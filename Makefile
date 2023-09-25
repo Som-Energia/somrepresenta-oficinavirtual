@@ -3,12 +3,17 @@
 default:
 	@printf "$$HELP"
 
-frontend-run-dev:
+ui-dev:
 	npm run dev --prefix frontend
 
+ui-deps:
+	npm install --prefix frontend
+
+ui-test:
+	npm run test --prefix frontend
 
 define HELP
-    - make frontend-run-dev\t\tStart frontend for development
+    - make dev-ui\t\tStart frontend for development
 
 Please execute "make <command>". Example: make run
 
