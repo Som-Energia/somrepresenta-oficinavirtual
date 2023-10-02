@@ -23,6 +23,10 @@ setup(
         'fastapi',
         'uvicorn[standard]',
         'consolemsg',
+        'pytest',
+        'pytest-cov',
+        'httpx',
+        'yamlns',
     ],
     classifiers = [
         'Programming Language :: Python',
