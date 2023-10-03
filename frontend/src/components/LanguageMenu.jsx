@@ -1,6 +1,6 @@
 import TranslateIcon from '@mui/icons-material/Translate'
 import LanguageIcon from '@mui/icons-material/Language'
-import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import CheckIcon from '@mui/icons-material/Check'
@@ -24,7 +24,7 @@ export default function LanguageMenu() {
 
   return (
     <>
-      <IconButton
+      <Button
         color={'inherit'}
         aria-label={t('APP_FRAME.CHANGE_LANGUAGE')}
         title={t('APP_FRAME.CHANGE_LANGUAGE')}
@@ -35,7 +35,8 @@ export default function LanguageMenu() {
         onClick={openMenu}
       >
         <LanguageIcon />
-      </IconButton>
+        {i18n.language}
+      </Button>
       <Menu
         id="language-menu"
         MenuListProps={{
