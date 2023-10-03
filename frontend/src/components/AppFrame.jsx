@@ -10,6 +10,7 @@ import PagesButtons from './PagesButtons'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { ScrollRestoration } from 'react-router-dom'
+import ClippedDrawer from './ClippedDrawer'
 
 export default function AppFrame({ children }) {
   const { t, i18n } = useTranslation()
@@ -24,11 +25,17 @@ export default function AppFrame({ children }) {
     },
   ]
 
+  const items = [
+    t('Instal·lacions'),
+    t('Factures'),
+    t('Dades de producció'),
+  ]
+
   // TODO: Move styling to the global style
   return (
     <>
       <ScrollRestoration /> {/* Scroll up on page switch */}
-      <AppBar position="static" enableColorOnDark>
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} enableColorOnDark >
         <Toolbar>
           {/* Page selector for small devices */}
           <PagesMenu
@@ -57,6 +64,7 @@ export default function AppFrame({ children }) {
           </Typography>
 
           {/* Page selector for bigger devices */}
+          {/*
           <PagesButtons
             pages={pages}
             sx={{
@@ -66,12 +74,21 @@ export default function AppFrame({ children }) {
               },
             }}
           />
-
+          */}
           {/* Tool buttons */}
           <ColorModeButton />
           <LanguageMenu />
         </Toolbar>
       </AppBar>
+      <ClippedDrawer
+          items={items}
+          sx={{
+            display: {
+              xs: 'none',
+              sm: 'inline',
+            },
+          }}
+      />
       <Box sx={{ minHeight: 'calc( 100vh - 7rem )' }}>{children}</Box>
     </>
   )
