@@ -31,15 +31,8 @@ export default function Page() {
             }}
           />
           <Box sx={{ display: 'flex', gap: 3 }}>
-            <Button variant="contained" color="secondary" onClick={() => navigate('/')}>
+            <Button variant="contained" color="primary" onClick={() => navigate('/')}>
               {t('APP_FRAME.GO_HOME')}
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => navigate('/simulator')}
-            >
-              {t('APP_FRAME.GO_SIMULATOR')}
             </Button>
           </Box>
         </Container>
