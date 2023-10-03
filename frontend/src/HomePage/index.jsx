@@ -14,7 +14,8 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import AppFrame from '../components/AppFrame'
 
 // TODO: Use the theme for this
-const highlightColor = '#646cff'
+//const highlightColor = '#646cff'
+const highlightColor = '#ef6c00'
 
 function PageButton(params) {
   const { route, title, image : Image} = params
@@ -23,8 +24,10 @@ function PageButton(params) {
       <CardActionArea
         {...(route ? { component: Link, to: route } : {})}
         sx={{
+          transition: '.2s',
           "&:hover": {
             color: highlightColor,
+            transition: '.2s'
           },
         }}
       >
