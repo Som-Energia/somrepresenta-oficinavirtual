@@ -1,8 +1,10 @@
 import TranslateIcon from '@mui/icons-material/Translate'
+import LanguageIcon from '@mui/icons-material/Language'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import CheckIcon from '@mui/icons-material/Check'
+import DescriptionIcon from '@mui/icons-material/Description'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,7 +34,7 @@ export default function LanguageMenu() {
         aria-haspopup="true"
         onClick={openMenu}
       >
-        <TranslateIcon />
+        <LanguageIcon />
       </IconButton>
       <Menu
         id="language-menu"
@@ -63,6 +65,7 @@ export default function LanguageMenu() {
               closeMenu()
             }}
           >
+            <ListItemIcon><TranslateIcon/></ListItemIcon>
             {t('APP_FRAME.CONTRIBUTE_TRANSLATIONS')}
           </MenuItem>
         )}
