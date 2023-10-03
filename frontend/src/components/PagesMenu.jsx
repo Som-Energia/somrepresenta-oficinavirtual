@@ -5,6 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
 import MenuIcon from '@mui/icons-material/Menu'
 
 export default function PagesMenu({ pages, ...props }) {
@@ -50,6 +51,9 @@ export default function PagesMenu({ pages, ...props }) {
               closeMenu()
             }}
           >
+            <ListItemIcon>
+              {page.icon}
+            </ListItemIcon>
             {page.text}
           </MenuItem>
         ))}

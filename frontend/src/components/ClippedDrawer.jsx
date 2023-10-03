@@ -7,10 +7,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { useNavigate } from 'react-router-dom'
 
 const drawerWidth = 240;
 
 export default function ClippedDrawer({sx, items}) {
+  const navigate = useNavigate()
   return (
       <Drawer
         variant="permanent"
@@ -24,13 +26,17 @@ export default function ClippedDrawer({sx, items}) {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {items.map((item, i) => (
-              <ListItem key={i+''} disablePadding>
+            {items.map((page, i) => (
+              <ListItem key={i+''} disablePadding
+                onClick={() => {
+                  navigate(page.path)
+                }}
+              >
                 <ListItemButton>
                   <ListItemIcon>
-                    {item.icon}
+                    {page.icon}
                   </ListItemIcon>
-                  <ListItemText primary={item.text} />
+                  <ListItemText primary={page.text} />
                 </ListItemButton>
               </ListItem>
             ))}
