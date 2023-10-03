@@ -98,16 +98,18 @@ export default function AppFrame({ children }) {
           <LanguageMenu />
         </Toolbar>
       </AppBar>
-      <ClippedDrawer
-        items={pages}
-        sx={{
-          display: {
-            xs: 'none',
-            sm: 'inline',
-          },
-        }}
-      />
-      <Box sx={{ minHeight: 'calc( 100vh - 7rem )' }}>{children}</Box>
+      <Box sx={{display: 'flex'}}>
+        <ClippedDrawer
+          items={pages}
+          sx={{
+            display: {
+              xs: 'none',
+              sm: 'inline',
+            },
+          }}
+        />
+        <Box sx={{ p:1, flexGrow: 1, minHeight: 'calc( 100vh - 7rem )' }}>{children}</Box>
+      </Box>
     </>
   )
 }
