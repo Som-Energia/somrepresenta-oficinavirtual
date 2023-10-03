@@ -28,7 +28,7 @@ export default function ClippedDrawer({sx, items}) {
               <ListItem key={i+''} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    {}
+                    {item.icon}
                   </ListItemIcon>
                   <ListItemText primary={item.text} />
                 </ListItemButton>

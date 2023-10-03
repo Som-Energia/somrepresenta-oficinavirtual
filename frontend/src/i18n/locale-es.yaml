@@ -1,0 +1,9 @@
+APP_FRAME:
+  PAGE_HOME: Inicio
+  PAGE_INSTALLATIONS: Instalaciones
+  PAGE_INVOICES: Facturas
+  PAGE_PRODUCTION_DATA: Dades de Producció
+  PAGE_NOT_FOUND: No se ha encontrado la página
+  GO_HOME: Vuelve al inicio
+  CONTRIBUTE_TRANSLATIONS: Ayúdanos a traducir
+

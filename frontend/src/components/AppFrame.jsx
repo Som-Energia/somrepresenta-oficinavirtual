@@ -11,6 +11,10 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { ScrollRestoration } from 'react-router-dom'
 import ClippedDrawer from './ClippedDrawer'
+import HomeIcon from '@mui/icons-material/Home'
+import SolarPowerIcon from '@mui/icons-material/SolarPower'
+import DescriptionIcon from '@mui/icons-material/Description'
+import QueryStatsIcon from '@mui/icons-material/QueryStats'
 
 export default function AppFrame({ children }) {
   const { t, i18n } = useTranslation()
@@ -21,26 +25,24 @@ export default function AppFrame({ children }) {
   const pages = [
     {
       text: t('APP_FRAME.PAGE_HOME'),
+      icon: <HomeIcon />,
       path: '/',
     },
     {
       text: t('APP_FRAME.PAGE_INSTALLATIONS'),
-      path: '/',
+      icon: <SolarPowerIcon />,
+      path: '/install',
     },
     {
       text: t('APP_FRAME.PAGE_INVOICES'),
-      path: '/',
+      icon: <DescriptionIcon />,
+      path: '/invoices',
     },
     {
       text: t('APP_FRAME.PAGE_PRODUCTION_DATA'),
-      path: '/',
+      icon: <QueryStatsIcon />,
+      path: '/production',
     },
-  ]
-
-  const items = [
-    t('Instal·lacions'),
-    t('Factures'),
-    t('Dades de producció'),
   ]
 
   // TODO: Move styling to the global style
