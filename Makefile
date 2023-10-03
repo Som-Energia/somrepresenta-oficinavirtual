@@ -20,7 +20,7 @@ ui-test-once:
 	npm run test:once
 
 api-dev:
-	.venv/bin/python scripts/representa-api.py --debug
+	.venv/bin/python scripts/representa_api.py --debug
 
 api-deps:
 	test -e .venv || python -m venv .venv
