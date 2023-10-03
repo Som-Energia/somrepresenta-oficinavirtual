@@ -23,6 +23,18 @@ export default function AppFrame({ children }) {
       text: t('APP_FRAME.PAGE_HOME'),
       path: '/',
     },
+    {
+      text: t('APP_FRAME.PAGE_INSTALLATIONS'),
+      path: '/',
+    },
+    {
+      text: t('APP_FRAME.PAGE_INVOICES'),
+      path: '/',
+    },
+    {
+      text: t('APP_FRAME.PAGE_PRODUCTION_DATA'),
+      path: '/',
+    },
   ]
 
   const items = [
@@ -81,7 +93,7 @@ export default function AppFrame({ children }) {
         </Toolbar>
       </AppBar>
       <ClippedDrawer
-          items={items}
+          items={pages}
           sx={{
             display: {
               xs: 'none',

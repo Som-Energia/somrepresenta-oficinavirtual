@@ -24,13 +24,13 @@ export default function ClippedDrawer({sx, items}) {
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            {items.map((text) => (
-              <ListItem key={text} disablePadding>
+            {items.map((item, i) => (
+              <ListItem key={i+''} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
                     {}
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={item.text} />
                 </ListItemButton>
               </ListItem>
             ))}
