@@ -49,7 +49,11 @@ export default function AppFrame({ children }) {
   return (
     <>
       <ScrollRestoration /> {/* Scroll up on page switch */}
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} enableColorOnDark >
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        enableColorOnDark
+      >
         <Toolbar>
           {/* Page selector for small devices */}
           <PagesMenu
@@ -95,13 +99,13 @@ export default function AppFrame({ children }) {
         </Toolbar>
       </AppBar>
       <ClippedDrawer
-          items={pages}
-          sx={{
-            display: {
-              xs: 'none',
-              sm: 'inline',
-            },
-          }}
+        items={pages}
+        sx={{
+          display: {
+            xs: 'none',
+            sm: 'inline',
+          },
+        }}
       />
       <Box sx={{ minHeight: 'calc( 100vh - 7rem )' }}>{children}</Box>
     </>
