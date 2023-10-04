@@ -1,0 +1,11 @@
+APP_FRAME:
+  TOGGLE_COLOR_MODE: Canvia el tema de color
+  CHANGE_LANGUAGE: Canvia l'idioma
+  GO_HOME: Torna al inici
+  PAGE_HOME: Inici
+  PAGE_INSTALLATIONS: Instal·lacions
+  PAGE_INVOICES: Factures
+  PAGE_PRODUCTION_DATA: Producció
+  PAGE_NOT_FOUND: No se ha trobat la pàgina
+  CONTRIBUTE_TRANSLATIONS: Ajuda'ns a traduïr
+
