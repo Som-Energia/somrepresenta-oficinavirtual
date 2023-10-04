@@ -32,7 +32,7 @@ function ProfileButton() {
   }
   const menuProfile = [
     {
-      text: 'Perfil',
+      text: t('APP_FRAME.MENU_PROFILE'),
       icon: <IconSettings />,
       /*
       onclick: () => {
@@ -41,7 +41,7 @@ function ProfileButton() {
       */
     },
     {
-      text: 'Logout',
+      text: t('APP_FRAME.MENU_LOGOUT'),
       icon: <IconLogout />,
       onclick: logout,
     },
@@ -51,7 +51,7 @@ function ProfileButton() {
     <Box sx={{ flexGrow: 0 }}>
       {currentUser !== null ? (
         <>
-          <Tooltip title={t('APP_FRAME.PROFILE')}>
+          <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
             <IconButton
               onClick={handleOpenUserMenu}
               sx={{

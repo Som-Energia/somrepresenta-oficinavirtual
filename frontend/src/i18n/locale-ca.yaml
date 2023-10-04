@@ -8,4 +8,8 @@ APP_FRAME:
   PAGE_PRODUCTION_DATA: Producció
   PAGE_NOT_FOUND: No se ha trobat la pàgina
   CONTRIBUTE_TRANSLATIONS: Ajuda'ns a traduïr
+  PROFILE_TOOLTIP: Perfil
+  MENU_PROFILE: Perfil
+  MENU_LOGOUT: Surt
+  LOGIN: Identifica't
 
