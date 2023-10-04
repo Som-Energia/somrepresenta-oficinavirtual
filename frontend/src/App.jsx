@@ -8,6 +8,7 @@ import TestPage from './components/TestPage'
 import HomePage from './HomePage'
 import NotFoundPage from './NotFoundPage'
 import DialogProvider from './components/DialogProvider'
+import AuthProvider from './components/AuthProvider'
 
 const routes = [
   {
@@ -29,7 +30,9 @@ function App() {
   return (
     <GlobalTheme>
       <DialogProvider>
-        <RouterProvider router={router} />
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
       </DialogProvider>
     </GlobalTheme>
   )

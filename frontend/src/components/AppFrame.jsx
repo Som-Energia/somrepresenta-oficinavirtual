@@ -3,6 +3,7 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import ProfileButton from './ProfileButton'
 import ColorModeButton from './ColorModeButton'
 import LanguageMenu from './LanguageMenu'
 import PagesMenu from './PagesMenu'
@@ -94,6 +95,7 @@ export default function AppFrame({ children }) {
           />
           */}
           {/* Tool buttons */}
+          <ProfileButton />
           <ColorModeButton />
           <LanguageMenu />
         </Toolbar>
