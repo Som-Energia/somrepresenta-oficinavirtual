@@ -15,6 +15,7 @@ import Divider from '@mui/material/Divider'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import IconSettings from '@mui/icons-material/Settings'
 import IconLogout from '@mui/icons-material/Logout'
+import IconLogin from '@mui/icons-material/Login'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from './AuthProvider'
 
@@ -46,16 +47,18 @@ function ProfileButton(params) {
       onclick: logout,
     },
   ]
-  if (currentUser) currentUser.avatar = '/logo.svg'
   return (
     <Box {...params}>
       {currentUser !== null ? (
         <>
           <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
-            <IconButton
+            <Button
+              variant='contained'
               onClick={handleOpenUserMenu}
               sx={{
                 p: 0,
+                color: (theme) => theme.palette.primary.contrastText,
+                bgcolor: (theme) => theme.palette.primary.main,
               }}
             >
               <Avatar
@@ -68,7 +71,18 @@ function ProfileButton(params) {
               >
                 {currentUser.initials}
               </Avatar>
-            </IconButton>
+              <Box
+                sx={{
+                  marginInlineStart: 1,
+                  display: {
+                    xs: 'none',
+                    sm: 'inherit',
+                  }
+                }}
+              >
+                {currentUser.name}
+              </Box>
+              </Button>
           </Tooltip>
           <Menu
             sx={{
@@ -115,9 +129,34 @@ function ProfileButton(params) {
           </Menu>
         </>
       ) : (
-        <Button variant="contained" onClick={login}>
-          {t("APP_FRAME.LOGIN")}
-        </Button>
+        <>
+          <Button 
+            variant="contained"
+            onClick={login}
+            sx={{
+              display: {
+                xs: 'none',
+                sm: 'inherit',
+              }
+            }}
+          >
+            {t("APP_FRAME.LOGIN")}
+          </Button>
+          <IconButton
+            color={'inherit'}
+            onClick={login}
+            sx={{
+              ...(params.sx??{}),
+              display: {
+                xs: 'inherit',
+                sm: 'none',
+              }
+            }}
+            title={t("APP_FRAME.LOGIN")}
+          >
+            <IconLogin/>
+          </IconButton>
+        </>
       )}
     </Box>
   )

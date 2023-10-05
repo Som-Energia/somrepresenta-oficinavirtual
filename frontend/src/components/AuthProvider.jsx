@@ -20,12 +20,14 @@ function AuthProvider({children}) {
       email: 'perico@nowhere.com',
       groups: ['admin', 'staff'],
       initials: "PP",
+      avatar: '/logo.svg',
     }))
   }, [])
 
   const logout = React.useCallback(()=>{
     setUser(null)
   }, [])
+
   var currentUser = null
   try {
     currentUser = JSON.parse(user)
@@ -38,7 +40,7 @@ function AuthProvider({children}) {
   return <AuthContext.Provider value={{
     login,
     logout,
-    currentUser: user === null ? null : JSON.parse(user),
+    currentUser,
   }}>
     {children}
   </AuthContext.Provider>
