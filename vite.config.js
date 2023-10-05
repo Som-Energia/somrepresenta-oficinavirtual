@@ -13,6 +13,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://localhost:5500',
+      '/oauth2': 'http://localhost:5500',
+      '/docs': 'http://localhost:5500',
+      '/openapi.json': 'http://localhost:5500',
     },
   },
   test: {
