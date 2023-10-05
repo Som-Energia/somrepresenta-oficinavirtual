@@ -21,6 +21,7 @@ setup(
     ],
     install_requires=[
         'fastapi',
+        'fastapi-oauth2',
         'uvicorn[standard]',
         'consolemsg',
         'pytest',
