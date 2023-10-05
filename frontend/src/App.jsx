@@ -45,13 +45,15 @@ function App() {
   const [count, setCount] = React.useState(0)
 
   return (
-    <GlobalTheme>
-      <DialogProvider>
-        <AuthProvider>
-          <RouterProvider router={router} />
-        </AuthProvider>
-      </DialogProvider>
-    </GlobalTheme>
+    <React.StrictMode>
+      <GlobalTheme>
+        <DialogProvider>
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
+        </DialogProvider>
+      </GlobalTheme>
+    </React.StrictMode>
   )
 }
 
