@@ -1,0 +1,16 @@
+- id: 'perico'
+  name: 'Perico de los Palotes'
+  email: 'perico@nowhere.com'
+  groups: ['staff']
+  initials: "PP"
+- id: 'mengana'
+  name: 'Mengana de los Palotes'
+  email: 'mengana@nowhere.com'
+  groups: ['admin']
+  initials: "FP"
+  avatar: '/logo.svg'
+- id: 'zutano'
+  name: 'Zutano Perengano'
+  email: 'zutano@nowhere.com'
+  groups: ['customer']
+  initials: "ZP"

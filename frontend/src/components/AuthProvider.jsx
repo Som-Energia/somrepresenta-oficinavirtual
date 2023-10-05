@@ -3,6 +3,7 @@ import useLocalStorage from '../hooks/LocalStorage'
 import { useDialog } from './DialogProvider'
 import { List, DialogContent, DialogTitle, ListItem, ListItemAvatar, ListItemText, Avatar, ListItemButton } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import users from '../data/dummyusers.yaml'
 
 const noFunction = () => undefined
 
@@ -15,23 +16,6 @@ const AuthContext = React.createContext({
 function DummyAuthDialog(params) {
   const {onUserSelected} = params
   const { t, i18n } = useTranslation()
-  const users = [
-    {
-      id: 'perico',
-      name: 'Perico de los Palotes',
-      email: 'perico@nowhere.com',
-      groups: ['staff'],
-      initials: "PP",
-    },
-    {
-      id: 'mengana',
-      name: 'Mengana de los Palotes',
-      email: 'mengana@nowhere.com',
-      groups: ['admin'],
-      initials: "FP",
-      avatar: '/logo.svg',
-    },
-  ]
   return <>
     <DialogContent>
       <DialogTitle>
