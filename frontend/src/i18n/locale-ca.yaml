@@ -7,6 +7,7 @@ APP_FRAME:
   PAGE_INVOICES: Factures
   PAGE_PRODUCTION_DATA: Producció
   PAGE_NOT_FOUND: No se ha trobat la pàgina
+  NOT_YET_IMPLEMENTED: Aquesta pàgina encara no està disponible
   CONTRIBUTE_TRANSLATIONS: Ajuda'ns a traduïr
   PROFILE_TOOLTIP: Perfil
   MENU_PROFILE: Perfil
