@@ -95,7 +95,7 @@ export default function AppFrame({ children }) {
           />
           */}
           {/* Tool buttons */}
-          <ProfileButton />
+          <ProfileButton sx= {{ flexGrow: 1}} />
           <ColorModeButton />
           <LanguageMenu />
         </Toolbar>

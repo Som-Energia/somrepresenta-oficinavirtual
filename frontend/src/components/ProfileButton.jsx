@@ -18,7 +18,7 @@ import IconLogout from '@mui/icons-material/Logout'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from './AuthProvider'
 
-function ProfileButton() {
+function ProfileButton(params) {
   const { t, i18n } = useTranslation()
   const {currentUser, login, logout} = React.useContext(AuthContext)
   console.log({currentUser})
@@ -46,9 +46,9 @@ function ProfileButton() {
       onclick: logout,
     },
   ]
-  
+  if (currentUser) currentUser.avatar = '/logo.svg'
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box {...params}>
       {currentUser !== null ? (
         <>
           <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
@@ -61,6 +61,10 @@ function ProfileButton() {
               <Avatar
                 alt={currentUser.initials}
                 src={currentUser.avatar}
+                sx={{
+                  bgcolor: (theme) => theme.palette.primary.contrastText,
+                  color: (theme) => theme.palette.primary.main,
+                }}
               >
                 {currentUser.initials}
               </Avatar>
