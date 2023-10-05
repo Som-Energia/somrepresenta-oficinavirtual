@@ -1,16 +1,16 @@
-- id: 'perico'
-  name: 'Perico de los Palotes'
-  email: 'perico@nowhere.com'
+- id: 'dummystaff'
+  name: 'Dummy Staff'
+  email: 'staff@nowhere.com'
   groups: ['staff']
-  initials: "PP"
-- id: 'mengana'
-  name: 'Mengana de los Palotes'
-  email: 'mengana@nowhere.com'
+  initials: "DS"
+- id: 'dummyadmin'
+  name: 'Dummy Admin'
+  email: 'admin@nowhere.com'
   groups: ['admin']
   initials: "FP"
   avatar: '/logo.svg'
-- id: 'zutano'
-  name: 'Zutano Perengano'
-  email: 'zutano@nowhere.com'
+- id: 'dummycustomer'
+  name: 'Dummy Customer'
+  email: 'customer@nowhere.com'
   groups: ['customer']
-  initials: "ZP"
+  initials: "DC"
