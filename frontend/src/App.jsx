@@ -11,6 +11,7 @@ import NotYetImplementedPage from './NotYetImplementedPage'
 import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
 import { CookiesProvider } from 'react-cookie';
+import PageGuard from './components/PageGuard'
 
 const routes = [
   {
@@ -27,7 +28,7 @@ const routes = [
   },
   {
     path: '/invoices',
-    element: <NotYetImplementedPage />
+    element: <PageGuard><NotYetImplementedPage /></PageGuard>
   },
   {
     path: '/production',
