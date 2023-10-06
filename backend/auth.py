@@ -6,8 +6,11 @@ from fastapi_oauth2.client import OAuth2Client
 from fastapi_oauth2.config import OAuth2Config
 from social_core.backends.google import GoogleOAuth2
 
-def on_auth(*args, **kwds):
-    print("on_auth", args, kwds)
+def on_auth(auth, user):
+    print("on_auth", auth, user)
+    # TODO: Lookup user in ERP
+    # TODO: If new user and require additional data, redirect
+
 
 def setup_auth(app):
     config = OAuth2Config(

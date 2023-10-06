@@ -1,0 +1,8 @@
+- id: somenergia
+  name: Som Energia
+  logo: /logo.svg
+- id: google-oauth2
+  name: Google
+  logo: /google-oauth2.svg
+
+
