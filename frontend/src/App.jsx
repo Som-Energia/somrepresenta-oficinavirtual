@@ -10,6 +10,7 @@ import NotFoundPage from './NotFoundPage'
 import NotYetImplementedPage from './NotYetImplementedPage'
 import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
+import { CookiesProvider } from 'react-cookie';
 
 const routes = [
   {
@@ -48,9 +49,11 @@ function App() {
     <React.StrictMode>
       <GlobalTheme>
         <DialogProvider>
-          <AuthProvider>
-            <RouterProvider router={router} />
-          </AuthProvider>
+          <CookiesProvider>
+            <AuthProvider>
+              <RouterProvider router={router} />
+            </AuthProvider>
+          </CookiesProvider>
         </DialogProvider>
       </GlobalTheme>
     </React.StrictMode>

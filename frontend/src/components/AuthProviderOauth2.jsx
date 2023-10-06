@@ -3,7 +3,8 @@ import useLocalStorage from '../hooks/LocalStorage'
 import { useDialog } from './DialogProvider'
 import { List, DialogContent, DialogTitle, ListItem, ListItemAvatar, ListItemText, Avatar, ListItemButton } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useCookies } from 'react-cookie';
+import { isExpired, decodeToken } from "react-jwt";
 import authProviders from '../data/authproviders.yaml'
 
 const noFunction = () => undefined
@@ -44,6 +45,7 @@ function AuthProviderDialog(params) {
 }
 
 function AuthProvider({children}) {
+  const [ cookies] = useCookies(['Authorization'])
   const [user, setUser] = useLocalStorage('user', null)
   const [openDialog, closeDialog] = useDialog()
 
@@ -56,18 +58,32 @@ function AuthProvider({children}) {
   }, [])
 
   const logout = React.useCallback(()=>{
-    setUser(null)
+    window.location = `/oauth2/logout`
   }, [])
+  function getCurrentUser() {
+    function error(message) {
+      console.error("Auth Error:", message)
+      return null
+    }
+    if (cookies.Authorization === undefined) return error("No token found")
+    const decodedToken = decodeToken(cookies.Authorization)
+    if (decodedToken === null) return error("Bad token")
+    if (isExpired(cookies.Authorization)) return error("Expired token")
+    return {
+      ...decodedToken,
+      avatar: decodedToken.picture,
+      initials: (
+        decodedToken.name
+          .split('')
+          .filter((l) => l.trim().toUpperCase() === l)
+          .slice(0, 2)
+          .join('')
+      ),
 
-  var currentUser = null
-  try {
-    currentUser = JSON.parse(user)
-  } catch (e) {
-    console.error("Invalid user info content")
-    setUser(null)
+    }
   }
+  const currentUser = getCurrentUser()
 
-  console.log({user})
   return <AuthContext.Provider value={{
     login,
     logout,
