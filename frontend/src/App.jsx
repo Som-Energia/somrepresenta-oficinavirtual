@@ -10,7 +10,7 @@ import NotFoundPage from './NotFoundPage'
 import NotYetImplementedPage from './NotYetImplementedPage'
 import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
-import { CookiesProvider } from 'react-cookie';
+import { CookiesProvider } from 'react-cookie'
 import PageGuard from './components/PageGuard'
 
 const routes = [
@@ -24,19 +24,23 @@ const routes = [
   },
   {
     path: '/install',
-    element: <NotYetImplementedPage />
+    element: <NotYetImplementedPage />,
   },
   {
     path: '/invoices',
-    element: <PageGuard><NotYetImplementedPage /></PageGuard>
+    element: (
+      <PageGuard>
+        <NotYetImplementedPage />
+      </PageGuard>
+    ),
   },
   {
     path: '/production',
-    element: <NotYetImplementedPage />
+    element: <NotYetImplementedPage />,
   },
   {
     path: '/test',
-    element: <TestPage />
+    element: <TestPage />,
   },
 ]
 

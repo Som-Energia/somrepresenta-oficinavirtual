@@ -95,12 +95,12 @@ export default function AppFrame({ children }) {
           />
           */}
           {/* Tool buttons */}
-          <ProfileButton sx= {{ flexGrow: 1}} />
+          <ProfileButton sx={{ flexGrow: 1 }} />
           <ColorModeButton />
           <LanguageMenu />
         </Toolbar>
       </AppBar>
-      <Box sx={{display: 'flex'}}>
+      <Box sx={{ display: 'flex' }}>
         <ClippedDrawer
           items={pages}
           sx={{
@@ -110,7 +110,9 @@ export default function AppFrame({ children }) {
             },
           }}
         />
-        <Box sx={{ p:1, flexGrow: 1, minHeight: 'calc( 100vh - 7rem )' }}>{children}</Box>
+        <Box sx={{ p: 1, flexGrow: 1, minHeight: 'calc( 100vh - 7rem )' }}>
+          {children}
+        </Box>
       </Box>
     </>
   )

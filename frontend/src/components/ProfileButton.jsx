@@ -21,8 +21,8 @@ import { useAuth } from './AuthProvider'
 
 function ProfileButton(params) {
   const { t, i18n } = useTranslation()
-  const {currentUser, login, logout} = useAuth()
-  console.log({currentUser})
+  const { currentUser, login, logout } = useAuth()
+  console.log({ currentUser })
 
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   const handleOpenUserMenu = (event) => {
@@ -53,7 +53,7 @@ function ProfileButton(params) {
         <>
           <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
             <Button
-              variant='contained'
+              variant="contained"
               onClick={handleOpenUserMenu}
               sx={{
                 p: 0,
@@ -77,12 +77,12 @@ function ProfileButton(params) {
                   display: {
                     xs: 'none',
                     sm: 'inherit',
-                  }
+                  },
                 }}
               >
                 {currentUser.name}
               </Box>
-              </Button>
+            </Button>
           </Tooltip>
           <Menu
             sx={{
@@ -130,31 +130,31 @@ function ProfileButton(params) {
         </>
       ) : (
         <>
-          <Button 
+          <Button
             variant="contained"
             onClick={login}
             sx={{
               display: {
                 xs: 'none',
                 sm: 'inherit',
-              }
+              },
             }}
           >
-            {t("APP_FRAME.LOGIN")}
+            {t('APP_FRAME.LOGIN')}
           </Button>
           <IconButton
             color={'inherit'}
             onClick={login}
             sx={{
-              ...(params.sx??{}),
+              ...(params.sx ?? {}),
               display: {
                 xs: 'inherit',
                 sm: 'none',
-              }
+              },
             }}
-            title={t("APP_FRAME.LOGIN")}
+            title={t('APP_FRAME.LOGIN')}
           >
-            <IconLogin/>
+            <IconLogin />
           </IconButton>
         </>
       )}

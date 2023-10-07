@@ -2,15 +2,15 @@
   name: 'Dummy Staff'
   email: 'staff@nowhere.com'
   groups: ['staff']
-  initials: "DS"
+  initials: 'DS'
 - id: 'dummyadmin'
   name: 'Dummy Admin'
   email: 'admin@nowhere.com'
   groups: ['admin']
-  initials: "FP"
+  initials: 'FP'
   avatar: '/logo.svg'
 - id: 'dummycustomer'
   name: 'Dummy Customer'
   email: 'customer@nowhere.com'
   groups: ['customer']
-  initials: "DC"
+  initials: 'DC'

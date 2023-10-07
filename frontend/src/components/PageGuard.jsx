@@ -11,10 +11,10 @@ function NotAuthenticated() {
 }
 
 function PageGuard(params) {
-  const {children} = params
-  const {currentUser, login, logout} = useAuth()
-  if (currentUser===null) return <NotAuthenticated/>
-  return (<>{children}</>)
+  const { children } = params
+  const { currentUser, login, logout } = useAuth()
+  if (currentUser === null) return <NotAuthenticated />
+  return <>{children}</>
 }
 
 export default PageGuard
