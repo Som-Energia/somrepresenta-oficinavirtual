@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from './AuthProvider'
 import AppFrame from './AppFrame'
 
-function NotAuthenticated() {
+function NotAuthenticatedPage() {
   const { t, i18n } = useTranslation()
   const { login } = useAuth()
   return (
@@ -42,7 +42,7 @@ function NotAuthenticated() {
 function PageGuard(params) {
   const { children } = params
   const { currentUser, login, logout } = useAuth()
-  if (currentUser === null) return <NotAuthenticated />
+  if (currentUser === null) return <NotAuthenticatedPage />
   return <>{children}</>
 }
 

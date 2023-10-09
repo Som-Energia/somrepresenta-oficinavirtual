@@ -23,8 +23,9 @@ Auth
 - [ ] Auth: Validate ERP user
 - [ ] Auth: Doubt: How to provision users?
 - [ ] Auth: Doubt: User ids: NIFs, email...?
-- [ ] Auth: PageGuards: IsAuthenticated
-- [ ] Auth: PageGuards: IsRole
+- [X] Auth: PageGuard: IsAuthenticated
+- [ ] Auth: PageGuard: IsRole
+- [ ] Abstract ErrorPage
 
 - [ ] Auth: Config to choose between Dummy and Auth
 - [ ] Auth: non ssr (rest) solution
@@ -32,6 +33,7 @@ Auth
 - [ ] Auth: Fix: Logout redirects from frontend server to backend server
 - [ ] Toaster per errors
 - [ ] Auth: `only_http`: make it false for development only, not in production
+- [ ] FastAPIOaut2: `only_http`: make it false for development only, not in production
 
 
 
