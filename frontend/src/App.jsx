@@ -12,6 +12,7 @@ import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
 import { CookiesProvider } from 'react-cookie'
 import PageGuard from './components/PageGuard'
+import ProfilePage from './ProfilePage'
 
 const routes = [
   {
@@ -37,6 +38,10 @@ const routes = [
   {
     path: '/production',
     element: <NotYetImplementedPage />,
+  },
+  {
+    path: '/profile',
+    element: <ProfilePage />,
   },
   {
     path: '/test',

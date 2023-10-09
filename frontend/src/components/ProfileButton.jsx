@@ -17,12 +17,13 @@ import IconSettings from '@mui/icons-material/Settings'
 import IconLogout from '@mui/icons-material/Logout'
 import IconLogin from '@mui/icons-material/Login'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
 
 function ProfileButton(params) {
   const { t, i18n } = useTranslation()
   const { currentUser, login, logout } = useAuth()
-  console.log({ currentUser })
+  const navigate = useNavigate()
 
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   const handleOpenUserMenu = (event) => {
@@ -35,11 +36,9 @@ function ProfileButton(params) {
     {
       text: t('APP_FRAME.MENU_PROFILE'),
       icon: <IconSettings />,
-      /*
       onclick: () => {
-        editPerson(Auth.username())
+        navigate('/profile')
       },
-      */
     },
     {
       text: t('APP_FRAME.MENU_LOGOUT'),
