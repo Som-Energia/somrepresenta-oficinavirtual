@@ -1,17 +1,15 @@
 import React from 'react'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Avatar from '@mui/material/Avatar'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemButton from '@mui/material/ListItemButton'
+import { useTranslation } from 'react-i18next'
 import useLocalStorage from '../hooks/LocalStorage'
 import { useDialog } from './DialogProvider'
-import {
-  List,
-  DialogContent,
-  DialogTitle,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Avatar,
-  ListItemButton,
-} from '@mui/material'
-import { useTranslation } from 'react-i18next'
 import authProviders from '../data/authproviders.yaml'
 
 const noFunction = () => undefined
