@@ -35,6 +35,8 @@ Auth
 - [ ] Auth: `only_http`: make it false for development only, not in production
 - [ ] FastAPIOaut2: `only_http`: make it false for development only, not in production
 
+- [ ] Browser language CA-ES not transformed into CA in language button
+
 
 
 

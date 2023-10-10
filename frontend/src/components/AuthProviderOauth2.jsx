@@ -12,8 +12,6 @@ import {
   ListItemButton,
 } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { useCookies } from 'react-cookie'
-import { isExpired, decodeToken } from 'react-jwt'
 import authProviders from '../data/authproviders.yaml'
 
 const noFunction = () => undefined
@@ -51,9 +49,17 @@ function AuthProviderDialog(params) {
 }
 
 function AuthProvider({ children }) {
-  const [cookies] = useCookies(['Authorization'])
   const [user, setUser] = useLocalStorage('user', null)
   const [openDialog, closeDialog] = useDialog()
+
+  let currentUser = null
+  try {
+    currentUser = JSON.parse(user)
+  }
+  catch(e) {
+    console.error('Parsing user info', e)
+  }
+  const setCurrentUser = (user) => setUser(JSON.stringify(user))
 
   const login = React.useCallback(() => {
     openDialog({
@@ -68,28 +74,28 @@ function AuthProvider({ children }) {
   }, [])
 
   const logout = React.useCallback(() => {
+    setCurrentUser(null)
     window.location = `/oauth2/logout`
   }, [])
-  function getCurrentUser() {
-    function error(message) {
-      console.error('Auth Error:', message)
-      return null
-    }
-    if (cookies.Authorization === undefined) return error('No token found')
-    const decodedToken = decodeToken(cookies.Authorization)
-    if (decodedToken === null) return error('Bad token')
-    if (isExpired(cookies.Authorization)) return error('Expired token')
-    return {
-      ...decodedToken,
-      avatar: decodedToken.picture,
-      initials: decodedToken.name
-        .split('')
-        .filter((l) => l.trim().toUpperCase() === l)
-        .slice(0, 2)
-        .join(''),
-    }
+
+  function error(message) {
+    console.error('Auth Error:', message)
+    return null
   }
-  const currentUser = getCurrentUser()
+
+  React.useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const response = await fetch('/api/me')
+      if (response.ok === false) {
+        const error = await response.json()
+        console.error("Login status:", error.detail)
+        return null
+      }
+      const user = await response.json()
+      return user
+    }
+    fetchCurrentUser().then((user) => setCurrentUser(user))
+  }, [])
 
   return (
     <AuthContext.Provider

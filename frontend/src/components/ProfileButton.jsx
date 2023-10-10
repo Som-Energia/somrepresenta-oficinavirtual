@@ -46,6 +46,14 @@ function ProfileButton(params) {
       onclick: logout,
     },
   ]
+
+  const initials = (name) =>
+    name
+      .split('')
+      .filter((l) => l.trim().toUpperCase() === l)
+      .slice(0, 2)
+      .join('')
+
   return (
     <Box {...params}>
       {currentUser !== null ? (
@@ -56,12 +64,13 @@ function ProfileButton(params) {
               onClick={handleOpenUserMenu}
               sx={{
                 p: 0,
+                pr: 1,
                 color: (theme) => theme.palette.primary.contrastText,
                 bgcolor: (theme) => theme.palette.primary.main,
               }}
             >
               <Avatar
-                alt={currentUser.initials}
+                alt={initials(currentUser.name)}
                 src={currentUser.avatar}
                 sx={{
                   bgcolor: (theme) => theme.palette.primary.contrastText,
