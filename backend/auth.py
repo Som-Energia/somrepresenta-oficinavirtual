@@ -21,7 +21,7 @@ def auth_error(message):
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail=message,
         headers={"WWW-Authenticate": "Bearer"},
-        )
+    )
 
 
 def validated_user(authorization: str = Depends(oauth2)):
