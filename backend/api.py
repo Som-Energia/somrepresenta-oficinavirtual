@@ -39,7 +39,7 @@ def apiMe(user: dict = Depends(validated_user)):
         state = 'Girona',
         phone = '555444333',
         proxy_name = 'Matute Gonzalez, Frasco',
-        proxi_nif = '987654321X',
+        proxy_nif = '987654321X',
     )
 
 setup_auth(app)
