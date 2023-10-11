@@ -1,8 +1,12 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {
+  createHashRouter as createRouter,
+  RouterProvider,
+} from 'react-router-dom'
 import './App.css'
 import './i18n/i18n'
 import { useTranslation } from 'react-i18next'
+import { CookiesProvider } from 'react-cookie'
 import GlobalTheme from './components/GlobalTheme'
 import TestPage from './components/TestPage'
 import HomePage from './HomePage'
@@ -10,7 +14,6 @@ import NotFoundPage from './NotFoundPage'
 import NotYetImplementedPage from './NotYetImplementedPage'
 import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
-import { CookiesProvider } from 'react-cookie'
 import PageGuard from './components/PageGuard'
 import ProfilePage from './ProfilePage'
 
@@ -49,7 +52,7 @@ const routes = [
   },
 ]
 
-const router = createBrowserRouter(routes)
+const router = createRouter(routes)
 
 function App() {
   const { t, i18n } = useTranslation()
