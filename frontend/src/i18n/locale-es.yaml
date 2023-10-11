@@ -16,3 +16,7 @@ APP_FRAME:
   CHOOSE_USER: Escoge usuaria
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Se requiere usuaria
+  DISCLAIMER: AVISO LEGAL
+  DISCLAIMER_URL: https://www.somenergia.coop/es/aviso-legal/
+  PRIVACY_POLICY: POLÍTICA DE PRIVACIDAD
+  PRIVACY_POLICY_URL: https://www.somenergia.coop/es/politica-de-privacidad/
