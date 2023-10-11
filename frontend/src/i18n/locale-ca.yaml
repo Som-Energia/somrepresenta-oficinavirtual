@@ -16,3 +16,20 @@ APP_FRAME:
   CHOOSE_USER: Escull usuaria
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Es requereix usuaria
+  DISCLAIMER: AVÍS LEGAL
+  DISCLAIMER_URL: https://www.somenergia.coop/ca/avis-legal/
+  PRIVACY_POLICY: POLÍTICA DE PRIVACITAT
+  PRIVACY_POLICY_URL: https://www.somenergia.coop/ca/politica-de-privacitat/
+PROFILE:
+  NAME: Nom
+  VAT: NIF
+  ROLES: Rols
+  ADDRESS: Direcció
+  CITY: Municipi
+  ZIP: Codi postal
+  STATE: Província
+  EMAIL: Correu-e
+  PHONE: Telèfon
+  PROXY_NAME: Nom representant
+  PROXY_VAT: NIF representant
+
