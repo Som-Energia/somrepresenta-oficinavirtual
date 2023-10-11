@@ -20,3 +20,16 @@ APP_FRAME:
   DISCLAIMER_URL: https://www.somenergia.coop/ca/avis-legal/
   PRIVACY_POLICY: POLÍTICA DE PRIVACITAT
   PRIVACY_POLICY_URL: https://www.somenergia.coop/ca/politica-de-privacitat/
+PROFILE:
+  NAME: Nom
+  VAT: NIF
+  ROLES: Rols
+  ADDRESS: Direcció
+  CITY: Municipi
+  ZIP: Codi postal
+  STATE: Província
+  EMAIL: Correu-e
+  PHONE: Telèfon
+  PROXY_NAME: Nom representant
+  PROXY_VAT: NIF representant
+
