@@ -1,8 +1,11 @@
 import React from 'react'
-//import AuthProvider, {AuthContext} from './AuthProviderDummy'
-import AuthProvider, { AuthContext } from './AuthProviderOauth2'
+console.log(import.meta.env)
+const configuredBackend = import.meta.env.VITE_AUTH_BACKEND ?? 'Oauth2'
 
-const useAuth = () => React.useContext(AuthContext)
+console.log({ configuredBackend })
 
-export { AuthContext, useAuth }
+const { AuthProvider, useAuth } = await import(`./AuthProvider${configuredBackend}.jsx`)
+console.log({ AuthProvider, useAuth })
+
+export { useAuth }
 export default AuthProvider

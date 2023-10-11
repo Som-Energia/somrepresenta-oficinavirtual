@@ -53,8 +53,7 @@ function AuthProvider({ children }) {
   let currentUser = null
   try {
     currentUser = JSON.parse(user)
-  }
-  catch(e) {
+  } catch (e) {
     console.error('Parsing user info', e)
   }
   const setCurrentUser = (user) => setUser(JSON.stringify(user))
@@ -86,7 +85,7 @@ function AuthProvider({ children }) {
       const response = await fetch('/api/me')
       if (response.ok === false) {
         const error = await response.json()
-        console.error("Login status:", error.detail)
+        console.error('Login status:', error.detail)
         return null
       }
       const user = await response.json()
@@ -108,5 +107,7 @@ function AuthProvider({ children }) {
   )
 }
 
-export { AuthContext }
+const useAuth = () => React.useContext(AuthContext)
+
+export { AuthProvider, useAuth }
 export default AuthProvider
