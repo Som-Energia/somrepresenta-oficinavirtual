@@ -1,13 +1,27 @@
 # Oficinavirtual Representa
 
-TODO: Describe the project
-
+Virtual office of somenergia's representation service
 
 ## Development setup
 
+### Requirements
+
+- A Python 3 virtual environment with name `.venv` located
+at the root of the project.
+
+### Dependencies
+
 ```bash
 make deps # Install dependencies
+```
+
+### Tests
+```bash
 make tests # Pass ui and api tests
+```
+
+### Application startup
+```bash
 # In diferent consoles:
 make ui-dev # runs the frontend server at localhost:5123
 make api-dev # runs the backend server at localhost:5500
