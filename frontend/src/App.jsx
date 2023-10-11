@@ -2,6 +2,7 @@ import React from 'react'
 import {
   createHashRouter as createRouter,
   RouterProvider,
+  Outlet,
 } from 'react-router-dom'
 import './App.css'
 import './i18n/i18n'
@@ -15,40 +16,63 @@ import NotYetImplementedPage from './NotYetImplementedPage'
 import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
+import AppFrame from './components/AppFrame'
 import ProfilePage from './ProfilePage'
 
 const routes = [
   {
-    path: '*',
-    element: <NotFoundPage />,
-  },
-  {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/install',
-    element: <NotYetImplementedPage />,
-  },
-  {
-    path: '/invoices',
     element: (
-      <PageGuard>
-        <NotYetImplementedPage />
-      </PageGuard>
+      <GlobalTheme>
+        <DialogProvider>
+          <CookiesProvider>
+            <AuthProvider>
+              <AppFrame>
+                <Outlet />
+              </AppFrame>
+            </AuthProvider>
+          </CookiesProvider>
+        </DialogProvider>
+      </GlobalTheme>
     ),
-  },
-  {
-    path: '/production',
-    element: <NotYetImplementedPage />,
-  },
-  {
-    path: '/profile',
-    element: <ProfilePage />,
-  },
-  {
-    path: '/test',
-    element: <TestPage />,
+    children: [
+      {
+        path: '*',
+        element: <NotFoundPage />,
+      },
+      {
+        path: '/test',
+        element: <TestPage />,
+      },
+      {
+        path: '/',
+        element: <HomePage />,
+      },
+      {
+        element: (
+          <PageGuard>
+            <Outlet />
+          </PageGuard>
+        ),
+        children: [
+          {
+            path: '/profile',
+            element: <ProfilePage />,
+          },
+          {
+            path: '/install',
+            element: <NotYetImplementedPage />,
+          },
+          {
+            path: '/invoices',
+            element: <NotYetImplementedPage />,
+          },
+          {
+            path: '/production',
+            element: <NotYetImplementedPage />,
+          },
+        ],
+      },
+    ],
   },
 ]
 
@@ -60,15 +84,7 @@ function App() {
 
   return (
     <React.StrictMode>
-      <GlobalTheme>
-        <DialogProvider>
-          <CookiesProvider>
-            <AuthProvider>
-              <RouterProvider router={router} />
-            </AuthProvider>
-          </CookiesProvider>
-        </DialogProvider>
-      </GlobalTheme>
+      <RouterProvider router={router} />
     </React.StrictMode>
   )
 }

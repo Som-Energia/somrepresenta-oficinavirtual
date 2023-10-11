@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import DescriptionIcon from '@mui/icons-material/Description'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
-import AppFrame from '../components/AppFrame'
 
 // TODO: Use the theme for this
 //const highlightColor = '#646cff'
@@ -62,26 +61,24 @@ export default function HomePage(params) {
     },
   ]
   return (
-    <AppFrame>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          flexFlow: 'row wrap',
-          justifyContent: 'center',
-          gap: '5%',
-          p: 3,
-        }}
-      >
-        {pages.map((page) => (
-          <PageButton
-            key={page.path}
-            title={page.text}
-            route={page.path}
-            image={page.icon}
-          />
-        ))}
-      </Box>
-    </AppFrame>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexFlow: 'row wrap',
+        justifyContent: 'center',
+        gap: '5%',
+        p: 3,
+      }}
+    >
+      {pages.map((page) => (
+        <PageButton
+          key={page.path}
+          title={page.text}
+          route={page.path}
+          image={page.icon}
+        />
+      ))}
+    </Box>
   )
 }

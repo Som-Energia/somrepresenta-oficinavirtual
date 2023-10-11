@@ -2,7 +2,6 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { useTranslation } from 'react-i18next'
-import AppFrame from '../components/AppFrame'
 import { useAuth } from '../components/AuthProvider'
 import PageGuard from '../components/PageGuard'
 
@@ -57,21 +56,18 @@ export default function ProfilePage(params) {
     },
   ]
 
+  console.log('Guarding for', currentUser)
   return (
-    <PageGuard>
-      <AppFrame>
-        <Container sx={{ mt: 10 }}>
-          <img src={currentUser.avatar} />
-          {fields.map((field) => {
-            return (
-              <p key={field.id}>
-                <b>{field.label}:</b>{' '}
-                {field.view ? field.view(currentUser) : currentUser[field.id]}
-              </p>
-            )
-          })}
-        </Container>
-      </AppFrame>
-    </PageGuard>
+    <Container>
+      <img src={currentUser.avatar} />
+      {fields.map((field) => {
+        return (
+          <p key={field.id}>
+            <b>{field.label}:</b>{' '}
+            {field.view ? field.view(currentUser) : currentUser[field.id]}
+          </p>
+        )
+      })}
+    </Container>
   )
 }
