@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { ScrollRestoration } from 'react-router-dom'
 import ClippedDrawer from './ClippedDrawer'
+import Footer from './Footer'
 
 export default function AppFrame({ children }) {
   const { t, i18n } = useTranslation()
@@ -114,6 +115,9 @@ export default function AppFrame({ children }) {
           {children}
         </Box>
       </Box>
+      <Footer
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      />
     </>
   )
 }
