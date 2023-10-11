@@ -66,7 +66,9 @@ export default function LanguageMenu() {
               closeMenu()
             }}
           >
-            <ListItemIcon><TranslateIcon/></ListItemIcon>
+            <ListItemIcon>
+              <TranslateIcon />
+            </ListItemIcon>
             {t('APP_FRAME.CONTRIBUTE_TRANSLATIONS')}
           </MenuItem>
         )}

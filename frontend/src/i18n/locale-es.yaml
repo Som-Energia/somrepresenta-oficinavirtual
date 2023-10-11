@@ -7,5 +7,12 @@ APP_FRAME:
   PAGE_INVOICES: Facturas
   PAGE_PRODUCTION_DATA: Producción
   PAGE_NOT_FOUND: No se ha encontrado la página
+  NOT_YET_IMPLEMENTED: Esta página aún no está disponible
   CONTRIBUTE_TRANSLATIONS: Ayúdanos a traducir
-
+  PROFILE_TOOLTIP: Perfil
+  MENU_PROFILE: Perfil
+  MENU_LOGOUT: Salir
+  LOGIN: Identificate
+  CHOOSE_USER: Escoge usuaria
+  CHOOSE_AUTH_PROVIDER: Escull com identificar-te
+  USER_REQUIRED: Se requiere usuaria

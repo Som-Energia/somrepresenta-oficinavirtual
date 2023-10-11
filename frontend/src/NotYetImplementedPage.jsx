@@ -19,7 +19,7 @@ export default function Page() {
         p: 2,
       }}
     >
-      <Typography variant="h4">{t('APP_FRAME.PAGE_NOT_FOUND')}</Typography>
+      <Typography variant="h4">{t('APP_FRAME.NOT_YET_IMPLEMENTED')}</Typography>
       <img
         src={koFirefly}
         style={{

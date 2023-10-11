@@ -51,9 +51,7 @@ export default function PagesMenu({ pages, ...props }) {
               closeMenu()
             }}
           >
-            <ListItemIcon>
-              {page.icon}
-            </ListItemIcon>
+            <ListItemIcon>{page.icon}</ListItemIcon>
             {page.text}
           </MenuItem>
         ))}
