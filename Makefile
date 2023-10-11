@@ -5,7 +5,7 @@ default:
 
 deps: ui-deps api-deps
 
-test: api-test ui-test-once
+tests: api-test ui-test-once
 
 ui-dev:
 	npm run dev
