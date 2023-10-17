@@ -31,6 +31,29 @@ Auth
 - [ ] Auth: PageGuard: filter by role (attribute allowedRoles (anyOf)? requiredRoles (allOf)?)
 - [ ] Abstract ErrorPage from common stuff in different error pages (NotFound, NotYetAvailable, Unauthorized...) to centralize styling
 
+- [ ] models?
+    - [ ] Quins son els nostres usuaris? De `res_partner` quins?
+        - filtrem per categoria?
+        - filtrem per si tenen contractes o factures?
+    - [ ] A partir de quin moment es  dona la provisió d'usuari per feta
+        - [ ] Quan s'envia el mail de validació de mail
+    - [ ] titular_associat?? (nom i nif) d'on ve?
+        - Ens estem inventant que es el nif del representant de l'empresa, es aixo?
+    - [ ] Correu com identificador implica problemes N:M
+    - [ ] giscere.instalacio
+    - [ ] giscere.contracte
+    - [ ] giscere.factura
+    - [ ] tipologia instalacio?
+    - [ ] com baixa el pdf
+- [ ] Com muntar el modul
+    - [ ] separat
+    - [ ] criteri versionat __terp__
+    - [ ] Nom del repo: `openerp_som_representa`?
+    - [ ] Nom del modul: `som_representa_www`?
+    - [ ] Convenció de versionat de mòduls
+    - [ ] diferencia entre: init - update - demo 
+
+
 - [ ] Auth: non ssr (rest) solution
 - [ ] Auth: Security: Activate PKCE: Proof Key for Code Exchange
 - [ ] Auth: Fix: Logout redirects from frontend server to backend server
