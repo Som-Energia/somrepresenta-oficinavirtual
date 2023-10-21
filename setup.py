@@ -16,6 +16,7 @@ setup(
     long_description_content_type = 'text/markdown',
     license = 'GNU Affero General Public License v3 or later (GPLv3+)',
     packages=find_packages(exclude=['*[tT]est*']),
+    python_requires='>=3.8',
     scripts=[
         'scripts/representa_api.py',
     ],
