@@ -10,10 +10,6 @@ import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import DescriptionIcon from '@mui/icons-material/Description'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 
-// TODO: Use the theme for this
-//const highlightColor = '#646cff'
-const highlightColor = '#ef6c00'
-
 function PageButton(params) {
   const { route, title, image: Image } = params
   return (
@@ -23,7 +19,7 @@ function PageButton(params) {
         sx={{
           transition: '.2s',
           '&:hover': {
-            color: highlightColor,
+            color: 'secondary.main',
             transition: '.2s',
           },
         }}
