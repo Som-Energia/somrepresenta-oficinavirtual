@@ -7,12 +7,14 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const drawerWidth = 240
 
 export default function ClippedDrawer({ sx, items }) {
   const navigate = useNavigate()
+  const currentLocation = useLocation()
+
   return (
     <Drawer
       variant="permanent"
@@ -27,18 +29,17 @@ export default function ClippedDrawer({ sx, items }) {
       <Box sx={{ overflow: 'auto' }}>
         <List>
           {items.map((page, i) => (
-            <ListItem
+            <ListItemButton
               key={i + ''}
               disablePadding
               onClick={() => {
                 navigate(page.path)
               }}
+              selected={page.path === currentLocation.pathname}
             >
-              <ListItemButton>
-                <ListItemIcon>{page.icon}</ListItemIcon>
-                <ListItemText primary={page.text} />
-              </ListItemButton>
-            </ListItem>
+              <ListItemIcon>{page.icon}</ListItemIcon>
+              <ListItemText primary={page.text} />
+            </ListItemButton>
           ))}
         </List>
       </Box>
