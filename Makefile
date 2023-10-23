@@ -35,7 +35,15 @@ api-test:
 
 
 define HELP
-    - make dev-ui\t\tStart frontend for development
+    - make deps\t\tInstall front and backend environment
+    - make ui-deps\t\tInstall frontend environment
+    - make api-deps\t\tInstall backend environment
+    - make ui-dev\t\tStart frontend development server
+    - make api-dev\t\tStart backend development server
+    - make ui-test\t\tPass frontend tests
+    - make api-test\t\tPass backend tests
+    - make test\t\tPass backend and frontend tests
+    - make build\t\tBuild frontend distribution files
 
 Please execute "make <command>". Example: make run
 
