@@ -16,33 +16,30 @@ import { useTranslation } from 'react-i18next'
 import ClippedDrawer from './ClippedDrawer'
 import Footer from './Footer'
 
-export default function AppFrame({ children }) {
+// TODO: Solve this, still have to list the icons in the yaml
+const icons = {
+  Home: HomeIcon,
+  SolarPower: SolarPowerIcon,
+  Description: DescriptionIcon,
+  QueryStats: QueryStatsIcon,
+}
+
+export default function AppFrame(props) {
+  const { title, subtitle, logo, menuPages, children, ...attribs } = props
   const { t, i18n } = useTranslation()
 
-  const title = 'Representa'
-  const logo = '/logo.svg'
-  const pages = [
-    {
-      text: t('APP_FRAME.PAGE_HOME'),
-      icon: <HomeIcon />,
-      path: '/',
-    },
-    {
-      text: t('APP_FRAME.PAGE_INSTALLATIONS'),
-      icon: <SolarPowerIcon />,
-      path: '/install',
-    },
-    {
-      text: t('APP_FRAME.PAGE_INVOICES'),
-      icon: <DescriptionIcon />,
-      path: '/invoices',
-    },
-    {
-      text: t('APP_FRAME.PAGE_PRODUCTION_DATA'),
-      icon: <QueryStatsIcon />,
-      path: '/production',
-    },
-  ]
+  const pages = React.useMemo(
+    () =>
+      menuPages.map((page) => {
+        const Icon = icons[page.icon]
+        return {
+          path: page.path,
+          text: t(page.text),
+          icon: <Icon />,
+        }
+      }),
+    [t],
+  )
 
   // TODO: Move styling to the global style
   return (
