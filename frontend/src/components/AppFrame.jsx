@@ -2,11 +2,11 @@ import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 import HomeIcon from '@mui/icons-material/Home'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
-import DescriptionIcon from '@mui/icons-material/Description'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
-import Box from '@mui/material/Box'
+import DescriptionIcon from '@mui/icons-material/Description'
 import ProfileButton from './ProfileButton'
 import ColorModeButton from './ColorModeButton'
 import LanguageMenu from './LanguageMenu'
@@ -107,15 +107,14 @@ export default function AppFrame({ children }) {
             },
           }}
         />
-        <Box sx={{ mt: '4.5rem', p: .4, flexGrow: 1, minHeight: 'calc( 100vh - 7rem)'}}>
+        <Box sx={{ mt: '4.5rem', p: 0.4, flexGrow: 1, minHeight: 'calc( 100vh - 7rem)' }}>
           {children}
         </Box>
       </Box>
-
       <Footer
-        sx={{ 
+        sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          position: "relative"
+          position: 'relative',
         }}
       />
     </>
