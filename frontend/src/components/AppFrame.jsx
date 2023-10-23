@@ -13,14 +13,11 @@ import LanguageMenu from './LanguageMenu'
 import PagesMenu from './PagesMenu'
 import PagesButtons from './PagesButtons'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import { ScrollRestoration } from 'react-router-dom'
 import ClippedDrawer from './ClippedDrawer'
 import Footer from './Footer'
 
 export default function AppFrame({ children }) {
   const { t, i18n } = useTranslation()
-  const navigate = useNavigate()
 
   const title = 'Representa'
   const logo = '/logo.svg'
@@ -50,7 +47,6 @@ export default function AppFrame({ children }) {
   // TODO: Move styling to the global style
   return (
     <>
-      <ScrollRestoration /> {/* Scroll up on page switch */}
       <AppBar
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}

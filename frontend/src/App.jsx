@@ -3,6 +3,7 @@ import {
   createHashRouter as createRouter,
   RouterProvider,
   Outlet,
+  ScrollRestoration,
 } from 'react-router-dom'
 import './App.css'
 import './i18n/i18n'
@@ -26,6 +27,7 @@ const routes = [
         <DialogProvider>
           <CookiesProvider>
             <AuthProvider>
+              <ScrollRestoration /> {/* Scroll up on page switch */}
               <AppFrame>
                 <Outlet />
               </AppFrame>
