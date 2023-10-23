@@ -1,6 +1,8 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import Avatar from '@mui/material/Avatar'
+import TextField from '@mui/material/TextField'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../components/AuthProvider'
 import PageGuard from '../components/PageGuard'
@@ -59,15 +61,42 @@ export default function ProfilePage(params) {
   console.log('Guarding for', currentUser)
   return (
     <Container>
-      <img src={currentUser.avatar} />
-      {fields.map((field) => {
-        return (
-          <p key={field.id}>
-            <b>{field.label}:</b>{' '}
-            {field.view ? field.view(currentUser) : currentUser[field.id]}
-          </p>
-        )
-      })}
+      <Box
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr',
+          columnGap: '1rem',
+          rowGap: '.7rem',
+        }}
+      >
+        <Box style={{ gridColumn: '2' }}>
+          <Avatar
+            alt={currentUser.initials}
+            src={currentUser.avatar}
+            variant="square"
+            sx={{
+              width: '64px',
+              height: '64px',
+            }}
+          >
+            {currentUser.initials}
+          </Avatar>
+        </Box>
+        {fields.map((field) => {
+          return (
+            <>
+              <Box sx={{ textAlign: 'right' }}>
+                <label key={field.id + '_label'} for={field.id}>
+                  <b>{field.label}:</b>
+                </label>
+              </Box>
+              <Box key={field.id}>
+                {field.view ? field.view(currentUser) : currentUser[field.id]}
+              </Box>
+            </>
+          )
+        })}
+      </Box>
     </Container>
   )
 }

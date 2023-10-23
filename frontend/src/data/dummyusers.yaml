@@ -1,16 +1,24 @@
 - id: 'dummystaff'
   name: 'Dummy Staff'
   email: 'staff@nowhere.com'
-  groups: ['staff']
+  roles: ['staff']
   initials: 'DS'
+
 - id: 'dummyadmin'
   name: 'Dummy Admin'
   email: 'admin@nowhere.com'
-  groups: ['admin']
+  roles: ['admin']
   initials: 'FP'
   avatar: '/logo.svg'
+
 - id: 'dummycustomer'
   name: 'Dummy Customer'
   email: 'customer@nowhere.com'
-  groups: ['customer']
+  roles: ['customer', 'proxy']
   initials: 'DC'
+  phone: '555444333'
+  nif: 12345678Z
+  address: Gran Via, 503, 3er 4a
+  city: Hospitalet, L'
+  zip: '08712'
+  state: Barcelona
