@@ -1,6 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +23,13 @@ export default function ProfilePage(params) {
     {
       id: 'roles',
       label: t('PROFILE.ROLES'),
-      view: (user) => <>{user.roles.map((rol) => ` [${rol}] `)}</>,
+      view: (user) => (
+        <>
+          {user.roles.map((rol) => (
+            <Chip key={rol} label={rol} />
+          ))}
+        </>
+      ),
     },
     {
       id: 'address',
