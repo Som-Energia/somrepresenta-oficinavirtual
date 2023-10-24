@@ -91,16 +91,16 @@ export default function ProfilePage(params) {
         </Box>
         {fields.map((field) => {
           return (
-            <>
+            <React.Fragment key={field.id}>
               <Box sx={{ textAlign: 'right' }}>
-                <label key={field.id + '_label'} for={field.id}>
+                <label htmlFor={field.id}>
                   <b>{field.label}:</b>
                 </label>
               </Box>
-              <Box key={field.id}>
+              <Box id={field.id}>
                 {field.view ? field.view(currentUser) : currentUser[field.id]}
               </Box>
-            </>
+            </React.Fragment>
           )
         })}
       </Box>
