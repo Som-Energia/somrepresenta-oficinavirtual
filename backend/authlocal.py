@@ -9,6 +9,20 @@ from jose import JWTError, jwt
 from .auth import auth_error, validated_user, JWT_ALGORITHM
 from consolemsg import error
 import os
+from pydantic import BaseModel
+
+class TokenUser(BaseModel):
+    nif: str
+    name: str
+    email: str
+    roles: list[str]
+
+    def data(self):
+        return ns(
+            self,
+            sub=self.nif,
+            username=self.nif,
+        )
 
 passwords_file = Path('passwords.yaml')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -22,42 +36,45 @@ def load_passwords():
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def set_password(user, password):
+def get_hashed_password(username):
     users = load_passwords()
-    users[user] = get_password_hash(password)
+    return users.get(username, None)
+
+def set_password(username, password):
+    users = load_passwords()
+    users[username] = get_password_hash(password)
     users.dump(passwords_file)
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-def authenticate_user(username: str, password: str):
-    users = load_passwords()
+def authenticate_user(username: str, password: str) -> TokenUser|bool:
     # TODO: Use the erp
     user = user_info(username)
     if not user:
         error("User not found")
         return False
     login = user.nif
-    error(f"username {username} - {login}")
-    if login not in users:
-        error("Bad user")
+    hashed_password = get_hashed_password(login)
+    if not hashed_password:
+        error("Inactive user")
         # TODO: Do not save the password!!
         set_password(login, password)
         return False
-    hashed_password = users[login]
     if not verify_password(password, hashed_password):
         error("Bad password")
         return False
     error("ok")
-    # TODO: rethink what to return
     return user
 
-def token_data_for_user(info):
-    return ns(info, sub=info.nif, username=info.nif)
-
-def dummy_user_info(login):
+def dummy_user_info(login: str)->TokenUser:
     """
-    >>> print(dummy_user_info(login='12345678Z').dump())
+    This token emulates a erp query on user info for a given username/login.
+
+    When username is a NIF, uses it to fill then email and fills a fake name.
+
+    >>> def p(x): print(ns(x.model_dump()).dump())
+    >>> p(dummy_user_info(login='12345678Z'))
     nif: 12345678Z
     name: Perico Palotes
     email: 12345678z@nowhere.com
@@ -65,7 +82,10 @@ def dummy_user_info(login):
     - customer
     <BLANKLINE>
 
-    >>> print(dummy_user_info(login='ahmed.jimenez@noplace.com').dump())
+    When username is an email, extracts the first part as name, and fills a
+    fake nif that depends on the email hash
+
+    >>> p(dummy_user_info(login='ahmed.jimenez@noplace.com'))
     nif: 23435017Z
     name: Ahmed Jimenez
     email: ahmed.jimenez@noplace.com
@@ -73,16 +93,18 @@ def dummy_user_info(login):
     - customer
     <BLANKLINE>
 
-    >>> print(dummy_user_info(login='Sira Ruiz').dump())
+    When username is neither a NIF nor an email, considers it a erp username.
+    builds an email out of it, a nif from the hash, and assigns 'staff' role.
+
+    >>> p(dummy_user_info(login='Sira Ruiz'))
     nif: 75881875Z
     name: Sira Ruiz
-    email: sira.ruiz@nowhere.com
+    email: sira.ruiz@somenergia.coop
     roles:
     - staff
     <BLANKLINE>
 
     """
-    import hashlib
 
     nif = None
     roles=['customer']
@@ -90,7 +112,8 @@ def dummy_user_info(login):
         email = login
         name = " ".join(
             token.title()
-            for token in login.split('@')[0]
+            for token in login
+                .split('@')[0]
                 .replace('.', ' ')
                 .replace('_', ' ')
                 .replace('-', ' ')
@@ -99,17 +122,21 @@ def dummy_user_info(login):
     else:
         email = '.'.join(
             login.replace('.,', ' ').split()
-        ).lower()+'@nowhere.com'
+        ).lower()
         if login[1:5].isdigit():
             name = "Perico Palotes"
             nif = login
+            email += '@nowhere.com'
         else:
             name = login
-            roles=['staff']
+            email += '@somenergia.coop'
 
+    if email.endswith('@somenergia.coop'):
+        roles=['staff']
+    import hashlib
     digest=hashlib.sha1(login.encode('utf8')).digest()
     nif = nif or (''.join(str(c)[-1] for c in digest)[-8:]+"Z")
-    return ns(
+    return TokenUser(
         nif = nif,
         name = name,
         email = email,
@@ -153,8 +180,7 @@ def setup_authlocal(app):
             error(f"user {user}")
             if not user:
                 raise auth_error("Incorrect username or password")
-            token_data = token_data_for_user(user)
-            access_token = create_access_token(token_data)
+            access_token = create_access_token(user.data())
 
             response = JSONResponse(dict(
                 access_token= access_token,
