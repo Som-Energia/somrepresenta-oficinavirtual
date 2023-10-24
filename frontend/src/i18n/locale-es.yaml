@@ -21,8 +21,9 @@ APP_FRAME:
   PRIVACY_POLICY: POLÍTICA DE PRIVACIDAD
   PRIVACY_POLICY_URL: https://www.somenergia.coop/es/politica-de-privacidad/
   LOGIN_DIALOG_TITLE: Identificate
-  LABEL_USERNAME: Usuario
-  LABEL_PASSWORD: Contraseña
+  USERNAME_LABEL: Usuario
+  USERNAME_HELP: Usa el NIF o el correo electrònico
+  PASSWORD_LABEL: Contraseña
   SUBMIT_BUTTON_LOGIN: Valida
   SUBMIT_BUTTON_PROCESSING: Validando...
 PROFILE:

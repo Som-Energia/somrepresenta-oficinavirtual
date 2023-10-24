@@ -50,24 +50,24 @@ function AuthProviderDialog(params) {
           <Stack spacing={3}>
             <TextField
               name="user"
-              label={t('APP_FRAME.LABEL_USERNAME')}
+              label={t('APP_FRAME.USERNAME_LABEL')}
               value={username}
               onChange={(ev) => setUsername(ev.target.value)}
-              helperText="lala"
+              helperText={t('APP_FRAME.USERNAME_HELP')}
             />
             <TextField
               name="password"
-              label={t('APP_FRAME.LABEL_PASSWORD')}
+              label={t('APP_FRAME.PASSWORD_LABEL')}
               type="password"
               value={password}
               onChange={(ev) => setPassword(ev.target.value)}
             />
+            <Box color="error.main">{error}</Box>
             <Button disabled={isLoading || !username || !password} type="submit">
               {isLoading
                 ? t('APP_FRAME.SUBMIT_BUTTON_PROCESSING')
                 : t('APP_FRAME.SUBMIT_BUTTON_LOGIN')}
             </Button>
-            <Box color="error.main">{error}</Box>
           </Stack>
         </form>
       </DialogContent>
