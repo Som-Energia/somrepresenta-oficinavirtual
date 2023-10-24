@@ -20,6 +20,11 @@ APP_FRAME:
   DISCLAIMER_URL: https://www.somenergia.coop/es/aviso-legal/
   PRIVACY_POLICY: POLÍTICA DE PRIVACIDAD
   PRIVACY_POLICY_URL: https://www.somenergia.coop/es/politica-de-privacidad/
+  LOGIN_DIALOG_TITLE: Identificate
+  LABEL_USERNAME: Usuario
+  LABEL_PASSWORD: Contraseña
+  SUBMIT_BUTTON_LOGIN: Valida
+  SUBMIT_BUTTON_PROCESSING: Validando...
 PROFILE:
   NAME: Nombre
   VAT: NIF
@@ -32,4 +37,3 @@ PROFILE:
   PHONE: Teléfono
   PROXY_NAME: Nombre representante
   PROXY_VAT: NIF representante
-

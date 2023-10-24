@@ -29,6 +29,8 @@ setup(
         'pytest-cov',
         'httpx',
         'yamlns',
+        'passlib', # local auth
+        'python-multipart', # local auth
     ],
     classifiers = [
         'Programming Language :: Python',

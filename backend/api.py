@@ -4,6 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from . import __version__ as version
 from .auth import setup_auth, validated_user
+from .authlocal import setup_authlocal
 
 load_dotenv()
 app = FastAPI()
@@ -28,9 +29,10 @@ def apiVersion():
 
 @app.get('/api/me')
 def apiMe(user: dict = Depends(validated_user)):
+    print(user)
     return dict(
         user,
-        avatar = user['picture'],
+        avatar = user.get('picture', 'logo.svg'),
         roles=['customer'],
         nif = '12345678X',
         address = 'Rue del Percebe, 13',
@@ -43,4 +45,5 @@ def apiMe(user: dict = Depends(validated_user)):
     )
 
 setup_auth(app)
+setup_authlocal(app)
 

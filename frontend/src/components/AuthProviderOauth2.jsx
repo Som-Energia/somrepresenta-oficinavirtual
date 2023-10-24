@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Avatar from '@mui/material/Avatar'
@@ -10,6 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from '../hooks/LocalStorage'
 import { useDialog } from './DialogProvider'
+import ov from '../services/ovapi'
 import authProviders from '../data/authproviders.yaml'
 
 const noFunction = () => undefined
@@ -63,7 +65,7 @@ function AuthProvider({ children }) {
       children: (
         <AuthProviderDialog
           onSelected={(provider) => {
-            window.location = `/oauth2/${provider.id}/authorize`
+            ov.externalLogin(provider.id)
           }}
         />
       ),
@@ -72,7 +74,7 @@ function AuthProvider({ children }) {
 
   const logout = React.useCallback(() => {
     setCurrentUser(null)
-    window.location = `/oauth2/logout`
+    ov.logout()
   }, [])
 
   function error(message) {
@@ -81,17 +83,7 @@ function AuthProvider({ children }) {
   }
 
   React.useEffect(() => {
-    const fetchCurrentUser = async () => {
-      const response = await fetch('/api/me')
-      if (response.ok === false) {
-        const error = await response.json()
-        console.error('Login status:', error.detail)
-        return null
-      }
-      const user = await response.json()
-      return user
-    }
-    fetchCurrentUser().then((user) => setCurrentUser(user))
+    ov.currentUser().then((user) => setCurrentUser(user))
   }, [])
 
   return (

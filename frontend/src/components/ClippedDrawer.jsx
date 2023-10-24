@@ -31,7 +31,6 @@ export default function ClippedDrawer({ sx, items }) {
           {items.map((page, i) => (
             <ListItemButton
               key={i + ''}
-              disablePadding
               onClick={() => {
                 navigate(page.path)
               }}
