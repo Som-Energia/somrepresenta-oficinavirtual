@@ -30,10 +30,6 @@ def set_password(user, password):
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-def show_password(password):
-    hashed = get_password_hash(password)
-    error(f'the hashed password is {hashed}')
-
 def authenticate_user(username: str, password: str):
     users = load_passwords()
     # TODO: Use the erp
@@ -51,8 +47,6 @@ def authenticate_user(username: str, password: str):
     hashed_password = users[login]
     if not verify_password(password, hashed_password):
         error("Bad password")
-        # TODO: Remove this trace
-        show_password(password)
         return False
     error("ok")
     # TODO: rethink what to return
