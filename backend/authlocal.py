@@ -33,17 +33,22 @@ def verify_password(plain_password, hashed_password):
 def show_password(password):
     hashed = get_password_hash(password)
     error(f'the hashed password is {hashed}')
-    
 
 def authenticate_user(username: str, password: str):
     users = load_passwords()
-    error(f"username {username}")
-    if username not in users:
+    # TODO: Use the erp
+    user = dummy_user_info(username)
+    if not user:
+        error("User not found")
+        return False
+    login = user.nif
+    error(f"username {username} - {login}")
+    if login not in users:
         error("Bad user")
         # TODO: Do not save the password!!
-        set_password(username, password)
+        set_password(login, password)
         return False
-    hashed_password = users[username]
+    hashed_password = users[login]
     if not verify_password(password, hashed_password):
         error("Bad password")
         # TODO: Remove this trace
@@ -51,9 +56,70 @@ def authenticate_user(username: str, password: str):
         return False
     error("ok")
     # TODO: rethink what to return
+    return user
+
+def token_data_for_user(info):
+    return ns(info, sub=info.nif, username=info.nif)
+
+def dummy_user_info(login):
+    """
+    >>> print(dummy_user_info(login='12345678Z').dump())
+    nif: 12345678Z
+    name: Perico Palotes
+    email: 12345678z@nowhere.com
+    roles:
+    - customer
+    <BLANKLINE>
+
+    >>> print(dummy_user_info(login='ahmed.jimenez@noplace.com').dump())
+    nif: 23435017Z
+    name: Ahmed Jimenez
+    email: ahmed.jimenez@noplace.com
+    roles:
+    - customer
+    <BLANKLINE>
+
+    >>> print(dummy_user_info(login='Sira Ruiz').dump())
+    nif: 75881875Z
+    name: Sira Ruiz
+    email: sira.ruiz@nowhere.com
+    roles:
+    - staff
+    <BLANKLINE>
+
+    """
+    import hashlib
+
+    nif = None
+    roles=['customer']
+    if '@' in login:
+        email = login
+        name = " ".join(
+            token.title()
+            for token in login.split('@')[0]
+                .replace('.', ' ')
+                .replace('_', ' ')
+                .replace('-', ' ')
+                .split()
+        )
+    else:
+        email = '.'.join(
+            login.replace('.,', ' ').split()
+        ).lower()+'@nowhere.com'
+        if login[1:5].isdigit():
+            name = "Perico Palotes"
+            nif = login
+        else:
+            name = login
+            roles=['staff']
+
+    digest=hashlib.sha1(login.encode('utf8')).digest()
+    nif = nif or (''.join(str(c)[-1] for c in digest)[-8:]+"Z")
     return ns(
-        username=username,
-        name=username.split('@')[0],
+        nif = nif,
+        name = name,
+        email = email,
+        roles = roles,
     )
 
 def create_access_token(data: dict):
@@ -85,15 +151,11 @@ def setup_authlocal(app):
     ):
         try:
             user = authenticate_user(form_data.username, form_data.password)
-            error(f"user {user.dump()}")
+            error(f"user {user}")
             if not user:
                 raise auth_error("Incorrect username or password")
-            access_token = create_access_token(
-                data=dict(
-                    user,
-                    sub = user.username,
-                ),
-            )
+            token_data = token_data_for_user(user)
+            access_token = create_access_token(token_data)
 
             response = JSONResponse(dict(
                 access_token= access_token,

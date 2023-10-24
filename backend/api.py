@@ -29,11 +29,9 @@ def apiVersion():
 
 @app.get('/api/me')
 def apiMe(user: dict = Depends(validated_user)):
-    print(user)
-    return dict(
-        user,
-        avatar = user.get('picture', 'logo.svg'),
-        roles=['customer'],
+    # TODO: Either query ERP or have a rich jwt and take data from it
+    default = dict(
+        avatar = user.get('picture', None),
         nif = '12345678X',
         address = 'Rue del Percebe, 13',
         city = 'Salt',
@@ -42,7 +40,9 @@ def apiMe(user: dict = Depends(validated_user)):
         phone = '555444333',
         proxy_name = 'Matute Gonzalez, Frasco',
         proxy_nif = '987654321X',
+        roles = ['customer'],
     )
+    return dict(default, **user)
 
 setup_auth(app)
 setup_authlocal(app)
