@@ -33,7 +33,7 @@ def verify_password(plain_password, hashed_password):
 def authenticate_user(username: str, password: str):
     users = load_passwords()
     # TODO: Use the erp
-    user = dummy_user_info(username)
+    user = user_info(username)
     if not user:
         error("User not found")
         return False
@@ -115,6 +115,11 @@ def dummy_user_info(login):
         email = email,
         roles = roles,
     )
+
+user_info = dict(
+    dummy = dummy_user_info,
+)[os.environ.get("USER_INFO_BACKEND", "dummy")]
+
 
 def create_access_token(data: dict):
     import datetime
