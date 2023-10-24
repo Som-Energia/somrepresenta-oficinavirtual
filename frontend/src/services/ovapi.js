@@ -2,7 +2,7 @@ import axios from 'axios'
 
 async function logout() {
   axios
-    .post('/api/auth/logout', {
+    .get('/api/auth/logout', {
       headers: {
         Accept: 'application/json',
         ContentType: 'multipart/form-data',

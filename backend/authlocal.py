@@ -163,7 +163,7 @@ def create_access_token(data: dict):
 def setup_authlocal(app):
     'Setups the local auth in the application'
 
-    @app.post("/api/auth/logout", response_model=dict)
+    @app.get("/api/auth/logout", response_model=dict)
     async def logout():
         response = JSONResponse(dict(
             result='ok',
