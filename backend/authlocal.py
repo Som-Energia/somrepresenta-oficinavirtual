@@ -1,4 +1,3 @@
-from yamlns import ns
 from pathlib import Path
 from typing import Annotated
 from passlib.context import CryptContext
@@ -9,20 +8,8 @@ from jose import JWTError, jwt
 from .auth import auth_error, validated_user, JWT_ALGORITHM
 from consolemsg import error
 import os
-from pydantic import BaseModel
-
-class TokenUser(BaseModel):
-    nif: str
-    name: str
-    email: str
-    roles: list[str]
-
-    def data(self):
-        return ns(
-            self,
-            sub=self.nif,
-            username=self.nif,
-        )
+from yamlns import ns
+from .models import TokenUser
 
 passwords_file = Path('passwords.yaml')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -196,7 +183,7 @@ def setup_authlocal(app):
                 httponly=True,
             )
         except Exception as e:
-            error(f"While autenticating: {e}")
+            error(f"While autenticating: {type(e)} {e}")
             raise
         return response
 
