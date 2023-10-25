@@ -8,11 +8,13 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
+import Alert from '@mui/material/Alert'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from '../hooks/LocalStorage'
 import { useDialog } from './DialogProvider'
 import authProviders from '../data/authproviders.yaml'
 import ov from '../services/ovapi'
+import wait from '../services/wait'
 
 const noFunction = () => undefined
 
@@ -102,7 +104,7 @@ function ChangePasswordDialog(params) {
       const result = await ov.localChangePassword(currentPassword, newPassword)
       beLoading(false)
       beSuccess(true)
-      closeDialog()
+      wait(1000).then(() => closeDialog())
     } catch (error) {
       setError(t('CHANGE_PASSWORD.CURRENT_PASSWORD_MISSMATCH_ERROR'))
       beLoading(false)
@@ -167,30 +169,36 @@ function ChangePasswordDialog(params) {
               }
             />
             <DialogActions sx={{ display: 'flex', justifyContent: 'right', gap: 2 }}>
-              <Button onClick={closeDialog}>Cancel</Button>
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={
-                  // sending or done
-                  isLoading ||
-                  isSuccess ||
-                  // Any field empty
-                  !currentPassword ||
-                  !newPassword ||
-                  !checkPassword ||
-                  // Any field in error
-                  !!error ||
-                  !!newPasswordError ||
-                  !!checkPasswordError
-                }
-              >
-                {isLoading
-                  ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
-                  : isSuccess
-                  ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')
-                  : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
-              </Button>
+              {isSuccess ? (
+                <Alert severity="success">
+                  {t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')}
+                </Alert>
+              ) : (
+                <>
+                  <Button onClick={closeDialog}>Cancel</Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={
+                      // sending or done
+                      isLoading ||
+                      isSuccess ||
+                      // Any field empty
+                      !currentPassword ||
+                      !newPassword ||
+                      !checkPassword ||
+                      // Any field in error
+                      !!error ||
+                      !!newPasswordError ||
+                      !!checkPasswordError
+                    }
+                  >
+                    {isLoading
+                      ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
+                      : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
+                  </Button>
+                </>
+              )}
             </DialogActions>
           </Stack>
         </form>
