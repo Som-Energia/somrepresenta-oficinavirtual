@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from yamlns import ns
 import os
 from somutils.testutils import sandbox_dir, enterContext
+import unittest.mock
 from .authlocal import setup_authlocal
 
 class AuthLocal_Test(unittest.TestCase):
@@ -108,5 +109,68 @@ class AuthLocal_Test(unittest.TestCase):
             detail: Not authenticated
         """, 403)
 
+    def test_login__proper(self):
+        r = self.provisioning_query(username='12345678Z', password='apassword')
+        self.assertResponseEqual(r, "result: ok")
+
+        r = self.client.post(
+            '/api/auth/token',
+            data=dict(
+                username='12345678Z',
+                password='apassword',
+            ),
+        )
+        token = r.json().get('access_token', "NOT_FOUND")
+        self.assertResponseEqual(r, f"""\
+            access_token: {token}
+            token_type: bearer
+            """)
+
+        self.assertEqual(
+            r.cookies.get('Authorization'),
+            f'"Bearer {token}"', # TODO: Why the quotes!???
+        )
+
+    def test_login__userNotFound(self):
+        with unittest.mock.patch('backend.authlocal.user_info') as mock:
+            mock.return_value = None
+
+            r = self.client.post(
+                '/api/auth/token',
+                data=dict(
+                    username='12345678Z',
+                    password='apassword',
+                ),
+            )
+            self.assertResponseEqual(r, f"""\
+                detail: Incorrect username
+                """, 401)
+
+    def test_login__unprovisionedUser(self):
+        r = self.client.post(
+            '/api/auth/token',
+            data=dict(
+                username='12345678Z',
+                password='apassword',
+            ),
+        )
+        self.assertResponseEqual(r, f"""\
+            detail: Incorrect password
+            """, 401)
+
+    def test_login__wrongPassword(self):
+        r = self.provisioning_query(username='12345678Z', password='apassword')
+        self.assertResponseEqual(r, "result: ok")
+
+        r = self.client.post(
+            '/api/auth/token',
+            data=dict(
+                username='12345678Z',
+                password='WRONG PASSWORD',
+            ),
+        )
+        self.assertResponseEqual(r, f"""\
+            detail: Incorrect password
+            """, 401)
 
 

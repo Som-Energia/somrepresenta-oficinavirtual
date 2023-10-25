@@ -210,7 +210,7 @@ def setup_authlocal(app):
 
 
     @app.post('/api/auth/provisioning')
-    def local_auth_admin_provisioning(
+    def local_auth_provision_user(
         username: Annotated[str, Body()],
         password: Annotated[str, Body()],
         key: str = Depends(provisioning_apikey)
