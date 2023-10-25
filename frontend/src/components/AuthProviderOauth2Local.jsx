@@ -123,6 +123,7 @@ function ChangePasswordDialog(params) {
       : checkPassword !== newPassword
       ? t('CHANGE_PASSWORD.NEW_PASSWORD_MISSMATCH_ERROR')
       : undefined
+
   return (
     <>
       <DialogTitle>{t('CHANGE_PASSWORD.CHANGE_PASSWORD_DIALOG_TITLE')}</DialogTitle>
@@ -138,7 +139,7 @@ function ChangePasswordDialog(params) {
                 setCurrentPassword(ev.target.value)
                 setError(undefined)
               }}
-              error={error}
+              error={!!error}
               helperText={error || ' '}
             />
             <TextField
@@ -171,8 +172,9 @@ function ChangePasswordDialog(params) {
                 type="submit"
                 variant="contained"
                 disabled={
-                  // sending
+                  // sending or done
                   isLoading ||
+                  isSuccess ||
                   // Any field empty
                   !currentPassword ||
                   !newPassword ||
@@ -185,6 +187,8 @@ function ChangePasswordDialog(params) {
               >
                 {isLoading
                   ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
+                  : isSuccess
+                  ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')
                   : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
               </Button>
             </DialogActions>
