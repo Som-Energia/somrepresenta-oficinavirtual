@@ -35,24 +35,18 @@ def set_password(username, password):
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-def authenticate_user(username: str, password: str) -> TokenUser|bool:
-    # TODO: Use the erp
-    user = user_info(username)
-    if not user:
-        error("User not found")
-        return False
-    login = user.nif
+def authenticate_user(login: str, password: str) -> bool:
     hashed_password = get_hashed_password(login)
     if not hashed_password:
         error("Inactive user")
         # TODO: Do not save the password!!
-        set_password(login, password)
+        #set_password(login, password)
         return False
     if not verify_password(password, hashed_password):
         error("Bad password")
         return False
     error("ok")
-    return user
+    return True
 
 def dummy_user_info(login: str)->TokenUser:
     """
@@ -163,10 +157,15 @@ def setup_authlocal(app):
         form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
     ):
         try:
-            user = authenticate_user(form_data.username, form_data.password)
-            error(f"user {user}")
+            # TODO: Use the erp
+            user = user_info(form_data.username)
             if not user:
-                raise auth_error("Incorrect username or password")
+                raise auth_error("Incorrect username")
+
+            auth_ok = authenticate_user(user.nif, form_data.password)
+            error(f"user {user}")
+            if not auth_ok:
+                raise auth_error("Incorrect password")
             access_token = create_access_token(user.data())
 
             response = JSONResponse(dict(
@@ -186,5 +185,17 @@ def setup_authlocal(app):
             error(f"While autenticating: {type(e)} {e}")
             raise
         return response
+
+    @app.get('/api/auth/change_password')
+    def local_auth_change_password(current_password: str, new_password: str, user: TokenUser = Depends(validated_user)):
+        "Change the password for the Local Authentication"
+        auth_ok = authenticate_user(user.nif, current_password)
+        if not auth_ok:
+            raise auth_error("Incorrect password")
+        set_password(user.nif, new_password)
+        return dict(
+            result = 'ok',
+        )
+
 
 

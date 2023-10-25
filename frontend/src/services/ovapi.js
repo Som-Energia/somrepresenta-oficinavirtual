@@ -63,9 +63,34 @@ async function externalLogin(providerId) {
   }, 1)
 }
 
+async function localChangePassword(currentPassword, newPassword) {
+  return axios
+    .post(
+      '/api/auth/change_password',
+      {
+        current_password: currentPassword,
+        new_password: newPassword,
+      },
+      {
+        headers: {
+          Accept: 'application/json',
+        },
+      },
+    )
+    .then((response) => {
+      console.log(response)
+      return response
+    })
+    .catch((error) => {
+      console.log({ error })
+      throw error
+    })
+}
+
 export default {
   logout,
   localLogin,
   externalLogin,
+  localChangePassword,
   currentUser,
 }
