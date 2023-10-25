@@ -4,6 +4,7 @@ import Container from '@mui/material/Container'
 import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../components/AuthProvider'
 import PageGuard from '../components/PageGuard'
@@ -68,6 +69,9 @@ export default function ProfilePage(params) {
   console.log('Guarding for', currentUser)
   return (
     <Container>
+      <Typography variant="h3" sx={{ mb: 3 }}>
+        {t('PROFILE.PROFILE_TITLE')}
+      </Typography>
       <Box
         style={{
           display: 'grid',

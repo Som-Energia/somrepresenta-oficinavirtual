@@ -42,6 +42,7 @@ CHANGE_PASSWORD:
   CURRENT_PASSWORD_MISSMATCH_ERROR: La contraseña actual no es la correcta
   PASSWORD_CHANGE_SUCCESSFUL: La contraseña se ha cambiado correctamente
 PROFILE:
+  PROFILE_TITLE: Perfil de usuario
   NAME: Nombre
   VAT: NIF
   ROLES: Roles
