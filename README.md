@@ -12,10 +12,19 @@ Virtual office of somenergia's representation service
 
 Early versions could work but not tested.
 
+If you system default Python do not meet python requirements,
+the recommended path is to use pyenv to install the required version
+and activate it local in the project directory before installing dependencies.
+
+```bash
+pyenv install 3.11
+pyenv local 3.11
+```
+
 ### Dependencies
 
 ```bash
-make deps # Install dependencies
+make deps # Installs dependencies (for python creates the virtual environment if missing)
 ```
 
 ### Tests
@@ -25,6 +34,23 @@ make tests # Pass ui and api tests
 ```
 
 ### Configuration
+
+```bash
+# .env
+OAUTH2_GOOGLE_CLIENT_ID='alongkeyfromgoogle.apps.googleusercontent.com'
+OAUTH2_GOOGLE_CLIENT_SECRET='anotherlongkeyfromgoogle'
+SESSION_SECRET='randomgeneratethisone'
+JWT_SECRET='alsorandomgeneratethisotherone'
+JWT_EXPIRES=86400 # one day in seconcs 60*60*12
+```
+
+```bash
+# frontend/.env.local
+# Overrides for you development setup the defaults in frontend/.env
+VITE_AUTH_BACKEND=Oauth2 # Delegate auth to an external AuthServer (Google, Keycloak...)
+#VITE_AUTH_BACKEND=Oauth2Local # First party login
+#VITE_AUTH_BACKEND=Dummy # Emulate login with a closed list of users in frontend/src/data/dummyusers.yaml (api calls won't work)
+```
 
 ### Application startup
 
