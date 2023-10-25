@@ -35,17 +35,36 @@ make tests # Pass ui and api tests
 
 ### Configuration
 
+Backend Config:
+
 ```bash
 # .env
+
+# You get the next two when you create you client app on google console
+# https://console.cloud.google.com/apis/credentials
+# Be aware that you need to specify properly any redirect targeta
 OAUTH2_GOOGLE_CLIENT_ID='alongkeyfromgoogle.apps.googleusercontent.com'
 OAUTH2_GOOGLE_CLIENT_SECRET='anotherlongkeyfromgoogle'
+
+# Used to encrypt sessions (not used yet)
 SESSION_SECRET='randomgeneratethisone'
+
+# Used to encrypt session jwt tokens
 JWT_SECRET='alsorandomgeneratethisotherone'
-JWT_EXPIRES=86400 # one day in seconcs 60*60*12
+
+# Time to live for the JWT session in seconds
+JWT_EXPIRES=86400 # one day in seconds 60*60*12
+
+# Key to be used in the x-key header to provision users
+# For security you can remove it when not provisioning users
+ERP_PROVISIONING_APIKEY="averylongrandomlygeneratedkey"
 ```
+
+Frontend Config:
 
 ```bash
 # frontend/.env.local
+
 # Overrides for you development setup the defaults in frontend/.env
 VITE_AUTH_BACKEND=Oauth2 # Delegate auth to an external AuthServer (Google, Keycloak...)
 #VITE_AUTH_BACKEND=Oauth2Local # First party login

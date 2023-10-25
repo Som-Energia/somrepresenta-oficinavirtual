@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Annotated
 from passlib.context import CryptContext
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, APIKeyHeader
 from fastapi.responses import JSONResponse
-from fastapi import Depends
+from fastapi import Depends, Body
 from jose import JWTError, jwt
 from .auth import auth_error, validated_user, JWT_ALGORITHM
 from consolemsg import error
@@ -163,7 +163,6 @@ def setup_authlocal(app):
                 raise auth_error("Incorrect username")
 
             auth_ok = authenticate_user(user.nif, form_data.password)
-            error(f"user {user}")
             if not auth_ok:
                 raise auth_error("Incorrect password")
             access_token = create_access_token(user.data())
@@ -193,6 +192,26 @@ def setup_authlocal(app):
         if not auth_ok:
             raise auth_error("Incorrect password")
         set_password(user.nif, new_password)
+        return dict(
+            result = 'ok',
+        )
+
+    apikey_on_header = APIKeyHeader(name="x-api-key")
+    def provisioning_apikey(key: str = Depends(apikey_on_header)):
+        """Ensures that the query comes from ERP"""
+        expected = os.environ.get('ERP_PROVISIONING_APIKEY')
+        if not expected: raise auth_error("Disabled key")
+        if key != expected: raise auth_error("Invalid key")
+
+
+    @app.post('/api/auth/provisioning')
+    def local_auth_admin_provisioning(
+        username: Annotated[str, Body()],
+        password: Annotated[str, Body()],
+        key: str = Depends(provisioning_apikey)
+    ):
+        """Administrative password set for the Local Authentication"""
+        set_password(username, password)
         return dict(
             result = 'ok',
         )
