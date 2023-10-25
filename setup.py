@@ -21,6 +21,7 @@ setup(
         'scripts/representa_api.py',
     ],
     install_requires=[
+        'somutils',
         'fastapi',
         'fastapi-oauth2',
         'uvicorn[standard]',
@@ -31,6 +32,8 @@ setup(
         'yamlns',
         'passlib', # local auth
         'python-multipart', # local auth
+        'authlib', # remote auth
+        'itsdangerous', # remote auth (via SessionMiddleware)
     ],
     classifiers = [
         'Programming Language :: Python',
