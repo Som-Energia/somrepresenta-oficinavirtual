@@ -1,7 +1,7 @@
 import React from 'react'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import DialogActions from '@mui/material/DialogTitle'
+import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
@@ -9,6 +9,10 @@ import Alert from '@mui/material/Alert'
 import { useTranslation } from 'react-i18next'
 import ov from '../services/ovapi'
 import wait from '../services/wait'
+
+// TODO: Let the user inject the specific function
+// to actually perform the action and thus removing the
+// dependency on ov
 
 function ChangePasswordDialog(params) {
   const { closeDialog } = params
@@ -93,13 +97,12 @@ function ChangePasswordDialog(params) {
                 checkPasswordError || ' ' // To avoid relayout when no error
               }
             />
-            <DialogActions sx={{ display: 'flex', justifyContent: 'right', gap: 2 }}>
               {isSuccess ? (
                 <Alert severity="success">
                   {t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')}
                 </Alert>
               ) : (
-                <>
+            <DialogActions>
                   <Button onClick={closeDialog}>Cancel</Button>
                   <Button
                     type="submit"
@@ -122,9 +125,8 @@ function ChangePasswordDialog(params) {
                       ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
                       : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
                   </Button>
-                </>
-              )}
             </DialogActions>
+              )}
           </Stack>
         </form>
       </DialogContent>
