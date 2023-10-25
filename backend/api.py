@@ -29,7 +29,7 @@ def apiVersion():
     )
 
 @app.get('/api/me')
-def apiMe(user: TokenUser = Depends(validated_user)) -> UserProfile:
+def apiMe(user: dict = Depends(validated_user)) -> UserProfile:
     # TODO: Either query ERP or have a rich jwt and take data from it
     default = dict(
         avatar = user.get('picture', None),

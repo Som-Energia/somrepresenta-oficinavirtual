@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
+import DialogActions from '@mui/material/DialogTitle'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -44,30 +45,37 @@ function AuthProviderDialog(params) {
   }
   return (
     <>
-      <DialogContent>
-        <DialogTitle>{t('APP_FRAME.LOGIN_DIALOG_TITLE')}</DialogTitle>
+      <DialogTitle>{t('LOGIN.LOGIN_DIALOG_TITLE')}</DialogTitle>
+      <DialogContent sx={{ minWidth: '20rem' }}>
         <form onSubmit={handleSubmit} method="post">
-          <Stack spacing={3}>
+          <Stack spacing={2} sx={{ pt: 1 }}>
             <TextField
               name="user"
-              label={t('APP_FRAME.USERNAME_LABEL')}
+              label={t('LOGIN.USERNAME_LABEL')}
               value={username}
               onChange={(ev) => setUsername(ev.target.value)}
-              helperText={t('APP_FRAME.USERNAME_HELP')}
+              helperText={t('LOGIN.USERNAME_HELP')}
             />
             <TextField
               name="password"
-              label={t('APP_FRAME.PASSWORD_LABEL')}
+              label={t('LOGIN.PASSWORD_LABEL')}
               type="password"
               value={password}
               onChange={(ev) => setPassword(ev.target.value)}
             />
             <Box color="error.main">{error}</Box>
-            <Button disabled={isLoading || !username || !password} type="submit">
-              {isLoading
-                ? t('APP_FRAME.SUBMIT_BUTTON_PROCESSING')
-                : t('APP_FRAME.SUBMIT_BUTTON_LOGIN')}
-            </Button>
+            <DialogActions sx={{ display: 'flex', justifyContent: 'right', gap: 2 }}>
+              <Button onClick={closeDialog}>Cancel</Button>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={isLoading || !username || !password}
+              >
+                {isLoading
+                  ? t('LOGIN.SUBMIT_BUTTON_PROCESSING')
+                  : t('LOGIN.SUBMIT_BUTTON_LOGIN')}
+              </Button>
+            </DialogActions>
           </Stack>
         </form>
       </DialogContent>
@@ -76,59 +84,110 @@ function AuthProviderDialog(params) {
 }
 
 function ChangePasswordDialog(params) {
-  const { closeDialog, username } = params
+  const { closeDialog } = params
   const [currentPassword, setCurrentPassword] = React.useState('')
   const [newPassword, setNewPassword] = React.useState('')
   const [checkPassword, setCheckPassword] = React.useState('')
   const [error, setError] = React.useState()
   const [isLoading, beLoading] = React.useState(false)
+  const [isSuccess, beSuccess] = React.useState(false)
   const { t, i18n } = useTranslation()
+
   async function handleSubmit(ev) {
     ev.preventDefault()
+    setError(undefined)
+    beLoading(true)
+    beSuccess(false)
+    try {
+      const result = await ov.localChangePassword(currentPassword, newPassword)
+      beLoading(false)
+      beSuccess(true)
+      closeDialog()
+    } catch (error) {
+      setError(t('CHANGE_PASSWORD.CURRENT_PASSWORD_MISSMATCH_ERROR'))
+      beLoading(false)
+    }
   }
+  const newPasswordError =
+    newPassword === ''
+      ? undefined
+      : newPassword.length < 8
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_TOO_SHORT_ERROR')
+      : newPassword === currentPassword
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_SAME_AS_CURRENT_ERROR')
+      : undefined
 
+  const checkPasswordError =
+    checkPassword === ''
+      ? undefined
+      : checkPassword !== newPassword
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MISSMATCH_ERROR')
+      : undefined
   return (
     <>
-      <DialogContent>
-        <DialogTitle>{t('APP_FRAME.CHANGE_PASSWORD_DIALOG_TITLE')}</DialogTitle>
+      <DialogTitle>{t('CHANGE_PASSWORD.CHANGE_PASSWORD_DIALOG_TITLE')}</DialogTitle>
+      <DialogContent sx={{ minWidth: '20rem' }}>
         <form onSubmit={handleSubmit} method="post">
-          <Stack spacing={3}>
+          <Stack spacing={2} sx={{ pt: 1 }}>
             <TextField
               name="currentPassword"
-              label={t('APP_FRAME.CURRENT_PASSWORD_LABEL')}
+              label={t('CHANGE_PASSWORD.CURRENT_PASSWORD_LABEL')}
               type="password"
               value={currentPassword}
-              onChange={(ev) => setCurrentPassword(ev.target.value)}
+              onChange={(ev) => {
+                setCurrentPassword(ev.target.value)
+                setError(undefined)
+              }}
+              error={error}
+              helperText={error || ' '}
             />
             <TextField
               name="newPassword"
-              label={t('APP_FRAME.NEW_PASSWORD_LABEL')}
+              label={t('CHANGE_PASSWORD.NEW_PASSWORD_LABEL')}
               type="password"
               value={newPassword}
-              onChange={(ev) => setNewPassword(ev.target.value)}
+              onChange={(ev) => {
+                setNewPassword(ev.target.value)
+              }}
+              error={!!newPasswordError}
+              helperText={
+                newPasswordError || ' ' // To avoid relayout when no error
+              }
             />
             <TextField
               name="checkPassword"
-              label={t('APP_FRAME.CHECK_PASSWORD_LABEL')}
+              label={t('CHANGE_PASSWORD.CHECK_PASSWORD_LABEL')}
               type="password"
               value={checkPassword}
               onChange={(ev) => setCheckPassword(ev.target.value)}
               error={checkPassword !== '' && checkPassword !== newPassword}
               helperText={
-                checkPassword !== '' && checkPassword !== newPassword
-                  ? t('APP_FRAME.NEW_PASSWORD_MISSMATCH_ERROR')
-                  : ' ' // To avoid relayout when no error
+                checkPasswordError || ' ' // To avoid relayout when no error
               }
             />
-            <Box color="error.main">{error}</Box>
-            <Button
-              disabled={isLoading || !currentPassword || !newPassword || !checkPassword}
-              type="submit"
-            >
-              {isLoading
-                ? t('APP_FRAME.SUBMIT_BUTTON_PROCESSING')
-                : t('APP_FRAME.SUBMIT_BUTTON_CHANGE_PASSWORD')}
-            </Button>
+            <DialogActions sx={{ display: 'flex', justifyContent: 'right', gap: 2 }}>
+              <Button onClick={closeDialog}>Cancel</Button>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={
+                  // sending
+                  isLoading ||
+                  // Any field empty
+                  !currentPassword ||
+                  !newPassword ||
+                  !checkPassword ||
+                  // Any field in error
+                  !!error ||
+                  !!newPasswordError ||
+                  !!checkPasswordError
+                }
+              >
+                {isLoading
+                  ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
+                  : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
+              </Button>
+            </DialogActions>
           </Stack>
         </form>
       </DialogContent>
@@ -171,7 +230,13 @@ function AuthProvider({ children }) {
 
   const changePassword = React.useCallback(() => {
     openDialog({
-      children: <ChangePasswordDialog />,
+      children: (
+        <ChangePasswordDialog
+          closeDialog={() => {
+            closeDialog()
+          }}
+        />
+      ),
     })
   }, [])
 

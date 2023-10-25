@@ -74,6 +74,7 @@ async function localChangePassword(currentPassword, newPassword) {
       {
         headers: {
           Accept: 'application/json',
+          ContentType: 'application/json',
         },
       },
     )
@@ -82,8 +83,8 @@ async function localChangePassword(currentPassword, newPassword) {
       return response
     })
     .catch((error) => {
-      console.log({ error })
-      throw error
+      console.log('Error received', error.response.data)
+      throw 'Unable to change the password'
     })
 }
 

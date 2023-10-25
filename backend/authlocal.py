@@ -185,12 +185,17 @@ def setup_authlocal(app):
             raise
         return response
 
-    @app.get('/api/auth/change_password')
-    def local_auth_change_password(current_password: str, new_password: str, user: TokenUser = Depends(validated_user)):
+    @app.post('/api/auth/change_password')
+    def local_auth_change_password(
+        current_password: Annotated[str, Body()],
+        new_password: Annotated[str, Body()],
+        user: dict = Depends(validated_user)
+    ):
+        user = TokenUser(**user)
         "Change the password for the Local Authentication"
         auth_ok = authenticate_user(user.nif, current_password)
         if not auth_ok:
-            raise auth_error("Incorrect password")
+            raise auth_error("Tio que no")
         set_password(user.nif, new_password)
         return dict(
             result = 'ok',
