@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import IconSettings from '@mui/icons-material/Settings'
+import IconKey from '@mui/icons-material/Key'
 import IconLogout from '@mui/icons-material/Logout'
 import IconLogin from '@mui/icons-material/Login'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +23,7 @@ import { useAuth } from './AuthProvider'
 
 function ProfileButton(params) {
   const { t, i18n } = useTranslation()
-  const { currentUser, login, logout } = useAuth()
+  const { currentUser, login, logout, changePassword } = useAuth()
   const navigate = useNavigate()
 
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -39,6 +40,12 @@ function ProfileButton(params) {
       onclick: () => {
         navigate('/profile')
       },
+    },
+    {
+      text: t('APP_FRAME.MENU_CHANGE_PASSWORD'),
+      icon: <IconKey />,
+      onclick: changePassword,
+      hidden: changePassword === undefined,
     },
     {
       text: t('APP_FRAME.MENU_LOGOUT'),
@@ -122,18 +129,21 @@ function ProfileButton(params) {
               {currentUser.name}
             </MenuItem>
             <Divider />
-            {menuProfile.map((option, i) => (
-              <MenuItem
-                key={i}
-                onClick={() => {
-                  handleCloseUserMenu()
-                  option.onclick && option.onclick()
-                }}
-              >
-                <ListItemIcon>{option.icon}</ListItemIcon>
-                <Typography textAlign="center">{option.text}</Typography>
-              </MenuItem>
-            ))}
+            {menuProfile.map(
+              (option, i) =>
+                !option.hidden && (
+                  <MenuItem
+                    key={i}
+                    onClick={() => {
+                      handleCloseUserMenu()
+                      option.onclick && option.onclick()
+                    }}
+                  >
+                    <ListItemIcon>{option.icon}</ListItemIcon>
+                    <Typography textAlign="center">{option.text}</Typography>
+                  </MenuItem>
+                ),
+            )}
           </Menu>
         </>
       ) : (

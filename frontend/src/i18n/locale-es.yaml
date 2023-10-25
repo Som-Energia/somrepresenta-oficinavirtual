@@ -10,6 +10,7 @@ APP_FRAME:
   NOT_YET_IMPLEMENTED: Esta página aún no está disponible
   CONTRIBUTE_TRANSLATIONS: Ayúdanos a traducir
   PROFILE_TOOLTIP: Perfil
+  MENU_CHANGE_PASSWORD: Cambia la contraseña
   MENU_PROFILE: Perfil
   MENU_LOGOUT: Salir
   LOGIN: Identificate
@@ -21,9 +22,15 @@ APP_FRAME:
   PRIVACY_POLICY: POLÍTICA DE PRIVACIDAD
   PRIVACY_POLICY_URL: https://www.somenergia.coop/es/politica-de-privacidad/
   LOGIN_DIALOG_TITLE: Identificate
+  CHANGE_PASSWORD_DIALOG_TITLE: Cambia la contraseña
   USERNAME_LABEL: Usuario
   USERNAME_HELP: Usa el NIF o el correo electrònico
   PASSWORD_LABEL: Contraseña
+  CURRENT_PASSWORD_LABEL: Contraseña actual
+  NEW_PASSWORD_LABEL: Nueva contraseña
+  CHECK_PASSWORD_LABEL: Repetir nueva contraseña
+  NEW_PASSWORD_MISSMATCH_ERROR: Las contraseñas no coinciden
+  SUBMIT_BUTTON_CHANGE_PASSWORD: Cambia
   SUBMIT_BUTTON_LOGIN: Valida
   SUBMIT_BUTTON_PROCESSING: Validando...
 PROFILE:

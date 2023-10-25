@@ -75,6 +75,67 @@ function AuthProviderDialog(params) {
   )
 }
 
+function ChangePasswordDialog(params) {
+  const { closeDialog, username } = params
+  const [currentPassword, setCurrentPassword] = React.useState('')
+  const [newPassword, setNewPassword] = React.useState('')
+  const [checkPassword, setCheckPassword] = React.useState('')
+  const [error, setError] = React.useState()
+  const [isLoading, beLoading] = React.useState(false)
+  const { t, i18n } = useTranslation()
+  async function handleSubmit(ev) {
+    ev.preventDefault()
+  }
+
+  return (
+    <>
+      <DialogContent>
+        <DialogTitle>{t('APP_FRAME.CHANGE_PASSWORD_DIALOG_TITLE')}</DialogTitle>
+        <form onSubmit={handleSubmit} method="post">
+          <Stack spacing={3}>
+            <TextField
+              name="currentPassword"
+              label={t('APP_FRAME.CURRENT_PASSWORD_LABEL')}
+              type="password"
+              value={currentPassword}
+              onChange={(ev) => setCurrentPassword(ev.target.value)}
+            />
+            <TextField
+              name="newPassword"
+              label={t('APP_FRAME.NEW_PASSWORD_LABEL')}
+              type="password"
+              value={newPassword}
+              onChange={(ev) => setNewPassword(ev.target.value)}
+            />
+            <TextField
+              name="checkPassword"
+              label={t('APP_FRAME.CHECK_PASSWORD_LABEL')}
+              type="password"
+              value={checkPassword}
+              onChange={(ev) => setCheckPassword(ev.target.value)}
+              error={checkPassword !== '' && checkPassword !== newPassword}
+              helperText={
+                checkPassword !== '' && checkPassword !== newPassword
+                  ? t('APP_FRAME.NEW_PASSWORD_MISSMATCH_ERROR')
+                  : ' ' // To avoid relayout when no error
+              }
+            />
+            <Box color="error.main">{error}</Box>
+            <Button
+              disabled={isLoading || !currentPassword || !newPassword || !checkPassword}
+              type="submit"
+            >
+              {isLoading
+                ? t('APP_FRAME.SUBMIT_BUTTON_PROCESSING')
+                : t('APP_FRAME.SUBMIT_BUTTON_CHANGE_PASSWORD')}
+            </Button>
+          </Stack>
+        </form>
+      </DialogContent>
+    </>
+  )
+}
+
 function AuthProvider({ children }) {
   const [user, setUser] = useLocalStorage('user', null)
   const [openDialog, closeDialog] = useDialog()
@@ -108,6 +169,12 @@ function AuthProvider({ children }) {
     ov.logout()
   }, [])
 
+  const changePassword = React.useCallback(() => {
+    openDialog({
+      children: <ChangePasswordDialog />,
+    })
+  }, [])
+
   function error(message) {
     console.error('Auth Error:', message)
     return null
@@ -123,6 +190,7 @@ function AuthProvider({ children }) {
         login,
         logout,
         currentUser,
+        changePassword,
       }}
     >
       {children}
