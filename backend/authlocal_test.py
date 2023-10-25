@@ -45,17 +45,30 @@ class AuthLocal_Test(unittest.TestCase):
         except:
             return ns()
 
+    def provisioning_query(
+        self,
+        username = 'myuser',
+        password = 'mypassword',
+        key = 'PROPER_KEY',
+    ):
+        query = ns.loads(f"""\
+            url: /api/auth/provisioning
+            json:
+                username: "{username}"
+                password: "{password}"
+            headers:
+                x-api-key: "{key}"
+        """)
+        if key is None: del query['headers']
+        if username is None: del query.json['username']
+        if password is None: del query.json['password']
+        return self.client.post(**query)
+
+
     def test_provisioning__proper(self):
         self.assertNotIn('myuser', self.passwords())
 
-        r = self.client.post(**ns.loads("""\
-            url: /api/auth/provisioning
-            json:
-                username: myuser
-                password: mypassword
-            headers:
-                x-api-key: PROPER_KEY
-        """))
+        r = self.provisioning_query()
         self.assertResponseEqual(r, f"""
             result: ok
         """)
@@ -63,27 +76,13 @@ class AuthLocal_Test(unittest.TestCase):
         self.assertIn('myuser', self.passwords())
 
     def test_provisioning__wrongKey(self):
-        r = self.client.post(**ns.loads("""\
-            url: /api/auth/provisioning
-            json:
-                username: myuser
-                password: mypassword
-            headers:
-                x-api-key: BAD_KEY
-        """))
+        r = self.provisioning_query(key="BAD_KEY")
         self.assertResponseEqual(r, f"""
             detail: Invalid key
         """, 401)
 
     def test_provisioning__missingParam(self):
-        r = self.client.post(**ns.loads("""\
-            url: /api/auth/provisioning
-            json:
-                # username: myuser <- This one removed
-                password: mypassword
-            headers:
-                x-api-key: PROPER_KEY
-        """))
+        r = self.provisioning_query(username=None)
         self.assertResponseEqual(r, """\
             detail:
             - input: null
@@ -98,25 +97,13 @@ class AuthLocal_Test(unittest.TestCase):
     def test_provisioning__disabledProvisioning(self):
         # This disables provisioning
         os.environ['ERP_PROVISIONING_APIKEY']=''
-        r = self.client.post(**ns.loads("""\
-            url: /api/auth/provisioning
-            json:
-                username: myuser
-                password: mypassword
-            headers:
-                x-api-key: PROPER_KEY
-        """))
+        r = self.provisioning_query()
         self.assertResponseEqual(r, f"""
             detail: Disabled key
         """, 401)
 
     def test_provisioning__withoutKey_notAuthenticated(self):
-        r = self.client.post(**ns.loads("""\
-            url: /api/auth/provisioning
-            data:
-                username: myuser
-                password: mypassword
-        """))
+        r = self.provisioning_query(key=None)
         self.assertResponseEqual(r, f"""
             detail: Not authenticated
         """, 403)
