@@ -124,6 +124,7 @@ def dummy_user_info(login: str)->TokenUser:
         roles = roles,
     )
 
+# TODO: Use the erp
 user_info = dict(
     dummy = dummy_user_info,
 )[os.environ.get("USER_INFO_BACKEND", "dummy")]
@@ -157,7 +158,6 @@ def setup_authlocal(app):
         form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
     ):
         try:
-            # TODO: Use the erp
             user = user_info(form_data.username)
             if not user:
                 raise auth_error("Incorrect username")
