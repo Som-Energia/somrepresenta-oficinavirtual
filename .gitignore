@@ -1,3 +1,6 @@
+# Application specific data files
+passwords.yaml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -260,7 +263,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-=======
 
 node_modules
 dist
