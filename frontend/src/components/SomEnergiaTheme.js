@@ -20,7 +20,7 @@ export default function SomEnergiaTheme(isDarkMode) {
         pagesubtitle: {
           fontSize: 20,
           fontWeight: 700,
-        }
+        },
       },
       palette: {
         mode: isDarkMode ? 'dark' : 'light',
@@ -44,8 +44,7 @@ export default function SomEnergiaTheme(isDarkMode) {
         },
         pagetitle: {
           main: '#444',
-        }
-
+        },
       },
     }),
   )
