@@ -42,7 +42,7 @@ export default function SomEnergiaTheme(isDarkMode) {
           main: '#e2e2e2', // From mentxu design 2023-10-26
           contrastText: 'white',
         },
-        title: {
+        pagetitle: {
           main: '#444',
         }
 
