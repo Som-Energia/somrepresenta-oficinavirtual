@@ -71,6 +71,7 @@ export default function AppFrame(props) {
               component="div"
               sx={{
                 textTransform: 'uppercase',
+                color: 'title.main'
               }}
             >{title}</Typography>
             <Typography
@@ -78,6 +79,7 @@ export default function AppFrame(props) {
               component="div"
               sx={{
                 textTransform: 'uppercase',
+                color: 'title.main'
               }}
             >
               {subtitle}
