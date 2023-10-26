@@ -12,6 +12,14 @@ export default function SomEnergiaTheme(isDarkMode) {
         homeButtons: {
           fontSize: 22,
           fontWeight: 'bold',
+        },
+        pagetitle: {
+          fontSize: 16,
+          fontWeight: 500,
+        },
+        pagesubtitle: {
+          fontSize: 16,
+          fontWeight: 700,
         }
       },
       palette: {

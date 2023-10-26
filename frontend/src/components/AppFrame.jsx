@@ -65,16 +65,24 @@ export default function AppFrame(props) {
           <img src={logo} width="32px" style={{ marginInline: '.5rem' }} />
 
           {/* App name */}
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              textTransform: 'uppercase',
-            }}
-          >
-            {title}
-          </Typography>
+          <Box sx={{ display: 'flex', flexGrow: 1, gap: '0.4rem' }}>
+            <Typography
+              variant="pagetitle"
+              component="div"
+              sx={{
+                textTransform: 'uppercase',
+              }}
+            >{title}</Typography>
+            <Typography
+              variant="pagesubtitle"
+              component="div"
+              sx={{
+                textTransform: 'uppercase',
+              }}
+            >
+              {subtitle}
+            </Typography>
+          </Box>
 
           {/* Page selector for bigger devices */}
           {/*
