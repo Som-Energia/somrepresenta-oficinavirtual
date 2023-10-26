@@ -65,7 +65,7 @@ export default function AppFrame(props) {
           <img src={logo} width="32px" style={{ marginInline: '.5rem' }} />
 
           {/* App name */}
-          <Box sx={{ display: 'flex', flexGrow: 1, gap: '0.4rem' }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1, gap: '0 0.4rem' }}>
             <Typography
               variant="pagetitle"
               component="div"
