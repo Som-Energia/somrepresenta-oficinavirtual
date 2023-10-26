@@ -9,6 +9,10 @@ export default function SomEnergiaTheme(isDarkMode) {
         brochureP: {
           fontSize: 18,
         },
+        homeButtons: {
+          fontSize: 22,
+          fontWeight: 'bold',
+        }
       },
       palette: {
         mode: isDarkMode ? 'dark' : 'light',
@@ -25,8 +29,9 @@ export default function SomEnergiaTheme(isDarkMode) {
         },
         secondary: {
           //main: '#E0E723', //'hsl(62, 80%, 52%)', // from style guide
-          //main: '#a1a1a1', // from webforms-ui
-          main: '#e6cc00',
+          main: '#a1a1a1', // from webforms-ui
+          // main: '#e6cc00', // Original design
+          main: '#e2e2e2', // From mentxu design 2023-10-26
           contrastText: 'white',
         },
       },

@@ -13,27 +13,40 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats'
 function PageButton(params) {
   const { route, title, image: Image } = params
   return (
-    <Card elevation={0}>
-      <CardActionArea
-        {...(route ? { component: Link, to: route } : {})}
+    <Box sx={{ display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
+      <Box
         sx={{
+          backgroundColor: 'primary.main',
+          color: 'primary.contrastText',
+          borderRadius: '50%',
+          marginTop: '1.5rem',
+          marginBottom: '1.5rem',
           transition: '.2s',
           '&:hover': {
-            color: 'secondary.main',
+            backgroundColor: 'secondary.main',
+            color: 'primary.main',
             transition: '.2s',
           },
         }}
       >
-        <CardContent>
-          <Box sx={{ display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
-            <Image sx={{ fontSize: 'clamp(150px, 20vw, 200px)' }} />
-            <Typography variant="h5" sx={{ textAlign: 'center' }}>
-              {title}
-            </Typography>
-          </Box>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+        <Link
+          to={route}
+          style={{
+            color: 'inherit',
+          }}
+        >
+          <Image
+            sx={{
+              fontSize: 'clamp(150px, 20vw, 200px)',
+              padding: '15%',
+            }}
+          />
+        </Link>
+      </Box>
+      <Typography variant="homeButtons" sx={{ textAlign: 'center' }}>
+        {title}
+      </Typography>
+    </Box>
   )
 }
 export default function HomePage(params) {
