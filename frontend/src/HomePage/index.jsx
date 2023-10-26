@@ -21,6 +21,8 @@ function PageButton(params) {
           borderRadius: '50%',
           marginTop: '1.5rem',
           marginBottom: '1.5rem',
+          height: 'clamp(150px,  15vw, 200px)',
+          width: 'clamp(150px, 15vw, 200px)',
           transition: '.2s',
           '&:hover': {
             backgroundColor: 'secondary.main',
@@ -37,7 +39,7 @@ function PageButton(params) {
         >
           <Image
             sx={{
-              fontSize: 'clamp(150px, 20vw, 200px)',
+              fontSize: 'clamp(150px, 15vw, 200px)',
               padding: '15%',
             }}
           />
@@ -76,7 +78,7 @@ export default function HomePage(params) {
         display: 'flex',
         flexFlow: 'row wrap',
         justifyContent: 'center',
-        gap: '5%',
+        gap: '10%',
         p: 3,
       }}
     >
