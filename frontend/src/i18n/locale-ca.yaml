@@ -10,6 +10,7 @@ APP_FRAME:
   NOT_YET_IMPLEMENTED: Aquesta pàgina encara no està disponible
   CONTRIBUTE_TRANSLATIONS: Ajuda'ns a traduïr
   PROFILE_TOOLTIP: Perfil
+  MENU_CHANGE_PASSWORD: Canvia la contrasenya
   MENU_PROFILE: Perfil
   MENU_LOGOUT: Surt
   LOGIN: Identifica't
@@ -21,6 +22,7 @@ APP_FRAME:
   PRIVACY_POLICY: POLÍTICA DE PRIVACITAT
   PRIVACY_POLICY_URL: https://www.somenergia.coop/ca/politica-de-privacitat/
 PROFILE:
+  PROFILE_TITLE: Perfil d'usuari
   NAME: Nom
   VAT: NIF
   ROLES: Rols
@@ -32,4 +34,3 @@ PROFILE:
   PHONE: Telèfon
   PROXY_NAME: Nom representant
   PROXY_VAT: NIF representant
-

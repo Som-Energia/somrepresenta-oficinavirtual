@@ -10,6 +10,7 @@ APP_FRAME:
   NOT_YET_IMPLEMENTED: Esta página aún no está disponible
   CONTRIBUTE_TRANSLATIONS: Ayúdanos a traducir
   PROFILE_TOOLTIP: Perfil
+  MENU_CHANGE_PASSWORD: Cambia la contraseña
   MENU_PROFILE: Perfil
   MENU_LOGOUT: Salir
   LOGIN: Identificate
@@ -20,7 +21,28 @@ APP_FRAME:
   DISCLAIMER_URL: https://www.somenergia.coop/es/aviso-legal/
   PRIVACY_POLICY: POLÍTICA DE PRIVACIDAD
   PRIVACY_POLICY_URL: https://www.somenergia.coop/es/politica-de-privacidad/
+LOGIN:
+  LOGIN_DIALOG_TITLE: Verificando tu identidad
+  USERNAME_LABEL: Usuario
+  USERNAME_HELP: Usa el NIF o el correo electrònico
+  SUBMIT_BUTTON_LOGIN: Valida
+  SUBMIT_BUTTON_PROCESSING: Validando...
+  PASSWORD_LABEL: Contraseña
+CHANGE_PASSWORD:
+  CHANGE_PASSWORD_DIALOG_TITLE: Cambiando la contraseña
+  CURRENT_PASSWORD_LABEL: Contraseña actual
+  NEW_PASSWORD_LABEL: Nueva contraseña
+  CHECK_PASSWORD_LABEL: Repetir la nueva contraseña
+  SUBMIT_BUTTON_CHANGE_PASSWORD: Cambia
+  SUBMIT_BUTTON_CHANGED_PASSWORD: ¡Contraseña Cambiada!
+  SUBMIT_BUTTON_CHANGING_PASSWORD: Cambiando...
+  NEW_PASSWORD_TOO_SHORT_ERROR: Demasiado corta
+  NEW_PASSWORD_MISSMATCH_ERROR: Las contraseñas no coinciden
+  NEW_PASSWORD_SAME_AS_CURRENT_ERROR: No puede ser igual que la actual
+  CURRENT_PASSWORD_MISSMATCH_ERROR: La contraseña actual no es la correcta
+  PASSWORD_CHANGE_SUCCESSFUL: La contraseña se ha cambiado correctamente
 PROFILE:
+  PROFILE_TITLE: Perfil de usuario
   NAME: Nombre
   VAT: NIF
   ROLES: Roles
@@ -32,4 +54,3 @@ PROFILE:
   PHONE: Teléfono
   PROXY_NAME: Nombre representante
   PROXY_VAT: NIF representante
-

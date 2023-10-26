@@ -15,25 +15,36 @@ on component initialization.
 Initial value of undefined is ignored.
 */
 
+function decode(json) {
+  const value = json === null ? null : JSON.parse(json)
+  return value
+}
+
+function encodeValue(value) {
+  const json = value === null ? null : JSON.stringify(value)
+  return json
+}
+
 export default function useLocalStorage(key, initialValue) {
   function setStorage(value) {
     if (value === null) localStorage.removeItem(key)
-    else localStorage.setItem(key, value)
+    else localStorage.setItem(key, encodeValue(value))
   }
+
   const [state, setState] = React.useState(() => {
-    const storedValue = localStorage[key]
+    const storedValue = localStorage.getItem(key)
     if (storedValue === null) {
       if (initialValue !== undefined) {
-        setStorage(initialValue ?? null)
+        setStorage(initialValue)
       }
     }
-    return localStorage.getItem(key)
+    return decode(localStorage.getItem(key))
   })
   // Update state when changed from other tab
   React.useEffect(() => {
     const listener = (e) => {
       if (e.key === key) {
-        setState(e.newValue)
+        setState(decode(e.newValue))
       }
     }
     window.addEventListener('storage', listener)
@@ -45,7 +56,7 @@ export default function useLocalStorage(key, initialValue) {
   // The state is set to the actual storage value (str conversion or null)
   const persistentSetState = React.useCallback((value) => {
     setStorage(value)
-    setState(localStorage.getItem(key))
+    setState(value)
   })
   return [state, persistentSetState]
 }

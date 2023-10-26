@@ -24,7 +24,7 @@ def auth_error(message):
     )
 
 
-def validated_user(authorization: str = Depends(oauth2)):
+async def validated_user(authorization: str = Depends(oauth2)):
     schema, token = get_authorization_scheme_param(authorization)
     if not authorization or schema.lower() != "bearer":
         if not oauth2.auto_error: return None
@@ -37,7 +37,6 @@ def validated_user(authorization: str = Depends(oauth2)):
         )
     except JWTError as e:
         raise auth_error(f"Token decoding failed: {e}")
-
     return payload
 
 def on_auth(auth, user):
