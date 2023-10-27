@@ -15,6 +15,7 @@ import PagesButtons from './PagesButtons'
 import { useTranslation } from 'react-i18next'
 import ClippedDrawer from './ClippedDrawer'
 import Footer from './Footer'
+import BreakPointIndicator from './BreakPointIndicator'
 
 // TODO: Solve this, still have to list the icons in the yaml
 const icons = {
@@ -120,6 +121,7 @@ export default function AppFrame(props) {
           {children}
         </Box>
       </Box>
+      <BreakPointIndicator />
       <Footer
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
