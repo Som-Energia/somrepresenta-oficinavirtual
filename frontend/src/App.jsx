@@ -18,8 +18,8 @@ import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
 import AppFrame from './components/AppFrame'
-import ProfilePage from './ProfilePage'
 import BreakPointIndicator from './components/BreakPointIndicator'
+import ProfilePage from './ProfilePage'
 
 const routes = [
   {

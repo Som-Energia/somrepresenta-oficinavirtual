@@ -66,7 +66,6 @@ export default function ProfilePage(params) {
     },
   ]
 
-  console.log('Guarding for', currentUser)
   return (
     <Container>
       <Typography variant="h3" sx={{ mb: 3 }}>
