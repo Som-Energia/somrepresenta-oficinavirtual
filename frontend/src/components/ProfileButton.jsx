@@ -177,8 +177,8 @@ function ProfileButton(params) {
             sx={{
               p: 0,
               pr: 1,
-              //color: (theme) => theme.palette.primary.contrastText,
-              //bgcolor: (theme) => theme.palette.primary.main,
+              color: (theme) => theme.palette.primary.contrastText,
+              bgcolor: (theme) => theme.palette.primary.main,
             }}
           >
             <Avatar
