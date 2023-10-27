@@ -1,7 +1,7 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 
 // TODO: This list must be updated if standard MUI typographies change
-const standardTypographies =[
+const standardTypographies = [
   'h1',
   'h2',
   'h3',
@@ -17,12 +17,7 @@ const standardTypographies =[
   'overline',
 ]
 
-const customTypographies = [
-  'pagetitle',
-  'pagesubtitle',
-  'homeButtons',
-  'brochureP',
-]
+const customTypographies = ['pagetitle', 'pagesubtitle', 'homeButtons']
 
 export default function SomEnergiaTheme(isDarkMode) {
   const theme = createTheme({
@@ -69,11 +64,11 @@ export default function SomEnergiaTheme(isDarkMode) {
         main: '#e2e2e2', // From mentxu design 2023-10-26
       },
       pagetitle: {
-        main: '#444',
+        main: '#4d4d4d',
       },
     },
   })
   return responsiveFontSizes(theme, {
-    variants: standardTypographies.concat(customTypographies)
+    variants: standardTypographies.concat(customTypographies),
   })
 }

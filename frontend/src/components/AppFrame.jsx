@@ -117,7 +117,14 @@ export default function AppFrame(props) {
             },
           }}
         />
-        <Box sx={{ mt: '4.5rem', p: 0.4, flexGrow: 1, minHeight: 'calc( 100vh - 7rem)' }}>
+        <Box
+          sx={{
+            mt: '4.5rem',
+            p: 0.4,
+            flexGrow: 1,
+            minHeight: 'calc( 100vh - 7rem)',
+          }}
+        >
           {children}
         </Box>
       </Box>
