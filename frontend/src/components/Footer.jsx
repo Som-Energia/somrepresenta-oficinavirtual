@@ -32,8 +32,8 @@ export default function Footer(params) {
       elevation={3}
       sx={{
         ...sx,
-        backgroundColor: 'primary.main',
-        color: 'primary.contrastText',
+        backgroundColor: 'secondary.main',
+        color: 'secondary.contrastText',
         padding: '1rem',
         mt: '2rem',
       }}
