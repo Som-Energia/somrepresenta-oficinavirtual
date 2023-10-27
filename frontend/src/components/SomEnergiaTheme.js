@@ -24,10 +24,6 @@ export default function SomEnergiaTheme(isDarkMode) {
     typography: {
       fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
       // Custom variant for home page paragraphs
-      brochureP: {
-        fontSize: 18,
-        lineHeight: 1,
-      },
       homeButtons: {
         fontSize: 22,
         fontWeight: 600,
@@ -35,12 +31,13 @@ export default function SomEnergiaTheme(isDarkMode) {
       },
       pagetitle: {
         fontSize: 20,
-        fontWeight: 400,
+        fontWeight: 400, // from style guide
         lineHeight: 1,
       },
       pagesubtitle: {
         fontSize: 20,
-        fontWeight: 700,
+        //fontWeight: 800, // from style guide
+        fontWeight: 700, //
         lineHeight: 1,
       },
     },
