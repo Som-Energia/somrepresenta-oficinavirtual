@@ -18,10 +18,10 @@ export default function BreakPointIndicator() {
           xs: '#9d9a',
           sm: '#9dda',
           md: '#99da',
-          lg: '#9dda',
-          xl: '#d9da',
+          lg: '#d9da',
+          xl: '#d99a',
         },
-        '&:before': {
+        '&:after': {
           marginInline: 'auto',
           content: {
             xs: '"xs"',
