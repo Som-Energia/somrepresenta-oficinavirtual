@@ -21,16 +21,71 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
 
+function ProfileMenu(params) {
+  const { anchorEl, setAnchorEl, menuOptions, currentUser } = params
+  function close() {
+    setAnchorEl(null)
+  }
+  return (
+    <Menu
+      sx={{
+        mt: '45px',
+      }}
+      id="menu-appbar"
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={Boolean(anchorEl)}
+      onClose={close}
+    >
+      <MenuItem onClick={close}>
+        <ListItemIcon>
+          <Avatar
+            sx={{
+              width: 24,
+              height: 24,
+            }}
+          />
+        </ListItemIcon>
+        {currentUser.name}
+      </MenuItem>
+      <Divider />
+      {menuOptions.map(
+        (option, i) =>
+          !option.hidden && (
+            <MenuItem
+              key={i}
+              onClick={() => {
+                close()
+                option.onclick && option.onclick()
+              }}
+            >
+              <ListItemIcon>{option.icon}</ListItemIcon>
+              <Typography textAlign="center">{option.text}</Typography>
+            </MenuItem>
+          ),
+      )}
+    </Menu>
+  )
+}
+
 function ProfileButton(params) {
   const { t, i18n } = useTranslation()
   const { currentUser, login, logout, changePassword } = useAuth()
   const navigate = useNavigate()
 
   const [anchorElUser, setAnchorElUser] = React.useState(null)
-  const handleOpenUserMenu = (event) => {
+  const openUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
   }
-  const handleCloseUserMenu = () => {
+  const closeUserMenu = () => {
     setAnchorElUser(null)
   }
   const menuProfile = [
@@ -68,7 +123,7 @@ function ProfileButton(params) {
           <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
             <Button
               variant="contained"
-              onClick={handleOpenUserMenu}
+              onClick={openUserMenu}
               sx={{
                 p: 0,
                 pr: 1,
@@ -99,52 +154,13 @@ function ProfileButton(params) {
               </Box>
             </Button>
           </Tooltip>
-          <Menu
-            sx={{
-              mt: '45px',
-            }}
-            id="menu-appbar"
+          <ProfileMenu
+            currentUser={currentUser}
             anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            <MenuItem onClick={handleCloseUserMenu}>
-              <ListItemIcon>
-                <Avatar
-                  sx={{
-                    width: 24,
-                    height: 24,
-                  }}
-                />
-              </ListItemIcon>
-              {currentUser.name}
-            </MenuItem>
-            <Divider />
-            {menuProfile.map(
-              (option, i) =>
-                !option.hidden && (
-                  <MenuItem
-                    key={i}
-                    onClick={() => {
-                      handleCloseUserMenu()
-                      option.onclick && option.onclick()
-                    }}
-                  >
-                    <ListItemIcon>{option.icon}</ListItemIcon>
-                    <Typography textAlign="center">{option.text}</Typography>
-                  </MenuItem>
-                ),
-            )}
-          </Menu>
+            closeHandler={closeUserMenu}
+            setAnchorEl={setAnchorElUser}
+            menuOptions={menuProfile}
+          />
         </>
       ) : (
         <>
