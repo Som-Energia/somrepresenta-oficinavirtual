@@ -130,10 +130,13 @@ def dummy_user_info(login: str)->TokenUser:
         avatar = avatar,
     )
 
-# TODO: Use the erp
-user_info = dict(
-    dummy = dummy_user_info,
-)[os.environ.get("USER_INFO_BACKEND", "dummy")]
+def user_info(login: str) -> TokenUser:
+    delegate_id = os.environ.get("USER_INFO_BACKEND", "dummy")
+    delegates = dict(
+        dummy = dummy_user_info,
+    )
+    delegate = delegates.get(delegate_id, dummy_user_info)
+    return delegate(login)
 
 
 def create_access_token(data: dict):
