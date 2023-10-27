@@ -9,9 +9,10 @@ import { Link } from 'react-router-dom'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import DescriptionIcon from '@mui/icons-material/Description'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
+import useAplicationMetadata from '../hooks/ApplicationMetadata'
 
 function PageButton(params) {
-  const { route, title, image: Image } = params
+  const { route, title, icon: Icon } = params
   return (
     <Box sx={{ display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
       <Box
@@ -37,7 +38,7 @@ function PageButton(params) {
             color: 'inherit',
           }}
         >
-          <Image
+          <Icon
             sx={{
               fontSize: 'clamp(150px, 15vw, 200px)',
               padding: '15%',
@@ -53,24 +54,7 @@ function PageButton(params) {
 }
 export default function HomePage(params) {
   const { t, i18n } = useTranslation()
-  // TODO: replicated in AppFrame
-  const pages = [
-    {
-      text: t('APP_FRAME.PAGE_INSTALLATIONS'),
-      icon: SolarPowerIcon,
-      path: '/install',
-    },
-    {
-      text: t('APP_FRAME.PAGE_INVOICES'),
-      icon: DescriptionIcon,
-      path: '/invoices',
-    },
-    {
-      text: t('APP_FRAME.PAGE_PRODUCTION_DATA'),
-      icon: QueryStatsIcon,
-      path: '/production',
-    },
-  ]
+  const { menuPages } = useAplicationMetadata()
   return (
     <Box
       sx={{
@@ -82,14 +66,16 @@ export default function HomePage(params) {
         p: 3,
       }}
     >
-      {pages.map((page) => (
-        <PageButton
-          key={page.path}
-          title={page.text}
-          route={page.path}
-          image={page.icon}
-        />
-      ))}
+      {menuPages
+        .filter((page) => page.path !== '/')
+        .map((page) => (
+          <PageButton
+            key={page.path}
+            title={page.text}
+            route={page.path}
+            icon={page.icon}
+          />
+        ))}
     </Box>
   )
 }

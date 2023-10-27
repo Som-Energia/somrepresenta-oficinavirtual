@@ -43,18 +43,23 @@ export default function PagesMenu({ pages, ...props }) {
         open={open}
         onClose={closeMenu}
       >
-        {pages.map((page) => (
-          <MenuItem
-            key={page.text}
-            onClick={() => {
-              navigate(page.path)
-              closeMenu()
-            }}
-          >
-            <ListItemIcon>{page.icon}</ListItemIcon>
-            {page.text}
-          </MenuItem>
-        ))}
+        {pages.map((page) => {
+          const Icon = page.icon
+          return (
+            <MenuItem
+              key={page.text}
+              onClick={() => {
+                navigate(page.path)
+                closeMenu()
+              }}
+            >
+              <ListItemIcon>
+                <Icon />
+              </ListItemIcon>
+              {page.text}
+            </MenuItem>
+          )
+        })}
       </Menu>
     </>
   )

@@ -2,45 +2,22 @@ import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import HomeIcon from '@mui/icons-material/Home'
-import SolarPowerIcon from '@mui/icons-material/SolarPower'
-import QueryStatsIcon from '@mui/icons-material/QueryStats'
-import DescriptionIcon from '@mui/icons-material/Description'
 import ProfileButton from './ProfileButton'
 import ColorModeButton from './ColorModeButton'
 import LanguageMenu from './LanguageMenu'
 import PagesMenu from './PagesMenu'
 import PagesButtons from './PagesButtons'
-import { useTranslation } from 'react-i18next'
 import ClippedDrawer from './ClippedDrawer'
 import Footer from './Footer'
 import BreakPointIndicator from './BreakPointIndicator'
-
-// TODO: Solve this, still have to list the icons in the yaml
-const icons = {
-  Home: HomeIcon,
-  SolarPower: SolarPowerIcon,
-  Description: DescriptionIcon,
-  QueryStats: QueryStatsIcon,
-}
+import useAplicationMetadata from '../hooks/ApplicationMetadata'
 
 export default function AppFrame(props) {
-  const { title, subtitle, logo, menuPages, children, ...attribs } = props
+  const { children } = props
+  const { title, subtitle, logo, menuPages } = useAplicationMetadata()
   const { t, i18n } = useTranslation()
-
-  const pages = React.useMemo(
-    () =>
-      menuPages.map((page) => {
-        const Icon = icons[page.icon]
-        return {
-          path: page.path,
-          text: t(page.text),
-          icon: <Icon />,
-        }
-      }),
-    [t],
-  )
 
   // TODO: Move styling to the global style
   return (
@@ -53,7 +30,7 @@ export default function AppFrame(props) {
         <Toolbar>
           {/* Page selector for small devices */}
           <PagesMenu
-            pages={pages}
+            pages={menuPages}
             sx={{
               display: {
                 xs: 'inline',
@@ -92,7 +69,7 @@ export default function AppFrame(props) {
           {/* Page selector for bigger devices */}
           {/*
           <PagesButtons
-            pages={pages}
+            pages={menuPages}
             sx={{
               display: {
                 xs: 'none',
@@ -109,7 +86,7 @@ export default function AppFrame(props) {
       </AppBar>
       <Box sx={{ display: 'flex' }}>
         <ClippedDrawer
-          items={pages}
+          items={menuPages}
           sx={{
             display: {
               xs: 'none',

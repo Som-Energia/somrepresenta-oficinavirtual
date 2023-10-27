@@ -28,18 +28,23 @@ export default function ClippedDrawer({ sx, items }) {
       <Toolbar />
       <Box sx={{ overflow: 'auto' }}>
         <List>
-          {items.map((page, i) => (
-            <ListItemButton
-              key={i + ''}
-              onClick={() => {
-                navigate(page.path)
-              }}
-              selected={page.path === currentLocation.pathname}
-            >
-              <ListItemIcon>{page.icon}</ListItemIcon>
-              <ListItemText primary={page.text} />
-            </ListItemButton>
-          ))}
+          {items.map((page, i) => {
+            const Icon = page.icon
+            return (
+              <ListItemButton
+                key={i + ''}
+                onClick={() => {
+                  navigate(page.path)
+                }}
+                selected={page.path === currentLocation.pathname}
+              >
+                <ListItemIcon>
+                  <Icon />
+                </ListItemIcon>
+                <ListItemText primary={page.text} />
+              </ListItemButton>
+            )
+          })}
         </List>
       </Box>
     </Drawer>

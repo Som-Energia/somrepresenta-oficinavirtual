@@ -19,7 +19,6 @@ import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
 import AppFrame from './components/AppFrame'
 import ProfilePage from './ProfilePage'
-import appData from './data/appdata.yaml'
 
 const routes = [
   {
@@ -29,7 +28,7 @@ const routes = [
           <CookiesProvider>
             <AuthProvider>
               <ScrollRestoration /> {/* Scroll up on page switch */}
-              <AppFrame {...appData}>
+              <AppFrame>
                 <Outlet />
               </AppFrame>
             </AuthProvider>
