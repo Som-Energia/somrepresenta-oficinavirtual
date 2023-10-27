@@ -19,6 +19,7 @@ import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
 import AppFrame from './components/AppFrame'
 import ProfilePage from './ProfilePage'
+import BreakPointIndicator from './components/BreakPointIndicator'
 
 const routes = [
   {
@@ -28,6 +29,7 @@ const routes = [
           <CookiesProvider>
             <AuthProvider>
               <ScrollRestoration /> {/* Scroll up on page switch */}
+              <BreakPointIndicator />
               <AppFrame>
                 <Outlet />
               </AppFrame>

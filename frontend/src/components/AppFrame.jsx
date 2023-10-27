@@ -11,7 +11,6 @@ import PagesMenu from './PagesMenu'
 import PagesButtons from './PagesButtons'
 import ClippedDrawer from './ClippedDrawer'
 import Footer from './Footer'
-import BreakPointIndicator from './BreakPointIndicator'
 import useAplicationMetadata from '../hooks/ApplicationMetadata'
 
 export default function AppFrame(props) {
@@ -105,7 +104,6 @@ export default function AppFrame(props) {
           {children}
         </Box>
       </Box>
-      <BreakPointIndicator />
       <Footer
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
