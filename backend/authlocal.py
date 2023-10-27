@@ -41,8 +41,6 @@ def authenticate_user(login: str, password: str) -> bool:
     hashed_password = get_hashed_password(login)
     if not hashed_password:
         error("Inactive user")
-        # TODO: Do not save the password!!
-        #set_password(login, password)
         return False
     if not verify_password(password, hashed_password):
         error("Bad password")
