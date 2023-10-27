@@ -1,0 +1,19 @@
+title: Oficina Virtual
+subtitle: Representación
+logo: /logo.svg
+menuPages:
+  - path: /
+    text: APP_FRAME.PAGE_HOME
+    icon: Home
+
+  - path: /install
+    text: APP_FRAME.PAGE_INSTALLATIONS
+    icon: SolarPower
+
+  - path: /invoices
+    text: APP_FRAME.PAGE_INVOICES
+    icon: Description
+
+  - path: /production
+    text: APP_FRAME.PAGE_PRODUCTION_DATA
+    icon: QueryStats

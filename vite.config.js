@@ -9,6 +9,9 @@ export default defineConfig({
     outDir: '../backend/dist',
   },
   root: 'frontend',
+  define: {
+    '__APP_VERSION__': JSON.stringify(process.env.npm_package_version),
+  },
   plugins: [react(), ViteYaml(), svgr()],
   server: {
     proxy: {

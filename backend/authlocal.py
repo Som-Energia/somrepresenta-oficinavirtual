@@ -10,10 +10,12 @@ from consolemsg import error
 import os
 from yamlns import ns
 from .models import TokenUser
+from .utils.gravatar import gravatar
 
 passwords_file = Path('passwords.yaml')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+default_gravatar = 'identicon' # https://docs.gravatar.com/general/images/
 
 def load_passwords():
     if not passwords_file.exists():
@@ -39,8 +41,6 @@ def authenticate_user(login: str, password: str) -> bool:
     hashed_password = get_hashed_password(login)
     if not hashed_password:
         error("Inactive user")
-        # TODO: Do not save the password!!
-        #set_password(login, password)
         return False
     if not verify_password(password, hashed_password):
         error("Bad password")
@@ -61,6 +61,7 @@ def dummy_user_info(login: str)->TokenUser:
     email: 12345678z@nowhere.com
     roles:
     - customer
+    avatar: https://www.gravatar.com/avatar/3c21fd9dfd53a55fc2dccd9927223026?d=identicon&s=128
     <BLANKLINE>
 
     When username is an email, extracts the first part as name, and fills a
@@ -72,6 +73,7 @@ def dummy_user_info(login: str)->TokenUser:
     email: ahmed.jimenez@noplace.com
     roles:
     - customer
+    avatar: https://www.gravatar.com/avatar/b33b174df857c3739090351199b1df78?d=identicon&s=128
     <BLANKLINE>
 
     When username is neither a NIF nor an email, considers it a erp username.
@@ -83,6 +85,7 @@ def dummy_user_info(login: str)->TokenUser:
     email: sira.ruiz@somenergia.coop
     roles:
     - staff
+    avatar: https://www.gravatar.com/avatar/83d1453396767bac8bf5fb110e68c142?d=identicon&s=128
     <BLANKLINE>
 
     """
@@ -117,17 +120,23 @@ def dummy_user_info(login: str)->TokenUser:
     import hashlib
     digest=hashlib.sha1(login.encode('utf8')).digest()
     nif = nif or (''.join(str(c)[-1] for c in digest)[-8:]+"Z")
+    avatar = gravatar(email, default=default_gravatar)
     return TokenUser(
         nif = nif,
         name = name,
         email = email,
         roles = roles,
+        picture = avatar,
+        avatar = avatar,
     )
 
-# TODO: Use the erp
-user_info = dict(
-    dummy = dummy_user_info,
-)[os.environ.get("USER_INFO_BACKEND", "dummy")]
+def user_info(login: str) -> TokenUser:
+    delegate_id = os.environ.get("USER_INFO_BACKEND", "dummy")
+    delegates = dict(
+        dummy = dummy_user_info,
+    )
+    delegate = delegates.get(delegate_id, dummy_user_info)
+    return delegate(login)
 
 
 def create_access_token(data: dict):

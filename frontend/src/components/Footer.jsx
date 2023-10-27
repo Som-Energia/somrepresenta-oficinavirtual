@@ -32,14 +32,21 @@ export default function Footer(params) {
       elevation={3}
       sx={{
         ...sx,
-        backgroundColor: 'primary.main',
-        color: 'primary.contrastText',
+        backgroundColor: 'secondary.main',
+        color: 'secondary.contrastText',
         padding: '1rem',
         mt: '2rem',
       }}
     >
       <Container>
-       <Box sx={{ display: 'flex', flexFlow: 'row wrap', gap: 1, justifyContent: 'space-around' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexFlow: 'row wrap',
+            gap: 1,
+            justifyContent: 'space-around',
+          }}
+        >
           {footerItems.map((item) => (
             <Button
               key={item.text}

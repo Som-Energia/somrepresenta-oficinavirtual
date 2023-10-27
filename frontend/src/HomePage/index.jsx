@@ -9,53 +9,52 @@ import { Link } from 'react-router-dom'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import DescriptionIcon from '@mui/icons-material/Description'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
+import useAplicationMetadata from '../hooks/ApplicationMetadata'
 
 function PageButton(params) {
-  const { route, title, image: Image } = params
+  const { route, title, icon: Icon } = params
   return (
-    <Card elevation={0}>
-      <CardActionArea
-        {...(route ? { component: Link, to: route } : {})}
+    <Box sx={{ display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
+      <Box
         sx={{
+          backgroundColor: 'primary.main',
+          color: 'primary.contrastText',
+          borderRadius: '50%',
+          marginTop: '1.5rem',
+          marginBottom: '1.5rem',
+          height: 'clamp(150px,  15vw, 200px)',
+          width: 'clamp(150px, 15vw, 200px)',
           transition: '.2s',
           '&:hover': {
-            color: 'secondary.main',
+            backgroundColor: 'secondary.main',
+            color: 'primary.main',
             transition: '.2s',
           },
         }}
       >
-        <CardContent>
-          <Box sx={{ display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
-            <Image sx={{ fontSize: 'clamp(150px, 20vw, 200px)' }} />
-            <Typography variant="h5" sx={{ textAlign: 'center' }}>
-              {title}
-            </Typography>
-          </Box>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+        <Link
+          to={route}
+          style={{
+            color: 'inherit',
+          }}
+        >
+          <Icon
+            sx={{
+              fontSize: 'clamp(150px, 15vw, 200px)',
+              padding: '15%',
+            }}
+          />
+        </Link>
+      </Box>
+      <Typography variant="homeButtons" sx={{ textAlign: 'center' }}>
+        {title}
+      </Typography>
+    </Box>
   )
 }
 export default function HomePage(params) {
   const { t, i18n } = useTranslation()
-  // TODO: replicated in AppFrame
-  const pages = [
-    {
-      text: t('APP_FRAME.PAGE_INSTALLATIONS'),
-      icon: SolarPowerIcon,
-      path: '/install',
-    },
-    {
-      text: t('APP_FRAME.PAGE_INVOICES'),
-      icon: DescriptionIcon,
-      path: '/invoices',
-    },
-    {
-      text: t('APP_FRAME.PAGE_PRODUCTION_DATA'),
-      icon: QueryStatsIcon,
-      path: '/production',
-    },
-  ]
+  const { menuPages } = useAplicationMetadata()
   return (
     <Box
       sx={{
@@ -63,18 +62,20 @@ export default function HomePage(params) {
         display: 'flex',
         flexFlow: 'row wrap',
         justifyContent: 'center',
-        gap: '5%',
+        gap: '10%',
         p: 3,
       }}
     >
-      {pages.map((page) => (
-        <PageButton
-          key={page.path}
-          title={page.text}
-          route={page.path}
-          image={page.icon}
-        />
-      ))}
+      {menuPages
+        .filter((page) => page.path !== '/')
+        .map((page) => (
+          <PageButton
+            key={page.path}
+            title={page.text}
+            route={page.path}
+            icon={page.icon}
+          />
+        ))}
     </Box>
   )
 }

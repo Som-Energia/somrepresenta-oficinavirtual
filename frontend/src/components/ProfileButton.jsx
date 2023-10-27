@@ -17,9 +17,62 @@ import IconSettings from '@mui/icons-material/Settings'
 import IconKey from '@mui/icons-material/Key'
 import IconLogout from '@mui/icons-material/Logout'
 import IconLogin from '@mui/icons-material/Login'
+import IconPerson from '@mui/icons-material/Person'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
+
+function ProfileMenu(params) {
+  const { anchorEl, closeMenu, menuOptions, currentUser } = params
+  return (
+    <Menu
+      sx={{
+        mt: '45px',
+      }}
+      id="menu-appbar"
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={Boolean(anchorEl)}
+      onClose={closeMenu}
+    >
+      <MenuItem onClick={closeMenu}>
+        <ListItemIcon>
+          <Avatar
+            sx={{
+              width: 24,
+              height: 24,
+            }}
+          />
+        </ListItemIcon>
+        {currentUser.name}
+      </MenuItem>
+      <Divider />
+      {menuOptions.map(
+        (option, i) =>
+          !option.hidden && (
+            <MenuItem
+              key={i}
+              onClick={() => {
+                closeMenu()
+                option.onclick && option.onclick()
+              }}
+            >
+              <ListItemIcon>{option.icon}</ListItemIcon>
+              <Typography textAlign="center">{option.text}</Typography>
+            </MenuItem>
+          ),
+      )}
+    </Menu>
+  )
+}
 
 function ProfileButton(params) {
   const { t, i18n } = useTranslation()
@@ -27,10 +80,10 @@ function ProfileButton(params) {
   const navigate = useNavigate()
 
   const [anchorElUser, setAnchorElUser] = React.useState(null)
-  const handleOpenUserMenu = (event) => {
+  const openUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
   }
-  const handleCloseUserMenu = () => {
+  const closeUserMenu = () => {
     setAnchorElUser(null)
   }
   const menuProfile = [
@@ -61,122 +114,112 @@ function ProfileButton(params) {
       .slice(0, 2)
       .join('')
 
-  return (
-    <Box {...params}>
-      {currentUser !== null ? (
-        <>
-          <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
-            <Button
-              variant="contained"
-              onClick={handleOpenUserMenu}
-              sx={{
-                p: 0,
-                pr: 1,
-                color: (theme) => theme.palette.primary.contrastText,
-                bgcolor: (theme) => theme.palette.primary.main,
-              }}
-            >
-              <Avatar
-                alt={initials(currentUser.name)}
-                src={currentUser.avatar}
-                sx={{
-                  bgcolor: (theme) => theme.palette.primary.contrastText,
-                  color: (theme) => theme.palette.primary.main,
-                }}
-              >
-                {currentUser.initials}
-              </Avatar>
-              <Box
-                sx={{
-                  marginInlineStart: 1,
-                  display: {
-                    xs: 'none',
-                    sm: 'inherit',
-                  },
-                }}
-              >
-                {currentUser.name}
-              </Box>
-            </Button>
-          </Tooltip>
-          <Menu
-            sx={{
-              mt: '45px',
-            }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            <MenuItem onClick={handleCloseUserMenu}>
-              <ListItemIcon>
-                <Avatar
-                  sx={{
-                    width: 24,
-                    height: 24,
-                  }}
-                />
-              </ListItemIcon>
-              {currentUser.name}
-            </MenuItem>
-            <Divider />
-            {menuProfile.map(
-              (option, i) =>
-                !option.hidden && (
-                  <MenuItem
-                    key={i}
-                    onClick={() => {
-                      handleCloseUserMenu()
-                      option.onclick && option.onclick()
-                    }}
-                  >
-                    <ListItemIcon>{option.icon}</ListItemIcon>
-                    <Typography textAlign="center">{option.text}</Typography>
-                  </MenuItem>
-                ),
-            )}
-          </Menu>
-        </>
-      ) : (
-        <>
+  if (currentUser === null)
+    return (
+      <>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: {
+              xs: 'none',
+              sm: 'inherit',
+            },
+          }}
+        >
           <Button
-            variant="contained"
-            onClick={login}
+            endIcon={<IconLogin />}
             sx={{
-              display: {
-                xs: 'none',
-                sm: 'inherit',
-              },
+              color: 'primary.contrastText',
+              bgcolor: 'primary.light',
             }}
+            onClick={login}
           >
             {t('APP_FRAME.LOGIN')}
           </Button>
-          <IconButton
-            color={'inherit'}
-            onClick={login}
+        </Box>
+        <IconButton
+          color={'inherit'}
+          onClick={login}
+          sx={{
+            display: {
+              xs: 'inherit',
+              sm: 'none',
+            },
+          }}
+          title={t('APP_FRAME.LOGIN')}
+        >
+          <IconLogin />
+        </IconButton>
+      </>
+    )
+
+  // User exists
+  return (
+    <>
+      <IconButton
+        color={'inherit'}
+        onClick={openUserMenu}
+        sx={{
+          display: {
+            xs: 'inherit',
+            sm: 'none',
+          },
+        }}
+        title={t('APP_FRAME.PROFILE_TOOLTIP')}
+      >
+        <IconPerson />
+      </IconButton>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: {
+            xs: 'none',
+            sm: 'inherit',
+          },
+        }}
+      >
+        <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
+          <Button
+            onClick={openUserMenu}
             sx={{
-              ...(params.sx ?? {}),
-              display: {
-                xs: 'inherit',
-                sm: 'none',
-              },
+              p: 0,
+              pr: 1,
+              color: 'primary.contrastText',
+              bgcolor: 'primary.light',
             }}
-            title={t('APP_FRAME.LOGIN')}
           >
-            <IconLogin />
-          </IconButton>
-        </>
-      )}
-    </Box>
+            <Avatar
+              alt={initials(currentUser.name)}
+              src={currentUser.avatar}
+              sx={{
+                bgcolor: 'primary.contrastText',
+                color: 'primary.main',
+              }}
+            >
+              {currentUser.initials}
+            </Avatar>
+            <Box
+              sx={{
+                marginInlineStart: 1,
+                whiteSpace: 'nowrap',
+                display: {
+                  xs: 'none',
+                  sm: 'inherit',
+                },
+              }}
+            >
+              {currentUser.name}
+            </Box>
+          </Button>
+        </Tooltip>
+      </Box>
+      <ProfileMenu
+        anchorEl={anchorElUser}
+        closeMenu={closeUserMenu}
+        currentUser={currentUser}
+        menuOptions={menuProfile}
+      />
+    </>
   )
 }
 

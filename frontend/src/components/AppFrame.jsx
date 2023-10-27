@@ -2,47 +2,21 @@ import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
-import HomeIcon from '@mui/icons-material/Home'
-import SolarPowerIcon from '@mui/icons-material/SolarPower'
-import QueryStatsIcon from '@mui/icons-material/QueryStats'
-import DescriptionIcon from '@mui/icons-material/Description'
 import ProfileButton from './ProfileButton'
 import ColorModeButton from './ColorModeButton'
 import LanguageMenu from './LanguageMenu'
 import PagesMenu from './PagesMenu'
 import PagesButtons from './PagesButtons'
-import { useTranslation } from 'react-i18next'
 import ClippedDrawer from './ClippedDrawer'
 import Footer from './Footer'
+import useAplicationMetadata from '../hooks/ApplicationMetadata'
 
-export default function AppFrame({ children }) {
+export default function AppFrame(props) {
+  const { children } = props
+  const { title, subtitle, logo, menuPages } = useAplicationMetadata()
   const { t, i18n } = useTranslation()
-
-  const title = 'Representa'
-  const logo = '/logo.svg'
-  const pages = [
-    {
-      text: t('APP_FRAME.PAGE_HOME'),
-      icon: <HomeIcon />,
-      path: '/',
-    },
-    {
-      text: t('APP_FRAME.PAGE_INSTALLATIONS'),
-      icon: <SolarPowerIcon />,
-      path: '/install',
-    },
-    {
-      text: t('APP_FRAME.PAGE_INVOICES'),
-      icon: <DescriptionIcon />,
-      path: '/invoices',
-    },
-    {
-      text: t('APP_FRAME.PAGE_PRODUCTION_DATA'),
-      icon: <QueryStatsIcon />,
-      path: '/production',
-    },
-  ]
 
   // TODO: Move styling to the global style
   return (
@@ -55,7 +29,7 @@ export default function AppFrame({ children }) {
         <Toolbar>
           {/* Page selector for small devices */}
           <PagesMenu
-            pages={pages}
+            pages={menuPages}
             sx={{
               display: {
                 xs: 'inline',
@@ -68,21 +42,33 @@ export default function AppFrame({ children }) {
           <img src={logo} width="32px" style={{ marginInline: '.5rem' }} />
 
           {/* App name */}
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              textTransform: 'uppercase',
-            }}
-          >
-            {title}
-          </Typography>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1, gap: '0 0.4rem' }}>
+            <Typography
+              variant="pagetitle"
+              component="div"
+              sx={{
+                textTransform: 'uppercase',
+                color: 'pagetitle.main',
+              }}
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="pagesubtitle"
+              component="div"
+              sx={{
+                textTransform: 'uppercase',
+                color: 'pagetitle.main',
+              }}
+            >
+              {subtitle}
+            </Typography>
+          </Box>
 
           {/* Page selector for bigger devices */}
           {/*
           <PagesButtons
-            pages={pages}
+            pages={menuPages}
             sx={{
               display: {
                 xs: 'none',
@@ -99,7 +85,7 @@ export default function AppFrame({ children }) {
       </AppBar>
       <Box sx={{ display: 'flex' }}>
         <ClippedDrawer
-          items={pages}
+          items={menuPages}
           sx={{
             display: {
               xs: 'none',
@@ -107,7 +93,14 @@ export default function AppFrame({ children }) {
             },
           }}
         />
-        <Box sx={{ mt: '4.5rem', p: 0.4, flexGrow: 1, minHeight: 'calc( 100vh - 7rem)' }}>
+        <Box
+          sx={{
+            mt: '4.5rem',
+            p: 0.4,
+            flexGrow: 1,
+            minHeight: 'calc( 100vh - 7rem)',
+          }}
+        >
           {children}
         </Box>
       </Box>

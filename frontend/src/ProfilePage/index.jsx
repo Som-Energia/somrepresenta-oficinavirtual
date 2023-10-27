@@ -66,7 +66,6 @@ export default function ProfilePage(params) {
     },
   ]
 
-  console.log('Guarding for', currentUser)
   return (
     <Container>
       <Typography variant="h3" sx={{ mb: 3 }}>
@@ -75,7 +74,7 @@ export default function ProfilePage(params) {
       <Box
         style={{
           display: 'grid',
-          gridTemplateColumns: 'auto 1fr',
+          gridTemplateColumns: '1fr 2fr',
           columnGap: '1rem',
           rowGap: '.7rem',
         }}

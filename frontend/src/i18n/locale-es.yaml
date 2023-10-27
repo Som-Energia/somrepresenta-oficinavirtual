@@ -1,4 +1,6 @@
 APP_FRAME:
+  APPLICATION_TITLE: Oficina Virtual
+  APPLICATION_SUBTITLE: Representación
   TOGGLE_COLOR_MODE: Cambia el tema de color
   CHANGE_LANGUAGE: Cambia el idioma
   GO_HOME: Vuelve al inicio

@@ -32,7 +32,7 @@ def apiVersion():
 def apiMe(user: dict = Depends(validated_user)) -> UserProfile:
     # TODO: Either query ERP or have a rich jwt and take data from it
     default = dict(
-        avatar = user.get('picture', None),
+        avatar = user.get('avatar', user.get('picture', None)),
         nif = '12345678X',
         address = 'Rue del Percebe, 13',
         city = 'Salt',

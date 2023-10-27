@@ -1,11 +1,18 @@
 import React from 'react'
-console.log(import.meta.env)
+
 const configuredBackend = import.meta.env.VITE_AUTH_BACKEND ?? 'Oauth2'
 
-console.log({ configuredBackend })
+// TODO: This would be a better approach but does not work in build just in dev
+//const { AuthProvider, useAuth } = import(`./AuthProvider${configuredBackend}.jsx`)
 
-const { AuthProvider, useAuth } = await import(`./AuthProvider${configuredBackend}.jsx`)
-console.log({ AuthProvider, useAuth })
+const backends = import.meta.globEager('./AuthProvider?*.jsx')
+const selectableBackends = Object.fromEntries(
+  Object.keys(backends).map((key) => {
+    const code = key.slice('./AuthProvider'.length, -'.jsx'.length)
+    return [code, backends[key]]
+  }),
+)
+const { AuthProvider, useAuth } = selectableBackends[configuredBackend]
 
 export { useAuth }
 export default AuthProvider

@@ -7,6 +7,7 @@ class TokenUser(BaseModel):
     name: str
     email: str
     roles: list[str]
+    avatar: str | None
 
     def data(self):
         return ns(
