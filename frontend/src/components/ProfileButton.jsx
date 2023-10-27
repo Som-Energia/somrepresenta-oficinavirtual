@@ -17,15 +17,13 @@ import IconSettings from '@mui/icons-material/Settings'
 import IconKey from '@mui/icons-material/Key'
 import IconLogout from '@mui/icons-material/Logout'
 import IconLogin from '@mui/icons-material/Login'
+import IconPerson from '@mui/icons-material/Person'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
 
 function ProfileMenu(params) {
-  const { anchorEl, setAnchorEl, menuOptions, currentUser } = params
-  function close() {
-    setAnchorEl(null)
-  }
+  const { anchorEl, closeMenu, menuOptions, currentUser } = params
   return (
     <Menu
       sx={{
@@ -43,9 +41,9 @@ function ProfileMenu(params) {
         horizontal: 'right',
       }}
       open={Boolean(anchorEl)}
-      onClose={close}
+      onClose={closeMenu}
     >
-      <MenuItem onClick={close}>
+      <MenuItem onClick={closeMenu}>
         <ListItemIcon>
           <Avatar
             sx={{
@@ -63,7 +61,7 @@ function ProfileMenu(params) {
             <MenuItem
               key={i}
               onClick={() => {
-                close()
+                closeMenu()
                 option.onclick && option.onclick()
               }}
             >
@@ -116,83 +114,105 @@ function ProfileButton(params) {
       .slice(0, 2)
       .join('')
 
-  return (
-    <Box {...params}>
-      {currentUser !== null ? (
-        <>
-          <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
-            <Button
-              variant="contained"
-              onClick={openUserMenu}
-              sx={{
-                p: 0,
-                pr: 1,
-                color: (theme) => theme.palette.primary.contrastText,
-                bgcolor: (theme) => theme.palette.primary.main,
-              }}
-            >
-              <Avatar
-                alt={initials(currentUser.name)}
-                src={currentUser.avatar}
-                sx={{
-                  bgcolor: (theme) => theme.palette.primary.contrastText,
-                  color: (theme) => theme.palette.primary.main,
-                }}
-              >
-                {currentUser.initials}
-              </Avatar>
-              <Box
-                sx={{
-                  marginInlineStart: 1,
-                  display: {
-                    xs: 'none',
-                    sm: 'inherit',
-                  },
-                }}
-              >
-                {currentUser.name}
-              </Box>
-            </Button>
-          </Tooltip>
-          <ProfileMenu
-            currentUser={currentUser}
-            anchorEl={anchorElUser}
-            closeHandler={closeUserMenu}
-            setAnchorEl={setAnchorElUser}
-            menuOptions={menuProfile}
-          />
-        </>
-      ) : (
-        <>
-          <Button
-            variant="contained"
-            onClick={login}
-            sx={{
-              display: {
-                xs: 'none',
-                sm: 'inherit',
-              },
-            }}
-          >
+  if (currentUser === null)
+    return (
+      <>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: {
+              xs: 'none',
+              sm: 'inherit',
+            },
+          }}
+        >
+          <Button variant="contained" onClick={login}>
             {t('APP_FRAME.LOGIN')}
           </Button>
-          <IconButton
-            color={'inherit'}
-            onClick={login}
+        </Box>
+        <IconButton
+          color={'inherit'}
+          onClick={login}
+          sx={{
+            display: {
+              xs: 'inherit',
+              sm: 'none',
+            },
+          }}
+          title={t('APP_FRAME.LOGIN')}
+        >
+          <IconLogin />
+        </IconButton>
+      </>
+    )
+
+  // User exists
+  return (
+    <>
+      <IconButton
+        color={'inherit'}
+        onClick={openUserMenu}
+        sx={{
+          display: {
+            xs: 'inherit',
+            sm: 'none',
+          },
+        }}
+        title={t('APP_FRAME.PROFILE_TOOLTIP')}
+      >
+        <IconPerson />
+      </IconButton>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: {
+            xs: 'none',
+            sm: 'inherit',
+          },
+        }}
+      >
+        <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
+          <Button
+            onClick={openUserMenu}
             sx={{
-              ...(params.sx ?? {}),
-              display: {
-                xs: 'inherit',
-                sm: 'none',
-              },
+              p: 0,
+              pr: 1,
+              //color: (theme) => theme.palette.primary.contrastText,
+              //bgcolor: (theme) => theme.palette.primary.main,
             }}
-            title={t('APP_FRAME.LOGIN')}
           >
-            <IconLogin />
-          </IconButton>
-        </>
-      )}
-    </Box>
+            <Avatar
+              alt={initials(currentUser.name)}
+              src={currentUser.avatar}
+              sx={{
+                bgcolor: (theme) => theme.palette.primary.contrastText,
+                color: (theme) => theme.palette.primary.main,
+              }}
+            >
+              {currentUser.initials}
+            </Avatar>
+            <Box
+              sx={{
+                marginInlineStart: 1,
+                whiteSpace: 'nowrap',
+                display: {
+                  xs: 'none',
+                  sm: 'inherit',
+                },
+              }}
+            >
+              {currentUser.name}
+            </Box>
+          </Button>
+        </Tooltip>
+      </Box>
+      <ProfileMenu
+        anchorEl={anchorElUser}
+        closeMenu={closeUserMenu}
+        currentUser={currentUser}
+        menuOptions={menuProfile}
+      />
+    </>
   )
 }
 
