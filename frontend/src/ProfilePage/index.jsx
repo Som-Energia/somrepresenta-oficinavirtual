@@ -75,7 +75,7 @@ export default function ProfilePage(params) {
       <Box
         style={{
           display: 'grid',
-          gridTemplateColumns: 'auto 1fr',
+          gridTemplateColumns: '1fr 2fr',
           columnGap: '1rem',
           rowGap: '.7rem',
         }}
