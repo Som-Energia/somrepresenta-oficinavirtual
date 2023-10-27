@@ -126,7 +126,14 @@ function ProfileButton(params) {
             },
           }}
         >
-          <Button variant="contained" onClick={login}>
+          <Button
+            endIcon={<IconLogin />}
+            sx={{
+              color: 'primary.contrastText',
+              bgcolor: 'primary.light',
+            }}
+            onClick={login}
+          >
             {t('APP_FRAME.LOGIN')}
           </Button>
         </Box>
@@ -177,16 +184,16 @@ function ProfileButton(params) {
             sx={{
               p: 0,
               pr: 1,
-              color: (theme) => theme.palette.primary.contrastText,
-              bgcolor: (theme) => theme.palette.primary.main,
+              color: 'primary.contrastText',
+              bgcolor: 'primary.light',
             }}
           >
             <Avatar
               alt={initials(currentUser.name)}
               src={currentUser.avatar}
               sx={{
-                bgcolor: (theme) => theme.palette.primary.contrastText,
-                color: (theme) => theme.palette.primary.main,
+                bgcolor: 'primary.contrastText',
+                color: 'primary.main',
               }}
             >
               {currentUser.initials}
