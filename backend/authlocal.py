@@ -10,10 +10,12 @@ from consolemsg import error
 import os
 from yamlns import ns
 from .models import TokenUser
+from .utils.gravatar import gravatar
 
 passwords_file = Path('passwords.yaml')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+default_gravatar = 'identicon' # https://docs.gravatar.com/general/images/
 
 def load_passwords():
     if not passwords_file.exists():
@@ -117,11 +119,14 @@ def dummy_user_info(login: str)->TokenUser:
     import hashlib
     digest=hashlib.sha1(login.encode('utf8')).digest()
     nif = nif or (''.join(str(c)[-1] for c in digest)[-8:]+"Z")
+    avatar = gravatar(email, default=default_gravatar)
     return TokenUser(
         nif = nif,
         name = name,
         email = email,
         roles = roles,
+        picture = avatar,
+        avatar = avatar,
     )
 
 # TODO: Use the erp
