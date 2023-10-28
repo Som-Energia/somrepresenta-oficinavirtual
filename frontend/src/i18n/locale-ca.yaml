@@ -19,10 +19,17 @@ APP_FRAME:
   CHOOSE_USER: Escull usuaria
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Es requereix usuaria
-  DISCLAIMER: AVÍS LEGAL
+FOOTER:
+  WEB: Web
+  BLOG: Blog
+  DISCLAIMER: Avís legal
   DISCLAIMER_URL: https://www.somenergia.coop/ca/avis-legal/
-  PRIVACY_POLICY: POLÍTICA DE PRIVACITAT
+  PRIVACY_POLICY: Política de privacitat
   PRIVACY_POLICY_URL: https://www.somenergia.coop/ca/politica-de-privacitat/
+  HELP_CENTER: Centre de ajuda
+  HELP_CENTER_URL: https://ca.support.somenergia.coop/
+  COOKIE_POLICY: Cookies
+  COOKIE_POLICY_URL: https://oficinavirtual.somenergia.coop/ca/cookies-policy/
 PROFILE:
   PROFILE_TITLE: Perfil d'usuari
   NAME: Nom
