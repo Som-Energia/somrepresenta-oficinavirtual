@@ -131,13 +131,12 @@ def dummy_user_info(login: str)->TokenUser:
     )
 
 def user_info(login: str) -> TokenUser:
-    delegate_id = os.environ.get("USER_INFO_BACKEND", "dummy")
+    delegate_id = os.environ.get("DATA_BACKEND", "dummy")
     delegates = dict(
         dummy = dummy_user_info,
     )
     delegate = delegates.get(delegate_id, dummy_user_info)
     return delegate(login)
-
 
 def create_access_token(data: dict):
     import datetime
