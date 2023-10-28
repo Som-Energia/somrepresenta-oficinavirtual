@@ -1,4 +1,4 @@
-from ..models import TokenUser
+from ..models import TokenUser, UserProfile
 from ..utils.gravatar import gravatar
 from yamlns import ns
 default_gravatar = 'identicon' # https://docs.gravatar.com/general/images/
@@ -85,4 +85,19 @@ def dummy_user_info(login: str)->TokenUser:
         avatar = avatar,
     )
 
+def dummy_profile_info(user_info: dict) -> UserProfile:
+    # TODO: Either query ERP or have a rich jwt and take data from it
+    default = dict(
+        avatar = user_info.get('avatar', user_info.get('picture', None)),
+        nif = '12345678X',
+        address = 'Rue del Percebe, 13',
+        city = 'Salt',
+        zip = '17234',
+        state = 'Girona',
+        phone = '555444333',
+        proxy_name = 'Matute Gonzalez, Frasco',
+        proxy_nif = '987654321X',
+        roles = ['customer'],
+    )
+    return UserProfile(**dict(default, **user_info))
 

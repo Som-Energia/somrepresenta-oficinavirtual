@@ -5,13 +5,12 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, AP
 from fastapi.responses import JSONResponse
 from fastapi import Depends, Body
 from jose import JWTError, jwt
-from .auth import auth_error, validated_user, JWT_ALGORITHM
 from consolemsg import error, success
 import os
 from yamlns import ns
+from .auth import auth_error, validated_user, JWT_ALGORITHM
 from .models import TokenUser
-from .datasources.dummy import dummy_user_info
-from .datasources.erp import erp_user_info
+from .datasources import user_info
 
 passwords_file = Path('passwords.yaml')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -48,15 +47,6 @@ def authenticate_user(login: str, password: str) -> bool:
         return False
     success(f"Correct password validation for {login} ok")
     return True
-
-def user_info(login: str) -> TokenUser:
-    delegate_id = os.environ.get("DATA_BACKEND", "dummy")
-    delegates = dict(
-        dummy = dummy_user_info,
-        erp = erp_user_info,
-    )
-    delegate = delegates.get(delegate_id, dummy_user_info)
-    return delegate(login)
 
 def create_access_token(data: dict):
     import datetime
