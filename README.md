@@ -58,6 +58,13 @@ JWT_EXPIRES=86400 # one day in seconds 60*60*12
 # Key to be used in the x-key header to provision users
 # For security you can remove it when not provisioning users
 ERP_PROVISIONING_APIKEY="averylongrandomlygeneratedkey"
+
+# ERP Configuration
+DATA_BACKEND="erp" # Could be 'dummy'
+ERP_BASEURL='http://myserver:port/api/'
+ERP_DATABASE='mydatabaseinstance'
+ERP_USERNAME='myuser'
+ERP_PASSWORD="mypassword"
 ```
 
 Frontend Config:
