@@ -1,11 +1,14 @@
 import Box from '@mui/material/Box'
 
 export default function BreakPointIndicator() {
+  // This component only shows on dev mode
+  if (!import.meta.env.DEV) return null
+
   return (
     <Box
       className="breakpoint-debug"
       sx={{
-        position: 'absolute',
+        position: 'fixed',
         bottom: '20%',
         right: '0%',
         zIndex: 100000,
@@ -15,11 +18,11 @@ export default function BreakPointIndicator() {
         alignText: 'center',
         color: 'black',
         backgroundColor: {
-          xs: '#9d9a',
-          sm: '#9dda',
+          xs: '#d99a',
+          sm: '#d9da',
           md: '#99da',
-          lg: '#d9da',
-          xl: '#d99a',
+          lg: '#9dda',
+          xl: '#9d9a',
         },
         '&:after': {
           marginInline: 'auto',
