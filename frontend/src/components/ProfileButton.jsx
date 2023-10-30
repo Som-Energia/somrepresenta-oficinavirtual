@@ -109,7 +109,7 @@ function ProfileButton(params) {
 
   const initials = (name) =>
     name
-      .split('')
+      .split(' ')
       .filter((l) => l.trim().toUpperCase() === l)
       .slice(0, 2)
       .join('')
