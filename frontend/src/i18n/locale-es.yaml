@@ -48,6 +48,10 @@ CHANGE_PASSWORD:
   NEW_PASSWORD_TOO_SHORT_ERROR: Demasiado corta
   NEW_PASSWORD_MISSMATCH_ERROR: Las contraseñas no coinciden
   NEW_PASSWORD_SAME_AS_CURRENT_ERROR: No puede ser igual que la actual
+  NEW_PASSWORD_MUST_CONTAIN_LOWERCASE: Ha de contener minúsculas
+  NEW_PASSWORD_MUST_CONTAIN_UPPERCASE: Ha de contener mayúsculas
+  NEW_PASSWORD_MUST_CONTAIN_DIGITS: Ha de contener números
+  NEW_PASSWORD_MUST_CONTAIN_SYMBOLS: Ha de contener símbolos
   CURRENT_PASSWORD_MISSMATCH_ERROR: La contraseña actual no es la correcta
   PASSWORD_CHANGE_SUCCESSFUL: La contraseña se ha cambiado correctamente
 PROFILE:

@@ -42,10 +42,18 @@ function ChangePasswordDialog(params) {
   const newPasswordError =
     newPassword === ''
       ? undefined
-      : newPassword.length < 8
-      ? t('CHANGE_PASSWORD.NEW_PASSWORD_TOO_SHORT_ERROR')
       : newPassword === currentPassword
       ? t('CHANGE_PASSWORD.NEW_PASSWORD_SAME_AS_CURRENT_ERROR')
+      : !/[a-z]/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_LOWERCASE')
+      : !/[A-Z]/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_UPPERCASE')
+      : !/\d/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_DIGITS')
+      : !/[^a-zA-Z0-9]/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_SYMBOLS')
+      : newPassword.length < 8
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_TOO_SHORT_ERROR')
       : undefined
 
   const checkPasswordError =
