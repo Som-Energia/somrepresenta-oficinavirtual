@@ -1,12 +1,20 @@
 from yamlns import ns
 from pydantic import BaseModel
+from typing import Literal
+import enum
+
+# TODO: Use an enum
+Role = Literal[
+    'customer',
+    'staff',
+]
 
 class TokenUser(BaseModel):
     """Minimal user info stored in the jwt token"""
     nif: str
     name: str
     email: str
-    roles: list[str]
+    roles: list[Role]
     avatar: str | None
 
     def data(self):
