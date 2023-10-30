@@ -18,7 +18,6 @@ def requiresToken(f, self, *args, **kwds):
 
 class Erp:
     def __init__(self):
-        dotenv.load_dotenv('.env')
         self.baseurl = os.environ['ERP_BASEURL']
         self.db = os.environ['ERP_DATABASE']
         self.user = os.environ['ERP_USERNAME']
@@ -56,6 +55,7 @@ class Erp:
 
 
 def example():
+    dotenv.load_dotenv('.env')
     e = Erp()
     e.token()
     for staff in e.staff_list():
