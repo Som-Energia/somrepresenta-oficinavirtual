@@ -94,7 +94,7 @@ def dummy_profile_info(user_info: dict) -> UserProfile:
         city = 'Salt',
         zip = '17234',
         state = 'Girona',
-        phone = '555444333',
+        phones = ['555444333'],
         proxy_name = 'Matute Gonzalez, Frasco',
         proxy_nif = '987654321X',
         roles = ['customer'],

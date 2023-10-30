@@ -7,6 +7,7 @@
 - id: 'dummyadmin'
   name: 'Dummy Admin'
   email: 'admin@nowhere.com'
+  phones: ['555444333', '555666777']
   roles: ['admin']
   initials: 'FP'
   avatar: '/logo.svg'
@@ -16,7 +17,7 @@
   email: 'customer@nowhere.com'
   roles: ['customer', 'proxy']
   initials: 'DC'
-  phone: '555444333'
+  phones: ['555444333']
   nif: 12345678Z
   address: Gran Via, 503, 3er 4a
   city: Hospitalet, L'

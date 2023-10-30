@@ -22,7 +22,7 @@ class UserProfile(TokenUser):
     city: str
     zip: str
     state: str
-    phone: str
+    phones: list[str]
     proxy_name: str | None
     proxy_nif: str | None
 

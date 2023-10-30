@@ -53,8 +53,9 @@ export default function ProfilePage(params) {
       label: t('PROFILE.EMAIL'),
     },
     {
-      id: 'phone',
+      id: 'phones',
       label: t('PROFILE.PHONE'),
+      view: (user) => <>{user.phones?.join(', ')}</>,
     },
     {
       id: 'proxy_name',
