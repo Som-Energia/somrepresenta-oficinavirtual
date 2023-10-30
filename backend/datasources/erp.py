@@ -39,9 +39,6 @@ def erp_user_info(login: str):
         print(ns(error=ns.loads(e.json())).dump())
 
 def erp_profile_info(user_info: dict) -> UserProfile:
-    # TODO: call erp.
-    return dummy_profile_info(user_info)
-
     e = Erp()
     return UserProfile(**erp.profile('ES'+user_info['nif']))
 
