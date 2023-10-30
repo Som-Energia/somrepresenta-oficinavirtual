@@ -9,7 +9,6 @@ import Box from '@mui/material/Box'
 import ProfileButton from './ProfileButton'
 import ColorModeButton from './ColorModeButton'
 import LanguageMenu from './LanguageMenu'
-import PagesButtons from './PagesButtons'
 import ClippedDrawer from './ClippedDrawer'
 import Footer from './Footer'
 import useAplicationMetadata from '../hooks/ApplicationMetadata'
@@ -73,18 +72,6 @@ export default function AppFrame(props) {
             </Typography>
           </Box>
 
-          {/* Page selector for bigger devices */}
-          {/*
-          <PagesButtons
-            pages={menuPages}
-            sx={{
-              display: {
-                xs: 'none',
-                sm: 'inline',
-              },
-            }}
-          />
-          */}
           {/* Tool buttons */}
           <ProfileButton sx={{ flexGrow: 1 }} />
           <ColorModeButton />
