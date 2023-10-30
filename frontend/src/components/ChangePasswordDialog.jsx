@@ -105,36 +105,36 @@ function ChangePasswordDialog(params) {
                 checkPasswordError || ' ' // To avoid relayout when no error
               }
             />
-              {isSuccess ? (
-                <Alert severity="success">
-                  {t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')}
-                </Alert>
-              ) : (
-            <DialogActions>
-                  <Button onClick={closeDialog}>Cancel</Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    disabled={
-                      // sending or done
-                      isLoading ||
-                      isSuccess ||
-                      // Any field empty
-                      !currentPassword ||
-                      !newPassword ||
-                      !checkPassword ||
-                      // Any field in error
-                      !!error ||
-                      !!newPasswordError ||
-                      !!checkPasswordError
-                    }
-                  >
-                    {isLoading
-                      ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
-                      : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
-                  </Button>
-            </DialogActions>
-              )}
+            {isSuccess ? (
+              <Alert severity="success">
+                {t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')}
+              </Alert>
+            ) : (
+              <DialogActions>
+                <Button onClick={closeDialog}>Cancel</Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={
+                    // sending or done
+                    isLoading ||
+                    isSuccess ||
+                    // Any field empty
+                    !currentPassword ||
+                    !newPassword ||
+                    !checkPassword ||
+                    // Any field in error
+                    !!error ||
+                    !!newPasswordError ||
+                    !!checkPasswordError
+                  }
+                >
+                  {isLoading
+                    ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
+                    : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
+                </Button>
+              </DialogActions>
+            )}
           </Stack>
         </form>
       </DialogContent>
