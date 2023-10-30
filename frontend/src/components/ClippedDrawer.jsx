@@ -7,8 +7,8 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const drawerWidth = 240
@@ -16,31 +16,27 @@ const drawerWidth = 240
 export default function ClippedDrawer({ sx, open, onClose, items }) {
   const navigate = useNavigate()
   const currentLocation = useLocation()
-  const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
+  const theme = useTheme()
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'))
 
   // Whenever we exit extra small breakpoint left temporary in close state
   React.useEffect(() => {
     if (!isXs && open) {
       onClose()
     }
-  },[isXs])
+  }, [isXs])
 
   return (
     <Drawer
       id="drawer"
-      variant={
-        isXs?
-        "temporary":
-        "permanent"
-      }
+      variant={isXs ? 'temporary' : 'permanent'}
       sx={{
         ...sx,
         width: drawerWidth,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
       }}
-      anchor='left'
+      anchor="left"
       open={open}
       onClose={onClose}
     >
