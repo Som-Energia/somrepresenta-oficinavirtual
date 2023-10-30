@@ -20,10 +20,9 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
   const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Whenever we exit extra small breakpoint left temporary in close state
-  React.useEffect(()=>{
-    if (!isXs) {
+  React.useEffect(() => {
+    if (!isXs && open) {
       onClose()
-      console.log("closing drawer out of extra small")
     }
   },[isXs])
 
