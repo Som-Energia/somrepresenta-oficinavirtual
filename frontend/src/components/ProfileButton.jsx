@@ -109,7 +109,7 @@ function ProfileButton(params) {
 
   const initials = (name) =>
     name
-      .split('')
+      .split(' ')
       .filter((l) => l.trim().toUpperCase() === l)
       .slice(0, 2)
       .join('')
@@ -201,10 +201,13 @@ function ProfileButton(params) {
             <Box
               sx={{
                 marginInlineStart: 1,
+                maxWidth: '12rem',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 display: {
                   xs: 'none',
-                  sm: 'inherit',
+                  sm: 'block',
                 },
               }}
             >

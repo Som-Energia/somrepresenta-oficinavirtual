@@ -42,10 +42,18 @@ function ChangePasswordDialog(params) {
   const newPasswordError =
     newPassword === ''
       ? undefined
-      : newPassword.length < 8
-      ? t('CHANGE_PASSWORD.NEW_PASSWORD_TOO_SHORT_ERROR')
       : newPassword === currentPassword
       ? t('CHANGE_PASSWORD.NEW_PASSWORD_SAME_AS_CURRENT_ERROR')
+      : !/[a-z]/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_LOWERCASE')
+      : !/[A-Z]/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_UPPERCASE')
+      : !/\d/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_DIGITS')
+      : !/[^a-zA-Z0-9]/.test(newPassword)
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_MUST_CONTAIN_SYMBOLS')
+      : newPassword.length < 8
+      ? t('CHANGE_PASSWORD.NEW_PASSWORD_TOO_SHORT_ERROR')
       : undefined
 
   const checkPasswordError =
@@ -97,36 +105,36 @@ function ChangePasswordDialog(params) {
                 checkPasswordError || ' ' // To avoid relayout when no error
               }
             />
-              {isSuccess ? (
-                <Alert severity="success">
-                  {t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')}
-                </Alert>
-              ) : (
-            <DialogActions>
-                  <Button onClick={closeDialog}>Cancel</Button>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    disabled={
-                      // sending or done
-                      isLoading ||
-                      isSuccess ||
-                      // Any field empty
-                      !currentPassword ||
-                      !newPassword ||
-                      !checkPassword ||
-                      // Any field in error
-                      !!error ||
-                      !!newPasswordError ||
-                      !!checkPasswordError
-                    }
-                  >
-                    {isLoading
-                      ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
-                      : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
-                  </Button>
-            </DialogActions>
-              )}
+            {isSuccess ? (
+              <Alert severity="success">
+                {t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGED_PASSWORD')}
+              </Alert>
+            ) : (
+              <DialogActions>
+                <Button onClick={closeDialog}>Cancel</Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={
+                    // sending or done
+                    isLoading ||
+                    isSuccess ||
+                    // Any field empty
+                    !currentPassword ||
+                    !newPassword ||
+                    !checkPassword ||
+                    // Any field in error
+                    !!error ||
+                    !!newPasswordError ||
+                    !!checkPasswordError
+                  }
+                >
+                  {isLoading
+                    ? t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGING_PASSWORD')
+                    : t('CHANGE_PASSWORD.SUBMIT_BUTTON_CHANGE_PASSWORD')}
+                </Button>
+              </DialogActions>
+            )}
           </Stack>
         </form>
       </DialogContent>

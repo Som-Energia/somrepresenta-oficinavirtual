@@ -14,16 +14,28 @@ export default function Footer(params) {
 
   const footerItems = [
     {
-      text: t('APP_FRAME.DISCLAIMER'),
-      url: t('APP_FRAME.DISCLAIMER_URL'),
-    },
-    {
-      text: t('APP_FRAME.PRIVACY_POLICY'),
-      url: t('APP_FRAME.PRIVACY_POLICY_URL'),
-    },
-    {
-      text: 'SOM ENERGIA SCCL',
+      text: t('FOOTER.WEB'),
       url: 'https://somenergia.coop',
+    },
+    {
+      text: t('FOOTER.BLOG'),
+      url: 'https://blog.somenergia.coop',
+    },
+    {
+      text: t('FOOTER.HELP_CENTER'),
+      url: t('FOOTER.HELP_CENTER_URL'),
+    },
+    {
+      text: t('FOOTER.DISCLAIMER'),
+      url: t('FOOTER.DISCLAIMER_URL'),
+    },
+    {
+      text: t('FOOTER.PRIVACY_POLICY'),
+      url: t('FOOTER.PRIVACY_POLICY_URL'),
+    },
+    {
+      text: t('FOOTER.COOKIE_POLICY'),
+      url: t('FOOTER.COOKIE_POLICY_URL'),
     },
   ]
   return (
@@ -43,21 +55,19 @@ export default function Footer(params) {
           sx={{
             display: 'flex',
             flexFlow: 'row wrap',
-            gap: 1,
-            justifyContent: 'space-around',
+            gap: '0 2rem',
+            justifyContent: 'center',
           }}
         >
           {footerItems.map((item) => (
             <Button
               key={item.text}
               href={item.url}
-              color="inherit"
               size="small"
               target="_blank"
+              sx={{ color: 'secondary.dark' }}
             >
-              <Typography variant="body1" sx={{ textTransform: 'none' }}>
-                {item.text}
-              </Typography>
+              {item.text}
             </Button>
           ))}
         </Box>

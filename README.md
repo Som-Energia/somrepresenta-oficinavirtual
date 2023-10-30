@@ -69,6 +69,7 @@ Frontend Config:
 VITE_AUTH_BACKEND=Oauth2 # Delegate auth to an external AuthServer (Google, Keycloak...)
 #VITE_AUTH_BACKEND=Oauth2Local # First party login
 #VITE_AUTH_BACKEND=Dummy # Emulate login with a closed list of users in frontend/src/data/dummyusers.yaml (api calls won't work)
+VITE_ENABLE_BREAKPOINT_INDICATOR=0 # set to 1 to enable in production, always enabled in devel
 ```
 
 ### Application startup
