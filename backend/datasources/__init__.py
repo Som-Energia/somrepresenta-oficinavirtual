@@ -20,5 +20,5 @@ def profile_info(user_info: dict) -> UserProfile:
         dummy = dummy_profile_info,
         erp = erp_profile_info,
     )
-    delegate = delegates.get(delegate_id, dummy_user_info)
+    delegate = delegates.get(delegate_id, dummy_profile_info)
     return delegate(user_info)
