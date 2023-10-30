@@ -201,10 +201,13 @@ function ProfileButton(params) {
             <Box
               sx={{
                 marginInlineStart: 1,
+                maxWidth: '12rem',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 display: {
                   xs: 'none',
-                  sm: 'inherit',
+                  sm: 'block',
                 },
               }}
             >
