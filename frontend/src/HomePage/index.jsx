@@ -59,9 +59,11 @@ export default function HomePage(params) {
     <Box
       sx={{
         width: '100%',
+        minHeight: '80%',
         display: 'flex',
         flexFlow: 'row wrap',
         justifyContent: 'center',
+        alignContent: 'center',
         gap: '10%',
         p: 3,
       }}
