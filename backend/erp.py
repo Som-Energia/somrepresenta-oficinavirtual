@@ -48,10 +48,10 @@ class Erp:
         return self.object_execute('res.users', 'read', ids,)# ['login', 'name'])
 
     def profile(self, vat):
-        return self.object_execute('partner', 'get_profile', vat)
+        return self.object_execute('users', 'get_partner_profile', vat)
 
     def partner(self, vat):
-        return self.object_execute('partner', 'get_partner', vat)
+        return self.object_execute('users', 'get_partner_info', vat)
 
 
 def example():
