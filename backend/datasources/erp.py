@@ -21,7 +21,7 @@ def erp_user_info(login: str):
     print(result.dump())
 
     # TODO: What to do with false emails 
-    if result.email == 'False':
+    if not result.email:
         result.email = result.nif.lower()+'@missingmail.com'
     print(result.dump())
 
