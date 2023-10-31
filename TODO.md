@@ -1,6 +1,13 @@
 # Pending tasks
 
+- [ ] Drawer buttons: close drawer on xs profile menu option taken
+- [ ] Drawer buttons: layout on bottom and equally spaced
+- [ ] Drawer buttons: Turn them into more verbose list items?
 - [ ] rename user_info -> identify_login
+- [ ] BUG: Browser language CA-ES not transformed into CA in language button
+- [ ] Reimplement remote login without the fastapi-oauth2 library:
+    - [ ] The library does a Catch all on all errors exposing the error to the user and hiding trace to devs
+    - [ ] Unable to personalize the jwt token
 - [ ] use polymorfism for data source
 - [ ] Unexpected Error handling: current (unexpected) error handling in fastapi
       hides errors information (trace) and forwards error message to the user.
@@ -35,12 +42,11 @@
 
 - [ ] Auth: non ssr (rest) solution
 - [ ] Auth: Security: Activate PKCE: Proof Key for Code Exchange
-- [ ] Auth: Fix: Logout redirects from frontend server to backend server
 - [ ] Toaster per errors
-- [ ] Auth: `only_http`: make it false for development only, not in production
-- [ ] FastAPIOaut2 Bug: `allow_http` https://github.com/pysnippet/fastapi-oauth2/issues/27
-- [ ] Browser language CA-ES not transformed into CA in language button
-- [ ] Use NavLink for links in route (adds stylable `active` class when the current path)
 - [ ] Use lazy and Suspense for pages for faster loads
-- [ ] Explore the use of Router Dom outlets to move AppFrame outside the pages
 - [ ] Fix: avoid rendering PageGuard childs (lazy?) if not available.
+- [x] Auth: Fix: Logout redirects from frontend server to backend server
+- [x] Use NavLink for links in route (adds stylable `active` class when the current path)
+- [x] Explore the use of Router Dom outlets to move AppFrame outside the pages
+- [x] Auth: `only_http`: make it false for development only, not in production -> fixed, not yet released
+    - [x] FastAPIOaut2 Bug: `allow_http` https://github.com/pysnippet/fastapi-oauth2/issues/27
