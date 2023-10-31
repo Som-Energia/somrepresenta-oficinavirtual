@@ -45,6 +45,7 @@ class AuthLocal_Test(unittest.TestCase):
         self.enterContext(environ('ERP_PROVISIONING_APIKEY', self.apikey))
         self.enterContext(environ('JWT_SECRET', "whatever"))
         self.enterContext(environ('JWT_EXPIRES', "2000"))
+        self.enterContext(environ('DATA_BACKEND', "dummy"))
         app = FastAPI()
         setup_auth(app)
         setup_authlocal(app)

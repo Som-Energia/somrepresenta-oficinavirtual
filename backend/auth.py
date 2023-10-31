@@ -10,6 +10,7 @@ from fastapi.security.utils import get_authorization_scheme_param
 from social_core.backends.google import GoogleOAuth2
 from jose import JWTError, jwt
 from consolemsg import error
+from .datasources import user_info
 
 JWT_ALGORITHM = 'HS256'
 
@@ -41,9 +42,9 @@ async def validated_user(authorization: str = Depends(oauth2)):
 
 def on_auth(auth, user):
     print("on_auth", auth, user)
-    # TODO: Lookup user in ERP
-    # TODO: If new user and require additional data, redirect
-
+    info = user_info(user['username'])
+    if not info:
+        auth_error(f"Not such an user {user['username']}")
 
 def setup_auth(app):
     config = OAuth2Config(

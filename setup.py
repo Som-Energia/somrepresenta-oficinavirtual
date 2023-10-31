@@ -22,6 +22,7 @@ setup(
     ],
     install_requires=[
         'somutils',
+        'python-stdnum',
         'fastapi',
         'fastapi-oauth2',
         'uvicorn[standard]',

@@ -18,7 +18,7 @@ export default function ProfilePage(params) {
       label: t('PROFILE.NAME'),
     },
     {
-      id: 'nif',
+      id: 'vat',
       label: t('PROFILE.VAT'),
     },
     {
@@ -53,8 +53,9 @@ export default function ProfilePage(params) {
       label: t('PROFILE.EMAIL'),
     },
     {
-      id: 'phone',
+      id: 'phones',
       label: t('PROFILE.PHONE'),
+      view: (user) => <>{user.phones?.join(', ')}</>,
     },
     {
       id: 'proxy_name',

@@ -6,6 +6,7 @@ from . import __version__ as version
 from .auth import setup_auth, validated_user
 from .authlocal import setup_authlocal
 from .models import UserProfile, TokenUser
+from .datasources import profile_info
 
 load_dotenv()
 app = FastAPI()
@@ -30,20 +31,7 @@ def apiVersion():
 
 @app.get('/api/me')
 def apiMe(user: dict = Depends(validated_user)) -> UserProfile:
-    # TODO: Either query ERP or have a rich jwt and take data from it
-    default = dict(
-        avatar = user.get('avatar', user.get('picture', None)),
-        nif = '12345678X',
-        address = 'Rue del Percebe, 13',
-        city = 'Salt',
-        zip = '17234',
-        state = 'Girona',
-        phone = '555444333',
-        proxy_name = 'Matute Gonzalez, Frasco',
-        proxy_nif = '987654321X',
-        roles = ['customer'],
-    )
-    return UserProfile(**dict(default, **user))
+    return profile_info(user)
 
 setup_auth(app)
 setup_authlocal(app)
