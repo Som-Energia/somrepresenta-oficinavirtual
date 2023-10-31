@@ -7,9 +7,13 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate, useLocation } from 'react-router-dom'
+import LanguageMenu from './LanguageMenu'
+import ColorModeButton from './ColorModeButton'
+import ProfileButton from './ProfileButton'
 
 const drawerWidth = 240
 
@@ -61,6 +65,14 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
               </ListItemButton>
             )
           })}
+          {isXs? <>
+          <Divider />
+          <ListItem>
+              <ProfileButton></ProfileButton>
+              <ColorModeButton />
+              <LanguageMenu />
+          </ListItem>
+          </>:null}
         </List>
       </Box>
     </Drawer>
