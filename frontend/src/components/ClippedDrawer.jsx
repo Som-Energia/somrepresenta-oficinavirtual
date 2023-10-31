@@ -65,14 +65,16 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
               </ListItemButton>
             )
           })}
-          {isXs? <>
-          <Divider />
-          <ListItem>
-              <ProfileButton></ProfileButton>
-              <ColorModeButton />
-              <LanguageMenu />
-          </ListItem>
-          </>:null}
+          {isXs ? (
+            <>
+              <Divider />
+              <ListItem>
+                <ProfileButton onMenuClose={onClose} />
+                <ColorModeButton />
+                <LanguageMenu />
+              </ListItem>
+            </>
+          ) : null}
         </List>
       </Box>
     </Drawer>
