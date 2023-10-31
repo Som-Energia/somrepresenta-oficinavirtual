@@ -1,24 +1,20 @@
+from yamlns import ns
+from consolemsg import error, success
 from ..models import TokenUser, UserProfile
 from .. import erp
 from ..utils.gravatar import gravatar
-from yamlns import ns
-from consolemsg import error, success
-default_gravatar = 'identicon' # https://docs.gravatar.com/general/images/
+from ..utils.vat import nif2vat
 
 def erp_user_info(login: str):
     e = erp.Erp()
     # TODO: Some nifs have not ES
     # TODO: Some data has trailing \n
-    result = ns(e.partner('ES'+login))
+    # TODO: nif2vat deal with emails
+    result = ns(e.identify(nif2vat(login)))
     if 'error' in result:
         error(result.dump())
         return None
     print('initial', result.dump())
-
-    # TODO: NIF is not VAT
-    if result.nif[:2] == 'ES':
-        result.nif = str(result.nif[2:])
-    print(result.dump())
 
     # TODO: What to do with false emails 
     if not result.email:
@@ -39,6 +35,11 @@ def erp_user_info(login: str):
         print(ns(error=ns.loads(e.json())).dump())
 
 def erp_profile_info(user_info: dict) -> UserProfile:
-    e = Erp()
-    return UserProfile(**erp.profile('ES'+user_info['nif']))
+    e = erp.Erp()
+    retrieved = e.profile(user_info['username'])
+    print(retrieved)
+    try:
+        return UserProfile(**retrieved)
+    except Exception as e:
+        print(e.json())
 

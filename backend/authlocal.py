@@ -80,7 +80,7 @@ def setup_authlocal(app):
             if not user:
                 raise auth_error("Incorrect username")
 
-            auth_ok = authenticate_user(user.nif, form_data.password)
+            auth_ok = authenticate_user(user.username, form_data.password)
             if not auth_ok:
                 raise auth_error("Incorrect password")
             access_token = create_access_token(user.data())
@@ -111,10 +111,10 @@ def setup_authlocal(app):
     ):
         user = TokenUser(**user)
         "Change the password for the Local Authentication"
-        auth_ok = authenticate_user(user.nif, current_password)
+        auth_ok = authenticate_user(user.username, current_password)
         if not auth_ok:
             raise auth_error("Tio que no")
-        set_password(user.nif, new_password)
+        set_password(user.username, new_password)
         return dict(
             result = 'ok',
         )

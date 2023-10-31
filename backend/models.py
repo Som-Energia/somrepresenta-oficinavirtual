@@ -11,7 +11,8 @@ Role = Literal[
 
 class TokenUser(BaseModel):
     """Minimal user info stored in the jwt token"""
-    nif: str
+    username: str
+    vat: str
     name: str
     email: str
     roles: list[Role]
@@ -20,17 +21,16 @@ class TokenUser(BaseModel):
     def data(self):
         return ns(
             self,
-            sub=self.nif,
-            username=self.nif,
+            sub=self.username,
         )
 
 class UserProfile(TokenUser):
-    avatar: str | None
+    avatar: str | None = None
     address: str
     city: str
     zip: str
     state: str
     phones: list[str]
-    proxy_name: str | None
-    proxy_nif: str | None
+    proxy_name: str | None = None
+    proxy_nif: str | None = None
 

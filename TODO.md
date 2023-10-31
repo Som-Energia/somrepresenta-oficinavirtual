@@ -1,5 +1,7 @@
 # Pending tasks
 
+- [ ] rename user_info -> identify_login
+- [ ] use polymorfism for data source
 - [ ] Unexpected Error handling: current (unexpected) error handling in fastapi
       hides errors information (trace) and forwards error message to the user.
       We want to have the full stack in logs/sentry and, because security,

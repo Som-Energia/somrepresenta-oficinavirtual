@@ -18,7 +18,7 @@ export default function ProfilePage(params) {
       label: t('PROFILE.NAME'),
     },
     {
-      id: 'nif',
+      id: 'vat',
       label: t('PROFILE.VAT'),
     },
     {

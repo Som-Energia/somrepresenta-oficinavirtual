@@ -47,11 +47,11 @@ class Erp:
         ids = self.object_execute('res.users', 'search', [['id','<>', False]])
         return self.object_execute('res.users', 'read', ids,)# ['login', 'name'])
 
-    def profile(self, vat):
-        return self.object_execute('users', 'get_partner_profile', vat)
+    def identify(self, vat):
+        return self.object_execute('users', 'identify_login', vat)
 
-    def partner(self, vat):
-        return self.object_execute('users', 'get_partner_info', vat)
+    def profile(self, vat):
+        return self.object_execute('users', 'get_profile', vat)
 
 
 def example():
@@ -61,7 +61,7 @@ def example():
     for staff in e.staff_list():
         print(staff)
     for partner in e.customer_list():
-        print(e.partner(partner['vat']))
+        print(e.identify(partner['vat']))
         print(e.profile(partner['vat']))
 
 if __name__ == '__main__':

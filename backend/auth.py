@@ -42,9 +42,9 @@ async def validated_user(authorization: str = Depends(oauth2)):
 
 def on_auth(auth, user):
     print("on_auth", auth, user)
-    info = user_info(user.get('nif', user['email']))
+    info = user_info(user['username'])
     if not info:
-        auth_error(f"Not such an user {user}")
+        auth_error(f"Not such an user {user['username']}")
 
 def setup_auth(app):
     config = OAuth2Config(
