@@ -23,7 +23,7 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
   const theme = useTheme()
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
 
-  // Whenever we exit extra small breakpoint left temporary in close state
+  // Whenever we exit xs breakpoint, close temporary drawer
   React.useEffect(() => {
     if (!isXs && open) {
       onClose()
@@ -47,6 +47,16 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
       <Toolbar />
       <Box sx={{ overflow: 'auto' }}>
         <List>
+        {isXs ? (
+            <>
+              <ListItem sx={{display: 'flex wrap', width: '100%', justifyContent: 'space-between'}}>
+                <ProfileButton onMenuClose={onClose} />
+                <ColorModeButton />
+                <LanguageMenu />
+              </ListItem>
+              <Divider />
+            </>
+          ) : null}
           {items.map((page, i) => {
             const Icon = page.icon
             return (
@@ -65,16 +75,6 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
               </ListItemButton>
             )
           })}
-          {isXs ? (
-            <>
-              <Divider />
-              <ListItem>
-                <ProfileButton onMenuClose={onClose} />
-                <ColorModeButton />
-                <LanguageMenu />
-              </ListItem>
-            </>
-          ) : null}
         </List>
       </Box>
     </Drawer>
