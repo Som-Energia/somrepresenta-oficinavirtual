@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 export default function PageButton(params) {
   const { route, title, icon: Icon } = params
+
   return (
     <Box sx={{ display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
       <Box
@@ -29,6 +30,7 @@ export default function PageButton(params) {
           to={route}
           style={{
             color: 'inherit',
+            display: 'block',
           }}
         >
           <Icon
