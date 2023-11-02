@@ -20,6 +20,7 @@ export default function PageButton(params) {
           '&:hover': {
             backgroundColor: 'secondary.main',
             color: 'primary.main',
+            transform: 'translateY(-0.4rem)',
             transition: '.2s',
           },
         }}
