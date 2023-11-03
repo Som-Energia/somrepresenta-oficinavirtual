@@ -75,6 +75,7 @@ function ProfileMenu(params) {
 }
 
 function ProfileButton(params) {
+  const { onMenuClose } = params
   const { t, i18n } = useTranslation()
   const { currentUser, login, logout, changePassword } = useAuth()
   const navigate = useNavigate()
@@ -85,6 +86,7 @@ function ProfileButton(params) {
   }
   const closeUserMenu = () => {
     setAnchorElUser(null)
+    onMenuClose && onMenuClose()
   }
   const menuProfile = [
     {

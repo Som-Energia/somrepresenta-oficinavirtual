@@ -7,9 +7,13 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate, useLocation } from 'react-router-dom'
+import LanguageMenu from './LanguageMenu'
+import ColorModeButton from './ColorModeButton'
+import ProfileButton from './ProfileButton'
 
 const drawerWidth = 240
 
@@ -19,7 +23,7 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
   const theme = useTheme()
   const isXs = useMediaQuery(theme.breakpoints.down('sm'))
 
-  // Whenever we exit extra small breakpoint left temporary in close state
+  // Whenever we exit xs breakpoint, close temporary drawer
   React.useEffect(() => {
     if (!isXs && open) {
       onClose()
@@ -43,6 +47,16 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
       <Toolbar />
       <Box sx={{ overflow: 'auto' }}>
         <List>
+        {isXs ? (
+            <>
+              <ListItem sx={{display: 'flex wrap', width: '100%', justifyContent: 'space-between'}}>
+                <ProfileButton onMenuClose={onClose} />
+                <ColorModeButton />
+                <LanguageMenu />
+              </ListItem>
+              <Divider />
+            </>
+          ) : null}
           {items.map((page, i) => {
             const Icon = page.icon
             return (

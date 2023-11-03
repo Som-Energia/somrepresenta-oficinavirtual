@@ -2,10 +2,12 @@ import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
 import ProfileButton from './ProfileButton'
 import ColorModeButton from './ColorModeButton'
 import LanguageMenu from './LanguageMenu'
@@ -15,9 +17,11 @@ import useAplicationMetadata from '../hooks/ApplicationMetadata'
 
 export default function AppFrame(props) {
   const { children } = props
-  const [ isDrawerOpen, openDrawer ] = React.useState(false)
+  const [isDrawerOpen, openDrawer] = React.useState(false)
   const { title, subtitle, logo, menuPages } = useAplicationMetadata()
   const { t, i18n } = useTranslation()
+  const theme = useTheme()
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'))
 
   // TODO: Move styling to the global style
   return (
@@ -34,7 +38,7 @@ export default function AppFrame(props) {
             aria-label={t('APP_FRAME.SECTIONS')}
             aria-controls="drawer"
             color="inherit"
-            onClick={()=>openDrawer((wasOpen)=>!wasOpen)}
+            onClick={() => openDrawer((wasOpen) => !wasOpen)}
             edge="start"
             sx={{
               display: {
@@ -73,15 +77,19 @@ export default function AppFrame(props) {
           </Box>
 
           {/* Tool buttons */}
-          <ProfileButton sx={{ flexGrow: 1 }} />
-          <ColorModeButton />
-          <LanguageMenu />
+          {isXs ? null : (
+            <>
+              <ProfileButton sx={{ flexGrow: 1 }} />
+              <ColorModeButton />
+              <LanguageMenu />
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <Box sx={{ display: 'flex' }}>
         <ClippedDrawer
           open={isDrawerOpen}
-          onClose={()=>openDrawer(false)}
+          onClose={() => openDrawer(false)}
           items={menuPages}
         />
         <Box
