@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "ov-representa"
+version = "0.1.0"
+description = "Virtual office for electricity market representation"
+authors = [
+    { name="Som Energia", email="itcrowd@somenergia.coop" },
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file="LICENSE"}
+keywords = ["virtual office", "invoices", "contracts"]
+
+classifiers = [
+    'Topic :: Office/Business',
+    'Intended Audience :: Customer Service',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Framework :: FastAPI',
+    'Environment :: Web Environment',
+    'Development Status :: 3 - Alpha',
+    'Operating System :: OS Independent',
+    'Natural Language :: Basque',
+    'Natural Language :: Catalan',
+    'Natural Language :: Galician',
+    'Natural Language :: Spanish',
+    'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+]
+dependencies = [
+    'somutils',
+    'python-stdnum',
+    'fastapi',
+    'fastapi-oauth2',
+    'uvicorn[standard]',
+    'consolemsg',
+    'pytest',
+    'pytest-cov',
+    'httpx',
+    'yamlns',
+    'passlib', # local auth
+    'python-multipart', # local auth
+    'authlib', # remote auth
+    'itsdangerous', # remote auth (via SessionMiddleware)
+    'typer[all]', # CLI tool
+    'pygments', # CLI tool
+]
+
+[project.scripts]
+representa-api = "scripts.representa_api:app"
+representa-manage = "scripts.representa_manage:app"
+
+[project.urls]
+Homepage = "https://somenergia.coop"
+Documentation = "https://github.com/som-energia/oficinavirtual-representa"
+Repository = "https://github.com/som-energia/oficinavirtual-representa"
+Changelog = "https://github.com/som-energia/oficinavirtual-representa/blob/master/CHANGELOG.md"
+
+[tool.setuptools.packages]
+find = {}
+
+[tool.coverage.run]
+relative_files = true
+branch = true
+omit = ["**/*test.py"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=wavefile"
+
+
