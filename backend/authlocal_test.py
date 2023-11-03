@@ -35,7 +35,7 @@ class AuthLocal_Test(unittest.TestCase):
     from yamlns.testutils import assertNsEqual
     from somutils.testutils import enterContext
 
-    username = '12345678Z'
+    username = 'ES12345678Z'
     password = 'mypassword'
     apikey = 'PROPER_KEY'
 
@@ -170,7 +170,27 @@ class AuthLocal_Test(unittest.TestCase):
         self.assertResponseEqual(r, "result: ok")
 
         r = self.login_query()
-        token = r.json().get('access_token', "NOT_FOUND")
+        token = 'NOT_FOUND'
+        try: token = r.json().get('access_token', "NOT_FOUND")
+        except: pass
+        self.assertResponseEqual(r, f"""\
+            access_token: {token}
+            token_type: bearer
+        """)
+
+        self.assertEqual(
+            r.cookies.get('Authorization'),
+            f'"Bearer {token}"', # TODO: Why the quotes!???
+        )
+
+    def test_login__proper_with_nif_instead_vat(self):
+        r = self.provisioning_query()
+        self.assertResponseEqual(r, "result: ok")
+
+        r = self.login_query(self.username[2:]) # removing ES
+        token = 'NOT_FOUND'
+        try: token = r.json().get('access_token', "NOT_FOUND")
+        except: pass
         self.assertResponseEqual(r, f"""\
             access_token: {token}
             token_type: bearer

@@ -7,11 +7,12 @@ def dummy_user_info(login: str)->TokenUser:
     """
     This token emulates a erp query on user info for a given username/login.
 
-    When username is a NIF, uses it to fill then email and fills a fake name.
+    When username is a NIF, uses its VAT version to fill then email and fills a fake name.
 
     >>> def p(x): print(ns(x.model_dump()).dump())
     >>> p(dummy_user_info(login='12345678Z'))
-    nif: 12345678Z
+    username: ES12345678Z
+    vat: ES12345678Z
     name: Perico Palotes
     email: 12345678z@nowhere.com
     roles:
@@ -20,10 +21,25 @@ def dummy_user_info(login: str)->TokenUser:
     <BLANKLINE>
 
     When username is an email, extracts the first part as name, and fills a
-    fake nif that depends on the email hash
+    fake vat that depends on the email hash
+
+    >>> def p(x): print(ns(x.model_dump()).dump())
+    >>> p(dummy_user_info(login='12345678Z'))
+    username: ES12345678Z
+    vat: ES12345678Z
+    name: Perico Palotes
+    email: 12345678z@nowhere.com
+    roles:
+    - customer
+    avatar: https://www.gravatar.com/avatar/3c21fd9dfd53a55fc2dccd9927223026?d=identicon&s=128
+    <BLANKLINE>
+
+    When username is an email, extracts the first part as name, and fills a
+    fake vat that depends on the email hash
 
     >>> p(dummy_user_info(login='ahmed.jimenez@noplace.com'))
-    nif: 23435017Z
+    username: ahmed.jimenez@noplace.com
+    vat: ES23435017Z
     name: Ahmed Jimenez
     email: ahmed.jimenez@noplace.com
     roles:
@@ -32,10 +48,11 @@ def dummy_user_info(login: str)->TokenUser:
     <BLANKLINE>
 
     When username is neither a NIF nor an email, considers it a erp username.
-    builds an email out of it, a nif from the hash, and assigns 'staff' role.
+    builds an email out of it, a vat from the hash, and assigns 'staff' role.
 
     >>> p(dummy_user_info(login='Sira Ruiz'))
-    nif: 75881875Z
+    username: ES75881875Z
+    vat: ES75881875Z
     name: Sira Ruiz
     email: sira.ruiz@somenergia.coop
     roles:
@@ -45,7 +62,8 @@ def dummy_user_info(login: str)->TokenUser:
 
     """
 
-    nif = None
+    vat = None
+    username = None
     roles=['customer']
     if '@' in login:
         email = login
@@ -58,14 +76,19 @@ def dummy_user_info(login: str)->TokenUser:
                 .replace('-', ' ')
                 .split()
         )
+        username = email
     else:
         email = '.'.join(
             login.replace('.,', ' ').split()
         ).lower()
-        if login[1:5].isdigit():
+        if login[3:6].isdigit():
+            vatprefix = ''
+            if not login.startswith('ES'):
+                vatprefix = 'ES'
             name = "Perico Palotes"
-            nif = login
+            vat = vatprefix + login
             email += '@nowhere.com'
+            username = vat
         else:
             name = login
             email += '@somenergia.coop'
@@ -74,10 +97,12 @@ def dummy_user_info(login: str)->TokenUser:
         roles=['staff']
     import hashlib
     digest=hashlib.sha1(login.encode('utf8')).digest()
-    nif = nif or (''.join(str(c)[-1] for c in digest)[-8:]+"Z")
+    vat = vat or 'ES'+(''.join(str(c)[-1] for c in digest)[-8:]+"Z")
+    username = username or vat
     avatar = gravatar(email, default=default_gravatar)
     return TokenUser(
-        nif = nif,
+        username = username,
+        vat = vat,
         name = name,
         email = email,
         roles = roles,
@@ -89,7 +114,8 @@ def dummy_profile_info(user_info: dict) -> UserProfile:
     # TODO: Either query ERP or have a rich jwt and take data from it
     default = dict(
         avatar = user_info.get('avatar', user_info.get('picture', None)),
-        nif = '12345678X',
+        username = 'ES12345678X',
+        vat = 'ES12345678X',
         address = 'Rue del Percebe, 13',
         city = 'Salt',
         zip = '17234',
