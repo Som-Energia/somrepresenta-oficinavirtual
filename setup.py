@@ -35,6 +35,8 @@ setup(
         'python-multipart', # local auth
         'authlib', # remote auth
         'itsdangerous', # remote auth (via SessionMiddleware)
+        'typer[all]', # CLI tool
+        'pygments', # CLI tool
     ],
     classifiers = [
         'Programming Language :: Python',
