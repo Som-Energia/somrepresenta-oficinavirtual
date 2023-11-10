@@ -1,7 +1,20 @@
 from yamlns import ns
-from pydantic import BaseModel
-from typing import Literal
+from pydantic import (
+    BaseModel,
+    Field,
+    field_validator,
+    ValidationInfo,
+    AfterValidator,
+    EmailStr,
+)
+from typing import Literal, Annotated
+import stdnum.eu.vat
 import enum
+
+VatNumber = Annotated[
+    str,
+    AfterValidator(stdnum.eu.vat.validate),
+]
 
 # TODO: Use an enum
 Role = Literal[
@@ -11,10 +24,11 @@ Role = Literal[
 
 class TokenUser(BaseModel):
     """Minimal user info stored in the jwt token"""
+
     username: str
-    vat: str
+    vat: VatNumber
     name: str
-    email: str
+    email: EmailStr
     roles: list[Role]
     avatar: str | None
 
@@ -32,5 +46,5 @@ class UserProfile(TokenUser):
     state: str
     phones: list[str]
     proxy_name: str | None = None
-    proxy_nif: str | None = None
+    proxy_nif: VatNumber | None = None
 
