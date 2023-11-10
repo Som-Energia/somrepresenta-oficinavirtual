@@ -67,6 +67,6 @@ branch = true
 omit = ["**/*test.py"]
 
 [tool.pytest.ini_options]
-addopts = "--cov=wavefile"
+addopts = "--doctest-modules --cov=backend"
 
 
