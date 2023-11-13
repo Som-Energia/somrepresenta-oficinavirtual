@@ -46,5 +46,5 @@ class UserProfile(TokenUser):
     state: str
     phones: list[str]
     proxy_name: str | None = None
-    proxy_nif: VatNumber | None = None
+    proxy_vat: VatNumber | None = None
 

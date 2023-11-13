@@ -62,7 +62,7 @@ export default function ProfilePage(params) {
       label: t('PROFILE.PROXY_NAME'),
     },
     {
-      id: 'proxy_nif',
+      id: 'proxy_vat',
       label: t('PROFILE.PROXY_VAT'),
     },
   ]
