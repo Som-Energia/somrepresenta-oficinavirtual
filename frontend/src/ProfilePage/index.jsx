@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../components/AuthProvider'
 import PageGuard from '../components/PageGuard'
+import { vat2nif } from '../services/vat'
 
 export default function ProfilePage(params) {
   const { t, i18n } = useTranslation()
@@ -20,6 +21,7 @@ export default function ProfilePage(params) {
     {
       id: 'vat',
       label: t('PROFILE.VAT'),
+      view: (user) => <>{vat2nif(user.vat)}</>,
     },
     {
       id: 'roles',
@@ -64,6 +66,7 @@ export default function ProfilePage(params) {
     {
       id: 'proxy_vat',
       label: t('PROFILE.PROXY_VAT'),
+      view: (user) => <>{vat2nif(user.proxy_vat)}</>,
     },
   ]
 
