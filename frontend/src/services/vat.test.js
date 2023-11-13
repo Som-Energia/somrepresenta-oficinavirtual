@@ -13,5 +13,10 @@ describe('vat-nif conversion test', () => {
   it('same if foreign vat', () => {
     expect(vat2nif('ATU99999999')).toBe('ATU99999999')
   })
+  it('if undefined return null', () => {
+    expect(vat2nif(undefined)).toBe(null)
+  })
+  it('if falsable return null', () => {
+    expect(vat2nif(false)).toBe(null)
+  })
 })
-
