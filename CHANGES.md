@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased
+
+- Fix: Showing proxy person information for legal entities
+- Improved model validation for vat and email fields
+
 ## 0.1.0 (2023-11-03)
 
 - First release

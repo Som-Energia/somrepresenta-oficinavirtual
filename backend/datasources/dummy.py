@@ -3,6 +3,15 @@ from ..utils.gravatar import gravatar
 from yamlns import ns
 default_gravatar = 'identicon' # https://docs.gravatar.com/general/images/
 
+def dni_from_seed(seed):
+    """Returns a valid but random nif depending on seed string"""
+    import hashlib
+    digest=hashlib.sha1(seed.encode('utf8')).digest()
+    dnistr = ''.join(str(c)[-1] for c in digest)[-8:]
+    dniint = int(dnistr)
+    checkdigit = "TRWAGMYFPDXBNJZSQVHLCKE"[dniint%23]
+    return 'ES'+dnistr+checkdigit
+
 def dummy_user_info(login: str)->TokenUser:
     """
     This token emulates a erp query on user info for a given username/login.
@@ -39,7 +48,7 @@ def dummy_user_info(login: str)->TokenUser:
 
     >>> p(dummy_user_info(login='ahmed.jimenez@noplace.com'))
     username: ahmed.jimenez@noplace.com
-    vat: ES23435017Z
+    vat: ES23435017H
     name: Ahmed Jimenez
     email: ahmed.jimenez@noplace.com
     roles:
@@ -51,8 +60,8 @@ def dummy_user_info(login: str)->TokenUser:
     builds an email out of it, a vat from the hash, and assigns 'staff' role.
 
     >>> p(dummy_user_info(login='Sira Ruiz'))
-    username: ES75881875Z
-    vat: ES75881875Z
+    username: ES75881875E
+    vat: ES75881875E
     name: Sira Ruiz
     email: sira.ruiz@somenergia.coop
     roles:
@@ -95,9 +104,7 @@ def dummy_user_info(login: str)->TokenUser:
 
     if email.endswith('@somenergia.coop'):
         roles=['staff']
-    import hashlib
-    digest=hashlib.sha1(login.encode('utf8')).digest()
-    vat = vat or 'ES'+(''.join(str(c)[-1] for c in digest)[-8:]+"Z")
+    vat = vat or dni_from_seed(login)
     username = username or vat
     avatar = gravatar(email, default=default_gravatar)
     return TokenUser(
@@ -122,7 +129,7 @@ def dummy_profile_info(user_info: dict) -> UserProfile:
         state = 'Girona',
         phones = ['555444333'],
         proxy_name = 'Matute Gonzalez, Frasco',
-        proxy_nif = '987654321X',
+        proxy_vat = '987654321X',
         roles = ['customer'],
     )
     return UserProfile(**dict(default, **user_info))

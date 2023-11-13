@@ -39,6 +39,7 @@ dependencies = [
     'pytest-cov',
     'httpx',
     'yamlns',
+    'pydantic[email]',
     'passlib', # local auth
     'python-multipart', # local auth
     'authlib', # remote auth
@@ -66,6 +67,6 @@ branch = true
 omit = ["**/*test.py"]
 
 [tool.pytest.ini_options]
-addopts = "--cov=wavefile"
+addopts = "--doctest-modules --cov=backend"
 
 
