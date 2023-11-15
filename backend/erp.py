@@ -53,6 +53,9 @@ class Erp:
     def profile(self, vat):
         return self.object_execute('users', 'get_profile', vat)
 
+    def sign_document(self, username, document):
+        return self.object_execute('users', 'sign_document', username, document)
+
 
 def example():
     dotenv.load_dotenv('.env')

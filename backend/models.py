@@ -22,6 +22,13 @@ Role = Literal[
     'staff',
 ]
 
+class SignatureResult(BaseModel):
+    signed_version: str # TODO: Restrict to iso datetime
+
+class SignedDocument(BaseModel):
+    document: str
+    version: str
+
 class TokenUser(BaseModel):
     """Minimal user info stored in the jwt token"""
 
@@ -47,4 +54,5 @@ class UserProfile(TokenUser):
     phones: list[str]
     proxy_name: str | None = None
     proxy_vat: VatNumber | None = None
+    signed_documents: list[SignedDocument]
 

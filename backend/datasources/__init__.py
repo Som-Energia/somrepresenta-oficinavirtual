@@ -1,7 +1,7 @@
 import os
 from .dummy import dummy_user_info, dummy_profile_info
-from .erp import erp_user_info, erp_profile_info
-from ..models import TokenUser, UserProfile
+from .erp import erp_user_info, erp_profile_info, erp_sign_document
+from ..models import TokenUser, UserProfile, SignatureResult
 
 # TODO: Use classes and polymorphism
 
@@ -22,3 +22,7 @@ def profile_info(user_info: dict) -> UserProfile:
     )
     delegate = delegates.get(delegate_id, dummy_profile_info)
     return delegate(user_info)
+
+
+def sign_document(username: str, document: str) -> SignatureResult:
+    return erp_sign_document(username, document)
