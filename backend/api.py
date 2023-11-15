@@ -33,6 +33,6 @@ def apiVersion():
 def apiMe(user: dict = Depends(validated_user)) -> UserProfile:
     return profile_info(user)
 
-setup_auth(app)
+#setup_auth(app)
 setup_authlocal(app)
 

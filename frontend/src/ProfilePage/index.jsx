@@ -10,6 +10,8 @@ import { useAuth } from '../components/AuthProvider'
 import PageGuard from '../components/PageGuard'
 import { vat2nif } from '../services/vat'
 
+const viewRoleOnProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_ON_PROFILE == false // intended ==
+
 export default function ProfilePage(params) {
   const { t, i18n } = useTranslation()
   const { currentUser } = useAuth()
@@ -33,6 +35,7 @@ export default function ProfilePage(params) {
           ))}
         </>
       ),
+      hide: (user) => viewRoleOnProfile,
     },
     {
       id: 'address',
@@ -62,11 +65,13 @@ export default function ProfilePage(params) {
     {
       id: 'proxy_name',
       label: t('PROFILE.PROXY_NAME'),
+      hide: (user) => !user.proxy_vat,
     },
     {
       id: 'proxy_vat',
       label: t('PROFILE.PROXY_VAT'),
       view: (user) => <>{vat2nif(user.proxy_vat)}</>,
+      hide: (user) => !user.proxy_vat,
     },
   ]
 
@@ -97,6 +102,8 @@ export default function ProfilePage(params) {
           </Avatar>
         </Box>
         {fields.map((field) => {
+          if (field.hide && field.hide(currentUser))
+            return null
           return (
             <React.Fragment key={field.id}>
               <Box sx={{ textAlign: 'right' }}>

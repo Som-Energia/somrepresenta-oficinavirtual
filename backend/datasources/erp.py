@@ -19,8 +19,8 @@ def erp_user_info(login: str):
 
     try:
         return TokenUser(**result)
-    except Exception as error:
-        print(ns(error=ns.loads(error.json())).dump())
+    except Exception as exception:
+        print(ns(error=ns.loads(exception.json())).dump())
         raise
 
 def erp_profile_info(user_info: dict) -> UserProfile:
@@ -28,7 +28,7 @@ def erp_profile_info(user_info: dict) -> UserProfile:
     retrieved = e.profile(user_info['username'])
     try:
         return UserProfile(**retrieved)
-    except Exception as error:
-        print(ns(error=ns.loads(error.json())).dump())
+    except Exception as exception:
+        print(ns(error=ns.loads(exception.json())).dump())
         raise
 
