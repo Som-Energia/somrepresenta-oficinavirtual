@@ -4,6 +4,11 @@
 
 - Fix: Showing proxy person information for legal entities
 - Improved model validation for vat and email fields
+- Profile: Hide proxy fields for physical persons
+- Profile: Hide roles (if VITE_ENABLE_VIEW_ROLE_ON_PROFILE)
+- Upgrade Notes:
+    - Added frontend/.env  VITE_ENABLE_VIEW_ROLE_ON_PROFILE
+
 
 ## 0.1.0 (2023-11-03)
 
