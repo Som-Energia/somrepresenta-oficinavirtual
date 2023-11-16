@@ -47,9 +47,15 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
       <Toolbar />
       <Box sx={{ overflow: 'auto' }}>
         <List>
-        {isXs ? (
+          {isXs ? (
             <>
-              <ListItem sx={{display: 'flex wrap', width: '100%', justifyContent: 'space-between'}}>
+              <ListItem
+                sx={{
+                  display: 'flex wrap',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <ProfileButton onMenuClose={onClose} />
                 <ColorModeButton />
                 <LanguageMenu />

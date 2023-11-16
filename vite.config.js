@@ -10,7 +10,7 @@ export default defineConfig({
   },
   root: 'frontend',
   define: {
-    '__APP_VERSION__': JSON.stringify(process.env.npm_package_version),
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
   plugins: [react(), ViteYaml(), svgr()],
   server: {

@@ -32,6 +32,9 @@ api-deps:
 api-test:
 	.venv/bin/pytest
 
+style:
+	node_modules/.bin/prettier --write . --config frontend/.prettierrc.yaml
+
 
 
 define HELP

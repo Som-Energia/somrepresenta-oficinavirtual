@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper'
 
 import { useTranslation } from 'react-i18next'
 
-function RgpdPage({document}) {
+function RgpdPage({ document }) {
   const { t, i18n } = useTranslation()
 
   const [error, setError] = React.useState(false)
@@ -19,8 +19,7 @@ function RgpdPage({document}) {
     try {
       const result = await ov.signDocument(document)
       console.log(result)
-    }
-    catch (e) {
+    } catch (e) {
       setError(e)
     }
   }
@@ -63,7 +62,7 @@ function RgpdCheck({ children }) {
     document: 'RGPD_OV_REPRESENTA',
     version: '2023-11-09 00:00:00',
   }
-  return <RgpdPage document={requiredDocuments.document+'CACA'} />
+  return <RgpdPage document={requiredDocuments.document + 'CACA'} />
   if (currentUser.signed_documents !== requiredDocuments) incluido
   return <RgpdPage />
   return children

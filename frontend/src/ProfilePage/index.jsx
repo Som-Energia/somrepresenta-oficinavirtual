@@ -102,8 +102,7 @@ export default function ProfilePage(params) {
           </Avatar>
         </Box>
         {fields.map((field) => {
-          if (field.hide && field.hide(currentUser))
-            return null
+          if (field.hide && field.hide(currentUser)) return null
           return (
             <React.Fragment key={field.id}>
               <Box sx={{ textAlign: 'right' }}>
