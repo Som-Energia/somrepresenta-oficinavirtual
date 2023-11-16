@@ -33,7 +33,7 @@ def apiVersion():
 def apiMe(user: dict = Depends(validated_user)) -> UserProfile:
     return profile_info(user)
 
-@app.get('/api/sign_document')
+@app.post('/api/sign_document/{document}')
 def apiSignDocument(document: str, user: dict = Depends(validated_user)) -> SignatureResult:
     return sign_document(user['username'], document)
 

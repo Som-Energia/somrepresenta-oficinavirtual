@@ -88,10 +88,31 @@ async function localChangePassword(currentPassword, newPassword) {
     })
 }
 
+async function signDocument(documentName) {
+  // TODO: escape document_name 
+  const response = await fetch(`/api/sign_document/${documentName}`, {
+    method: 'POST',
+  })
+  .catch((error) => {
+    console.log('Error received', error.response.json())
+    throw 'Unable to sign document'
+  })
+  .then(async (response) => {
+      console.log("Response", response)
+      if (!response.ok) {
+        throw `Unable to sign document: ${await response.text()}`
+      }
+      return response.json()
+    })
+  
+  return response
+}
+
 export default {
   logout,
   localLogin,
   externalLogin,
   localChangePassword,
   currentUser,
+  signDocument,
 }
