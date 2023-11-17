@@ -18,7 +18,11 @@ describe('firstPendingDocument', () => {
 
   it('Single document to sign', () => {
     const required = [docversion('doc1', date1)]
+    console.log('required inside', required)
     const signed = []
-    expect(firstPendingDocument(signed, required)).toBe(null)
+    expect(firstPendingDocument(signed, required)).toBe({
+      document: 'doc1',
+      version: date1,
+    })
   })
 })
