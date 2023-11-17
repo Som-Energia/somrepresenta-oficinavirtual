@@ -56,6 +56,21 @@ class Erp:
     def sign_document(self, username, document):
         return self.object_execute('users', 'sign_document', username, document)
 
+    def list_signatures(self, username, document=None):
+        """Only for debug purposes"""
+        document_query = [['document_version.type.code', '=', document]] if document else []
+        ids = self.object_execute('signed.document', 'search', [['signer.vat', '=', username]]+document_query)
+        signatures = self.object_execute('signed.document', 'read', ids)
+        return signatures
+
+    def clear_signatures(self, username, document=None):
+        """Only for debug purposes"""
+        document_query = [['document_version.type.code', '=', document]] if document else []
+        ids = self.object_execute('signed.document', 'search', [['signer.vat', '=', username]]+document_query)
+        deleted = self.object_execute('signed.document', 'read', ids)
+        self.object_execute('signed.document', 'unlink', ids)
+        return deleted
+
 
 def example():
     dotenv.load_dotenv('.env')
