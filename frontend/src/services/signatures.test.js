@@ -39,4 +39,9 @@ describe('firstPendingDocument', () => {
       version: date2,
     })
   })
+  it('Newer versions signed, no signature required', () => {
+    const required = [docversion('doc1', date1)]
+    const signed = [docversion('doc1', date2)]
+    expect(firstPendingDocument(required, signed)).toBe(null)
+  })
 })

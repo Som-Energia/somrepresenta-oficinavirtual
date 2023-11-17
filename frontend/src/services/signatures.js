@@ -7,7 +7,7 @@ function firstPendingDocument(requiredDocuments, signedDocuments) {
   if (requiredDocuments.length > 0) {
     const required = requiredDocuments[0]
     if (signed[required.document] === undefined) return required
-    if (signed[required.document] !== required.version) return required
+    if (signed[required.document] < required.version) return required
   }
   return null
 
