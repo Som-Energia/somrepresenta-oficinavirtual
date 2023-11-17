@@ -19,6 +19,26 @@ APP_FRAME:
   CHOOSE_USER: Escoge usuaria
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Se requiere usuaria
+TERMS:
+  UNEXPECTED_ERROR: Error inexperado
+  ACCEPT: Acepto
+  RGPD_TITLE: Información sobre protección de datos
+  RGPD_BODY_MARKDOWN: |
+    **RESPONSABLE:** SOMENERGIA SCCL., Pic de la Peguera, 11 17003 Girona (GIRONA),
+    somenergia@delegado-datos.com F55091367
+
+    **FINALIDAD:** Gestionar la tramitación de tu solicitud. TODO: Parece copiado de otro que no corresponde
+
+    **LEGITIMIDAD:** Relación contractual y/o consentimiento del interesado.
+
+    **CESIONES:** No están previstas cesiones de datos a terceros, excepto obligación legal.
+
+    **CONSERVACIÓN:** Durante los plazos de conservación exigidos legalmente para atender eventuales responsabilidades, mientras dure la relación contractual y también una vez esta haya finalizado.
+
+    **DERECHOS:** Bla, bla, bla. Lorena ictus.
+    En caso de divergencias con la entidad en relación con el tratamiento de tus datos, puedes presentar una reclamación ante la Autoridad de Protección de Datos (www.aepd.es).
+
+  RGPD_ACCEPT: Acepto el tratamiento de mis datos
 FOOTER:
   WEB: Web
   BLOG: Blog

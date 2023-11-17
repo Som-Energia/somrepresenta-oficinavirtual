@@ -1,0 +1,9 @@
+- document: RGPD_OV_REPRESENTA
+  version: '2023-11-09 00:00:00'
+  title: TERMS.RGPD_TITLE
+  body: TERMS.RGPD_BODY_MARKDOWN
+  accept: TERMS.RGPD_ACCEPT
+#- document: MY_DOCUMENT
+#  version: '2023-11-09 00:00:00'
+#  title: TERMS.MY_TERMS_TITLE
+#  body: TERMS.MY_TERMS_BODY_MARKDOWN

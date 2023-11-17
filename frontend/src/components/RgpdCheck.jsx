@@ -1,71 +1,101 @@
 import React, { Children } from 'react'
-import { useAuth } from './AuthProvider'
-import ov from '../services/ovapi'
-
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
-
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
+import MuiMarkdown from 'mui-markdown'
+import { useAuth } from './AuthProvider'
+import ov from '../services/ovapi'
+import requiredDocuments from '../data/terms.yaml'
 
-function RgpdPage({ document }) {
+function RgpdPage(props) {
+  const { document, title, body, accept, onAccept, onReject } = props
   const { t, i18n } = useTranslation()
-
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [error, setError] = React.useState(false)
 
   async function handleAccept() {
     try {
       const result = await ov.signDocument(document)
-      console.log(result)
+      console.log({ result })
+      console.log({ onAccept })
+      onAccept && onAccept()
     } catch (e) {
+      console.log(e)
       setError(e)
     }
   }
 
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexFlow: 'column',
-        alignItems: 'center',
-        p: 2,
-      }}
-    >
-      <Paper
+    <Dialog open fullScreen={fullScreen} scroll="paper">
+      <DialogTitle>{t(title)}</DialogTitle>
+      <DialogContent
         sx={{
           display: 'flex',
           flexFlow: 'column',
           alignItems: 'left',
           p: 2,
           gap: 2,
+          maxWidth: '50rem',
         }}
       >
-        <Typography variant="h4">{t('APP_FRAME.RGPD')}</Typography>
-        <Typography variant="body1">{t('APP_FRAME.RGPD_TEXT')}</Typography>
+        <Container>
+          <MuiMarkdown>{t(body)}</MuiMarkdown>
+        </Container>
+      </DialogContent>
 
-        <Box color="error.main">{error}</Box>
-        <Box sx={{ display: 'flex', gap: 3 }}>
-          <Button variant="contained" color="primary" onClick={handleAccept}>
-            {t('APP_FRAME.ACCEPT_CONDITIONS')}
-          </Button>
+      {error ? (
+        <Box color="error.main">
+          <Container>
+            {t('TERMS.UNEXPECTED_ERROR')}: {error}
+          </Container>
         </Box>
-      </Paper>
-    </Container>
+      ) : null}
+
+      <DialogActions>
+        <Button variant="contained" color="secondary" onClick={onReject}>
+          {t('APP_FRAME.MENU_LOGOUT')}
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleAccept}>
+          {accept ? t(accept) : t('TERMS.ACCEPT')}
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }
 
-function RgpdCheck({ children }) {
-  const { currentUser } = useAuth()
-  const requiredDocuments = {
-    document: 'RGPD_OV_REPRESENTA',
-    version: '2023-11-09 00:00:00',
+function firstPendingDocument(requiredDocuments, signedDocuments) {
+  const signed = Object.fromEntries(signedDocuments.map((d) => [d.document, d.version]))
+  for (const required of requiredDocuments) {
+    const signedVersion = signed[required.document]
+    // Not signed ever
+    if (signedVersion === undefined) return required
+    // Signed but an older version
+    if (signedVersion < required.version) return required
   }
-  return <RgpdPage document={requiredDocuments.document + 'CACA'} />
-  if (currentUser.signed_documents !== requiredDocuments) incluido
-  return <RgpdPage />
-  return children
+  return null
+}
+
+function RgpdCheck({ children }) {
+  const { currentUser, logout, reloadUser } = useAuth()
+
+  if (!currentUser) return children
+
+  const tosign = firstPendingDocument(requiredDocuments, currentUser.signed_documents)
+  if (tosign === null) return children
+
+  console.log({ reloadUser })
+
+  return <RgpdPage {...tosign} onAccept={reloadUser} onReject={logout} />
 }
 
 export default RgpdCheck
