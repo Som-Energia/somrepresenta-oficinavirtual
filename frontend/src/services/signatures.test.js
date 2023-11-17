@@ -13,16 +13,21 @@ describe('firstPendingDocument', () => {
   it('No documents to sign', () => {
     const required = []
     const signed = []
-    expect(firstPendingDocument(signed, required)).toBe(null)
+    expect(firstPendingDocument(required, signed)).toBe(null)
   })
 
   it('Single document to sign', () => {
     const required = [docversion('doc1', date1)]
-    console.log('required inside', required)
     const signed = []
-    expect(firstPendingDocument(signed, required)).toBe({
+    expect(firstPendingDocument(required, signed)).toStrictEqual({
       document: 'doc1',
       version: date1,
     })
+  })
+
+  it('Single document already signed', () => {
+    const required = [docversion('doc1', date1)]
+    const signed = [docversion('doc1', date1)]
+    expect(firstPendingDocument(required, signed)).toBe(null)
   })
 })
