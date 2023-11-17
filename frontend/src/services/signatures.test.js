@@ -54,4 +54,13 @@ describe('firstPendingDocument', () => {
       version: date1,
     })
   })
+
+  it('First unsigned document takes precedence', () => {
+    const required = [docversion('doc1', date1), docversion('doc2', date1)]
+    const signed = []
+    expect(firstPendingDocument(required, signed)).toStrictEqual({
+      document: 'doc1',
+      version: date1,
+    })
+  })
 })
