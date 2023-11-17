@@ -8,7 +8,7 @@ describe('firstPendingDocument', () => {
     return { document, version }
   }
   var date1 = '2001-01-01 00:00:00'
-  var date2 = '2001-01-01 00:00:00'
+  var date2 = '2002-02-02 00:00:00'
 
   it('No documents to sign', () => {
     const required = []
@@ -29,5 +29,14 @@ describe('firstPendingDocument', () => {
     const required = [docversion('doc1', date1)]
     const signed = [docversion('doc1', date1)]
     expect(firstPendingDocument(required, signed)).toBe(null)
+  })
+
+  it('Old version signed, requires updated signature', () => {
+    const required = [docversion('doc1', date2)]
+    const signed = [docversion('doc1', date1)]
+    expect(firstPendingDocument(required, signed)).toStrictEqual({
+      document: 'doc1',
+      version: date2,
+    })
   })
 })
