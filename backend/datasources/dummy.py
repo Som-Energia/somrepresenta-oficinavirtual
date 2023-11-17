@@ -129,8 +129,9 @@ def dummy_profile_info(user_info: dict) -> UserProfile:
         state = 'Girona',
         phones = ['555444333'],
         proxy_name = 'Matute Gonzalez, Frasco',
-        proxy_vat = '987654321X',
+        proxy_vat = 'ES87654321X',
         roles = ['customer'],
+        signed_documents = [],
     )
     return UserProfile(**dict(default, **user_info))
 
