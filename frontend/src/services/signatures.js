@@ -6,8 +6,9 @@ function firstPendingDocument(requiredDocuments, signedDocuments) {
   const signed = Object.fromEntries(signedDocuments.map((d) => [d.document, d.version]))
   if (requiredDocuments.length > 0) {
     const required = requiredDocuments[0]
-    if (signed[required.document] === undefined) return required
-    if (signed[required.document] < required.version) return required
+    const signedVersion = signed[required.document]
+    if (signedVersion === undefined) return required
+    if (signedVersion < required.version) return required
   }
   return null
 
