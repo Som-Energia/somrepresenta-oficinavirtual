@@ -17,7 +17,7 @@ import NotYetImplementedPage from './NotYetImplementedPage'
 import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
-import RgpdCheck from './components/RgpdCheck'
+import TermsCheck from './components/TermsCheck'
 import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
 import ProfilePage from './ProfilePage'
@@ -32,9 +32,9 @@ const routes = [
               <ScrollRestoration /> {/* Scroll up on page switch */}
               <BreakPointIndicator />
               <AppFrame>
-                <RgpdCheck>
+                <TermsCheck>
                   <Outlet />
-                </RgpdCheck>
+                </TermsCheck>
               </AppFrame>
             </AuthProvider>
           </CookiesProvider>

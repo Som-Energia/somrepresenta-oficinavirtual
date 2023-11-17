@@ -1,3 +1,9 @@
+/**
+A terms checker ask the user for certain terms and conditions
+to be accepted before continuing using the application.
+The different terms to be accepted separatelly are configured
+in a yaml file.
+*/
 import React, { Children } from 'react'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
@@ -16,7 +22,7 @@ import { useAuth } from './AuthProvider'
 import ov from '../services/ovapi'
 import requiredDocuments from '../data/terms.yaml'
 
-function RgpdPage(props) {
+function TermsDialog(props) {
   const { document, title, body, accept, onAccept, onReject } = props
   const { t, i18n } = useTranslation()
   const theme = useTheme()
@@ -85,7 +91,7 @@ function firstPendingDocument(requiredDocuments, signedDocuments) {
   return null
 }
 
-function RgpdCheck({ children }) {
+function TermsCheck({ children }) {
   const { currentUser, logout, reloadUser } = useAuth()
 
   if (!currentUser) return children
@@ -95,7 +101,7 @@ function RgpdCheck({ children }) {
 
   console.log({ reloadUser })
 
-  return <RgpdPage {...tosign} onAccept={reloadUser} onReject={logout} />
+  return <TermsDialog {...tosign} onAccept={reloadUser} onReject={logout} />
 }
 
-export default RgpdCheck
+export default TermsCheck
