@@ -63,6 +63,7 @@ describe('firstPendingDocument', () => {
       version: date1,
     })
   })
+
   it('additional fields on required documents traspassed', () => {
     const required = [docversion('doc1', date1)]
     required[0].additional_field = 'additional value'
@@ -72,5 +73,20 @@ describe('firstPendingDocument', () => {
       version: date1,
       additional_field: 'additional value',
     })
+  })
+
+  it('undefined signed as empty', () => {
+    const required = [docversion('doc1', date1)]
+    const signed = undefined
+    expect(firstPendingDocument(required, signed)).toStrictEqual({
+      document: 'doc1',
+      version: date1,
+    })
+  })
+
+  it('undefined required as empty', () => {
+    const required = undefined
+    const signed = [docversion('doc1', date1)]
+    expect(firstPendingDocument(required, signed)).toBe(null)
   })
 })
