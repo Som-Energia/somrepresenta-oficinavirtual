@@ -89,8 +89,8 @@ async function localChangePassword(currentPassword, newPassword) {
 }
 
 async function signDocument(documentName) {
-  // TODO: escape document_name
-  const response = await fetch(`/api/sign_document/${documentName}`, {
+  const encodedDocument = encodeURIComponent(documentName)
+  const response = await fetch(`/api/sign_document/${encodedDocument}`, {
     method: 'POST',
   })
     .catch((error) => {
