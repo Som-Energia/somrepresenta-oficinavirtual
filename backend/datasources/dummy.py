@@ -160,3 +160,14 @@ def dummy_sign_document(username: str, document: str) -> SignatureResult:
         signed_version = current_version,
     )
 
+
+class DummyBackend():
+    def user_info(self, login: str) -> TokenUser | None:
+        return dummy_user_info(login)
+
+    def profile_info(self, user_info: dict) -> UserProfile:
+        return dummy_profile_info(user_info)
+
+    def sign_document(self, username: str, document: str) -> SignatureResult:
+        return dummy_sign_document(username, document)
+

@@ -54,3 +54,14 @@ def erp_sign_document(username: str, document: str) -> SignatureResult:
     except Exception as exception:
         print(ns(error=ns.loads(exception.json())).dump())
         raise
+
+class ErpBackend():
+    def user_info(self, login: str) -> TokenUser | None:
+        return erp_user_info(login)
+
+    def profile_info(self, user_info: dict) -> UserProfile:
+        return erp_profile_info(user_info)
+
+    def sign_document(self, username: str, document: str) -> SignatureResult:
+        return erp_sign_document(username, document)
+

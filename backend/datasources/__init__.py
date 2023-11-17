@@ -1,28 +1,25 @@
 import os
-from .dummy import dummy_user_info, dummy_profile_info
-from .erp import erp_user_info, erp_profile_info, erp_sign_document
+from .dummy import DummyBackend
+from .erp import ErpBackend
 from ..models import TokenUser, UserProfile, SignatureResult
 
-# TODO: Use classes and polymorphism
+def backend():
+    # Is important not to cache the result it so that
+    # tests can change the environment.
+    delegate_id = os.environ.get("DATA_BACKEND", "dummy")
+    delegates = dict(
+        dummy = DummyBackend,
+        erp = ErpBackend,
+    )
+    delegate = delegates.get(delegate_id, DummyBackend)
+    return delegate()
 
 def user_info(login: str) -> TokenUser:
-    delegate_id = os.environ.get("DATA_BACKEND", "dummy")
-    delegates = dict(
-        dummy = dummy_user_info,
-        erp = erp_user_info,
-    )
-    delegate = delegates.get(delegate_id, dummy_user_info)
-    return delegate(login)
+    return backend().user_info(login)
 
 def profile_info(user_info: dict) -> UserProfile:
-    delegate_id = os.environ.get("DATA_BACKEND", "dummy")
-    delegates = dict(
-        dummy = dummy_profile_info,
-        erp = erp_profile_info,
-    )
-    delegate = delegates.get(delegate_id, dummy_profile_info)
-    return delegate(user_info)
-
+    return backend().profile_info(user_info)
 
 def sign_document(username: str, document: str) -> SignatureResult:
-    return erp_sign_document(username, document)
+    return backend().sign_document(username, document)
+
