@@ -19,6 +19,7 @@ const noFunction = () => undefined
 const AuthContext = React.createContext({
   login: noFunction,
   logout: noFunction,
+  reloadUser: noFunction,
   currentUser: null,
 })
 
@@ -82,16 +83,23 @@ function AuthProvider({ children }) {
     return null
   }
 
-  React.useEffect(() => {
+  const reloadUser = React.useCallback(() => {
+    console.log('Reloading user')
     ov.currentUser().then((user) => setCurrentUser(user))
+  })
+
+  React.useEffect(() => {
+    reloadUser()
   }, [])
 
+  console.log({ login, logout, currentUser, reloadUser })
   return (
     <AuthContext.Provider
       value={{
         login,
         logout,
         currentUser,
+        reloadUser,
       }}
     >
       {children}

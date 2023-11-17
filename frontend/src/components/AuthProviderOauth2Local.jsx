@@ -18,6 +18,7 @@ const noFunction = () => undefined
 const AuthContext = React.createContext({
   login: noFunction,
   logout: noFunction,
+  reloadUser: noFunction,
   currentUser: null,
 })
 
@@ -32,7 +33,7 @@ function AuthProvider({ children }) {
     console.error('Parsing user info', e)
   }
   const setCurrentUser = (user) => setUser(JSON.stringify(user))
-  const updateUser = () => {
+  const reloadUser = () => {
     ov.currentUser().then((user) => setCurrentUser(user))
   }
 
@@ -42,7 +43,7 @@ function AuthProvider({ children }) {
         <LoginDialog
           closeDialog={() => {
             closeDialog()
-            updateUser()
+            reloadUser()
           }}
         />
       ),
@@ -72,7 +73,7 @@ function AuthProvider({ children }) {
   }
 
   React.useEffect(() => {
-    updateUser()
+    reloadUser()
   }, [])
 
   return (
@@ -80,6 +81,7 @@ function AuthProvider({ children }) {
       value={{
         login,
         logout,
+        reloadUser,
         currentUser,
         changePassword,
       }}
