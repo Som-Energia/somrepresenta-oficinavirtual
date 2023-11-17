@@ -1,7 +1,11 @@
-from ..models import TokenUser, UserProfile
+from ..models import TokenUser, UserProfile, SignatureResult
 from ..utils.gravatar import gravatar
 from yamlns import ns
 default_gravatar = 'identicon' # https://docs.gravatar.com/general/images/
+
+# Fake signed documents repository
+# Empties whenever the app is reloaded
+_signed_documents = ns()
 
 def dni_from_seed(seed):
     """Returns a valid but random nif depending on seed string"""
@@ -133,5 +137,26 @@ def dummy_profile_info(user_info: dict) -> UserProfile:
         roles = ['customer'],
         signed_documents = [],
     )
-    return UserProfile(**dict(default, **user_info))
+    profile = UserProfile(**dict(default, **user_info))
+    profile.signed_documents = [
+        dict(
+            document=document,
+            version=version,
+        )
+        for document, version in _signed_documents.setdefault(profile.username, dict()).items()
+    ]
+    return profile
+
+
+def dummy_sign_document(username: str, document: str) -> SignatureResult:
+    versions = ns.loads("""
+        RGPD_OV_REPRESENTA: '2023-11-09 00:00:00'
+    """)
+    current_version = versions.get(document)
+    if not current_version:
+        raise Exception("No such document")
+    _signed_documents.setdefault(username, ns())[document] = current_version
+    return SignatureResult(
+        signed_version = current_version,
+    )
 
