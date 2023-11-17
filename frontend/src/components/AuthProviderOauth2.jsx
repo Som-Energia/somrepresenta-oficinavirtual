@@ -84,7 +84,6 @@ function AuthProvider({ children }) {
   }
 
   const reloadUser = React.useCallback(() => {
-    console.log('Reloading user')
     ov.currentUser().then((user) => setCurrentUser(user))
   })
 
@@ -92,7 +91,6 @@ function AuthProvider({ children }) {
     reloadUser()
   }, [])
 
-  console.log({ login, logout, currentUser, reloadUser })
   return (
     <AuthContext.Provider
       value={{

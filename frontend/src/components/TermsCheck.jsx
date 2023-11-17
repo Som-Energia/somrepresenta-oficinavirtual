@@ -32,8 +32,6 @@ function TermsDialog(props) {
   async function handleAccept() {
     try {
       const result = await ov.signDocument(document)
-      console.log({ result })
-      console.log({ onAccept })
       onAccept && onAccept()
     } catch (e) {
       console.log(e)
@@ -98,8 +96,6 @@ function TermsCheck({ children }) {
 
   const tosign = firstPendingDocument(requiredDocuments, currentUser.signed_documents)
   if (tosign === null) return children
-
-  console.log({ reloadUser })
 
   return <TermsDialog {...tosign} onAccept={reloadUser} onReject={logout} />
 }
