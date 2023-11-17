@@ -1,7 +1,6 @@
 from ..models import TokenUser, UserProfile, SignatureResult
 from ..utils.gravatar import gravatar
 from yamlns import ns
-default_gravatar = 'identicon' # https://docs.gravatar.com/general/images/
 
 # Fake signed documents repository
 # Empties whenever the app is reloaded
@@ -110,7 +109,7 @@ def dummy_user_info(login: str)->TokenUser:
         roles=['staff']
     vat = vat or dni_from_seed(login)
     username = username or vat
-    avatar = gravatar(email, default=default_gravatar)
+    avatar = gravatar(email)
     return TokenUser(
         username = username,
         vat = vat,

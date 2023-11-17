@@ -19,15 +19,13 @@ class ErpError(Exception):
 
 def erp_user_info(login: str):
     e = erp.Erp()
-    # TODO: Some nifs have not ES
-    # TODO: Some data has trailing \n
-    # TODO: nif2vat deal with emails
+    # TODO: Handle emails as login
     result = ns(e.identify(nif2vat(login)))
     if 'error' in result:
         error(result.dump())
         return None
 
-    result.avatar = None
+    result.avatar = gravatar(result.email)
 
     try:
         return TokenUser(**result)
