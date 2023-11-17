@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 from . import __version__ as version
 from .auth import setup_auth, validated_user
 from .authlocal import setup_authlocal
-from .models import UserProfile, TokenUser
-from .datasources import profile_info
+from .models import UserProfile, TokenUser, SignatureResult
+from .datasources import profile_info, sign_document
 
 load_dotenv()
 app = FastAPI()
@@ -32,6 +32,10 @@ def apiVersion():
 @app.get('/api/me')
 def apiMe(user: dict = Depends(validated_user)) -> UserProfile:
     return profile_info(user)
+
+@app.post('/api/sign_document/{document}')
+def apiSignDocument(document: str, user: dict = Depends(validated_user)) -> SignatureResult:
+    return sign_document(user['username'], document)
 
 #setup_auth(app)
 setup_authlocal(app)

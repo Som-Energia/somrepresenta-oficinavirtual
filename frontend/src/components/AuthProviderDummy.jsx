@@ -17,6 +17,7 @@ const noFunction = () => undefined
 const AuthContext = React.createContext({
   login: noFunction,
   logout: noFunction,
+  reloadUser: noFunction,
   currentUser: null,
 })
 
@@ -80,6 +81,7 @@ function AuthProvider({ children }) {
       value={{
         login,
         logout,
+        reloadUser: noFunction,
         currentUser,
       }}
     >

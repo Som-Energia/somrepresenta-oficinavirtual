@@ -5,11 +5,6 @@ endOfLine: auto
 semi: false
 options:
   editorConfig: true
-# overrides:
-#   - files: "*.md"
-#     options:
-#       tabWidth: 4
-
 # Possible values:
 # "arrowParens": "always"
 # "bracketSpacing": true

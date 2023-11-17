@@ -4,6 +4,7 @@ import os
 import dotenv
 import json
 from typing import Optional
+from backend.erp import Erp
 
 dotenv.load_dotenv()
 
@@ -59,6 +60,30 @@ def reset_password(
     )
     r.raise_for_status()
     pretty(r.json())
+
+
+@app.command()
+def list_signatures(
+    username: str,
+    document: Optional[str] = None,
+):
+    """
+    Clears any signature for the user and optional document
+    """
+    e = Erp()
+    pretty(e.list_signatures(username, document))
+
+
+@app.command()
+def clear_signatures(
+    username: str,
+    document: Optional[str] = None,
+):
+    """
+    Clears any signature for the user and optional document
+    """
+    e = Erp()
+    pretty(e.clear_signatures(username, document))
 
 
 

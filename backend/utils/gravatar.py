@@ -1,7 +1,10 @@
 import urllib.parse
 import hashlib
- 
-def gravatar(email, size=128, default='404'):
+
+# https://docs.gravatar.com/general/images/
+default_gravatar = '404'
+
+def gravatar(email, size=128, default=default_gravatar):
     utf8email = email.lower().encode('utf8')
     emailhash = hashlib.md5(utf8email).hexdigest()
     return (

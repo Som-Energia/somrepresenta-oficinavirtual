@@ -19,6 +19,24 @@ APP_FRAME:
   CHOOSE_USER: Escoge usuaria
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Se requiere usuaria
+TERMS:
+  UNEXPECTED_ERROR: Error inexperado
+  ACCEPT: Acepto
+  RGPD_TITLE: Información sobre protección de datos
+  RGPD_BODY_MARKDOWN: |
+    **RESPONSABLE:** SOM ENERGIA, SCCL. (F55091367), Pic de Peguera, 11 17003 Girona ( GIRONA ),
+    somenergia@delegado-datos.com.
+
+    **FINALIDAD:** Gestionar la tramitación de tu solicitud.
+
+    **LEGITIMACIÓN:** Relación contractual y/o consentimiento del interesado.
+
+    **CESIONES:** No están previstas cesiones de datos a terceros, salvo obligación legal.
+
+    **CONSERVACIÓN:** Hasta una vez resuelta tu solicitud.
+
+    **DERECHOS:** Puedes retirar tu consentimiento en cualquier momento, así como ejercer tu derecho de acceso, rectificación, supresión, portabilidad, limitación y oposición dirigiéndote a los datos del responsable. En caso de divergencias, puedes presentar una reclamación ante la Agencia de Protección de Datos (www.aepd.es).
+  RGPD_ACCEPT: Acepto el tratamiento de mis datos
 FOOTER:
   WEB: Web
   BLOG: Blog
