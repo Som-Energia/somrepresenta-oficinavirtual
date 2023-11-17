@@ -21,6 +21,7 @@ import MuiMarkdown from 'mui-markdown'
 import { useAuth } from './AuthProvider'
 import ov from '../services/ovapi'
 import requiredDocuments from '../data/terms.yaml'
+import { firstPendingDocument } from '../services/signatures'
 
 function TermsDialog(props) {
   const { document, title, body, accept, onAccept, onReject } = props
@@ -75,18 +76,6 @@ function TermsDialog(props) {
       </DialogActions>
     </Dialog>
   )
-}
-
-function firstPendingDocument(requiredDocuments, signedDocuments) {
-  const signed = Object.fromEntries(signedDocuments.map((d) => [d.document, d.version]))
-  for (const required of requiredDocuments) {
-    const signedVersion = signed[required.document]
-    // Not signed ever
-    if (signedVersion === undefined) return required
-    // Signed but an older version
-    if (signedVersion < required.version) return required
-  }
-  return null
 }
 
 function TermsCheck({ children }) {
