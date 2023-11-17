@@ -97,7 +97,12 @@ function TermsCheck({ children }) {
   const tosign = firstPendingDocument(requiredDocuments, currentUser.signed_documents)
   if (tosign === null) return children
 
-  return <TermsDialog {...tosign} onAccept={reloadUser} onReject={logout} />
+  return (
+    <>
+      <TermsDialog {...tosign} onAccept={reloadUser} onReject={logout} />
+      {children}
+    </>
+  )
 }
 
 export default TermsCheck
