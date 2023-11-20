@@ -6,9 +6,9 @@
 - Improved model validation for vat and email fields
 - Fix: Profile: Retrieve proxy person information for legal entities
 - Profile: Hide empty proxy fields for physical persons
-- Profile: Hide roles (if not VITE_ENABLE_VIEW_ROLE_ON_PROFILE)
+- Profile: Hide roles (if not `VITE_ENABLE_VIEW_ROLE_IN_PROFILE`)
 - Upgrade Notes:
-    - Added frontend/.env  VITE_ENABLE_VIEW_ROLE_ON_PROFILE
+    - Added frontend/.env  `VITE_ENABLE_VIEW_ROLE_IN_PROFILE`
 
 ## 0.1.0 (2023-11-03)
 
