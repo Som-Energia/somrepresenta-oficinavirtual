@@ -19,6 +19,21 @@ APP_FRAME:
   CHOOSE_USER: Escull usuaria
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Es requereix usuaria
+TERMS:
+  RGPD_TITLE: Informació sobre protecció de dades
+  RGPD_BODY_MARKDOWN: |
+    **RESPONSABLE:** SOM ENERGIA, SCCL., Pic de Peguera, 11 17003 Girona ( GIRONA ),
+    somenergia@delegado-datos.com, F55091367
+
+    **FINALITAT:** Gestionar la tramitació de la teva sol·licitud.
+
+    **LEGITIMACIÓ:** Relació contractual i/o Consentiment de l'interessat.
+
+    **CESSIONS:** No estan previstes cessions de dades a tercers, excepte obligació legal.
+
+    **CONSERVACIÓ:** Fins a una vegada resolta la teva sol·licitud per correu electrònic.
+
+    **DRETS:** Pots retirar el teu consentiment en qualsevol moment, així com exercir el teu dret d'accés, rectificació, supressió, portabilitat, limitació i oposició dirigir-te a les dades del responsable. En cas de divergències, pots presentar una reclamació davant l'Agència de Protecció de Dades (www.aepd.es).
 FOOTER:
   WEB: Web
   BLOG: Blog
@@ -43,15 +58,3 @@ PROFILE:
   PHONE: Telèfon
   PROXY_NAME: Nom representant
   PROXY_VAT: NIF representant
-TERMS:
-  RGPD_TITLE: Informació sobre protecció de dades
-  RGPD_BODY_MARKDOWN: "**RESPONSABLE:** SOM ENERGIA, SCCL., Pic de Peguera, 11 17003\
-    \ Girona ( GIRONA ) , somenergia@delegado-datos.com, F55091367\n\n**FINALITAT:**\
-    \ Gestionar la tramitació de la teva sol·licitud.\n\n**LEGITIMACIÓ:** Relació\
-    \ contractual i/o Consentiment de l'interessat.\n\n**CESSIONS:** No estan previstes\
-    \ cessions de dades a tercers, excepte obligació legal.\n\n**CONSERVACIÓ:** Fins\
-    \ a una vegada resolta la teva sol·licitud per correu electrònic.\n\n**DRETS:**\
-    \ Pots retirar el teu consentiment en qualsevol moment, així com exercir el teu\
-    \ dret d'accés, rectificació, supressió, portabilitat, limitació i oposició dirigir-te\
-    \ a les dades del responsable. En cas de divergències, pots presentar una reclamació\
-    \ davant l'Agència de Protecció de Dades (www.aepd.es).\n"

@@ -21,7 +21,6 @@ APP_FRAME:
   USER_REQUIRED: Se requiere usuaria
 TERMS:
   UNEXPECTED_ERROR: Error inesperado
-  ACCEPT: Acepto
   RGPD_TITLE: Información sobre protección de datos
   RGPD_BODY_MARKDOWN: |
     **RESPONSABLE:** SOM ENERGIA, SCCL. (F55091367), Pic de Peguera, 11 17003 Girona ( GIRONA ),
