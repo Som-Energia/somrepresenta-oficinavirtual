@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- UI check API version to match and do a full reload after a countdown
 - RGPD check required to access
 - Improved model validation for vat and email fields
 - Fix: Profile: Retrieve proxy person information for legal entities

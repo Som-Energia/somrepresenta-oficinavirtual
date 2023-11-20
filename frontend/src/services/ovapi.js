@@ -108,7 +108,17 @@ async function signDocument(documentName) {
   return response
 }
 
+async function version() {
+  return axios
+    .get('/api/version')
+    .then((result) => result.data.version)
+    .catch((error) => {
+      throw error
+    })
+}
+
 export default {
+  version,
   logout,
   localLogin,
   externalLogin,

@@ -84,3 +84,16 @@ PROFILE:
   PHONE: Teléfono
   PROXY_NAME: Nombre representante
   PROXY_VAT: NIF representante
+VERSION_CHECKER:
+  NEW_VERSION_DETECTED_TITLE: Nueva versión detectada
+  NEW_VERSION_DETECTED_MARKDOWN: |
+    Se ha detectado una actualización de la aplicación {{title}}.
+
+    - Versión en su navegador: `{{uiVersion}}`
+    - Versión en el servidor: `{{apiVersion}}`
+
+    Se recargará la aplicación para evitar posibles problemas.
+
+  RELOADING_IN: Recargando en {{seconds}} segundos
+  RELOADING: Recargando...
+  RELOAD_NOW: Recarga ya

@@ -18,6 +18,7 @@ import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
 import TermsCheck from './components/TermsCheck'
+import VersionCheck from './components/VersionCheck'
 import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
 import ProfilePage from './ProfilePage'
@@ -27,6 +28,7 @@ const routes = [
     element: (
       <GlobalTheme>
         <DialogProvider>
+          <VersionCheck />
           <CookiesProvider>
             <AuthProvider>
               <ScrollRestoration /> {/* Scroll up on page switch */}
