@@ -32,9 +32,8 @@ const routes = [
               <ScrollRestoration /> {/* Scroll up on page switch */}
               <BreakPointIndicator />
               <AppFrame>
-                <TermsCheck>
-                  <Outlet />
-                </TermsCheck>
+                <TermsCheck />
+                <Outlet />
               </AppFrame>
             </AuthProvider>
           </CookiesProvider>
