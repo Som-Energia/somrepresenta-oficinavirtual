@@ -20,7 +20,7 @@ APP_FRAME:
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Se requiere usuaria
 TERMS:
-  UNEXPECTED_ERROR: Error inexperado
+  UNEXPECTED_ERROR: Error inesperado
   ACCEPT: Acepto
   RGPD_TITLE: Información sobre protección de datos
   RGPD_BODY_MARKDOWN: |
@@ -53,7 +53,7 @@ LOGIN:
   USERNAME_LABEL: Usuario
   USERNAME_HELP: Usa el NIF o el correo electrònico
   SUBMIT_BUTTON_LOGIN: Valida
-  SUBMIT_BUTTON_PROCESSING: Validando...
+  SUBMIT_BUTTON_PROCESSING: Validando…
   PASSWORD_LABEL: Contraseña
 CHANGE_PASSWORD:
   CHANGE_PASSWORD_DIALOG_TITLE: Cambiando la contraseña
@@ -62,7 +62,7 @@ CHANGE_PASSWORD:
   CHECK_PASSWORD_LABEL: Repetir la nueva contraseña
   SUBMIT_BUTTON_CHANGE_PASSWORD: Cambia
   SUBMIT_BUTTON_CHANGED_PASSWORD: ¡Contraseña Cambiada!
-  SUBMIT_BUTTON_CHANGING_PASSWORD: Cambiando...
+  SUBMIT_BUTTON_CHANGING_PASSWORD: Cambiando…
   NEW_PASSWORD_TOO_SHORT_ERROR: Demasiado corta
   NEW_PASSWORD_MISSMATCH_ERROR: Las contraseñas no coinciden
   NEW_PASSWORD_SAME_AS_CURRENT_ERROR: No puede ser igual que la actual
