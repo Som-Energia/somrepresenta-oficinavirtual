@@ -93,3 +93,15 @@ make api-dev # runs the backend server at localhost:5500
 
 TODO: Unify both environments, by achieving hot module reload
 while generating in `backend/dist` for the backend to serve in development.
+
+### `representa-manage`
+
+`representa-manage` is a installed script which includes, as subcommands, some utilities for operation and development.
+
+Some of them are:
+
+- reset-password: resets the password of a user
+- list-signatures: removes the signatures made by a user
+- clear-signatures: removes the signatures made by a user
+
+See the command help for more information.
