@@ -105,3 +105,12 @@ Some of them are:
 - clear-signatures: removes the signatures made by a user
 
 See the command help for more information.
+
+### Deploy upgrades
+
+- `git fetch` to get the latest updates
+- `tig --all` to see deployed and incoming version
+- `git rebase`
+- Review CHANGES.md for Upgrade Notes (since last deployed version)
+- `make deploy`  Install ui/api dependencies and build ui
+- `sudo supervisor restart`
