@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 
 [project]
 name = "ov-representa"
-version = "0.1.0"
+dynamic=["version"]
 description = "Virtual office for electricity market representation"
 authors = [
     { name="Som Energia", email="itcrowd@somenergia.coop" },
@@ -47,6 +47,9 @@ dependencies = [
     'typer[all]', # CLI tool
     'pygments', # CLI tool
 ]
+
+[tool.setuptools.dynamic]
+version = {attr = "backend.__version__"}
 
 [project.scripts]
 representa-api = "scripts.representa_api:app"
