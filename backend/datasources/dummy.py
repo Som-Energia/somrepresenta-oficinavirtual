@@ -29,7 +29,7 @@ def dummy_user_info(login: str)->TokenUser:
     email: 12345678z@nowhere.com
     roles:
     - customer
-    avatar: https://www.gravatar.com/avatar/3c21fd9dfd53a55fc2dccd9927223026?d=identicon&s=128
+    avatar: https://www.gravatar.com/avatar/3c21fd9dfd53a55fc2dccd9927223026?d=404&s=128
     <BLANKLINE>
 
     When username is an email, extracts the first part as name, and fills a
@@ -43,7 +43,7 @@ def dummy_user_info(login: str)->TokenUser:
     email: 12345678z@nowhere.com
     roles:
     - customer
-    avatar: https://www.gravatar.com/avatar/3c21fd9dfd53a55fc2dccd9927223026?d=identicon&s=128
+    avatar: https://www.gravatar.com/avatar/3c21fd9dfd53a55fc2dccd9927223026?d=404&s=128
     <BLANKLINE>
 
     When username is an email, extracts the first part as name, and fills a
@@ -56,7 +56,7 @@ def dummy_user_info(login: str)->TokenUser:
     email: ahmed.jimenez@noplace.com
     roles:
     - customer
-    avatar: https://www.gravatar.com/avatar/b33b174df857c3739090351199b1df78?d=identicon&s=128
+    avatar: https://www.gravatar.com/avatar/b33b174df857c3739090351199b1df78?d=404&s=128
     <BLANKLINE>
 
     When username is neither a NIF nor an email, considers it a erp username.
@@ -69,7 +69,7 @@ def dummy_user_info(login: str)->TokenUser:
     email: sira.ruiz@somenergia.coop
     roles:
     - staff
-    avatar: https://www.gravatar.com/avatar/83d1453396767bac8bf5fb110e68c142?d=identicon&s=128
+    avatar: https://www.gravatar.com/avatar/83d1453396767bac8bf5fb110e68c142?d=404&s=128
     <BLANKLINE>
 
     """
