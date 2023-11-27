@@ -10,7 +10,7 @@ import { useAuth } from '../components/AuthProvider'
 import PageGuard from '../components/PageGuard'
 import { vat2nif } from '../services/vat'
 
-const viewRoleOnProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == false // intended ==
+const viewRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == false // intended ==
 
 export default function ProfilePage(params) {
   const { t, i18n } = useTranslation()
@@ -35,7 +35,7 @@ export default function ProfilePage(params) {
           ))}
         </>
       ),
-      hide: (user) => viewRoleOnProfile,
+      hide: (user) => viewRoleInProfile,
     },
     {
       id: 'address',
