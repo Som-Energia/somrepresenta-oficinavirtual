@@ -1,4 +1,4 @@
-.PHONY: default frontend-run-dev
+.PHONY: default deps tests deploy ui-deploy api-deploy ui-dev api-dev ui-deps api-deps style
 
 default:
 	@printf "$$HELP"
@@ -7,8 +7,12 @@ deps: ui-deps api-deps
 
 tests: api-test ui-test-once
 
-ui-build:
+deploy: ui-deploy api-deploy
+
+ui-deploy: ui-deps
 	npm run build
+
+api-deploy: api-deps
 
 ui-dev:
 	npm run dev
@@ -33,7 +37,8 @@ api-test:
 	.venv/bin/pytest
 
 style:
-	node_modules/.bin/prettier --write . --config frontend/.prettierrc.yaml
+	node_modules/.bin/prettier --write . --config .prettierrc.yaml
+	# TODO: apply black
 
 
 

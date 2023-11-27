@@ -77,6 +77,7 @@ VITE_AUTH_BACKEND=Oauth2 # Delegate auth to an external AuthServer (Google, Keyc
 #VITE_AUTH_BACKEND=Oauth2Local # First party login
 #VITE_AUTH_BACKEND=Dummy # Emulate login with a closed list of users in frontend/src/data/dummyusers.yaml (api calls won't work)
 VITE_ENABLE_BREAKPOINT_INDICATOR=0 # set to 1 to enable in production, always enabled in devel
+VITE_ENABLE_VIEW_ROLE_IN_PROFILE=0 # set to 1 to show the user role in profile page
 ```
 
 ### Application startup
@@ -92,3 +93,24 @@ make api-dev # runs the backend server at localhost:5500
 
 TODO: Unify both environments, by achieving hot module reload
 while generating in `backend/dist` for the backend to serve in development.
+
+### `representa-manage`
+
+`representa-manage` is a installed script which includes, as subcommands, some utilities for operation and development.
+
+Some of them are:
+
+- reset-password: resets the password of a user
+- list-signatures: removes the signatures made by a user
+- clear-signatures: removes the signatures made by a user
+
+See the command help for more information.
+
+### Deploy upgrades
+
+- `git fetch` to get the latest updates
+- `tig --all` to see deployed and incoming version
+- `git rebase`
+- Review CHANGES.md for Upgrade Notes (since last deployed version)
+- `make deploy`  Install ui/api dependencies and build ui
+- `sudo supervisor restart`
