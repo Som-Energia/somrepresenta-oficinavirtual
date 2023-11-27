@@ -67,7 +67,7 @@ const routes = [
             element: <ProfilePage />,
           },
           {
-            path: '/install',
+            path: '/installation',
             element: <NotYetImplementedPage />,
           },
           {
