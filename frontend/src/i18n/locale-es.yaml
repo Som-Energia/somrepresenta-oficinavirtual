@@ -97,3 +97,7 @@ VERSION_CHECKER:
   RELOADING_IN: Recargando en {{seconds}} segundos
   RELOADING: Recargando...
   RELOAD_NOW: Recarga ya
+INSTALLATIONS:
+  TABLE_TITLE: Instalaciones
+  COLUMN_CONTRACT_NUMBER: Número de contrato
+  COLUMN_INSTALLATION_NAME: Nombre de la instalación
