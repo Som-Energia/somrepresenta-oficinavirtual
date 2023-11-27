@@ -22,7 +22,7 @@ import VersionCheck from './components/VersionCheck'
 import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
 import ProfilePage from './ProfilePage'
-import InstalltionsPage from './InstallationsPage'
+import InstallationsPage from './InstallationsPage'
 
 const routes = [
   {
@@ -69,7 +69,7 @@ const routes = [
           },
           {
             path: '/installation',
-            element: <InstalltionsPage />,
+            element: <InstallationsPage />,
           },
           {
             path: '/invoices',
