@@ -37,7 +37,7 @@ export default function InstalltionsPage(params) {
       idField={'contract_number'}
       title={t('INSTALLATIONS.TABLE_TITLE')}
       defaultPageSize={12}
-      pageSizes={[-1, 12, 18, 25]}
+      pageSizes={[]}
       columns={columns}
       rows={rows}
       actions={actions}

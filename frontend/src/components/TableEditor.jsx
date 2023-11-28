@@ -301,7 +301,7 @@ export default function TableEditor(props) {
     columns,
     rows,
     defaultPageSize = 10,
-    pageSizes = [-1, 10, 15, 20],
+    pageSizes = [],
     actions = [],
     itemActions = [],
     selectionActions = [],
@@ -364,7 +364,12 @@ export default function TableEditor(props) {
   const isSelected = (id) => selected.indexOf(id) !== -1
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
+  const emptyRows =
+    pageSizes.length === 0
+      ? 0
+      : page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - rows.length)
+      : 0
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -380,16 +385,18 @@ export default function TableEditor(props) {
           actions={actions}
           selectionActions={selectionActions}
         />
-        <TablePagination
-          rowsPerPageOptions={pageSizes}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-        <TableContainer sx={{ maxHeight: 'calc(80vh)', overflow: 'scroll' }}>
+        {pageSizes.length !== 0 && (
+          <TablePagination
+            rowsPerPageOptions={pageSizes}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
+        <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
@@ -419,7 +426,10 @@ export default function TableEditor(props) {
                   }
                   return false
                 })
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .slice(
+                  pageSizes.length === 0 ? 0 : page * rowsPerPage,
+                  pageSizes.length === 0 ? rows.length : page * rowsPerPage + rowsPerPage,
+                )
                 .map((row, index) => {
                   const isItemSelected = isSelected(row[idField])
                   const labelId = `enhanced-table-checkbox-${index}`
