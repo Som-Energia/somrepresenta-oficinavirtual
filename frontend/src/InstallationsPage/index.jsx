@@ -9,7 +9,7 @@ export default function InstalltionsPage(params) {
   const rows = dummyData
   const columns = [
     {
-      id: 'id', // TODO: can we name it contract?
+      id: 'contract_number', // TODO: can we name it contract?
       label: t('INSTALLATIONS.COLUMN_CONTRACT_NUMBER'),
       searchable: true,
       numeric: false,
@@ -34,6 +34,7 @@ export default function InstalltionsPage(params) {
   ]
   return (
     <TableEditor
+      idField={'contract_number'}
       title={t('INSTALLATIONS.TABLE_TITLE')}
       defaultPageSize={12}
       pageSizes={[-1, 12, 18, 25]}

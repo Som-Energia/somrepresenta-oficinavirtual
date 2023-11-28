@@ -302,6 +302,7 @@ EnhancedTableToolbar.propTypes = {
 
 export default function TableEditor(props) {
   const {
+    idField = 'id',
     title,
     columns,
     rows,
@@ -326,7 +327,7 @@ export default function TableEditor(props) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id)
+      const newSelected = rows.map((row) => row[idField])
       setSelected(newSelected)
       return
     }
@@ -421,19 +422,20 @@ export default function TableEditor(props) {
                 })
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.id)
+                  const isItemSelected = isSelected(row[idField])
                   const labelId = `enhanced-table-checkbox-${index}`
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      onClick={(event) => handleClick(event, row[idField])}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.id}
+                      key={row[idField]}
                       selected={isItemSelected}
-                    >
+                      id={labelId}
+                      >
                       <TableCell padding="checkbox">
                         <Checkbox
                           color="primary"
@@ -443,20 +445,11 @@ export default function TableEditor(props) {
                           }}
                         />
                       </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.id}
-                      </TableCell>
                       {columns
-                        .filter((x) => x.id !== 'id')
                         .map((column) => {
                           return (
                             <TableCell
-                              key={row.id + '_' + column.id}
+                              key={row[idField] + '_' + column.id}
                               align={column.numeric ? 'right' : 'left'}
                             >
                               {column.view
