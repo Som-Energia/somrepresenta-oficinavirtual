@@ -164,6 +164,7 @@ function EnhancedTableHead(props) {
     numSelected,
     rowCount,
     onRequestSort,
+    hasCheckbox,
   } = props
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
@@ -172,17 +173,19 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'Select all',
-            }}
-          />
-        </TableCell>
+        {hasCheckbox && (
+          <TableCell padding="checkbox">
+            <Checkbox
+              color="primary"
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+              checked={rowCount > 0 && numSelected === rowCount}
+              onChange={onSelectAllClick}
+              inputProps={{
+                'aria-label': 'Select all',
+              }}
+            />
+          </TableCell>
+        )}
         {columns.map((column) => (
           <TableCell
             key={column.id}
@@ -219,6 +222,7 @@ EnhancedTableHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
+  hasCheckbox: PropTypes.bool.isRequired,
 }
 
 function EnhancedTableToolbar(props) {
@@ -239,10 +243,7 @@ function EnhancedTableToolbar(props) {
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity,
-            ),
+            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         }),
       }}
     >
@@ -256,12 +257,7 @@ function EnhancedTableToolbar(props) {
           {`${numSelected} selected`}
         </Typography>
       ) : (
-        <Box
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
+        <Box sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
           {title}
         </Box>
       )}
@@ -281,9 +277,7 @@ function EnhancedTableToolbar(props) {
       </Box>
       <Box sx={{ flex: '1 1 100%' }}></Box>
       <ActionButtons
-        actions={
-          numSelected > 0 && selectionActions ? selectionActions : actions
-        }
+        actions={numSelected > 0 && selectionActions ? selectionActions : actions}
         context={selected}
       />
     </Toolbar>
@@ -366,8 +360,7 @@ export default function TableEditor(props) {
   const isSelected = (id) => selected.indexOf(id) !== -1
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -407,6 +400,7 @@ export default function TableEditor(props) {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              hasCheckbox={selectionActions.length !== 0}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
@@ -416,7 +410,8 @@ export default function TableEditor(props) {
                     const column = columns[i]
                     if (!column.searchable) continue
                     const fieldContent = row[column.id] + ''
-                    if (fieldContent.toLowerCase().includes(search.toLowerCase())) return true
+                    if (fieldContent.toLowerCase().includes(search.toLowerCase()))
+                      return true
                   }
                   return false
                 })
@@ -435,39 +430,36 @@ export default function TableEditor(props) {
                       key={row[idField]}
                       selected={isItemSelected}
                       id={labelId}
-                      >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
-                      </TableCell>
-                      {columns
-                        .map((column) => {
-                          return (
-                            <TableCell
-                              key={row[idField] + '_' + column.id}
-                              align={column.numeric ? 'right' : 'left'}
-                            >
-                              {column.view
-                                ? column.view(row)
-                                : row[column.id] === undefined
-                                ? '-'
-                                : row[column.id] === null
-                                ? '-'
-                                : row[column.id]}
-                            </TableCell>
-                          )
-                        })}
+                    >
+                      {selectionActions.length !== 0 && (
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            color="primary"
+                            checked={isItemSelected}
+                            inputProps={{
+                              'aria-labelledby': labelId,
+                            }}
+                          />
+                        </TableCell>
+                      )}
+                      {columns.map((column) => {
+                        return (
+                          <TableCell
+                            key={row[idField] + '_' + column.id}
+                            align={column.numeric ? 'right' : 'left'}
+                          >
+                            {column.view
+                              ? column.view(row)
+                              : row[column.id] === undefined
+                              ? '-'
+                              : row[column.id] === null
+                              ? '-'
+                              : row[column.id]}
+                          </TableCell>
+                        )
+                      })}
                       <TableCell>
-                        <ActionButtons
-                          size="small"
-                          actions={itemActions}
-                          context={row}
-                        />
+                        <ActionButtons size="small" actions={itemActions} context={row} />
                       </TableCell>
                     </TableRow>
                   )
