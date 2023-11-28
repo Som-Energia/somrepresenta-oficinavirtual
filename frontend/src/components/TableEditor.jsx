@@ -46,7 +46,7 @@ const denseRowHeight = 33
 function ActionButtons(props) {
   const { actions, context, ...rest } = props
   return (
-    <div style={{ display: 'flex', flex: 'row no-wrap' }}>
+    <div style={{ display: 'flex', flex: 'row no-wrap', justifyContent: 'right' }}>
       {props.actions.map((action, i) => {
         return (
           <Tooltip title={action.title} key={i}>
@@ -397,12 +397,7 @@ export default function TableEditor(props) {
           />
         )}
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={'small'}
-            stickyHeader
-          >
+          <Table aria-labelledby="tableTitle" size={'small'} stickyHeader>
             <EnhancedTableHead
               columns={columns}
               numSelected={selected.length}
