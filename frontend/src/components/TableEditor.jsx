@@ -50,15 +50,19 @@ function ActionButtons(props) {
       {props.actions.map((action, i) => {
         return (
           <Tooltip title={action.title} key={i}>
-            <IconButton
-              {...rest}
-              onClick={(ev) => {
-                ev.stopPropagation()
-                action.handler && action.handler(props.context)
-              }}
-            >
-              {action.icon}
-            </IconButton>
+            {action.view ? (
+              action.view(props.context)
+            ) : (
+              <IconButton
+                {...rest}
+                onClick={(ev) => {
+                  ev.stopPropagation()
+                  action.handler && action.handler(props.context)
+                }}
+              >
+                {action.icon}
+              </IconButton>
+            )}
           </Tooltip>
         )
       })}

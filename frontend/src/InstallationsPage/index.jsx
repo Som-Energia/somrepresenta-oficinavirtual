@@ -3,6 +3,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
 import TableEditor from '../components/TableEditor'
 import dummyData from '../data/dummyinstallations.yaml'
+import { Button } from '@mui/material'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 export default function InstalltionsPage(params) {
   const { t, i18n } = useTranslation()
@@ -29,7 +31,23 @@ export default function InstalltionsPage(params) {
     {
       title: 'Details',
       icon: <SearchIcon fontSize="inherit" />,
-      handler: (item)=>{console.log("Voy!!", item)},
+      handler: (item) => {
+        console.log('Voy!!', item)
+      },
+      view: (contract) => {
+        return (
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => {
+              console.log('Voy!!', contract)
+            }}
+            endIcon={<MoreVertIcon />}
+          >
+            {t('INSTALLATIONS.BUTTON_DETAILS')}
+          </Button>
+        )
+      },
     },
   ]
   return (
