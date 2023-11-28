@@ -416,7 +416,7 @@ export default function TableEditor(props) {
                     const column = columns[i]
                     if (!column.searchable) continue
                     const fieldContent = row[column.id] + ''
-                    if (fieldContent.includes(search)) return true
+                    if (fieldContent.toLowerCase().includes(search.toLowerCase())) return true
                   }
                   return false
                 })
