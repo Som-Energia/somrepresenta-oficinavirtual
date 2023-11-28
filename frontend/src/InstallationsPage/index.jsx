@@ -29,7 +29,7 @@ export default function InstallationsPage(params) {
   const selectionActions = []
   const itemActions = [
     {
-      title: 'Details',
+      title: t('INSTALLATIONS.TOOLTIP_DETAILS'),
       icon: <SearchIcon fontSize="inherit" />,
       handler: (item) => {
         console.log('Voy!!', item)
@@ -52,7 +52,6 @@ export default function InstallationsPage(params) {
   ]
   return (
     <TableEditor
-      idField={'contract_number'}
       title={t('INSTALLATIONS.TABLE_TITLE')}
       defaultPageSize={12}
       pageSizes={[]}
@@ -61,6 +60,7 @@ export default function InstallationsPage(params) {
       actions={actions}
       selectionActions={selectionActions}
       itemActions={itemActions}
+      idField={'contract_number'}
     ></TableEditor>
   )
 }
