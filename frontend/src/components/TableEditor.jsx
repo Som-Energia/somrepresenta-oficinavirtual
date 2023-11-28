@@ -33,15 +33,49 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Checkbox from '@mui/material/Checkbox'
+import Skeleton from '@mui/material/Skeleton'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import Tooltip from '@mui/material/Tooltip'
 import { visuallyHidden } from '@mui/utils'
 import InputBase from '@mui/material/InputBase'
 import { styled, alpha } from '@mui/material/styles'
+import { useTranslation } from 'react-i18next'
+
 /* eslint-enable */
 
 const denseRowHeight = 33
+
+function Loading(props) {
+  const {t} = useTranslation()
+  const nCols = 3 // TODO: take it from columns
+  return (
+    <>
+      <TableRow>
+        <TableCell colSpan={nCols}>
+          <div
+            style={{
+              width: '100%',
+              textAlign: 'center',
+            }}
+          >
+            {t('TABLE_EDITOR.LOADING')}
+          </div>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell colSpan={nCols}>
+          <Skeleton animation="wave" />
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell colSpan={nCols}>
+          <Skeleton animation="wave" />
+        </TableCell>
+      </TableRow>
+    </>
+  )
+}
 
 function ActionButtons(props) {
   const { actions, context, ...rest } = props
@@ -160,6 +194,8 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
+  const {t} = useTranslation()
+
   const {
     columns,
     onSelectAllClick,
@@ -185,7 +221,7 @@ function EnhancedTableHead(props) {
               checked={rowCount > 0 && numSelected === rowCount}
               onChange={onSelectAllClick}
               inputProps={{
-                'aria-label': 'Select all',
+                'aria-label': t('TABLE_EDITOR.SELECT_ALL'),
               }}
             />
           </TableCell>
@@ -205,14 +241,14 @@ function EnhancedTableHead(props) {
               {column.label}
               {orderBy === column.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === 'desc' ? t('TABLE_EDITOR.SORTED_DESCENDING') : t('TABLE_EDITOR.SORTED_ASCENDING')}
                 </Box>
               ) : null}
             </TableSortLabel>
           </TableCell>
         ))}
         <TableCell key={'action'} align={'right'} padding={'normal'}>
-          {'Accions'}
+          {t('TABLE_EDITOR.ACTIONS')}
         </TableCell>
       </TableRow>
     </TableHead>
@@ -230,6 +266,8 @@ EnhancedTableHead.propTypes = {
 }
 
 function EnhancedTableToolbar(props) {
+  const {t} = useTranslation()
+
   const {
     title,
     selected,
@@ -258,7 +296,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {`${numSelected} selected`}
+          {t('TABLE_EDITOR.N_SELECTED', {numSelected})}
         </Typography>
       ) : (
         <Box sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
@@ -272,8 +310,8 @@ function EnhancedTableToolbar(props) {
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
-            placeholder={'Search…'}
-            inputProps={{ 'aria-label': 'search' }}
+            placeholder={t('TABLE_EDITOR.PLACEHOLDER_SEARCH')}
+            inputProps={{ 'aria-label': t('TABLE_EDITOR.LABEL_SEARCH') }}
             onChange={onSearchEdited}
             value={search}
           />
@@ -309,6 +347,7 @@ export default function TableEditor(props) {
     actions = [],
     itemActions = [],
     selectionActions = [],
+    loading = false,
   } = props
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
@@ -413,70 +452,80 @@ export default function TableEditor(props) {
               hasCheckbox={selectionActions.length !== 0}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .filter((row) => {
-                  if (!search) return true
-                  for (const i in columns) {
-                    const column = columns[i]
-                    if (!column.searchable) continue
-                    const fieldContent = row[column.id] + ''
-                    if (fieldContent.toLowerCase().includes(search.toLowerCase()))
-                      return true
-                  }
-                  return false
-                })
-                .slice(
-                  pageSizes.length === 0 ? 0 : page * rowsPerPage,
-                  pageSizes.length === 0 ? rows.length : page * rowsPerPage + rowsPerPage,
-                )
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row[idField])
-                  const labelId = `enhanced-table-checkbox-${index}`
+              {loading ? (
+                <Loading />
+              ) : (
+                stableSort(rows, getComparator(order, orderBy))
+                  .filter((row) => {
+                    if (!search) return true
+                    for (const i in columns) {
+                      const column = columns[i]
+                      if (!column.searchable) continue
+                      const fieldContent = row[column.id] + ''
+                      if (fieldContent.toLowerCase().includes(search.toLowerCase()))
+                        return true
+                    }
+                    return false
+                  })
+                  .slice(
+                    pageSizes.length === 0 ? 0 : page * rowsPerPage,
+                    pageSizes.length === 0
+                      ? rows.length
+                      : page * rowsPerPage + rowsPerPage,
+                  )
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row[idField])
+                    const labelId = `enhanced-table-checkbox-${index}`
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row[idField])}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row[idField]}
-                      selected={isItemSelected}
-                      id={labelId}
-                    >
-                      {selectionActions.length !== 0 && (
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            color="primary"
-                            checked={isItemSelected}
-                            inputProps={{
-                              'aria-labelledby': labelId,
-                            }}
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row[idField])}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row[idField]}
+                        selected={isItemSelected}
+                        id={labelId}
+                      >
+                        {selectionActions.length !== 0 && (
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              color="primary"
+                              checked={isItemSelected}
+                              inputProps={{
+                                'aria-labelledby': labelId,
+                              }}
+                            />
+                          </TableCell>
+                        )}
+                        {columns.map((column) => {
+                          return (
+                            <TableCell
+                              key={row[idField] + '_' + column.id}
+                              align={column.numeric ? 'right' : 'left'}
+                            >
+                              {column.view
+                                ? column.view(row)
+                                : row[column.id] === undefined
+                                ? '-'
+                                : row[column.id] === null
+                                ? '-'
+                                : row[column.id]}
+                            </TableCell>
+                          )
+                        })}
+                        <TableCell>
+                          <ActionButtons
+                            size="small"
+                            actions={itemActions}
+                            context={row}
                           />
                         </TableCell>
-                      )}
-                      {columns.map((column) => {
-                        return (
-                          <TableCell
-                            key={row[idField] + '_' + column.id}
-                            align={column.numeric ? 'right' : 'left'}
-                          >
-                            {column.view
-                              ? column.view(row)
-                              : row[column.id] === undefined
-                              ? '-'
-                              : row[column.id] === null
-                              ? '-'
-                              : row[column.id]}
-                          </TableCell>
-                        )
-                      })}
-                      <TableCell>
-                        <ActionButtons size="small" actions={itemActions} context={row} />
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
+                      </TableRow>
+                    )
+                  })
+              )}
               {emptyRows > 0 && (
                 <TableRow
                   style={{

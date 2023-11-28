@@ -6,7 +6,7 @@ import dummyData from '../data/dummyinstallations.yaml'
 import { Button } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 
-export default function InstalltionsPage(params) {
+export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
   const rows = dummyData
   const columns = [

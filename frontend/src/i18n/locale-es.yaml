@@ -102,3 +102,14 @@ INSTALLATIONS:
   COLUMN_CONTRACT_NUMBER: Número de contrato
   COLUMN_INSTALLATION_NAME: Nombre de la instalación
   BUTTON_DETAILS: Detalles
+TABLE_EDITOR:
+  LOADING: Cargando datos...
+  SELECT_ALL: Selecciona todo
+  ACTIONS: Acciones
+  SORTED_DESCENDING: Orden descendiente
+  SORTED_ASCENDING: Orden ascendiente
+  N_SELECTED: "{{numSelected}} seleccionados"
+  PLACEHOLDER_SEARCH: "Busca..."
+  LABEL_SEARCH: "Busca"
+
+
