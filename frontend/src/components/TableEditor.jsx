@@ -329,6 +329,10 @@ export default function TableEditor(props) {
   }
 
   const handleClick = (event, id) => {
+    if (selectionActions.length === 0) {
+      return
+    }
+
     const selectedIndex = selected.indexOf(id)
     let newSelected = []
 
