@@ -1,10 +1,10 @@
 import React from 'react'
-import SearchIcon from '@mui/icons-material/Search'
 import { useTranslation } from 'react-i18next'
-import TableEditor from '../components/TableEditor'
 import dummyData from '../data/dummyinstallations.yaml'
 import { Button } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import { Link } from 'react-router-dom';
+import TableEditor from '../components/TableEditor'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
@@ -30,15 +30,13 @@ export default function InstallationsPage(params) {
   const itemActions = [
     {
       title: t('INSTALLATIONS.TOOLTIP_DETAILS'),
-      icon: <SearchIcon fontSize="inherit" />,
-      handler: (item) => {
-        console.log('Voy!!', item)
-      },
       view: (contract) => {
         return (
           <Button
             variant="contained"
             size="small"
+            component={Link}
+            to={`/installation/${contract.contract_number}`}
             onClick={() => {
               console.log('Voy!!', contract)
             }}
