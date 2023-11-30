@@ -1,6 +1,6 @@
 from yamlns import ns
 from consolemsg import error, success
-from ..models import TokenUser, UserProfile, SignatureResult
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary
 from .. import erp
 from ..utils.gravatar import gravatar
 from ..utils.vat import nif2vat
@@ -62,4 +62,12 @@ class ErpBackend():
 
     def sign_document(self, username: str, document: str) -> SignatureResult:
         return erp_sign_document(username, document)
+
+    def installation_list(self, username: str) -> list[InstallationSummary]:
+        e = erp.Erp()
+        installations = e.list_installations(username)
+        return [
+            InstallationSummary(**installation)
+            for installation in installations
+        ]
 

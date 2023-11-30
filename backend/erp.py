@@ -71,6 +71,8 @@ class Erp:
         self.object_execute('signed.document', 'unlink', ids)
         return deleted
 
+    def list_installations(self, vat):
+        return self.object_execute('installation', 'get_installations', vat)
 
 def example():
     dotenv.load_dotenv('.env')
