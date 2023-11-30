@@ -1,7 +1,7 @@
 import os
 from .dummy import DummyBackend
 from .erp import ErpBackend
-from ..models import TokenUser, UserProfile, SignatureResult
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary
 
 def backend():
     # Is important not to cache the result it so that
@@ -23,3 +23,5 @@ def profile_info(user_info: dict) -> UserProfile:
 def sign_document(username: str, document: str) -> SignatureResult:
     return backend().sign_document(username, document)
 
+def installation_list(username: str) -> list[InstallationSummary]:
+    return backend().installation_list(username)

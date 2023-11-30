@@ -63,7 +63,7 @@ export default function InstallationsPage(params) {
         <TableRow>
           <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
             <Typography variant="h2">
-              🤷‍♀️ <br/>
+              🤷‍♀️ <br />
               {t('INSTALLATIONS.NO_INSTALLATIONS')}
             </Typography>
           </TableCell>{' '}

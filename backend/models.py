@@ -56,3 +56,7 @@ class UserProfile(TokenUser):
     proxy_vat: VatNumber | None = None
     signed_documents: list[SignedDocument]
 
+class InstallationSummary(BaseModel):
+    contract_number: str
+    installation_name: str
+
