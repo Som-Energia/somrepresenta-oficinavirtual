@@ -8,10 +8,26 @@ import Typography from '@mui/material/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { Link } from 'react-router-dom'
 import TableEditor from '../components/TableEditor'
+import { useAuth } from '../components/AuthProvider'
+import ovapi from '../services/ovapi'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
-  const rows = dummyData
+  const [isLoading, beLoading] = React.useState(true) 
+  const [rows, setRows] = React.useState([])
+  const {currentUser} = useAuth()
+
+  React.useEffect(()=>{
+    beLoading(true)
+    ovapi.installations(currentUser).then((retrievedRows)=>{
+      setRows(retrievedRows)
+      beLoading(false)
+    }).catch((error) => {
+      beLoading(false)
+      console.error(error)
+    })
+  }, [currentUser])
+
   const columns = [
     {
       id: 'contract_number', // TODO: can we name it contract?
@@ -21,7 +37,7 @@ export default function InstallationsPage(params) {
       disablePadding: true,
     },
     {
-      id: 'name',
+      id: 'installation_name',
       label: t('INSTALLATIONS.COLUMN_INSTALLATION_NAME'),
       searchable: true,
       numeric: false,
@@ -59,6 +75,7 @@ export default function InstallationsPage(params) {
       selectionActions={selectionActions}
       itemActions={itemActions}
       idField={'contract_number'}
+      loading={isLoading}
       noDataPlaceHolder={
         <TableRow>
           <TableCell colSpan={4} sx={{ textAlign: 'center' }}>

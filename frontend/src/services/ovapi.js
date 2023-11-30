@@ -1,4 +1,5 @@
 import axios from 'axios'
+import wait from './wait'
 
 async function logout() {
   axios
@@ -104,7 +105,6 @@ async function signDocument(documentName) {
       }
       return response.json()
     })
-
   return response
 }
 
@@ -112,6 +112,16 @@ async function version() {
   return axios
     .get('/api/version')
     .then((result) => result.data.version)
+    .catch((error) => {
+      throw error
+    })
+}
+
+async function installations() {
+  await wait(2000)
+  return axios
+    .get('/api/installations')
+    .then((result) => result.data)
     .catch((error) => {
       throw error
     })
@@ -125,4 +135,5 @@ export default {
   localChangePassword,
   currentUser,
   signDocument,
+  installations,
 }
