@@ -17,7 +17,6 @@ TODO: One has to have 'id' as id
 
 */
 
-
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import Box from '@mui/material/Box'
@@ -47,7 +46,7 @@ import { useTranslation } from 'react-i18next'
 const denseRowHeight = 33
 
 function Loading(props) {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const nCols = 3 // TODO: take it from columns
   return (
     <>
@@ -194,7 +193,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const {
     columns,
@@ -241,7 +240,9 @@ function EnhancedTableHead(props) {
               {column.label}
               {orderBy === column.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? t('TABLE_EDITOR.SORTED_DESCENDING') : t('TABLE_EDITOR.SORTED_ASCENDING')}
+                  {order === 'desc'
+                    ? t('TABLE_EDITOR.SORTED_DESCENDING')
+                    : t('TABLE_EDITOR.SORTED_ASCENDING')}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -266,7 +267,7 @@ EnhancedTableHead.propTypes = {
 }
 
 function EnhancedTableToolbar(props) {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   const {
     title,
@@ -296,7 +297,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {t('TABLE_EDITOR.N_SELECTED', {numSelected})}
+          {t('TABLE_EDITOR.N_SELECTED', { numSelected })}
         </Typography>
       ) : (
         <Box sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
@@ -348,6 +349,7 @@ export default function TableEditor(props) {
     itemActions = [],
     selectionActions = [],
     loading = false,
+    noDataPlaceHolder=undefined,
   } = props
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
@@ -454,6 +456,8 @@ export default function TableEditor(props) {
             <TableBody>
               {loading ? (
                 <Loading />
+              ) : rows.length === 0 ? (
+                noDataPlaceHolder
               ) : (
                 stableSort(rows, getComparator(order, orderBy))
                   .filter((row) => {
