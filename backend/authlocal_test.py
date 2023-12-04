@@ -1,27 +1,14 @@
-
+import os
 import unittest
 from fastapi import FastAPI, Depends
 from fastapi.testclient import TestClient
 from yamlns import ns
-import os
 from consolemsg import error
 from somutils.testutils import sandbox_dir, enterContext
 import unittest.mock
-from contextlib import contextmanager
 from .authlocal import setup_authlocal
 from .auth import validated_user, oauth2, setup_auth
-
-@contextmanager
-def environ(var, value):
-    oldvalue = os.environ.get(var)
-    os.environ[var]=value
-    try:
-        yield
-    finally:
-        if oldvalue:
-            os.environ[var]=oldvalue
-        else:
-            del os.environ[var]
+from .utils.testutils import environ
 
 def setup_profile(app):
     """Mount testing only purpose api entries"""
