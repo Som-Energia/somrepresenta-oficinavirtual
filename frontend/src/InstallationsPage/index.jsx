@@ -13,19 +13,22 @@ import ovapi from '../services/ovapi'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
-  const [isLoading, beLoading] = React.useState(true) 
+  const [isLoading, beLoading] = React.useState(true)
   const [rows, setRows] = React.useState([])
-  const {currentUser} = useAuth()
+  const { currentUser } = useAuth()
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     beLoading(true)
-    ovapi.installations(currentUser).then((retrievedRows)=>{
-      setRows(retrievedRows)
-      beLoading(false)
-    }).catch((error) => {
-      beLoading(false)
-      console.error(error)
-    })
+    ovapi
+      .installations(currentUser)
+      .then((retrievedRows) => {
+        setRows(retrievedRows)
+        beLoading(false)
+      })
+      .catch((error) => {
+        beLoading(false)
+        console.error(error)
+      })
   }, [currentUser])
 
   const columns = [
@@ -83,7 +86,7 @@ export default function InstallationsPage(params) {
               🤷‍♀️ <br />
               {t('INSTALLATIONS.NO_INSTALLATIONS')}
             </Typography>
-          </TableCell>{' '}
+          </TableCell>
         </TableRow>
       }
     ></TableEditor>
