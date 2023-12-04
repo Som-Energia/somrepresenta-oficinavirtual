@@ -75,3 +75,53 @@ def assertResponseEqual(self, response, expected, status=200):
         ),
     )
 
+def safe_response_get(r, key, fallback='NOT_FOUND'):
+    """
+    To be used when an attribute in a response to back2back is variable,
+    to use the actual result value in the expectation, but to
+    obtain it in a safe way, so that, when the attribute is missing
+    or even when the response is not a valid json, we get the fallback.
+
+    Deep attribute access can be expressed with dots: level.level.key
+
+    >>> from httpx import Response
+    >>> r = Response(text='{"key1": "value1", "level1": {"level2": {"key2": "value2"}}}', status_code=200)
+
+    >>> # bad json
+    >>> badjson = Response(text='bad json content', status_code=200)
+    >>> safe_response_get(badjson, 'key1')
+    'NOT_FOUND'
+
+    >>> # top level key
+    >>> safe_response_get(r, 'key1') # top level key
+    'value1'
+
+    >>> # missing top level key
+    >>> safe_response_get(r, 'missing')
+    'NOT_FOUND'
+
+    >>> # custom fallback
+    >>> safe_response_get(r, 'key2', 'CUSTOM_FALLBACK')
+    'CUSTOM_FALLBACK'
+
+    >>> # deep value
+    >>> safe_response_get(r, 'level1.level2.key2')
+    'value2'
+
+    >>> # non leaf value
+    >>> safe_response_get(r, 'level1.level2')
+    {'key2': 'value2'}
+
+    >>> # bad intermediate step
+    >>> safe_response_get(r, 'level1.bad.key2')
+    'NOT_FOUND'
+    """
+    try:
+        value = r.json()
+    except Exception:
+        return fallback
+    for level in key.split('.'):
+        if not isinstance(value, dict):
+            return fallback
+        value = value.get(level, fallback)
+    return value

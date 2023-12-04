@@ -137,9 +137,8 @@ class AuthLocal_Test(unittest.TestCase):
         self.assertResponseEqual(r, "result: ok")
 
         r = self.login_query()
-        token = 'NOT_FOUND'
-        try: token = r.json().get('access_token', "NOT_FOUND")
-        except: pass
+
+        token = safe_response_get(r, 'access_token')
         self.assertResponseEqual(r, f"""\
             access_token: {token}
             token_type: bearer
@@ -155,9 +154,8 @@ class AuthLocal_Test(unittest.TestCase):
         self.assertResponseEqual(r, "result: ok")
 
         r = self.login_query(self.username[2:]) # removing ES
-        token = 'NOT_FOUND'
-        try: token = r.json().get('access_token', "NOT_FOUND")
-        except: pass
+
+        token = safe_response_get(r, 'access_token')
         self.assertResponseEqual(r, f"""\
             access_token: {token}
             token_type: bearer
