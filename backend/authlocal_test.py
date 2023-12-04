@@ -4,7 +4,7 @@ from fastapi import FastAPI, Depends
 from fastapi.testclient import TestClient
 from yamlns import ns
 from consolemsg import error
-from somutils.testutils import sandbox_dir, enterContext
+from somutils.testutils import sandbox_dir
 import unittest.mock
 from .authlocal import setup_authlocal
 from .auth import validated_user, oauth2, setup_auth
@@ -21,6 +21,7 @@ class AuthLocal_Test(unittest.TestCase):
 
     from yamlns.testutils import assertNsEqual
     from somutils.testutils import enterContext
+    from .utils.testutils import assertResponseEqual
 
     username = 'ES12345678Z'
     password = 'mypassword'
@@ -38,27 +39,6 @@ class AuthLocal_Test(unittest.TestCase):
         setup_authlocal(app)
         setup_profile(app)
         self.client = TestClient(app)
-
-
-
-    def assertResponseEqual(self, response, expected, status=200):
-        if type(expected) == str:
-            data = ns.loads(expected)
-
-        content = ns(text=response.text)
-        try: content = ns(yaml=ns.loads(content.text))
-        except: pass
-
-        self.assertNsEqual(
-            ns(
-                content,
-                status=response.status_code,
-            ),
-            ns(
-                yaml=data,
-                status=status,
-            ),
-        )
 
     def passwords(self):
         try:

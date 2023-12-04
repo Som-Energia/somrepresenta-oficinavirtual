@@ -1,5 +1,7 @@
 import os
 from contextlib import contextmanager
+from yamlns.testutils import assertNsEqual
+from yamlns import ns
 
 @contextmanager
 def environ(var, value):
@@ -51,3 +53,25 @@ def environ(var, value):
         yield value
     finally:
         set(oldvalue)
+
+
+def assertResponseEqual(self, response, expected, status=200):
+    if type(expected) == str:
+        data = ns.loads(expected)
+
+    content = ns(text=response.text)
+    try: content = ns(yaml=ns.loads(content.text))
+    except: pass
+
+    assertNsEqual(
+        self,
+        ns(
+            content,
+            status=response.status_code,
+        ),
+        ns(
+            yaml=data,
+            status=status,
+        ),
+    )
+
