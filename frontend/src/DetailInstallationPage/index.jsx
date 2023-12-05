@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
 import { useParams } from 'react-router-dom'
-import { Container, Grid, Typography, Paper } from '@mui/material'
+import { Container, Grid, Typography, Paper, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+const Item = styled('div')(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === 'dark'
+      ? theme.palette.table.contentDark
+      : theme.palette.table.contentLight,
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: 'left',
   color: theme.palette.text.secondary,
-  borderRadius: '0px',
 }))
 
 // TODO: move to a file
@@ -42,83 +43,44 @@ const dummyData = {
   },
 }
 
-// TODO: make it grid! and decide the format that fields has to have
 const PrettyBox = ({ title = false, fields, translationsPrefix = 'DETAILS' }) => {
   const { t, i18n } = useTranslation()
   const data = Object.entries(fields)
 
   return (
-    <Container>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Item sx={{ backgroundColor: 'table.titleColor' }}>
-            <b>{title}</b>
-          </Item>
-        </Grid>
-        <Grid item xs={4}>
-          {data.map((detail) => (
-            <Item>
-              <b>{t(`${translationsPrefix}.${detail[0].toUpperCase()}`)}</b>
-            </Item>
-          ))}
-        </Grid>
-        <Grid item xs={8}>
-          {data.map((detail) => (
-            <Item>{detail[1] ? detail[1] : '-'}</Item>
-          ))}
-        </Grid>
-      </Grid>
-    </Container>
-  )
-}
-
-// TODO: delete if proposed design is not a must, btw it has to be a grid too
-const ProposedBox = ({ title = false, fields, translationsPrefix = 'DETAILS' }) => {
-  const { t, i18n } = useTranslation()
-  const data = Object.entries(fields)
-
-  return (
-    <Container>
-      <Box sx={{ width: '100%', marginBottom: '1rem' }}>
-        <Item sx={{ backgroundColor: 'table.titleColor' }}>
-          <b>{title}</b>
-        </Item>
-      </Box>
-      <Box sx={{ display: 'flex' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: 'table.rowTitle',
-            color: 'table.textColor',
-            border: '1px solid black',
-            marginRight: '1rem',
-          }}
-        >
-          {data.map(
-            (detail) =>
-              detail[1] && (
-                <label style={{ padding: '6px' }}>
-                  {t(`${translationsPrefix}.${detail[0].toUpperCase()}`)}
-                </label>
-              ),
-          )}
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: 'table.rowValue',
-            color: 'table.textColor',
-            border: '1px solid black',
-          }}
-        >
-          {data.map((detail) => (
-            <label style={{ padding: '6px' }}>{detail[1]}</label>
-          ))}
-        </Box>
-      </Box>
-    </Container>
+    <Grid
+      container
+      sx={{
+        width: 'auto',
+        marginLeft: '1rem',
+        marginTop: '2rem',
+        marginRight: '1rem',
+      }}
+    >
+      <Item
+        sx={{ backgroundColor: 'table.titleColor', width: '100%', marginBottom: '1rem' }}
+      >
+        <b>{title}</b>
+      </Item>
+      <div style={{ width: '100%' }}>
+        {data.map((detail) => (
+          <Box sx={{ display: 'flex', width: '100%' }}>
+            <Grid
+              item
+              xs={4}
+              sx={{ marginRight: '1rem', display: 'grid', overflow: 'hidden' }}
+            >
+              <Item>
+                <b>{t(`${translationsPrefix}.${detail[0].toUpperCase()}`)}</b>
+              </Item>
+            </Grid>
+            <Grid item xs={8} sx={{ display: 'grid', overflow: 'hidden' }}>
+              <Item>{detail[1] ? detail[1] : '-'}</Item>
+            </Grid>
+          </Box>
+        ))}
+      </div>
+    </Grid>
   )
 }
 
@@ -153,7 +115,6 @@ export default function DetailInstallationPage(params) {
         translationsPrefix="INSTALLATION_DETAIL"
         title={t('INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE')}
       />
-      &nbsp;
       <PrettyBox
         fields={contractDetail}
         translationsPrefix="CONTRACT_DETAIL"

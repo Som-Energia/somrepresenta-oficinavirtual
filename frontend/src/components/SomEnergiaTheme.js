@@ -65,9 +65,8 @@ export default function SomEnergiaTheme(isDarkMode) {
       },
       table: {
         titleColor: 'rgb(150,182,51,0.7)',
-        rowTitle: '#e2e2e2',
-        rowValue: 'white',
-        textColor: 'black',
+        contentLight: 'rgba(0, 0, 0, 0.03)',
+        contentDark: '#1A2027',
       },
     },
   })

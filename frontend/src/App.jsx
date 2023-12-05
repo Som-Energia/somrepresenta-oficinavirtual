@@ -75,7 +75,7 @@ const routes = [
             element: <InstallationsPage />,
           },
           {
-            path: '/install/:id',
+            path: '/installation/:id',
             element: <DetailInstallationPage />,
           },
           {
