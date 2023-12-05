@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles'
 import { useParams } from 'react-router-dom'
 import { Container, Grid, Typography, Paper, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import dummyData from '../data/dummyinstallationdetail.yaml'
 
 const Item = styled('div')(({ theme }) => ({
   backgroundColor:
@@ -14,34 +15,6 @@ const Item = styled('div')(({ theme }) => ({
   textAlign: 'left',
   color: theme.palette.text.secondary,
 }))
-
-// TODO: move to a file
-const dummyData = {
-  contract_details: {
-    billing_mode: 'index',
-    cost_deviation: 'included',
-    discharge_date: '2022-09-21',
-    iban: '**** **** **** **** **** 6718',
-    proxy_fee: 0.12,
-    reduction_deviation: 100,
-    representation_type: 'directa_cnmc',
-    status: 'activa',
-  },
-  installation_details: {
-    address: 'CL Perico Palotes 38 17004 (Girona)',
-    cil: 'ES0000000000000000AA0A000',
-    city: 'Girona',
-    contract_number: '00001',
-    coordinates: '41.55476,-4.10777',
-    ministry_code: 'RE-008800',
-    name: 'Central de Test',
-    postal_code: '17004',
-    province: 'Girona',
-    rated_power: 1000,
-    technology: false,
-    type: 'IT-00666',
-  },
-}
 
 const PrettyBox = ({ title = false, fields, translationsPrefix = 'DETAILS' }) => {
   const { t, i18n } = useTranslation()
@@ -104,7 +77,6 @@ export default function DetailInstallationPage(params) {
     setContractDetail(dummyData?.contract_details)
   }
 
-  console.log('Detail installation', installationDetail)
   return installationDetail && contractDetail ? (
     <Container>
       <Typography variant="h3" sx={{ mb: 3 }}>
