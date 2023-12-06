@@ -1,21 +1,14 @@
 import os
 import unittest
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from yamlns import ns
 from consolemsg import error
 from somutils.testutils import sandbox_dir
 import unittest.mock
 from .authlocal import setup_authlocal
-from .auth import validated_user, oauth2, setup_auth
-from .utils.testutils import environ
-
-def setup_profile(app):
-    """Mount testing only purpose api entries"""
-
-    @app.get('/api/me')
-    def profile(user: dict = Depends(validated_user)) -> dict:
-        return user
+from .utils.testutils import environ, safe_response_get
+from .api_business import setup_business
 
 class AuthLocal_Test(unittest.TestCase):
 
@@ -35,9 +28,8 @@ class AuthLocal_Test(unittest.TestCase):
         self.enterContext(environ('JWT_EXPIRES', "2000"))
         self.enterContext(environ('DATA_BACKEND', "dummy"))
         app = FastAPI()
-        setup_auth(app)
         setup_authlocal(app)
-        setup_profile(app)
+        setup_business(app)
         self.client = TestClient(app)
 
     def passwords(self):
@@ -71,13 +63,17 @@ class AuthLocal_Test(unittest.TestCase):
         )
 
     def login_query(self, username=username, password=password):
-        return self.client.post(
+        r = self.client.post(
             '/api/auth/token',
             data=dict(
                 username=username,
                 password=password,
             ),
         )
+        # TODO: Why this is needed at all? Authorization was already
+        # TODO: in client but does not send it unless we do that
+        self.client.cookies.set('Authorization', r.cookies.get('Authorization'))
+        return r
 
     def profile_query(self):
         return self.client.get(
@@ -199,16 +195,27 @@ class AuthLocal_Test(unittest.TestCase):
             detail: Incorrect password
         """, 401)
 
-    @unittest.skip("Still not working")
     def test_self_profile(self):
         r = self.provisioning_query()
-        print("after provision", self.client.cookies)
         r = self.login_query()
-        print("after login", self.client.cookies)
         r = self.profile_query()
-        print("afger profile", self.client.cookies)
-        self.assertResponseEqual(r, f"""\
-            lala: boo
+        self.assertResponseEqual(r, r"""
+            vat: ES12345678Z
+            address: Rue del Percebe, 13
+            avatar: https://www.gravatar.com/avatar/1ad4bc8f8707a4fba330f4d1f8353ebc?d=404&s=128
+            city: Salt
+            email: es12345678z@nowhere.com
+            name: Perico Palotes
+            phones:
+            - '555444333'
+            proxy_name: Matute Gonzalez, Frasco
+            proxy_vat: ES87654321X
+            roles:
+            - customer
+            signed_documents: []
+            state: Girona
+            username: ES12345678Z
+            zip: '17234'
         """)
 
 
