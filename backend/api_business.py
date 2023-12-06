@@ -9,7 +9,7 @@ from consolemsg import error
 def setup_business(app):
 
     @app.exception_handler(ErpConnectionError)
-    async def erp_connection_error_hand(request: Request, exc: ErpConnectionError):
+    async def erp_connection_error_handler(request: Request, exc: ErpConnectionError):
         # TODO: Log exception
         error("Unable to reach ERP")
         return JSONResponse(
@@ -18,14 +18,14 @@ def setup_business(app):
         )
 
     @app.get('/api/me')
-    def api_me(user: dict = Depends(validated_user)) -> UserProfile:
+    def profile_information(user: dict = Depends(validated_user)) -> UserProfile:
         return profile_info(user)
 
     @app.post('/api/sign_document/{document}')
-    def api_sign_document(document: str, user: dict = Depends(validated_user)) -> SignatureResult:
+    def sign_document(document: str, user: dict = Depends(validated_user)) -> SignatureResult:
         return sign_document(user['username'], document)
 
     @app.get('/api/installations')
-    def api_installations(user: dict = Depends(validated_user)) -> list[InstallationSummary]:
+    def installation_list(user: dict = Depends(validated_user)) -> list[InstallationSummary]:
         return installation_list(user['username'])
 
