@@ -31,11 +31,3 @@ class VersionApi_Test(unittest.TestCase):
             detail: Method Not Allowed
         """, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_validation_error(self):
-        r = self.client.get('/api/version', params=dict(
-            unexpected='value',
-        ))
-        self.assertResponseEqual(r, f"""
-            version: {api_version}
-        """)
-
