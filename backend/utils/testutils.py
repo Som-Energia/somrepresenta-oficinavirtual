@@ -55,7 +55,7 @@ def environ(var, value):
         set(oldvalue)
 
 
-def assertResponseEqual(self, response, expected, status=200):
+def assertResponseEqual(self, response, expected, status=200, content_type='application/json'):
     if type(expected) == str:
         data = ns.loads(expected)
 
@@ -68,10 +68,12 @@ def assertResponseEqual(self, response, expected, status=200):
         ns(
             content,
             status=response.status_code,
+            content_type=response.headers['Content-Type'],
         ),
         ns(
             yaml=data,
             status=status,
+            content_type=content_type,
         ),
     )
 
