@@ -1,6 +1,6 @@
 import os
 import unittest
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.testclient import TestClient
 from yamlns import ns
 from consolemsg import error
@@ -218,5 +218,15 @@ class AuthLocal_Test(unittest.TestCase):
             zip: '17234'
         """)
 
-
+    def test_erp_connection_error(self):
+        r = self.provisioning_query()
+        r = self.login_query()
+        with (
+            environ('DATA_BACKEND', 'erp'),
+            environ('ERP_BASEURL', 'http://noexisto.com'),
+        ):
+            r = self.client.get('/api/me')
+        self.assertResponseEqual(r, """\
+            details: Unable to reach ERP
+        """, status.HTTP_502_BAD_GATEWAY)
 
