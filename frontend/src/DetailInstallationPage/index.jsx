@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { useParams } from 'react-router-dom'
-import { Container, Grid, Typography, Paper, Box } from '@mui/material'
+import { Container, Grid, Typography, Paper, Box, Alert } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import ov from '../services/ovapi'
 
@@ -52,33 +52,51 @@ const PrettyBox = ({ title = false, fields, translationsPrefix = 'DETAILS' }) =>
             </Grid>
           </Box>
         ))}
-      </div>
+      </Box>
     </Grid>
   )
 }
 
+// TODO: create or use a loading component
 const Loading = () => {
   return <div>Loading...</div>
 }
 
+// TODO: create or use a generic context to set app alert messages
+const AlertError = ({ error }) => {
+  const { t } = useTranslation()
+  return (
+    <Alert sx={{ margin: '1rem' }} severity="error">
+      {t(`ERROR.${error}`)}
+    </Alert>
+  )
+}
+
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [installationDetail, setInstallationDetail] = useState(false)
   const [contractDetail, setContractDetail] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     getDetailInstallation()
   }, [])
 
-  const getDetailInstallation = () => {
-    ov.installationDetails(contract_number).then((response) => {
-      setInstallationDetail(response?.installation_details)
-      setContractDetail(response?.contract_details)
-    })
+  async function getDetailInstallation() {
+    try {
+      const result = await ov.installationDetails(contract_number)
+      setInstallationDetail(result?.installation_details)
+      setContractDetail(result?.contract_details)
+    } catch (e) {
+      // TODO: check how errors are managed
+      setError(e.code)
+    }
   }
 
-  return installationDetail && contractDetail ? (
+  return error ? (
+    <AlertError error={error} />
+  ) : installationDetail && contractDetail ? (
     <Container>
       <Typography variant="h3" sx={{ mb: 3 }}>
         {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
