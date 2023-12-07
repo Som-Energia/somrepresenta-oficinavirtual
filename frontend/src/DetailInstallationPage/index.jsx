@@ -16,28 +16,29 @@ const Item = styled('div')(({ theme }) => ({
   color: theme.palette.text.secondary,
 }))
 
+// TODO: extract this generic component if we want to use it
 const PrettyBox = ({ title = false, fields, translationsPrefix = 'DETAILS' }) => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const data = Object.entries(fields)
-
   return (
     <Grid
       container
-      sx={{
-        width: 'auto',
-        marginLeft: '1rem',
-        marginTop: '2rem',
-        marginRight: '1rem',
-      }}
+      sx={{ width: 'auto', marginLeft: '1rem', marginTop: '2rem', marginRight: '1rem' }}
     >
-      <Item
-        sx={{ backgroundColor: 'table.titleColor', width: '100%', marginBottom: '1rem' }}
-      >
-        <b>{title}</b>
-      </Item>
-      <div style={{ width: '100%' }}>
-        {data.map((detail) => (
-          <Box sx={{ display: 'flex', width: '100%' }}>
+      {title && (
+        <Item
+          sx={{
+            backgroundColor: 'table.titleColor',
+            width: '100%',
+            marginBottom: '1rem',
+          }}
+        >
+          <b>{title}</b>
+        </Item>
+      )}
+      <Box sx={{ width: '100%' }}>
+        {data.map((detail, index) => (
+          <Box key={index} sx={{ display: 'flex', width: '100%' }}>
             <Grid
               item
               xs={4}
