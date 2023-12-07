@@ -1,10 +1,10 @@
 import unittest
-from fastapi import status
+from fastapi import FastAPI, status
 from fastapi.testclient import TestClient
 from yamlns import ns
 from pathlib import Path
 from . import __version__ as api_version
-from . import api
+from .api import setup_base, setup_statics
 
 class VersionApi_Test(unittest.TestCase):
 
@@ -12,7 +12,10 @@ class VersionApi_Test(unittest.TestCase):
 
     def setUp(self):
         self.maxDiff = None
-        self.client = TestClient(api.app)
+        self.app = FastAPI()
+        setup_base(self.app)
+        setup_statics(self.app)
+        self.client = TestClient(self.app)
 
     def test_version(self):
         r = self.client.get('/api/version')
