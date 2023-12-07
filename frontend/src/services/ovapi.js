@@ -141,9 +141,9 @@ async function signDocument(documentName) {
   return response
 }
 
-async function installationDetails(installation_name) {
+async function installationDetails(contract_number) {
   return axios
-    .get(`/api/installation_details/${installation_name}`)
+    .get(`/api/installation_details/${contract_number}`)
     .then((result) => result.data)
     .catch((error) => {
       throw error

@@ -95,9 +95,9 @@ class Erp:
     def list_installations(self, vat):
         return self.object_execute('som.ov.installations', 'get_installations', vat)
 
-    def installation_details(self, installation_name):
+    def installation_details(self, contract_number):
         details = self.object_execute(
-            "installation", "get_installation_details", installation_name
+            "installation", "get_installation_details", contract_number
         )
         return details
 

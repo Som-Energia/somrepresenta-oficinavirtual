@@ -62,7 +62,7 @@ const Loading = () => {
 }
 
 export default function DetailInstallationPage(params) {
-  const { installation_name } = useParams()
+  const { contract_number } = useParams()
   const { t, i18n } = useTranslation()
   const [installationDetail, setInstallationDetail] = useState(false)
   const [contractDetail, setContractDetail] = useState(false)
@@ -72,7 +72,7 @@ export default function DetailInstallationPage(params) {
   }, [])
 
   const getDetailInstallation = () => {
-    ov.installationDetails(installation_name).then((response) => {
+    ov.installationDetails(contract_number).then((response) => {
       setInstallationDetail(response?.installation_details)
       setContractDetail(response?.contract_details)
     })
