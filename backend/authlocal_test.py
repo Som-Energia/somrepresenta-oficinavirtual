@@ -125,7 +125,7 @@ class AuthLocal_Test(unittest.TestCase):
               - username
               msg: Field required
               type: missing
-              url: 'https://errors.pydantic.dev/2.4/v/missing'
+              url: 'https://errors.pydantic.dev/2.5/v/missing'
         """, 422)
 
     def test_provisioning__disabledProvisioning(self):
