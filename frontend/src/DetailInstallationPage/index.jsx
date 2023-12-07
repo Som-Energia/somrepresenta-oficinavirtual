@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 import { useParams } from 'react-router-dom'
 import { Container, Grid, Typography, Paper, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import dummyData from '../data/dummyinstallationdetail.yaml'
+import ov from '../services/ovapi'
 
 const Item = styled('div')(({ theme }) => ({
   backgroundColor:
@@ -62,19 +62,20 @@ const Loading = () => {
 }
 
 export default function DetailInstallationPage(params) {
-  const { id } = useParams()
+  const { installation_name } = useParams()
   const { t, i18n } = useTranslation()
   const [installationDetail, setInstallationDetail] = useState(false)
   const [contractDetail, setContractDetail] = useState(false)
 
   useEffect(() => {
-    getDetailInstallation(id)
+    getDetailInstallation()
   }, [])
 
-  const getDetailInstallation = ({ contractId }) => {
-    // TODO: ask backend detail installation data from id
-    setInstallationDetail(dummyData?.installation_details)
-    setContractDetail(dummyData?.contract_details)
+  const getDetailInstallation = () => {
+    ov.installationDetails(installation_name).then((response) => {
+      setInstallationDetail(response?.installation_details)
+      setContractDetail(response?.contract_details)
+    })
   }
 
   return installationDetail && contractDetail ? (
