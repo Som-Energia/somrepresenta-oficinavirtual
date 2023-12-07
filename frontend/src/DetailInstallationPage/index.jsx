@@ -84,11 +84,22 @@ export default function DetailInstallationPage(params) {
     getDetailInstallation()
   }, [])
 
+  // TODO: check if we can get this data from backend or move this function
+  function transformContractDetails(contractData) {
+    if (contractData.cost_deviation == 'included') {
+      contractData['reduction_deviation'] += ' %'
+    } else {
+      contractData['reduction_deviation'] = 'N/A'
+    }
+    return contractData
+  }
+
   async function getDetailInstallation() {
     try {
       const result = await ov.installationDetails(contract_number)
       setInstallationDetail(result?.installation_details)
-      setContractDetail(result?.contract_details)
+      const contractData = transformContractDetails(result?.contract_details)
+      setContractDetail(contractData)
     } catch (e) {
       // TODO: check how errors are managed
       setError(e.code)
