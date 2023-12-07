@@ -3,18 +3,30 @@
 // this one already has all the components inside and just
 // requires to define and provide the data to adapt to.
 /*
-columns: array of objects that define the columns of the table:
-- id: The field to be search in rows
-- label: The field label to show on the column header
-- searchable: If the field is considered for searches
-- view: A functor receiving the full row object and returning the cell content (can be a react object).
-  By default returns the value of the field at id converted to string,
-  except for null and undefined that are turned into '-'.
-- numeric: if truish aligns right instead of left
-- disablePadding: if truish set padding to none instead of normal TODO: investigate
-
-TODO: One has to have 'id' as id
-
+Attributes
+- columns: array of objects that define the columns of the table:
+    - id: The field to be search in rows
+    - label: The field label to show on the column header
+    - searchable: If the field is considered for searches
+    - view: A functor receiving the full row object and returning the cell content (can be a react object).
+      By default returns the value of the field at id converted to string,
+      except for null and undefined that are turned into '-'.
+    - numeric: if truish aligns right instead of left
+    - disablePadding: if truish set padding to none instead of normal TODO: investigate
+- rows: array of objects containing the data to display
+- title: the title of the table
+- idField: data field to be used as row identifier (default 'id'). Values must be unique.
+- defaultPageSize: default page size. Default -1 meaning not paginated
+- pageSizes: If available, a page size chooser will be presented to the user
+- actions: list of actions to be applied in global, context is the whole set of rows
+    - title: label to be shown on hover
+    - action: function to be called with the subject as parameter
+    - icon: an icon for the action icon button
+    - view: (optional) functor receiving the context and returning an alternative for the default icon button
+- itemActions: list of actions available for each single row, row is passed to 
+- selectionActions = [],
+- loading: set to true to activate loading status
+- noDataPlaceHolder: node to show in case of no data is to be presented
 */
 
 import * as React from 'react'
@@ -38,6 +50,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import Tooltip from '@mui/material/Tooltip'
 import { visuallyHidden } from '@mui/utils'
 import InputBase from '@mui/material/InputBase'
+import CircularProgress from '@mui/material/CircularProgress'
 import { styled, alpha } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 
@@ -47,9 +60,18 @@ const denseRowHeight = 33
 
 function Loading(props) {
   const { t } = useTranslation()
-  const nCols = 3 // TODO: take it from columns
+  const { nCols = 3 } = props
   return (
     <>
+      <TableRow>
+        {Array(nCols)
+          .fill()
+          .map((v, i) => (
+            <TableCell key={i}>
+              <Skeleton animation="wave" />
+            </TableCell>
+          ))}
+      </TableRow>
       <TableRow>
         <TableCell colSpan={nCols}>
           <div
@@ -58,18 +80,8 @@ function Loading(props) {
               textAlign: 'center',
             }}
           >
-            {t('TABLE_EDITOR.LOADING')}
+            <CircularProgress />
           </div>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell colSpan={nCols}>
-          <Skeleton animation="wave" />
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell colSpan={nCols}>
-          <Skeleton animation="wave" />
         </TableCell>
       </TableRow>
     </>
@@ -80,17 +92,17 @@ function ActionButtons(props) {
   const { actions, context, ...rest } = props
   return (
     <div style={{ display: 'flex', flex: 'row no-wrap', justifyContent: 'right' }}>
-      {props.actions.map((action, i) => {
+      {actions.map((action, i) => {
         return (
           <Tooltip title={action.title} key={i}>
             {action.view ? (
-              action.view(props.context)
+              action.view(context)
             ) : (
               <IconButton
                 {...rest}
                 onClick={(ev) => {
                   ev.stopPropagation()
-                  action.handler && action.handler(props.context)
+                  action.handler && action.handler(context)
                 }}
               >
                 {action.icon}
@@ -107,6 +119,7 @@ const ActionsType = PropTypes.arrayOf(
     title: PropTypes.string.isRequired,
     icon: PropTypes.element.isRequired,
     action: PropTypes.func,
+    view: PropTypes.func,
   }),
 )
 ActionButtons.propTypes = {
@@ -337,7 +350,7 @@ EnhancedTableToolbar.propTypes = {
   selectionActions: ActionsType,
 }
 
-export default function TableEditor(props) {
+function TableEditor(props) {
   const {
     idField = 'id',
     title,
@@ -349,7 +362,7 @@ export default function TableEditor(props) {
     itemActions = [],
     selectionActions = [],
     loading = false,
-    noDataPlaceHolder=undefined,
+    noDataPlaceHolder = undefined,
   } = props
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
@@ -455,7 +468,7 @@ export default function TableEditor(props) {
             />
             <TableBody>
               {loading ? (
-                <Loading />
+                <Loading nCols={columns.length + 1} />
               ) : rows.length === 0 ? (
                 noDataPlaceHolder
               ) : (
@@ -546,3 +559,18 @@ export default function TableEditor(props) {
     </Box>
   )
 }
+
+TableEditor.propTypes = {
+  title: PropTypes.string.isRequired,
+  actions: ActionsType,
+  itemActions: ActionsType,
+  selectionActions: ActionsType,
+  onRowClicked: PropTypes.functor,
+  idField: PropTypes.string,
+  defaultPageSize: PropTypes.number,
+  pageSizes: PropTypes.arrayOf(PropTypes.number),
+  loading: PropTypes.bool,
+  noDataPlaceHolder: PropTypes.node,
+}
+
+export default TableEditor
