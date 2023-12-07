@@ -95,6 +95,13 @@ class Erp:
     def list_installations(self, vat):
         return self.object_execute('som.ov.installations', 'get_installations', vat)
 
+    def installation_details(self, installation_name):
+        details = self.object_execute(
+            "installation", "get_installation_details", installation_name
+        )
+        return details
+
+
 def example():
     dotenv.load_dotenv('.env')
     e = Erp()

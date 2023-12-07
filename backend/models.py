@@ -56,7 +56,35 @@ class UserProfile(TokenUser):
     proxy_vat: VatNumber | None = None
     signed_documents: list[SignedDocument]
 
+
 class InstallationSummary(BaseModel):
     contract_number: str
     installation_name: str
 
+class InstallationDetails(BaseModel):
+    address: str
+    cil: str
+    city: str
+    contract_number: str
+    coordinates: str | None = None
+    ministry_code: str
+    name: str
+    postal_code: str
+    province: str
+    rated_power: int
+    technology: str | bool
+    type: str
+
+class ContractDetails(BaseModel):
+    billing_mode: str
+    cost_deviation: str
+    discharge_date: str
+    iban: str
+    proxy_fee: float
+    reduction_deviation: int
+    representation_type: str
+    status: str
+
+class InstallationDetailsResult(BaseModel):
+    installation_details: InstallationDetails
+    contract_details: ContractDetails
