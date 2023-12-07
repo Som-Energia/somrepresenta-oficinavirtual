@@ -82,9 +82,10 @@ export default function InstallationsPage(params) {
       noDataPlaceHolder={
         <TableRow>
           <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
-            <Typography variant="h2">
-              🤷‍♀️ <br />
+            <Typography variant="h4">
               {t('INSTALLATIONS.NO_INSTALLATIONS')}
+              <br />
+              🤷‍♀️
             </Typography>
           </TableCell>
         </TableRow>
