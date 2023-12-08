@@ -68,6 +68,7 @@ export default function Example() {
   const [variant, setVariant] = React.useState('standard')
   return (
     <>
+      <h1>SnackbarMessages</h1>
       <Box sx={{ display: 'flex', flexFlow: 'wrap', gap: 1, justifyContent: 'center' }}>
         <Selector
           label="Horizontal Anchor"
