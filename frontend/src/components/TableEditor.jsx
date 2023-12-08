@@ -117,7 +117,7 @@ function ActionButtons(props) {
 const ActionsType = PropTypes.arrayOf(
   PropTypes.shape({
     title: PropTypes.string.isRequired,
-    icon: PropTypes.element.isRequired,
+    icon: PropTypes.element,
     action: PropTypes.func,
     view: PropTypes.func,
   }),
@@ -565,7 +565,6 @@ TableEditor.propTypes = {
   actions: ActionsType,
   itemActions: ActionsType,
   selectionActions: ActionsType,
-  onRowClicked: PropTypes.functor,
   idField: PropTypes.string,
   defaultPageSize: PropTypes.number,
   pageSizes: PropTypes.arrayOf(PropTypes.number),

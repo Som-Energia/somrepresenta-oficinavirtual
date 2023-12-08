@@ -27,22 +27,22 @@ class Erp:
         self._token = None
 
     def _post(self, endpoint, *args):
-        print("<<", endpoint, args)
+        print(">>", endpoint, args)
         try:
             r = httpx.post(self.baseurl+endpoint, json=list(args))
         except httpx.ConnectError as e:
             raise ErpConnectionError(str(e))
         r.raise_for_status()
         result = r.json()
-        #print(">>", endpoint, result)
+        print("<<", endpoint, result)
         return result
 
     def token(self):
-        self._token = self._post('common', 'token', self.db, self.user, self.password)
+        self._token = self._post('/common', 'token', self.db, self.user, self.password)
 
     @requiresToken
     def object_execute(self, *args):
-        return self._post('object', 'execute', self.db, 'token', self._token, *args)
+        return self._post('/object', 'execute', self.db, 'token', self._token, *args)
 
     def customer_list(self):
         ids = self.object_execute('res.partner', 'search', [['vat','<>', False]])
