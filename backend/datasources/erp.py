@@ -53,6 +53,14 @@ def erp_sign_document(username: str, document: str) -> SignatureResult:
         print(ns(error=ns.loads(exception.json())).dump())
         raise
 
+def erp_installation_list(username: str) -> list[InstallationSummary]:
+    e = erp.Erp()
+    installations = e.list_installations(username)
+    return [
+        InstallationSummary(**installation)
+        for installation in installations
+    ]
+
 class ErpBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return erp_user_info(login)
@@ -64,10 +72,5 @@ class ErpBackend():
         return erp_sign_document(username, document)
 
     def installation_list(self, username: str) -> list[InstallationSummary]:
-        e = erp.Erp()
-        installations = e.list_installations(username)
-        return [
-            InstallationSummary(**installation)
-            for installation in installations
-        ]
+        return erp_installation_list(username)
 
