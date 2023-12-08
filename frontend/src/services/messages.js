@@ -24,8 +24,8 @@ IMPORTANT: `subscribe()` returns a function to unsubscribe. Use it.
 */
 
 const _subscribers = new Set()
-function _notify(message, level) {
-  _subscribers.forEach((l) => l({ message, level }))
+function _notify(message, level, extra) {
+  _subscribers.forEach((l) => l({ message, level, ...(extra || {}) }))
 }
 
 function subscribe(subscriber) {
@@ -33,24 +33,24 @@ function subscribe(subscriber) {
   return () => _subscribers.delete(subscriber)
 }
 
-function log(message) {
-  _notify(message, undefined)
+function log(message, extra) {
+  _notify(message, undefined, extra)
 }
 
-function error(message) {
-  _notify(message, 'error')
+function error(message, extra) {
+  _notify(message, 'error', extra)
 }
 
-function warn(message) {
-  _notify(message, 'warning')
+function warn(message, extra) {
+  _notify(message, 'warning', extra)
 }
 
-function info(message) {
-  _notify(message, 'info')
+function info(message, extra) {
+  _notify(message, 'info', extra)
 }
 
-function success(message) {
-  _notify(message, 'success')
+function success(message, extra) {
+  _notify(message, 'success', extra)
 }
 
 // Default handler, use the console
@@ -65,3 +65,13 @@ const disableConsoleMessages = subscribe(({ message, level }) => {
 })
 
 export { error, warn, success, info, log, subscribe, disableConsoleMessages }
+const messages = {
+  error,
+  warn,
+  success,
+  info,
+  log,
+  subscribe,
+  disableConsoleMessages,
+}
+export default messages

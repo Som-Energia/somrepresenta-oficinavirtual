@@ -18,6 +18,7 @@ Attributes:
 import React from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 import Slide from '@mui/material/Slide'
 import { subscribe } from '../services/messages'
 
@@ -72,6 +73,7 @@ export default function SnackbarMessages(props) {
                 : {}),
             }}
           >
+            {message.context && <AlertTitle>{message.context}</AlertTitle>}
             {message.message}
           </Alert>
         </Snackbar>

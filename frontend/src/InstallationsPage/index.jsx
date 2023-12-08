@@ -19,6 +19,7 @@ export default function InstallationsPage(params) {
 
   React.useEffect(() => {
     beLoading(true)
+    setRows([])
     ovapi
       .installations(currentUser)
       .then((retrievedRows) => {
