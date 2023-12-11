@@ -6,6 +6,8 @@ from .erp import Erp, ErpConnectionError
 
 
 class Erp_Test(unittest.TestCase):
+    from somutils.testutils import enterContext
+
     def setUp(self):
         self.enterContext(environ('ERP_BASEURL', 'http://noexisto.com'))
         self.enterContext(environ('ERP_DATABASE', 'mydatabase'))
