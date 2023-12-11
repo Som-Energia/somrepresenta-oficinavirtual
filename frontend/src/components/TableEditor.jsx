@@ -48,6 +48,8 @@ import Skeleton from '@mui/material/Skeleton'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import Tooltip from '@mui/material/Tooltip'
+import Collapse from '@mui/material/Collapse'
+import Button from '@mui/material/Button'
 import { visuallyHidden } from '@mui/utils'
 import InputBase from '@mui/material/InputBase'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -364,6 +366,7 @@ function TableEditor(props) {
     loading = false,
     noDataPlaceHolder = undefined,
   } = props
+  const { t } = useTranslation()
   const [order, setOrder] = React.useState('asc')
   const [orderBy, setOrderBy] = React.useState('name')
   const [selected, setSelected] = React.useState([])
@@ -420,6 +423,20 @@ function TableEditor(props) {
   }
 
   const isSelected = (id) => selected.indexOf(id) !== -1
+  // TODO: Reconcile filtering with pagination when we use pagination back
+  const isFiltered = (row) => {
+    if (!search) return false
+    for (const i in columns) {
+      const column = columns[i]
+      if (!column.searchable) continue
+      const fieldContent = row[column.id] + ''
+      if (fieldContent.toLowerCase().includes(search.toLowerCase())) return false
+    }
+    return true
+  }
+
+  const nFilteredRows = rows.filter(isFiltered).length
+  const nColumns = columns.length + 1
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -468,22 +485,11 @@ function TableEditor(props) {
             />
             <TableBody>
               {loading ? (
-                <Loading nCols={columns.length + 1} />
+                <Loading nCols={nColumns} />
               ) : rows.length === 0 ? (
                 noDataPlaceHolder
               ) : (
                 stableSort(rows, getComparator(order, orderBy))
-                  .filter((row) => {
-                    if (!search) return true
-                    for (const i in columns) {
-                      const column = columns[i]
-                      if (!column.searchable) continue
-                      const fieldContent = row[column.id] + ''
-                      if (fieldContent.toLowerCase().includes(search.toLowerCase()))
-                        return true
-                    }
-                    return false
-                  })
                   .slice(
                     pageSizes.length === 0 ? 0 : page * rowsPerPage,
                     pageSizes.length === 0
@@ -493,9 +499,17 @@ function TableEditor(props) {
                   .map((row, index) => {
                     const isItemSelected = isSelected(row[idField])
                     const labelId = `enhanced-table-checkbox-${index}`
+                    const isItemFiltered = isFiltered(row)
 
                     return (
                       <TableRow
+                        sx={{
+                          '& td': {
+                            paddingBlock: isItemFiltered ? 0 : 'inherited',
+                            marginBlock: isItemFiltered ? 0 : 'inherited',
+                            border: isItemFiltered ? 0 : 'inherited',
+                          },
+                        }}
                         hover
                         onClick={(event) => handleClick(event, row[idField])}
                         role="checkbox"
@@ -507,41 +521,63 @@ function TableEditor(props) {
                       >
                         {selectionActions.length !== 0 && (
                           <TableCell padding="checkbox">
-                            <Checkbox
-                              color="primary"
-                              checked={isItemSelected}
-                              inputProps={{
-                                'aria-labelledby': labelId,
-                              }}
-                            />
+                            <Collapse in={!isItemFiltered}>
+                              <Checkbox
+                                color="primary"
+                                checked={isItemSelected}
+                                inputProps={{
+                                  'aria-labelledby': labelId,
+                                }}
+                              />
+                            </Collapse>
                           </TableCell>
                         )}
                         {columns.map((column) => {
                           return (
                             <TableCell
-                              key={row[idField] + '_' + column.id}
                               align={column.numeric ? 'right' : 'left'}
+                              key={row[idField] + '_' + column.id}
                             >
-                              {column.view
-                                ? column.view(row)
-                                : row[column.id] === undefined
-                                ? '-'
-                                : row[column.id] === null
-                                ? '-'
-                                : row[column.id]}
+                              <Collapse in={!isItemFiltered} component={null}>
+                                {column.view
+                                  ? column.view(row)
+                                  : row[column.id] === undefined
+                                  ? '-'
+                                  : row[column.id] === null
+                                  ? '-'
+                                  : row[column.id]}
+                              </Collapse>
                             </TableCell>
                           )
                         })}
                         <TableCell>
-                          <ActionButtons
-                            size="small"
-                            actions={itemActions}
-                            context={row}
-                          />
+                          <Collapse in={!isItemFiltered} component={null}>
+                            <ActionButtons
+                              size="small"
+                              actions={itemActions}
+                              context={row}
+                            />
+                          </Collapse>
                         </TableCell>
                       </TableRow>
                     )
                   })
+              )}
+              {nFilteredRows > 0 && (
+                <TableRow>
+                  <TableCell colSpan={nColumns - 1}>
+                    {t('TABLE_EDITOR.N_ITEMS_FILTERED', { n: nFilteredRows })}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: 'right' }}>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      onClick={() => setSearch('')}
+                    >
+                      {t('TABLE_EDITOR.CLEAR_FILTER')}
+                    </Button>
+                  </TableCell>
+                </TableRow>
               )}
               {emptyRows > 0 && (
                 <TableRow
@@ -549,7 +585,7 @@ function TableEditor(props) {
                     height: denseRowHeight * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={nColumns} />
                 </TableRow>
               )}
             </TableBody>
