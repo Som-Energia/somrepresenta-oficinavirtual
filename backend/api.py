@@ -13,7 +13,8 @@ def setup():
     setup_authlocal(app)
     setup_business(app)
     setup_statics(app)
-    [print(r) for r in app.routes]
+    if os.environ.get("SHOW_ROUTES"):
+        [print(r.path) for r in app.routes]
     return app
 
 app = setup()
