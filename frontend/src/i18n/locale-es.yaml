@@ -116,7 +116,7 @@ TABLE_EDITOR:
   PLACEHOLDER_SEARCH: 'Busca...'
   LABEL_SEARCH: 'Busca'
   N_ITEMS_FILTERED: Se han filtrado {{n}} elementos
-  CLEAR_FILTER: Elimina el filtro
+  CLEAR_FILTER: Muestra todo
 OVAPI:
   CONTEXT_LOGIN: Validando identidad
   CONTEXT_INSTALLATIONS: Obteniendo la lista de instalaciones
