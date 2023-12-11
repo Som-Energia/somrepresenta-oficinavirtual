@@ -14,7 +14,7 @@ def setup():
     setup_business(app)
     setup_statics(app)
     if os.environ.get("SHOW_ROUTES"):
-        [print(r.path) for r in app.routes]
+        [print(f"'{r.path}' - [{r.name}]") for r in app.routes]
     return app
 
 app = setup()

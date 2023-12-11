@@ -18,6 +18,7 @@ export default defineConfig({
       '/api': 'http://localhost:5500',
       '/oauth2': 'http://localhost:5500',
       '/docs': 'http://localhost:5500',
+      '/redoc': 'http://localhost:5500',
       '/openapi.json': 'http://localhost:5500',
     },
   },
