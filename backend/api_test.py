@@ -6,6 +6,12 @@ from pathlib import Path
 from . import __version__ as api_version
 from .api_base import setup_base, setup_statics
 
+
+def setup_validation_test(app):
+    @app.get('/test/validation')
+    def validation(parameter: int):
+        return dict(result='ok')
+
 class VersionApi_Test(unittest.TestCase):
 
     from .utils.testutils import assertResponseEqual
@@ -14,6 +20,7 @@ class VersionApi_Test(unittest.TestCase):
         self.maxDiff = None
         self.app = FastAPI()
         setup_base(self.app)
+        setup_validation_test(self.app)
         setup_statics(self.app)
         self.client = TestClient(self.app)
 
@@ -44,4 +51,17 @@ class VersionApi_Test(unittest.TestCase):
         self.assertResponseEqual(r, f"""
             detail: Method Not Allowed
         """, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_validation_error(self):
+        r = self.client.get('/test/validation?parameter=notanint')
+        self.assertResponseEqual(r, f"""
+            detail:
+            - input: notanint
+              loc:
+              - query
+              - parameter
+              msg: Input should be a valid integer, unable to parse string as an integer
+              type: int_parsing
+              url: https://errors.pydantic.dev/2.4/v/int_parsing
+        """, status. HTTP_422_UNPROCESSABLE_ENTITY)
 
