@@ -1,6 +1,6 @@
 import os
 import unittest
-from fastapi import FastAPI, status
+from fastapi import FastAPI, Depends, status
 from fastapi.testclient import TestClient
 from yamlns import ns
 from consolemsg import error
@@ -9,6 +9,7 @@ import unittest.mock
 from .authlocal import setup_authlocal
 from .utils.testutils import environ, safe_response_get
 from .api_business import setup_business
+from .auth import validated_user
 
 class AuthLocal_Test(unittest.TestCase):
 
@@ -29,7 +30,15 @@ class AuthLocal_Test(unittest.TestCase):
         self.enterContext(environ('DATA_BACKEND', "dummy"))
         app = FastAPI()
         setup_authlocal(app)
-        setup_business(app)
+
+        @app.get('/api/test_protected')
+        def api_protected(user: dict = Depends(validated_user)):
+            return user
+
+        @app.get('/api/test_unprotected')
+        def api_unprotected():
+            return dict(result='ok')
+
         self.client = TestClient(app)
 
     def passwords(self):
@@ -75,14 +84,19 @@ class AuthLocal_Test(unittest.TestCase):
         self.client.cookies.set('Authorization', r.cookies.get('Authorization'))
         return r
 
-    def profile_query(self):
-        return self.client.get(
-            '/api/me',
-        )
-
     def logout_query(self):
         return self.client.post(
             '/api/auth/logout',
+        )
+
+    def protected_query(self):
+        return self.client.get(
+            '/api/test_protected',
+        )
+
+    def unprotected_query(self):
+        return self.client.get(
+            '/api/test_unprotected',
         )
 
     def test_provisioning__proper(self):
@@ -115,12 +129,12 @@ class AuthLocal_Test(unittest.TestCase):
         """, 422)
 
     def test_provisioning__disabledProvisioning(self):
-        # This disables provisioning
-        del os.environ['ERP_PROVISIONING_APIKEY']
-        r = self.provisioning_query()
-        self.assertResponseEqual(r, f"""
-            detail: Disabled key
-        """, 401)
+        # Disable provisioning by unsetting env var
+        with environ('ERP_PROVISIONING_APIKEY', None):
+            r = self.provisioning_query()
+            self.assertResponseEqual(r, f"""
+                detail: Disabled key
+            """, 401)
 
     def test_provisioning__withoutKey_notAuthenticated(self):
         r = self.provisioning_query(key=None)
@@ -195,38 +209,32 @@ class AuthLocal_Test(unittest.TestCase):
             detail: Incorrect password
         """, 401)
 
-    def test_self_profile(self):
-        r = self.provisioning_query()
-        r = self.login_query()
-        r = self.profile_query()
+    def test_unprotected_api__no_login(self):
+        r = self.unprotected_query()
         self.assertResponseEqual(r, r"""
-            vat: ES12345678Z
-            address: Rue del Percebe, 13
-            avatar: https://www.gravatar.com/avatar/1ad4bc8f8707a4fba330f4d1f8353ebc?d=404&s=128
-            city: Salt
-            email: es12345678z@nowhere.com
-            name: Perico Palotes
-            phones:
-            - '555444333'
-            proxy_name: Matute Gonzalez, Frasco
-            proxy_vat: ES87654321X
-            roles:
-            - customer
-            signed_documents: []
-            state: Girona
-            username: ES12345678Z
-            zip: '17234'
+            result: ok
         """)
 
-    def test_erp_connection_error(self):
+    def test_protected_api__no_login(self):
+        r = self.protected_query()
+        self.assertResponseEqual(r, r"""
+            detail: Not authenticated
+        """, 403)
+
+    def test_protected_api__with_login(self):
         r = self.provisioning_query()
         r = self.login_query()
-        with (
-            environ('DATA_BACKEND', 'erp'),
-            environ('ERP_BASEURL', 'http://noexisto.com'),
-        ):
-            r = self.client.get('/api/me')
-        self.assertResponseEqual(r, """\
-            details: Unable to reach ERP
-        """, status.HTTP_502_BAD_GATEWAY)
+        r = self.protected_query()
+        # returns what the protected items will receveive as validated_user Depends
+        self.assertResponseEqual(r, r"""
+            vat: ES12345678Z
+            avatar: https://www.gravatar.com/avatar/1ad4bc8f8707a4fba330f4d1f8353ebc?d=404&s=128
+            email: es12345678z@nowhere.com
+            name: Perico Palotes
+            exp: {exp}
+            roles:
+            - customer
+            username: ES12345678Z
+            sub: ES12345678Z
+        """.format(exp=safe_response_get(r, 'exp')))
 
