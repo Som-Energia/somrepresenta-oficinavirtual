@@ -18,6 +18,15 @@ def requiresToken(f, self, *args, **kwds):
 
 class ErpConnectionError(Exception): pass
 
+class ErpUnexpectedError(Exception):
+    def __init__(self, remote_error, remote_traceback):
+        self.remote_error = remote_error
+        self.remote_traceback = remote_traceback
+        super(ErpUnexpectedError, self).__init__(
+            f"Unexpected Error inside ERP: {remote_error}\n"
+            f"{''.join(remote_traceback)}"
+        )
+
 class Erp:
     def __init__(self):
         self.baseurl = os.environ['ERP_BASEURL']
@@ -34,7 +43,14 @@ class Erp:
             raise ErpConnectionError(str(e))
         r.raise_for_status()
         result = r.json()
-        print("<<", endpoint, result)
+        print("<<", r.status_code, endpoint, result)
+
+        # ERP error before getting in our ERP callback sandbox
+        if r.status_code == 210:
+            raise ErpUnexpectedError(
+                remote_error = result.get("exception", "Unknown exception"),
+                remote_traceback = result.get("traceback"),
+            )
         return result
 
     def token(self):
@@ -77,7 +93,7 @@ class Erp:
         return deleted
 
     def list_installations(self, vat):
-        return self.object_execute('som.ov.installation', 'get_installations', vat)
+        return self.object_execute('som.ov.installations', 'get_installations', vat)
 
 def example():
     dotenv.load_dotenv('.env')
