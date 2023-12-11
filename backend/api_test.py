@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from yamlns import ns
 from pathlib import Path
 from . import __version__ as api_version
-from .api import setup_base, setup_statics
+from .api_base import setup_base, setup_statics
 
 class VersionApi_Test(unittest.TestCase):
 
