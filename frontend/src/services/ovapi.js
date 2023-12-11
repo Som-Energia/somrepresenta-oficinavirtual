@@ -59,6 +59,7 @@ async function currentUser() {
 }
 
 async function localLogin(username, password) {
+  const context = i18n.t('OVAPI.CONTEXT_LOGIN')
   const formData = new FormData()
   formData.append('username', username)
   formData.append('password', password)
@@ -69,13 +70,12 @@ async function localLogin(username, password) {
         ContentType: 'multipart/form-data',
       },
     })
+    .catch(handleCommonErrors(context))
     .then((response) => {
-      console.log(response)
+      if (response === undefined) {
+        return
+      }
       return response
-    })
-    .catch((error) => {
-      console.log({ error })
-      throw error
     })
 }
 
