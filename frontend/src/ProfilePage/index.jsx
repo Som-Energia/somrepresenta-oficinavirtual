@@ -3,17 +3,15 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../components/AuthProvider'
-import PageGuard from '../components/PageGuard'
 import { vat2nif } from '../services/vat'
 
-const viewRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == false // intended ==
+const hideRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == 'false'
 
 export default function ProfilePage(params) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { currentUser } = useAuth()
   const fields = [
     {
@@ -35,7 +33,7 @@ export default function ProfilePage(params) {
           ))}
         </>
       ),
-      hide: (user) => viewRoleInProfile,
+      hide: (user) => hideRoleInProfile,
     },
     {
       id: 'address',
