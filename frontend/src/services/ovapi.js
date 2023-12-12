@@ -141,6 +141,15 @@ async function signDocument(documentName) {
   return response
 }
 
+async function installationDetails(contract_number) {
+  return axios
+    .get(`/api/installation_details/${contract_number}`)
+    .then((result) => result.data)
+    .catch((error) => {
+      throw error
+    })
+}
+
 async function version() {
   return axios
     .get('/api/version')
@@ -167,4 +176,5 @@ export default {
   currentUser,
   signDocument,
   installations,
+  installationDetails,
 }

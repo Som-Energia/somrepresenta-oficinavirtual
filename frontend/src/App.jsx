@@ -24,6 +24,7 @@ import BreakPointIndicator from './components/BreakPointIndicator'
 import SnackbarMessages from './components/SnackbarMessages'
 import ProfilePage from './ProfilePage'
 import InstallationsPage from './InstallationsPage'
+import DetailInstallationPage from './DetailInstallationPage'
 
 const routes = [
   {
@@ -72,6 +73,10 @@ const routes = [
           {
             path: '/installation',
             element: <InstallationsPage />,
+          },
+          {
+            path: '/installation/:contract_number',
+            element: <DetailInstallationPage />,
           },
           {
             path: '/invoices',

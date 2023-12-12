@@ -63,6 +63,11 @@ export default function SomEnergiaTheme(isDarkMode) {
       pagetitle: {
         main: '#4d4d4d',
       },
+      table: {
+        titleColor: 'rgb(150,182,51,0.7)',
+        contentLight: 'rgba(0, 0, 0, 0.03)',
+        contentDark: '#1A2027',
+      },
     },
   })
   return responsiveFontSizes(theme, {
