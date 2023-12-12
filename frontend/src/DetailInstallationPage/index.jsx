@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { Container, Grid, Typography, Paper, Box, Alert } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import ov from '../services/ovapi'
+import Loading from '../components/Loading'
 
 const Item = styled('div')(({ theme }) => ({
   backgroundColor:
@@ -56,11 +57,6 @@ const PrettyBox = ({ title = false, fields, translationsPrefix = 'DETAILS' }) =>
       </Box>
     </Grid>
   )
-}
-
-// TODO: create or use a loading component
-const Loading = () => {
-  return <div>Loading...</div>
 }
 
 // TODO: create or use a generic context to set app alert messages
