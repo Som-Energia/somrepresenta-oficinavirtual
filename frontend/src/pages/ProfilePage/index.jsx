@@ -5,8 +5,8 @@ import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '../components/AuthProvider'
-import { vat2nif } from '../services/vat'
+import { useAuth } from '../../components/AuthProvider'
+import { vat2nif } from '../../services/vat'
 
 const hideRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == 'false'
 

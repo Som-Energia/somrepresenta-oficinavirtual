@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { useParams } from 'react-router-dom'
-import { Container, Grid, Typography, Paper, Box, Alert } from '@mui/material'
+import { Container, Grid, Typography, Box, Alert } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import ov from '../services/ovapi'
-import Loading from '../components/Loading'
+import ov from '../../services/ovapi'
+import Loading from '../../components/Loading'
 
 const Item = styled('div')(({ theme }) => ({
   backgroundColor:
