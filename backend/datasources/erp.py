@@ -61,9 +61,9 @@ def erp_installation_list(username: str) -> list[InstallationSummary]:
         for installation in installations
     ]
 
-def erp_installation_details(contract_number: str) -> InstallationDetailsResult:
+def erp_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
     e = erp.Erp()
-    retrieved = e.installation_details(contract_number)
+    retrieved = e.installation_details(username, contract_number)
     if 'error' in retrieved:
         raise ErpError(retrieved)
     try:
@@ -86,5 +86,5 @@ class ErpBackend():
     def installation_list(self, username: str) -> list[InstallationSummary]:
         return erp_installation_list(username)
 
-    def installation_details(self, contract_number: str) -> InstallationDetailsResult:
-        return erp_installation_details(contract_number)
+    def installation_details(self, username: str, contract_number: str) -> InstallationDetailsResult:
+        return erp_installation_details(username, contract_number)

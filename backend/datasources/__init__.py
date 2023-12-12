@@ -26,5 +26,5 @@ def sign_document(username: str, document: str) -> SignatureResult:
 def installation_list(username: str) -> list[InstallationSummary]:
     return backend().installation_list(username)
 
-def installation_details(installation_name: str) -> InstallationDetailsResult:
-    return backend().installation_details(installation_name)
+def installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
+    return backend().installation_details(username, contract_number)
