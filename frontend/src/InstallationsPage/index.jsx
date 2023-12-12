@@ -6,10 +6,31 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import { Link } from 'react-router-dom'
 import TableEditor from '../components/TableEditor'
 import { useAuth } from '../components/AuthProvider'
 import ovapi from '../services/ovapi'
+import { Container } from '@mui/material'
+
+function PageTitle(props) {
+  const {children, Icon} = props
+  return (
+    <Typography variant="h3" sx={{ mb: 3 }}>
+      <Icon
+        sx={{
+          display: 'inline',
+          fontSize: '3rem',
+          m: 0,
+          p: 0,
+          mb: '-0.5rem',
+          mr: '1rem',
+        }}
+      />
+      {children}
+    </Typography>
+  )
+}
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
@@ -69,28 +90,32 @@ export default function InstallationsPage(params) {
     },
   ]
   return (
-    <TableEditor
-      title={t('INSTALLATIONS.TABLE_TITLE')}
-      defaultPageSize={12}
-      pageSizes={[]}
-      columns={columns}
-      rows={rows}
-      actions={actions}
-      selectionActions={selectionActions}
-      itemActions={itemActions}
-      idField={'contract_number'}
-      loading={isLoading}
-      noDataPlaceHolder={
-        <TableRow>
-          <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
-            <Typography variant="h4">
-              {t('INSTALLATIONS.NO_INSTALLATIONS')}
-              <br />
-              🤷‍♀️
-            </Typography>
-          </TableCell>
-        </TableRow>
-      }
-    ></TableEditor>
+    <Container>
+      <PageTitle Icon={SolarPowerIcon}>{t('INSTALLATIONS.INSTALLATIONS_TITLE')}</PageTitle>
+
+      <TableEditor
+        title={t('INSTALLATIONS.TABLE_TITLE')}
+        defaultPageSize={12}
+        pageSizes={[]}
+        columns={columns}
+        rows={rows}
+        actions={actions}
+        selectionActions={selectionActions}
+        itemActions={itemActions}
+        idField={'contract_number'}
+        loading={isLoading}
+        noDataPlaceHolder={
+          <TableRow>
+            <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
+              <Typography variant="h4">
+                {t('INSTALLATIONS.NO_INSTALLATIONS')}
+                <br />
+                🤷‍♀️
+              </Typography>
+            </TableCell>
+          </TableRow>
+        }
+      ></TableEditor>
+    </Container>
   )
 }
