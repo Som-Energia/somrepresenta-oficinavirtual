@@ -97,7 +97,7 @@ class Erp:
 
     def installation_details(self, username, contract_number):
         details = self.object_execute(
-            "som_ov_installation", "get_installation_details", username, contract_number
+            "som.ov.installations", "get_installation_details", username, contract_number
         )
         return details
 
