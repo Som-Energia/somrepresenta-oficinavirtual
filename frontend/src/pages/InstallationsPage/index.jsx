@@ -12,25 +12,8 @@ import TableEditor from '../../components/TableEditor'
 import { useAuth } from '../../components/AuthProvider'
 import ovapi from '../../services/ovapi'
 import { Container } from '@mui/material'
+import PageTitle from '../../components/PageTitle'
 
-function PageTitle(props) {
-  const {children, Icon} = props
-  return (
-    <Typography variant="h3" sx={{ mb: 3 }}>
-      <Icon
-        sx={{
-          display: 'inline',
-          fontSize: '3rem',
-          m: 0,
-          p: 0,
-          mb: '-0.5rem',
-          mr: '1rem',
-        }}
-      />
-      {children}
-    </Typography>
-  )
-}
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
