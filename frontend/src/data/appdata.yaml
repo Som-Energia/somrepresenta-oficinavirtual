@@ -6,7 +6,7 @@ menuPages:
     text: APP_FRAME.PAGE_HOME
     icon: Home
 
-  - path: /install
+  - path: /installation
     text: APP_FRAME.PAGE_INSTALLATIONS
     icon: SolarPower
 

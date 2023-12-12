@@ -21,7 +21,9 @@ import TermsCheck from './components/TermsCheck'
 import VersionCheck from './components/VersionCheck'
 import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
+import SnackbarMessages from './components/SnackbarMessages'
 import ProfilePage from './ProfilePage'
+import InstallationsPage from './InstallationsPage'
 
 const routes = [
   {
@@ -33,6 +35,7 @@ const routes = [
             <AuthProvider>
               <ScrollRestoration /> {/* Scroll up on page switch */}
               <BreakPointIndicator />
+              <SnackbarMessages variant="filled" />
               <AppFrame>
                 <TermsCheck />
                 <Outlet />
@@ -67,8 +70,8 @@ const routes = [
             element: <ProfilePage />,
           },
           {
-            path: '/install',
-            element: <NotYetImplementedPage />,
+            path: '/installation',
+            element: <InstallationsPage />,
           },
           {
             path: '/invoices',

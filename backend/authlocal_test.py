@@ -1,39 +1,21 @@
-
+import os
 import unittest
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, status
 from fastapi.testclient import TestClient
 from yamlns import ns
-import os
 from consolemsg import error
-from somutils.testutils import sandbox_dir, enterContext
+from somutils.testutils import sandbox_dir
 import unittest.mock
-from contextlib import contextmanager
 from .authlocal import setup_authlocal
-from .auth import validated_user, oauth2, setup_auth
-
-@contextmanager
-def environ(var, value):
-    oldvalue = os.environ.get(var)
-    os.environ[var]=value
-    try:
-        yield
-    finally:
-        if oldvalue:
-            os.environ[var]=oldvalue
-        else:
-            del os.environ[var]
-
-def setup_profile(app):
-    """Mount testing only purpose api entries"""
-
-    @app.get('/api/me')
-    def profile(user: dict = Depends(validated_user)) -> dict:
-        return user
+from .utils.testutils import environ, safe_response_get
+from .api_business import setup_business
+from .auth import validated_user
 
 class AuthLocal_Test(unittest.TestCase):
 
     from yamlns.testutils import assertNsEqual
     from somutils.testutils import enterContext
+    from .utils.testutils import assertResponseEqual
 
     username = 'ES12345678Z'
     password = 'mypassword'
@@ -47,31 +29,17 @@ class AuthLocal_Test(unittest.TestCase):
         self.enterContext(environ('JWT_EXPIRES', "2000"))
         self.enterContext(environ('DATA_BACKEND', "dummy"))
         app = FastAPI()
-        setup_auth(app)
         setup_authlocal(app)
-        setup_profile(app)
+
+        @app.get('/api/test_protected')
+        def api_protected(user: dict = Depends(validated_user)):
+            return user
+
+        @app.get('/api/test_unprotected')
+        def api_unprotected():
+            return dict(result='ok')
+
         self.client = TestClient(app)
-
-
-
-    def assertResponseEqual(self, response, expected, status=200):
-        if type(expected) == str:
-            data = ns.loads(expected)
-
-        content = ns(text=response.text)
-        try: content = ns(yaml=ns.loads(content.text))
-        except: pass
-
-        self.assertNsEqual(
-            ns(
-                content,
-                status=response.status_code,
-            ),
-            ns(
-                yaml=data,
-                status=status,
-            ),
-        )
 
     def passwords(self):
         try:
@@ -104,22 +72,31 @@ class AuthLocal_Test(unittest.TestCase):
         )
 
     def login_query(self, username=username, password=password):
-        return self.client.post(
+        r = self.client.post(
             '/api/auth/token',
             data=dict(
                 username=username,
                 password=password,
             ),
         )
-
-    def profile_query(self):
-        return self.client.get(
-            '/api/me',
-        )
+        # TODO: Why this is needed at all? Authorization was already
+        # TODO: in client but does not send it unless we do that
+        self.client.cookies.set('Authorization', r.cookies.get('Authorization'))
+        return r
 
     def logout_query(self):
         return self.client.post(
             '/api/auth/logout',
+        )
+
+    def protected_query(self):
+        return self.client.get(
+            '/api/test_protected',
+        )
+
+    def unprotected_query(self):
+        return self.client.get(
+            '/api/test_unprotected',
         )
 
     def test_provisioning__proper(self):
@@ -152,12 +129,12 @@ class AuthLocal_Test(unittest.TestCase):
         """, 422)
 
     def test_provisioning__disabledProvisioning(self):
-        # This disables provisioning
-        del os.environ['ERP_PROVISIONING_APIKEY']
-        r = self.provisioning_query()
-        self.assertResponseEqual(r, f"""
-            detail: Disabled key
-        """, 401)
+        # Disable provisioning by unsetting env var
+        with environ('ERP_PROVISIONING_APIKEY', None):
+            r = self.provisioning_query()
+            self.assertResponseEqual(r, f"""
+                detail: Disabled key
+            """, 401)
 
     def test_provisioning__withoutKey_notAuthenticated(self):
         r = self.provisioning_query(key=None)
@@ -170,9 +147,8 @@ class AuthLocal_Test(unittest.TestCase):
         self.assertResponseEqual(r, "result: ok")
 
         r = self.login_query()
-        token = 'NOT_FOUND'
-        try: token = r.json().get('access_token', "NOT_FOUND")
-        except: pass
+
+        token = safe_response_get(r, 'access_token')
         self.assertResponseEqual(r, f"""\
             access_token: {token}
             token_type: bearer
@@ -188,9 +164,8 @@ class AuthLocal_Test(unittest.TestCase):
         self.assertResponseEqual(r, "result: ok")
 
         r = self.login_query(self.username[2:]) # removing ES
-        token = 'NOT_FOUND'
-        try: token = r.json().get('access_token', "NOT_FOUND")
-        except: pass
+
+        token = safe_response_get(r, 'access_token')
         self.assertResponseEqual(r, f"""\
             access_token: {token}
             token_type: bearer
@@ -234,17 +209,32 @@ class AuthLocal_Test(unittest.TestCase):
             detail: Incorrect password
         """, 401)
 
-    @unittest.skip("Still not working")
-    def test_self_profile(self):
-        r = self.provisioning_query()
-        print("after provision", self.client.cookies)
-        r = self.login_query()
-        print("after login", self.client.cookies)
-        r = self.profile_query()
-        print("afger profile", self.client.cookies)
-        self.assertResponseEqual(r, f"""\
-            lala: boo
+    def test_unprotected_api__no_login(self):
+        r = self.unprotected_query()
+        self.assertResponseEqual(r, r"""
+            result: ok
         """)
 
+    def test_protected_api__no_login(self):
+        r = self.protected_query()
+        self.assertResponseEqual(r, r"""
+            detail: Not authenticated
+        """, 403)
 
+    def test_protected_api__with_login(self):
+        r = self.provisioning_query()
+        r = self.login_query()
+        r = self.protected_query()
+        # returns what the protected items will receveive as validated_user Depends
+        self.assertResponseEqual(r, r"""
+            vat: ES12345678Z
+            avatar: https://www.gravatar.com/avatar/1ad4bc8f8707a4fba330f4d1f8353ebc?d=404&s=128
+            email: es12345678z@nowhere.com
+            name: Perico Palotes
+            exp: {exp}
+            roles:
+            - customer
+            username: ES12345678Z
+            sub: ES12345678Z
+        """.format(exp=safe_response_get(r, 'exp')))
 

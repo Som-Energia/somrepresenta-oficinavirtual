@@ -20,17 +20,23 @@ function LoginDialog(params) {
   const [isLoading, beLoading] = React.useState(false)
   const [error, setError] = React.useState()
   const { t, i18n } = useTranslation()
+
   async function handleSubmit(ev) {
     ev.preventDefault()
     beLoading(true)
     ov.localLogin(username, password)
       .then((response) => {
+        if (!response) {
+          setError(t('LOGIN.UNABLE_TO_LOGIN'))
+          beLoading(false)
+          return
+        }
         console.log(response)
         closeDialog()
       })
       .catch((error) => {
         console.error({ error })
-        setError('Usuario o contraseña invàlida.')
+        setError(t('LOGIN.VALIDATION_ERROR'))
         beLoading(false)
       })
   }

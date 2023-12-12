@@ -32,8 +32,7 @@ def main(debug, host, port, printrules):
 
     step("Starting API")
     if printrules:
-        for rule in app.routes:
-            step("- {}", rule.path)
+        os.environ["SHOW_ROUTES"]="1"
     import uvicorn
     uvicorn.run("backend.api:app", host=host, port=port, reload=debug)
     step("API stopped")

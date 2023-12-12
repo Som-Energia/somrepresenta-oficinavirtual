@@ -54,6 +54,8 @@ LOGIN:
   SUBMIT_BUTTON_LOGIN: Valida
   SUBMIT_BUTTON_PROCESSING: Validando…
   PASSWORD_LABEL: Contraseña
+  UNABLE_TO_LOGIN: No ha sido posible validar
+  VALIDATION_ERROR: Usuario o contraseña invàlida.
 CHANGE_PASSWORD:
   CHANGE_PASSWORD_DIALOG_TITLE: Cambiando la contraseña
   CURRENT_PASSWORD_LABEL: Contraseña actual
@@ -97,3 +99,28 @@ VERSION_CHECKER:
   RELOADING_IN: Recargando en {{seconds}} segundos
   RELOADING: Recargando...
   RELOAD_NOW: Recarga ya
+INSTALLATIONS:
+  INSTALLATIONS_TITLE: Instalaciones
+  TABLE_TITLE: Instalaciones
+  COLUMN_CONTRACT_NUMBER: Número de contrato
+  COLUMN_INSTALLATION_NAME: Nombre de la instalación
+  BUTTON_DETAILS: Detalle
+  TOOLTIP_DETAILS: Detalle
+  NO_INSTALLATIONS: No se han encontrado instalaciones
+TABLE_EDITOR:
+  LOADING: Cargando datos...
+  SELECT_ALL: Selecciona todo
+  ACTIONS: Acciones
+  SORTED_DESCENDING: Orden descendiente
+  SORTED_ASCENDING: Orden ascendiente
+  N_SELECTED: '{{numSelected}} seleccionados'
+  PLACEHOLDER_SEARCH: 'Busca...'
+  LABEL_SEARCH: 'Busca'
+  N_ITEMS_FILTERED: Se han filtrado {{n}} elementos
+  CLEAR_FILTER: Muestra todo
+OVAPI:
+  CONTEXT_LOGIN: Validando identidad
+  CONTEXT_INSTALLATIONS: Obteniendo la lista de instalaciones
+  ERR_NETWORK: No se encuentra el servidor. ¿Tiene conexión a la red?
+  ERR_GATEWAY: El sistema no está disponible por mantenimiento. Pruebe más tarde.
+  ERR_INTERNAL: 'Se ha producido un error inesperado en el servidor. Referencia {{reference}}.'

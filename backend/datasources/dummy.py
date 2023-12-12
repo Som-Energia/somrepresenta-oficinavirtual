@@ -1,4 +1,4 @@
-from ..models import TokenUser, UserProfile, SignatureResult
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary
 from ..utils.gravatar import gravatar
 from yamlns import ns
 
@@ -159,6 +159,21 @@ def dummy_sign_document(username: str, document: str) -> SignatureResult:
         signed_version = current_version,
     )
 
+def dummy_installation_list(username: str) -> list[InstallationSummary]:
+    def generative_installation(i):
+        cities=['Manlleu', 'Manacor', 'Tivisa']
+        installs=['Pavelló', 'Piscina', 'Casal']
+        install = installs[i%len(installs)]
+        city = cities[(i//len(installs))%len(cities)]
+        return InstallationSummary(
+            contract_number=f'19000{username[-2]}_{i}',
+            installation_name=f'{city} {install}',
+        )
+    return [
+        generative_installation(i)
+        for i in range(int(username[-3]))
+    ]
+
 
 class DummyBackend():
     def user_info(self, login: str) -> TokenUser | None:
@@ -169,4 +184,7 @@ class DummyBackend():
 
     def sign_document(self, username: str, document: str) -> SignatureResult:
         return dummy_sign_document(username, document)
+
+    def installation_list(self, username: str) -> list[InstallationSummary]:
+        return dummy_installation_list(username)
 

@@ -16,6 +16,17 @@ def requiresToken(f, self, *args, **kwds):
     except Exception as e:
         raise 
 
+class ErpConnectionError(Exception): pass
+
+class ErpUnexpectedError(Exception):
+    def __init__(self, remote_error, remote_traceback):
+        self.remote_error = remote_error
+        self.remote_traceback = remote_traceback
+        super(ErpUnexpectedError, self).__init__(
+            f"Unexpected Error inside ERP: {remote_error}\n"
+            f"{''.join(remote_traceback)}"
+        )
+
 class Erp:
     def __init__(self):
         self.baseurl = os.environ['ERP_BASEURL']
@@ -25,19 +36,29 @@ class Erp:
         self._token = None
 
     def _post(self, endpoint, *args):
-        #print("<<", args)
-        r = httpx.post(self.baseurl+endpoint, json=list(args))
+        print(">>", endpoint, args)
+        try:
+            r = httpx.post(self.baseurl+endpoint, json=list(args))
+        except httpx.ConnectError as e:
+            raise ErpConnectionError(str(e))
         r.raise_for_status()
         result = r.json()
-        #print(">>", result)
+        print("<<", r.status_code, endpoint, result)
+
+        # ERP error before getting in our ERP callback sandbox
+        if r.status_code == 210:
+            raise ErpUnexpectedError(
+                remote_error = result.get("exception", "Unknown exception"),
+                remote_traceback = result.get("traceback"),
+            )
         return result
 
     def token(self):
-        self._token = self._post('common', 'token', self.db, self.user, self.password)
+        self._token = self._post('/common', 'token', self.db, self.user, self.password)
 
     @requiresToken
     def object_execute(self, *args):
-        return self._post('object', 'execute', self.db, 'token', self._token, *args)
+        return self._post('/object', 'execute', self.db, 'token', self._token, *args)
 
     def customer_list(self):
         ids = self.object_execute('res.partner', 'search', [['vat','<>', False]])
@@ -48,29 +69,31 @@ class Erp:
         return self.object_execute('res.users', 'read', ids,)# ['login', 'name'])
 
     def identify(self, vat):
-        return self.object_execute('users', 'identify_login', vat)
+        return self.object_execute('som.ov.users', 'identify_login', vat)
 
     def profile(self, vat):
-        return self.object_execute('users', 'get_profile', vat)
+        return self.object_execute('som.ov.users', 'get_profile', vat)
 
     def sign_document(self, username, document):
-        return self.object_execute('users', 'sign_document', username, document)
+        return self.object_execute('som.ov.users', 'sign_document', username, document)
 
     def list_signatures(self, username, document=None):
         """Only for debug purposes"""
         document_query = [['document_version.type.code', '=', document]] if document else []
-        ids = self.object_execute('signed.document', 'search', [['signer.vat', '=', username]]+document_query)
-        signatures = self.object_execute('signed.document', 'read', ids)
+        ids = self.object_execute('som.ov.signed.document', 'search', [['signer.vat', '=', username]]+document_query)
+        signatures = self.object_execute('som.ov.signed.document', 'read', ids)
         return signatures
 
     def clear_signatures(self, username, document=None):
         """Only for debug purposes"""
         document_query = [['document_version.type.code', '=', document]] if document else []
-        ids = self.object_execute('signed.document', 'search', [['signer.vat', '=', username]]+document_query)
-        deleted = self.object_execute('signed.document', 'read', ids)
-        self.object_execute('signed.document', 'unlink', ids)
+        ids = self.object_execute('som.ov.signed.document', 'search', [['signer.vat', '=', username]]+document_query)
+        deleted = self.object_execute('som.ov.signed.document', 'read', ids)
+        self.object_execute('som.ov.signed.document', 'unlink', ids)
         return deleted
 
+    def list_installations(self, vat):
+        return self.object_execute('som.ov.installations', 'get_installations', vat)
 
 def example():
     dotenv.load_dotenv('.env')

@@ -1,42 +1,21 @@
-from fastapi import FastAPI, Request, Depends
-from fastapi.responses import FileResponse
-from pathlib import Path
+import os
+from fastapi import FastAPI
 from dotenv import load_dotenv
-from . import __version__ as version
-from .auth import setup_auth, validated_user
+from .api_base import setup_base, setup_statics
 from .authlocal import setup_authlocal
-from .models import UserProfile, TokenUser, SignatureResult
-from .datasources import profile_info, sign_document
+from .api_business import setup_business
 
-load_dotenv()
-app = FastAPI()
+def setup():
+    load_dotenv()
+    app = FastAPI()
+    setup_base(app)
+    #setup_auth(app)
+    setup_authlocal(app)
+    setup_business(app)
+    setup_statics(app)
+    if os.environ.get("SHOW_ROUTES"):
+        [print(f"'{r.path}' - [{r.name}]") for r in app.routes]
+    return app
 
-packagedir = Path(__file__).parent
-distpath = packagedir/'dist'
-
-@app.get('/')
-@app.get('/{file}')
-def frontend(request: Request, file=None):
-    return FileResponse(distpath / (file or 'index.html'))
-
-@app.get('/assets/{file}')
-def static_files(request: Request, file=None, dir=None):
-    return FileResponse(distpath / 'assets' / (file or 'index.html'))
-
-@app.get('/api/version')
-def apiVersion():
-    return dict(
-        version = version,
-    )
-
-@app.get('/api/me')
-def apiMe(user: dict = Depends(validated_user)) -> UserProfile:
-    return profile_info(user)
-
-@app.post('/api/sign_document/{document}')
-def apiSignDocument(document: str, user: dict = Depends(validated_user)) -> SignatureResult:
-    return sign_document(user['username'], document)
-
-#setup_auth(app)
-setup_authlocal(app)
+app = setup()
 
