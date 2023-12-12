@@ -11,9 +11,9 @@ import { Link } from 'react-router-dom'
 import TableEditor from '../../components/TableEditor'
 import { useAuth } from '../../components/AuthProvider'
 import ovapi from '../../services/ovapi'
-import { Container } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import PageTitle from '../../components/PageTitle'
-
+import Loading from '../../components/Loading'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
@@ -72,10 +72,13 @@ export default function InstallationsPage(params) {
       },
     },
   ]
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Container>
-      <PageTitle Icon={SolarPowerIcon}>{t('INSTALLATIONS.INSTALLATIONS_TITLE')}</PageTitle>
-
+      <PageTitle Icon={SolarPowerIcon}>
+        {t('INSTALLATIONS.INSTALLATIONS_TITLE')}
+      </PageTitle>
       <TableEditor
         title={t('INSTALLATIONS.TABLE_TITLE')}
         defaultPageSize={12}
