@@ -56,6 +56,8 @@ def erp_sign_document(username: str, document: str) -> SignatureResult:
 def erp_installation_list(username: str) -> list[InstallationSummary]:
     e = erp.Erp()
     installations = e.list_installations(username)
+    if 'error' in installations:
+        raise ErpError(installations)
     return [
         InstallationSummary(**installation)
         for installation in installations
