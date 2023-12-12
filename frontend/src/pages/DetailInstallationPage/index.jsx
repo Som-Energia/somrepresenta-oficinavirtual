@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { useParams } from 'react-router-dom'
-import { Container, Grid, Typography, Box, Alert } from '@mui/material'
+import { Container, Grid, Box, Alert } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import ov from '../../services/ovapi'
 import Loading from '../../components/Loading'
+import PageTitle from '../../components/PageTitle'
+import SolarPowerIcon from '@mui/icons-material/SolarPower'
 
 const Item = styled('div')(({ theme }) => ({
   backgroundColor:
@@ -106,9 +108,9 @@ export default function DetailInstallationPage(params) {
     <AlertError error={error} />
   ) : installationDetail && contractDetail ? (
     <Container>
-      <Typography variant="h3" sx={{ mb: 3 }}>
+      <PageTitle Icon={SolarPowerIcon}>
         {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
-      </Typography>
+      </PageTitle>
       <PrettyBox
         fields={installationDetail}
         translationsPrefix="INSTALLATION_DETAIL"
