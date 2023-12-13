@@ -144,7 +144,7 @@ INSTALLATION_DETAIL:
   PROVINCE: Provincia
   RATED_POWER: Potencia nominal [kW]
   TECHNOLOGY: Tecnología
-  TYPE: Tipo de seguidor
+  TYPE: Código de instalación tipo
   ERROR_LOADING_DATA: Error cargando los datos
   BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
 CONTRACT_DETAIL:
