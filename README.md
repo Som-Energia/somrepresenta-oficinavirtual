@@ -35,50 +35,10 @@ make tests # Pass ui and api tests
 
 ### Configuration
 
-Backend Config:
+Backend Config. Copy `.env-example` as .env and edit.
 
-```bash
-# .env
-
-# You get the next two when you create you client app on google console
-# https://console.cloud.google.com/apis/credentials
-# Be aware that you need to specify properly any redirect targeta
-OAUTH2_GOOGLE_CLIENT_ID='alongkeyfromgoogle.apps.googleusercontent.com'
-OAUTH2_GOOGLE_CLIENT_SECRET='anotherlongkeyfromgoogle'
-
-# Used to encrypt sessions (not used yet)
-SESSION_SECRET='randomgeneratethisone'
-
-# Used to encrypt session jwt tokens
-JWT_SECRET='alsorandomgeneratethisotherone'
-
-# Time to live for the JWT session in seconds
-JWT_EXPIRES=86400 # one day in seconds 60*60*12
-
-# Key to be used in the x-key header to provision users
-# For security you can remove it when not provisioning users
-ERP_PROVISIONING_APIKEY="averylongrandomlygeneratedkey"
-
-# ERP Configuration
-DATA_BACKEND="erp" # Could be 'dummy'
-ERP_BASEURL='http://myserver:port/api/'
-ERP_DATABASE='mydatabaseinstance'
-ERP_USERNAME='myuser'
-ERP_PASSWORD="mypassword"
-```
-
-Frontend Config:
-
-```bash
-# frontend/.env.local
-
-# Overrides for you development setup the defaults in frontend/.env
-VITE_AUTH_BACKEND=Oauth2 # Delegate auth to an external AuthServer (Google, Keycloak...)
-#VITE_AUTH_BACKEND=Oauth2Local # First party login
-#VITE_AUTH_BACKEND=Dummy # Emulate login with a closed list of users in frontend/src/data/dummyusers.yaml (api calls won't work)
-VITE_ENABLE_BREAKPOINT_INDICATOR=0 # set to 1 to enable in production, always enabled in devel
-VITE_ENABLE_VIEW_ROLE_IN_PROFILE=false # set to true to show the user role in profile page
-```
+Frontend Config: Defaults in `frontend/.env` can be overriden
+by copying `frontend/.env.local-example` as `frontend/.env.local` and editing it.
 
 ### Application startup
 
