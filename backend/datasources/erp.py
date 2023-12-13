@@ -1,5 +1,7 @@
+from contextlib import contextmanager
 from yamlns import ns
 from consolemsg import error, success
+from pydantic import ValidationError
 from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
 from .. import erp
 from ..utils.gravatar import gravatar
@@ -7,7 +9,7 @@ from ..utils.vat import nif2vat
 
 class ErpError(Exception):
     def __init__(self, erp_error: dict):
-        formatted_trace = ''.join(erp_error['trace'])
+        formatted_trace = ''.join(erp_error.get('trace', "No trace available"))
         super().__init__((
             "{code}\n"
             "{error}\n\n"
@@ -16,6 +18,25 @@ class ErpError(Exception):
             formatted_trace=formatted_trace,
             **erp_error,
         ))
+
+class ErpValidationError(ErpError):
+    def __init__(self, exception: ValidationError):
+        message = (
+            "Invalid data received from ERP\n"
+            f"{ns(error=ns.loads(exception.json())).dump()}"
+        )
+        error(message)
+        self.original = exception
+        super().__init__(dict(
+            code="ErpValidationError",
+            error=message,
+        ))
+
+@contextmanager
+def catchValidationErrors():
+    try: yield
+    except ValidationError as exception:
+        raise ErpValidationError(exception)
 
 class ContractWithoutInstallation(ErpError):
     pass
@@ -84,16 +105,13 @@ def erp_installation_list(username: str) -> list[InstallationSummary]:
         for installation in installations
     ]
 
+
 def erp_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
     e = erp.Erp()
     retrieved = e.installation_details(username, contract_number)
     processErpErrors(retrieved)
-    try:
+    with catchValidationErrors():
         return InstallationDetailsResult(**retrieved)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
-
 
 class ErpBackend():
     def user_info(self, login: str) -> TokenUser | None:
