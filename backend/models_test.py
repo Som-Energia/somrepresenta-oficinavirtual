@@ -8,6 +8,7 @@ from .models import (
     VatNumber,
     TokenUser,
 )
+from .utils.testutils import pydantic_minor_version
 
 class Myclass(BaseModel):
     vat: VatNumber
@@ -28,7 +29,7 @@ class VatNumber_Test(unittest.TestCase):
     def test_validate__with_bad_vat(self):
         with self.assertRaises(ValidationError) as ctx:
             Myclass(vat='badvat')
-        self.assertNsEqual(ctx.exception.json(), """
+        self.assertNsEqual(ctx.exception.json(), f"""
             data:
             - ctx:
                 error: One of the parts of the number are invalid or unknown.
@@ -37,7 +38,7 @@ class VatNumber_Test(unittest.TestCase):
               - vat
               msg: Value error, One of the parts of the number are invalid or unknown.
               type: value_error
-              url: https://errors.pydantic.dev/2.5/v/value_error
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/value_error
         """)
 
 class TokenUser_Test(unittest.TestCase):
@@ -67,44 +68,44 @@ class TokenUser_Test(unittest.TestCase):
     def test_validate__no_fields__requires_minimal(self):
         with self.assertRaises(ValidationError) as ctx:
             TokenUser()
-        self.assertNsEqual(ctx.exception.json(), """
+        self.assertNsEqual(ctx.exception.json(), f"""
             data:
-            - input: {}
+            - input: {{}}
               loc:
               - username
               msg: Field required
               type: missing
-              url: https://errors.pydantic.dev/2.5/v/missing
-            - input: {}
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/missing
+            - input: {{}}
               loc:
               - vat
               msg: Field required
               type: missing
-              url: https://errors.pydantic.dev/2.5/v/missing
-            - input: {}
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/missing
+            - input: {{}}
               loc:
               - name
               msg: Field required
               type: missing
-              url: https://errors.pydantic.dev/2.5/v/missing
-            - input: {}
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/missing
+            - input: {{}}
               loc:
               - email
               msg: Field required
               type: missing
-              url: https://errors.pydantic.dev/2.5/v/missing
-            - input: {}
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/missing
+            - input: {{}}
               loc:
               - roles
               msg: Field required
               type: missing
-              url: https://errors.pydantic.dev/2.5/v/missing
-            - input: {}
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/missing
+            - input: {{}}
               loc:
               - avatar
               msg: Field required
               type: missing
-              url: https://errors.pydantic.dev/2.5/v/missing
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/missing
         """)
 
 

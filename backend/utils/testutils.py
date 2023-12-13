@@ -2,6 +2,9 @@ import os
 from contextlib import contextmanager
 from yamlns.testutils import assertNsEqual
 from yamlns import ns
+from pydantic import __version__ as pydantic_version
+
+pydantic_minor_version = '.'.join(pydantic_version.split('.')[:2])
 
 @contextmanager
 def environ(var, value):

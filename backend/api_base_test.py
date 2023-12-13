@@ -5,7 +5,7 @@ from yamlns import ns
 from pathlib import Path
 from . import __version__ as api_version
 from .api_base import setup_base, setup_statics
-from .utils.testutils import safe_response_get
+from .utils.testutils import safe_response_get, pydantic_minor_version
 
 
 def setup_test_entry_points(app):
@@ -67,7 +67,7 @@ class ApiBase_Test(unittest.TestCase):
               - parameter
               msg: Input should be a valid integer, unable to parse string as an integer
               type: int_parsing
-              url: https://errors.pydantic.dev/2.5/v/int_parsing
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/int_parsing
         """, status. HTTP_422_UNPROCESSABLE_ENTITY)
 
     @unittest.skip("How to enable 500 handling when testing?")

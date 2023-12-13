@@ -7,7 +7,7 @@ from consolemsg import error
 from somutils.testutils import sandbox_dir
 import unittest.mock
 from .authlocal import setup_authlocal
-from .utils.testutils import environ, safe_response_get
+from .utils.testutils import environ, safe_response_get, pydantic_minor_version
 from .api_business import setup_business
 from .auth import validated_user
 
@@ -117,7 +117,7 @@ class AuthLocal_Test(unittest.TestCase):
 
     def test_provisioning__missingParam(self):
         r = self.provisioning_query(username=None)
-        self.assertResponseEqual(r, """\
+        self.assertResponseEqual(r, f"""\
             detail:
             - input: null
               loc:
@@ -125,7 +125,7 @@ class AuthLocal_Test(unittest.TestCase):
               - username
               msg: Field required
               type: missing
-              url: 'https://errors.pydantic.dev/2.5/v/missing'
+              url: 'https://errors.pydantic.dev/{pydantic_minor_version}/v/missing'
         """, 422)
 
     def test_provisioning__disabledProvisioning(self):
