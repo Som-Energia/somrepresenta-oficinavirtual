@@ -60,9 +60,6 @@ def processErpErrors(erp_response):
             raise UnauthorizedAccess(erp_response)
         case {'code': 'ContractWithoutInstallation', **rest}:
             raise ContractWithoutInstallation(erp_response)
-        # TODO: Remove when ERP renames PartnerNotExists as NoSuchUser
-        case {'code': 'PartnerNotExists', **rest}:
-            raise NoSuchUser(erp_response)
         case {'code': 'NoSuchUser', **rest}:
             raise NoSuchUser(erp_response)
 
