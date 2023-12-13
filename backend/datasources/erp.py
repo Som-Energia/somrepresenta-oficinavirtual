@@ -17,10 +17,32 @@ class ErpError(Exception):
             **erp_error,
         ))
 
+class ContractWithoutInstallation(ErpError):
+    pass
+
+class ContractNotExists(ErpError):
+    pass
+
+class UnauthorizedAccess(ErpError):
+    pass
+
+def processErpErrors(erp_response):
+    if not 'error' in erp_response: return
+    match erp_response:
+        case {'code': 'ContractNotExists', **rest}:
+            raise ContractNotExists(erp_response)
+        case {'code': 'UnauthorizedAccess', **rest}:
+            raise UnauthorizedAccess(erp_response)
+        case {'code': 'ContractWithoutInstallation', **rest}:
+            raise ContractWithoutInstallation(erp_response)
+
+    raise ErpError(erp_response)
+
 def erp_user_info(login: str):
     e = erp.Erp()
     # TODO: Handle emails as login
     result = ns(e.identify(nif2vat(login)))
+    # TODO: processErpErrors(retrieved)
     if 'error' in result:
         error(result.dump())
         return None
@@ -36,6 +58,7 @@ def erp_user_info(login: str):
 def erp_profile_info(user_info: dict) -> UserProfile:
     e = erp.Erp()
     retrieved = e.profile(user_info['username'])
+    # TODO: processErpErrors(retrieved)
     try:
         return UserProfile(**retrieved)
     except Exception as exception:
@@ -45,8 +68,7 @@ def erp_profile_info(user_info: dict) -> UserProfile:
 def erp_sign_document(username: str, document: str) -> SignatureResult:
     e = erp.Erp()
     retrieved = e.sign_document(username, document)
-    if 'error' in retrieved:
-        raise ErpError(retrieved)
+    processErpErrors(retrieved)
     try:
         return SignatureResult(**retrieved)
     except Exception as exception:
@@ -56,8 +78,7 @@ def erp_sign_document(username: str, document: str) -> SignatureResult:
 def erp_installation_list(username: str) -> list[InstallationSummary]:
     e = erp.Erp()
     installations = e.list_installations(username)
-    if 'error' in installations:
-        raise ErpError(installations)
+    processErpErrors(installations)
     return [
         InstallationSummary(**installation)
         for installation in installations
@@ -66,8 +87,7 @@ def erp_installation_list(username: str) -> list[InstallationSummary]:
 def erp_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
     e = erp.Erp()
     retrieved = e.installation_details(username, contract_number)
-    if 'error' in retrieved:
-        raise ErpError(retrieved)
+    processErpErrors(retrieved)
     try:
         return InstallationDetailsResult(**retrieved)
     except Exception as exception:
