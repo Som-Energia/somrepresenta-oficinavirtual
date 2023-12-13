@@ -122,23 +122,20 @@ async function localChangePassword(currentPassword, newPassword) {
     })
 }
 
-async function signDocument(documentName) {
+function signDocument(documentName) {
+  const context = i18n.t('OVAPI.CONTEXT_SIGNING_DOCUMENT')
   const encodedDocument = encodeURIComponent(documentName)
-  const response = await fetch(`/api/sign_document/${encodedDocument}`, {
-    method: 'POST',
-  })
-    .catch((error) => {
-      console.log('Error received', error.response.json())
-      throw 'Unable to sign document'
-    })
-    .then(async (response) => {
+  const promise = axios
+    .post(`/api/sign_document/${encodedDocument}`)
+    .catch(handleCommonErrors(context))
+    .then((response) => {
       console.log('Response', response)
-      if (!response.ok) {
-        throw `Unable to sign document: ${await response.text()}`
+      if (response===undefined) {
+        throw i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT')
       }
-      return response.json()
+      return response.data
     })
-  return response
+  return promise
 }
 
 async function installationDetails(contract_number) {
