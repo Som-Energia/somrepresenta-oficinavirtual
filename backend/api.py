@@ -1,12 +1,18 @@
 import os
 from fastapi import FastAPI
 from dotenv import load_dotenv
+import sentry_sdk
 from .api_base import setup_base, setup_statics
 from .authlocal import setup_authlocal
 from .api_business import setup_business
 
 def setup():
     load_dotenv()
+    if os.environ.get('SENTRY_DNS'):
+        sentry_sdk.init(
+            dsn=os.environ['SENTRY_DNS'],
+            enable_tracing=True,
+        )
     app = FastAPI()
     setup_base(app)
     #setup_auth(app)
