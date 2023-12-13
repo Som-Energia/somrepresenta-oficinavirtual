@@ -9,7 +9,7 @@ import { vat2nif } from '../../services/vat'
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import PageTitle from '../../components/PageTitle'
 
-const hideRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == 'false'
+const hideRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == false
 
 export default function ProfilePage(params) {
   const { t } = useTranslation()
