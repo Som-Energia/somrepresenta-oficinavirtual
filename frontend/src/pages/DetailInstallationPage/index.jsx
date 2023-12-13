@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Alert } from '@mui/material'
-import Box from '@mui/material/Box'
+import { Container } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import ovapi from '../../services/ovapi'
 import Loading from '../../components/Loading'
@@ -9,6 +8,7 @@ import PageTitle from '../../components/PageTitle'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import SimpleTable from '../../components/SimpleTable'
 import ErrorSplash from '../../components/ErrorSplash'
+import NavigationButtons from '../../components/NavigationButtons'
 
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
@@ -63,6 +63,12 @@ export default function DetailInstallationPage(params) {
         />
       ) : (
         <>
+          {/* TODO: get the before and after user installations */}
+          <NavigationButtons
+            toBefore="/installation/00001"
+            toNext="/installation/00001"
+            toReturn="/installation"
+          />
           <SimpleTable
             fields={installationDetail}
             translationsPrefix="INSTALLATION_DETAIL"
