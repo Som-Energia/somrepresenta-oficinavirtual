@@ -47,6 +47,10 @@ class ContractNotExists(ErpError):
 class UnauthorizedAccess(ErpError):
     pass
 
+class NoSuchUser(ErpError):
+    pass
+
+
 def processErpErrors(erp_response):
     if not 'error' in erp_response: return
     match erp_response:
@@ -56,6 +60,11 @@ def processErpErrors(erp_response):
             raise UnauthorizedAccess(erp_response)
         case {'code': 'ContractWithoutInstallation', **rest}:
             raise ContractWithoutInstallation(erp_response)
+        # TODO: Remove when ERP renames PartnerNotExists as NoSuchUser
+        case {'code': 'PartnerNotExists', **rest}:
+            raise NoSuchUser(erp_response)
+        case {'code': 'NoSuchUser', **rest}:
+            raise NoSuchUser(erp_response)
 
     raise ErpError(erp_response)
 
