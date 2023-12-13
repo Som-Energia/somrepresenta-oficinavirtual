@@ -7,10 +7,14 @@ from . import __version__ as api_version
 from .api_base import setup_base, setup_statics
 
 
-def setup_validation_test(app):
+def setup_test_entry_points(app):
     @app.get('/test/validation')
-    def validation(parameter: int):
+    def api_validation(parameter: int):
         return dict(result='ok')
+
+    @app.get('/test/unexpected')
+    def api_unexpected():
+        raise Exception("Exepction message")
 
 class VersionApi_Test(unittest.TestCase):
 
@@ -20,7 +24,7 @@ class VersionApi_Test(unittest.TestCase):
         self.maxDiff = None
         self.app = FastAPI()
         setup_base(self.app)
-        setup_validation_test(self.app)
+        setup_test_entry_points(self.app)
         setup_statics(self.app)
         self.client = TestClient(self.app)
 
@@ -54,6 +58,19 @@ class VersionApi_Test(unittest.TestCase):
 
     def test_validation_error(self):
         r = self.client.get('/test/validation?parameter=notanint')
+        self.assertResponseEqual(r, f"""
+            detail:
+            - input: notanint
+              loc:
+              - query
+              - parameter
+              msg: Input should be a valid integer, unable to parse string as an integer
+              type: int_parsing
+              url: https://errors.pydantic.dev/2.4/v/int_parsing
+        """, status. HTTP_422_UNPROCESSABLE_ENTITY)
+
+    def test_unexpected_error(self):
+        r = self.client.get('/test/unexpected')
         self.assertResponseEqual(r, f"""
             detail:
             - input: notanint
