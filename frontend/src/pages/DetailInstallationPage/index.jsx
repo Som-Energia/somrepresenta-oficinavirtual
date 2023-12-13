@@ -10,6 +10,9 @@ import PageTitle from '../../components/PageTitle'
 import SimpleTable from '../../components/SimpleTable'
 import ErrorSplash from '../../components/ErrorSplash'
 import NavigationButtons from '../../components/NavigationButtons'
+import { contractFields } from './detailInstallationData'
+import { installationFields } from './detailInstallationData'
+import { transformContractDetails } from './detailInstallationData'
 
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
@@ -21,16 +24,6 @@ export default function DetailInstallationPage(params) {
   useEffect(() => {
     getDetailInstallation()
   }, [contract_number])
-
-  // TODO: check if we can get this data from backend or move this function
-  function transformContractDetails(contractData) {
-    if (contractData.cost_deviation == 'included') {
-      contractData['reduction_deviation'] += ' %'
-    } else {
-      contractData['reduction_deviation'] = 'N/A'
-    }
-    return contractData
-  }
 
   async function getDetailInstallation() {
     setError(false)
@@ -73,11 +66,13 @@ export default function DetailInstallationPage(params) {
           />
           <SimpleTable
             fields={installationDetail}
+            fieldsOrder={installationFields}
             translationsPrefix="INSTALLATION_DETAIL"
             title={t('INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE')}
           />
           <SimpleTable
             fields={contractDetail}
+            fieldsOrder={contractFields}
             translationsPrefix="CONTRACT_DETAIL"
             title={t('CONTRACT_DETAIL.CONTRACT_DETAILS_TITLE')}
           />

@@ -13,9 +13,14 @@ const Item = styled('div')(({ theme }) => ({
   color: theme.palette.text.secondary,
 }))
 
-const SimpleTable = ({ title = false, fields, translationsPrefix = 'DETAILS' }) => {
+const SimpleTable = ({
+  title = false,
+  fields,
+  fieldsOrder = false,
+  translationsPrefix = 'DETAILS',
+}) => {
   const { t } = useTranslation()
-  const data = Object.entries(fields)
+  const data = fieldsOrder || Object.keys(fields)
   return (
     <Grid
       container
@@ -41,11 +46,11 @@ const SimpleTable = ({ title = false, fields, translationsPrefix = 'DETAILS' }) 
               sx={{ marginRight: '1rem', display: 'grid', overflow: 'hidden' }}
             >
               <Item>
-                <b>{t(`${translationsPrefix}.${detail[0].toUpperCase()}`)}</b>
+                <b>{t(`${translationsPrefix}.${detail.toUpperCase()}`)}</b>
               </Item>
             </Grid>
             <Grid item xs={8} sx={{ display: 'grid', overflow: 'hidden' }}>
-              <Item>{detail[1] ? detail[1] : '-'}</Item>
+              <Item>{fields[detail] ? fields[detail] : '-'}</Item>
             </Grid>
           </Box>
         ))}
