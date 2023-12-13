@@ -70,41 +70,32 @@ def erp_user_info(login: str):
 
     result.avatar = gravatar(result.email)
 
-    try:
+    with catchValidationErrors():
         return TokenUser(**result)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
 
 def erp_profile_info(user_info: dict) -> UserProfile:
     e = erp.Erp()
     retrieved = e.profile(user_info['username'])
     # TODO: processErpErrors(retrieved)
-    try:
+    with catchValidationErrors():
         return UserProfile(**retrieved)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
 
 def erp_sign_document(username: str, document: str) -> SignatureResult:
     e = erp.Erp()
     retrieved = e.sign_document(username, document)
     processErpErrors(retrieved)
-    try:
+    with catchValidationErrors():
         return SignatureResult(**retrieved)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
 
 def erp_installation_list(username: str) -> list[InstallationSummary]:
     e = erp.Erp()
     installations = e.list_installations(username)
     processErpErrors(installations)
-    return [
-        InstallationSummary(**installation)
-        for installation in installations
-    ]
-
+    with catchValidationErrors():
+        return [
+            InstallationSummary(**installation)
+            for installation in installations
+        ]
 
 def erp_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
     e = erp.Erp()
