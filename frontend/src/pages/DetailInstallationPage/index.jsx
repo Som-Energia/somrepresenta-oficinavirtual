@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Container } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import Container from '@mui/material/Container'
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import ovapi from '../../services/ovapi'
 import Loading from '../../components/Loading'
 import PageTitle from '../../components/PageTitle'
-import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import SimpleTable from '../../components/SimpleTable'
 import ErrorSplash from '../../components/ErrorSplash'
 import NavigationButtons from '../../components/NavigationButtons'
@@ -68,6 +69,7 @@ export default function DetailInstallationPage(params) {
             toBefore="/installation/00001"
             toNext="/installation/00001"
             toReturn="/installation"
+            returnIcon={<FormatListBulletedIcon />}
           />
           <SimpleTable
             fields={installationDetail}

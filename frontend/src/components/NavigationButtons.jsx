@@ -1,9 +1,10 @@
 import { styled } from '@mui/material/styles'
-import { Container, Alert, Box, Typography, Button, ButtonGroup } from '@mui/material'
+import { Link } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
-import { Link } from 'react-router-dom'
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.table.titleColor,
@@ -17,7 +18,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }))
 
 const NavigationButtons = (props) => {
-  const { toBefore, toNext, toReturn } = props
+  const { toBefore, toNext, toReturn, returnIcon } = props
   return (
     <Box
       sx={{
@@ -35,9 +36,8 @@ const NavigationButtons = (props) => {
         <StyledButton component={Link} to={toNext}>
           <NavigateNextIcon />
         </StyledButton>
-        {/* TODO: pass return icon */}
         <StyledButton component={Link} to={toReturn}>
-          <FormatListBulletedIcon />
+          {returnIcon}
         </StyledButton>
       </ButtonGroup>
     </Box>
