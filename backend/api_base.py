@@ -21,14 +21,12 @@ def setup_base(app):
     @app.exception_handler(Exception)
     async def unexpected_exception_handler(request: Request, exc: Exception):
         reference = uuid4()
-        error('====================================reference {}', reference)
 
-        
         # TODO: sentry this, ui programming error
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={
-                "details": "Internal error",
+                "details": "Internal server error",
                 "reference": str(reference),
             },
         )
