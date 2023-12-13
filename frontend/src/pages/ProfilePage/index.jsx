@@ -3,17 +3,16 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '../components/AuthProvider'
-import PageGuard from '../components/PageGuard'
-import { vat2nif } from '../services/vat'
+import { useAuth } from '../../components/AuthProvider'
+import { vat2nif } from '../../services/vat'
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import PageTitle from '../../components/PageTitle'
 
-const viewRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == false // intended ==
+const hideRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == 'false'
 
 export default function ProfilePage(params) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { currentUser } = useAuth()
   const fields = [
     {
@@ -35,7 +34,7 @@ export default function ProfilePage(params) {
           ))}
         </>
       ),
-      hide: (user) => viewRoleInProfile,
+      hide: (user) => hideRoleInProfile,
     },
     {
       id: 'address',
@@ -77,9 +76,9 @@ export default function ProfilePage(params) {
 
   return (
     <Container>
-      <Typography variant="h3" sx={{ mb: 3 }}>
+      <PageTitle Icon={AccountBoxIcon}>
         {t('PROFILE.PROFILE_TITLE')}
-      </Typography>
+      </PageTitle>
       <Box
         style={{
           display: 'grid',

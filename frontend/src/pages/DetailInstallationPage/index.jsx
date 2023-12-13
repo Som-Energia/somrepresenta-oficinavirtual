@@ -1,63 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { styled } from '@mui/material/styles'
 import { useParams } from 'react-router-dom'
-import { Container, Grid, Typography, Paper, Box, Alert } from '@mui/material'
+import { Container, Alert } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import ov from '../services/ovapi'
-import Loading from '../components/Loading'
-
-const Item = styled('div')(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === 'dark'
-      ? theme.palette.table.contentDark
-      : theme.palette.table.contentLight,
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'left',
-  color: theme.palette.text.secondary,
-}))
-
-// TODO: extract this generic component if we want to use it
-const PrettyBox = ({ title = false, fields, translationsPrefix = 'DETAILS' }) => {
-  const { t } = useTranslation()
-  const data = Object.entries(fields)
-  return (
-    <Grid
-      container
-      sx={{ width: 'auto', marginLeft: '1rem', marginTop: '2rem', marginRight: '1rem' }}
-    >
-      {title && (
-        <Item
-          sx={{
-            backgroundColor: 'table.titleColor',
-            width: '100%',
-            marginBottom: '1rem',
-          }}
-        >
-          <b>{title}</b>
-        </Item>
-      )}
-      <Box sx={{ width: '100%' }}>
-        {data.map((detail, index) => (
-          <Box key={index} sx={{ display: 'flex', width: '100%' }}>
-            <Grid
-              item
-              xs={4}
-              sx={{ marginRight: '1rem', display: 'grid', overflow: 'hidden' }}
-            >
-              <Item>
-                <b>{t(`${translationsPrefix}.${detail[0].toUpperCase()}`)}</b>
-              </Item>
-            </Grid>
-            <Grid item xs={8} sx={{ display: 'grid', overflow: 'hidden' }}>
-              <Item>{detail[1] ? detail[1] : '-'}</Item>
-            </Grid>
-          </Box>
-        ))}
-      </Box>
-    </Grid>
-  )
-}
+import ov from '../../services/ovapi'
+import Loading from '../../components/Loading'
+import PageTitle from '../../components/PageTitle'
+import SolarPowerIcon from '@mui/icons-material/SolarPower'
+import SimpleTable from '../../components/SimpleTable'
 
 // TODO: create or use a generic context to set app alert messages
 const AlertError = ({ error }) => {
@@ -106,15 +55,15 @@ export default function DetailInstallationPage(params) {
     <AlertError error={error} />
   ) : installationDetail && contractDetail ? (
     <Container>
-      <Typography variant="h3" sx={{ mb: 3 }}>
+      <PageTitle Icon={SolarPowerIcon}>
         {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
-      </Typography>
-      <PrettyBox
+      </PageTitle>
+      <SimpleTable
         fields={installationDetail}
         translationsPrefix="INSTALLATION_DETAIL"
         title={t('INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE')}
       />
-      <PrettyBox
+      <SimpleTable
         fields={contractDetail}
         translationsPrefix="CONTRACT_DETAIL"
         title={t('CONTRACT_DETAIL.CONTRACT_DETAILS_TITLE')}

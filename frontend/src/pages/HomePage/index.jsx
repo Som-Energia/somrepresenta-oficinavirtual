@@ -1,6 +1,6 @@
 import React from 'react'
 import Box from '@mui/material/Box'
-import useAplicationMetadata from '../hooks/ApplicationMetadata'
+import useAplicationMetadata from '../../hooks/ApplicationMetadata'
 import PageButton from './PageButton'
 
 export default function HomePage(params) {

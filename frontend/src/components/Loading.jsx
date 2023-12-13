@@ -17,7 +17,7 @@ const Loading = () => {
         p: 3,
       }}
     >
-      <div class="ring">
+      <div className="ring">
         <img
           src={logo}
           style={{
@@ -25,7 +25,7 @@ const Loading = () => {
             marginTop: '0.5rem',
           }}
         />
-        <span class="rotation"></span>
+        <span className="rotation"></span>
       </div>
     </Box>
   )

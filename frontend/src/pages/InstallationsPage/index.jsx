@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import dummyData from '../data/dummyinstallations.yaml'
+import dummyData from '../../data/dummyinstallations.yaml'
 import Button from '@mui/material/Button'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
@@ -8,29 +8,12 @@ import Typography from '@mui/material/Typography'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import { Link } from 'react-router-dom'
-import TableEditor from '../components/TableEditor'
-import { useAuth } from '../components/AuthProvider'
-import ovapi from '../services/ovapi'
-import { Container } from '@mui/material'
-
-function PageTitle(props) {
-  const {children, Icon} = props
-  return (
-    <Typography variant="h3" sx={{ mb: 3 }}>
-      <Icon
-        sx={{
-          display: 'inline',
-          fontSize: '3rem',
-          m: 0,
-          p: 0,
-          mb: '-0.5rem',
-          mr: '1rem',
-        }}
-      />
-      {children}
-    </Typography>
-  )
-}
+import TableEditor from '../../components/TableEditor'
+import { useAuth } from '../../components/AuthProvider'
+import ovapi from '../../services/ovapi'
+import { Box, Container } from '@mui/material'
+import PageTitle from '../../components/PageTitle'
+import Loading from '../../components/Loading'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
@@ -89,10 +72,13 @@ export default function InstallationsPage(params) {
       },
     },
   ]
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Container>
-      <PageTitle Icon={SolarPowerIcon}>{t('INSTALLATIONS.INSTALLATIONS_TITLE')}</PageTitle>
-
+      <PageTitle Icon={SolarPowerIcon}>
+        {t('INSTALLATIONS.INSTALLATIONS_TITLE')}
+      </PageTitle>
       <TableEditor
         title={t('INSTALLATIONS.TABLE_TITLE')}
         defaultPageSize={12}

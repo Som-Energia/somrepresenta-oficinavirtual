@@ -30,6 +30,6 @@ def setup_business(app):
         return installation_list(user['username'])
 
     @app.get('/api/installation_details/{contract_number}')
-    def apiInstallationDetails(contract_number: str, user: dict = Depends(validated_user)) -> InstallationDetailsResult:
+    def api_installation_details(contract_number: str, user: dict = Depends(validated_user)) -> InstallationDetailsResult:
         return installation_details(user['username'], contract_number)
 
