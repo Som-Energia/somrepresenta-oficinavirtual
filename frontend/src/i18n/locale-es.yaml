@@ -121,6 +121,7 @@ TABLE_EDITOR:
 OVAPI:
   CONTEXT_LOGIN: Validando identidad
   CONTEXT_INSTALLATIONS: Obteniendo la lista de instalaciones
+  CONTEXT_INSTALLATION_DETAILS: Obteniendo los detalles de la instalación
   ERR_NETWORK: No se encuentra el servidor. ¿Tiene conexión a la red?
   ERR_GATEWAY: El sistema no está disponible por mantenimiento. Pruebe más tarde.
   ERR_INTERNAL: 'Se ha producido un error inesperado en el servidor. Referencia {{reference}}.'
@@ -140,6 +141,8 @@ INSTALLATION_DETAIL:
   RATED_POWER: Potencia Nominal [kW]
   TECHNOLOGY: Tecnología
   TYPE: Tipo de seguidor
+  ERROR_LOADING_DATA: Error cargando los datos
+  BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
 CONTRACT_DETAIL:
   CONTRACT_DETAILS_TITLE: Detalles del Contrato
   BILLING_MODE: Modo de facturación
