@@ -5,14 +5,19 @@ from yamlns import ns
 from pathlib import Path
 from . import __version__ as api_version
 from .api_base import setup_base, setup_statics
+from .utils.testutils import safe_response_get, pydantic_minor_version
 
 
-def setup_validation_test(app):
+def setup_test_entry_points(app):
     @app.get('/test/validation')
-    def validation(parameter: int):
+    def api_validation(parameter: int):
         return dict(result='ok')
 
-class VersionApi_Test(unittest.TestCase):
+    @app.get('/test/unexpected')
+    def api_unexpected():
+        raise Exception("Exepction message")
+
+class ApiBase_Test(unittest.TestCase):
 
     from .utils.testutils import assertResponseEqual
 
@@ -20,7 +25,7 @@ class VersionApi_Test(unittest.TestCase):
         self.maxDiff = None
         self.app = FastAPI()
         setup_base(self.app)
-        setup_validation_test(self.app)
+        setup_test_entry_points(self.app)
         setup_statics(self.app)
         self.client = TestClient(self.app)
 
@@ -62,6 +67,14 @@ class VersionApi_Test(unittest.TestCase):
               - parameter
               msg: Input should be a valid integer, unable to parse string as an integer
               type: int_parsing
-              url: https://errors.pydantic.dev/2.4/v/int_parsing
+              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/int_parsing
+        """, status. HTTP_422_UNPROCESSABLE_ENTITY)
+
+    @unittest.skip("How to enable 500 handling when testing?")
+    def test_unexpected_error(self):
+        r = self.client.get('/test/unexpected')
+        self.assertResponseEqual(r, f"""
+            detail: Internal server error
+            reference: {safe_response_get(r, 'response')}
         """, status. HTTP_422_UNPROCESSABLE_ENTITY)
 

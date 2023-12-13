@@ -1,9 +1,14 @@
 from pathlib import Path
+from uuid import uuid4
+from fastapi.responses import JSONResponse
+from fastapi import status, Request
+
 from fastapi.staticfiles import StaticFiles
 from fastapi.exception_handlers import (
     request_validation_exception_handler,
 )
 from fastapi.exceptions import RequestValidationError
+from consolemsg import error
 from . import __version__ as version
 
 def setup_base(app):
@@ -11,6 +16,19 @@ def setup_base(app):
     def apiVersion():
         return dict(
             version = version,
+        )
+
+    @app.exception_handler(Exception)
+    async def unexpected_exception_handler(request: Request, exc: Exception):
+        reference = uuid4()
+
+        # TODO: sentry this, ui programming error
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "details": "Internal server error",
+                "reference": str(reference),
+            },
         )
 
     @app.exception_handler(RequestValidationError)

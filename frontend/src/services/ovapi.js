@@ -142,12 +142,11 @@ async function signDocument(documentName) {
 }
 
 async function installationDetails(contract_number) {
+  const context = i18n.t('OVAPI.CONTEXT_INSTALLATION_DETAILS')
   return axios
     .get(`/api/installation_details/${contract_number}`)
-    .then((result) => result.data)
-    .catch((error) => {
-      throw error
-    })
+    .catch(handleCommonErrors(context))
+    .then((result) => (result?.data === undefined ? undefined : result.data))
 }
 
 async function version() {

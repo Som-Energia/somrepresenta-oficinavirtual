@@ -46,6 +46,7 @@ dependencies = [
     'itsdangerous', # remote auth (via SessionMiddleware)
     'typer[all]', # CLI tool
     'pygments', # CLI tool
+    'sentry-sdk[fastapi]',
 ]
 
 [tool.setuptools.dynamic]
