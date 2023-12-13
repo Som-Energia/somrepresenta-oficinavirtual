@@ -27,7 +27,7 @@ export default function DetailInstallationPage(params) {
 
   useEffect(() => {
     getDetailInstallation()
-  }, [])
+  }, [contract_number])
 
   // TODO: check if we can get this data from backend or move this function
   function transformContractDetails(contractData) {
