@@ -8,9 +8,9 @@ from .api_business import setup_business
 
 def setup():
     load_dotenv()
-    if os.environ.get('SENTRY_DNS'):
+    if os.environ.get('SENTRY_DSN'):
         sentry_sdk.init(
-            dsn=os.environ['SENTRY_DNS'],
+            dsn=os.environ['SENTRY_DSN'],
             enable_tracing=True,
         )
     app = FastAPI()
