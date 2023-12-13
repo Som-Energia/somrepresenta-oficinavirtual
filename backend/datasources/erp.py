@@ -53,23 +53,20 @@ class NoSuchUser(ErpError):
 class NoDocumentVersions(ErpError):
     pass
 
-erp_errors = {
-    excp.__name__: excp
-    for excp in [
-        ContractWithoutInstallation,
-        ContractNotExists,
-        UnauthorizedAccess,
-        NoSuchUser,
-        NoDocumentVersions,
-    ]
-}
-
 def processErpErrors(erp_response):
     if not 'error' in erp_response: return
-    SpecificError = erp_errors.get(erp_response['code'])
-    if SpecificError:
-        raise SpecificError(erp_response)
-    raise ErpError(erp_response)
+    erp_errors = {
+        excp.__name__: excp
+        for excp in [
+            ContractWithoutInstallation,
+            ContractNotExists,
+            UnauthorizedAccess,
+            NoSuchUser,
+            NoDocumentVersions,
+        ]
+    }
+    SpecificError = erp_errors.get(erp_response['code'], ErpError)
+    raise SpecificError(erp_response)
 
 def erp_user_info(login: str):
     e = erp.Erp()
