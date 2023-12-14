@@ -1,5 +1,4 @@
 import axios from 'axios'
-import wait from './wait'
 import messages from './messages'
 import i18n from '../i18n/i18n'
 
@@ -125,7 +124,7 @@ async function localChangePassword(currentPassword, newPassword) {
 function signDocument(documentName) {
   const context = i18n.t('OVAPI.CONTEXT_SIGNING_DOCUMENT')
   const encodedDocument = encodeURIComponent(documentName)
-  const promise = axios
+  return axios
     .post(`/api/sign_document/${encodedDocument}`)
     .catch(handleCommonErrors(context))
     .then((response) => {
@@ -135,7 +134,6 @@ function signDocument(documentName) {
       }
       return response.data
     })
-  return promise
 }
 
 async function installationDetails(contract_number) {
