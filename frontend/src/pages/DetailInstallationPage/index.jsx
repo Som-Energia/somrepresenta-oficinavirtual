@@ -45,9 +45,12 @@ export default function DetailInstallationPage(params) {
     setError(false)
     setInstallationDetail(undefined)
     setContractDetail(undefined)
-    const result = await ovapi.installationDetails(contract_number)
-    if (!result) {
-      setError(true)
+    var result
+    try {
+      result = await ovapi.installationDetails(contract_number)
+    }
+    catch(e) {
+      setError(e)
       return
     }
     setInstallationDetail(result?.installation_details)
@@ -64,7 +67,8 @@ export default function DetailInstallationPage(params) {
       </PageTitle>
       {error ? (
         <ErrorSplash
-          message={t('INSTALLATION_DETAIL.ERROR_LOADING_DATA')}
+          title={t('INSTALLATION_DETAIL.ERROR_LOADING_DATA')}
+          message={error.error}
           backlink="/installation"
           backtext={t('INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS')}
         />

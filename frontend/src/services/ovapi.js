@@ -2,7 +2,7 @@ import axios from 'axios'
 import messages from './messages'
 import i18n from '../i18n/i18n'
 
-function handleCommonErrors(context) {
+function handleCommonErrorsOld(context) {
   return (error) => {
     const t = i18n.t
 
@@ -26,6 +26,44 @@ function handleCommonErrors(context) {
           context,
         })
         return
+      }
+    }
+    messages.error(`${error.code}: ${error.message}`)
+    throw error
+  }
+}
+
+function handleCommonErrors(context) {
+  return (error) => {
+    const t = i18n.t
+
+    console.log(`Error ${error.code} ${context}\n${error.message}`)
+    if (error.code === 'ERR_NETWORK') {
+      messages.error(t('OVAPI.ERR_NETWORK'), { context })
+      return {
+        error: t('OVAPI.ERR_NETWORK'),
+      }
+    }
+    // The server returned an error response
+    if (error.response) {
+      // Gateway error (ERP down)
+      if (error.response.status === 502) {
+        messages.error(t('OVAPI.ERR_GATEWAY'), { context })
+        return {
+          error: t('OVAPI.ERR_GATEWAY'),
+        }
+      }
+      // API unexpected error
+      if (error.response.status === 500) {
+        const unreference = '42-666-137' // A 'random' number when no reference
+        const reference = error.response.data.reference ?? unreference
+        messages.error(t('OVAPI.ERR_INTERNAL', { reference }), {
+          context,
+        })
+        return {
+          error: t('OVAPI.ERR_INTERNAL', { reference }),
+          reference: reference,
+        }
       }
     }
     messages.error(`${error.code}: ${error.message}`)
@@ -65,7 +103,7 @@ async function localLogin(username, password) {
         ContentType: 'multipart/form-data',
       },
     })
-    .catch(handleCommonErrors(context))
+    .catch(handleCommonErrorsOld(context))
     .then((response) => {
       if (response === undefined) {
         return
@@ -135,7 +173,7 @@ function signDocument(documentName) {
   const encodedDocument = encodeURIComponent(documentName)
   return axios
     .post(`/api/sign_document/${encodedDocument}`)
-    .catch(handleCommonErrors(context))
+    .catch(handleCommonErrorsOld(context))
     .then((response) => {
       console.log('Response', response)
       if (response === undefined) {
@@ -149,7 +187,7 @@ async function installations() {
   const context = i18n.t('OVAPI.CONTEXT_INSTALLATIONS')
   return axios
     .get('/api/installations')
-    .catch(handleCommonErrors(context))
+    .catch(handleCommonErrorsOld(context))
     .then((result) => (result?.data === undefined ? [] : result.data))
 }
 
@@ -158,7 +196,12 @@ async function installationDetails(contract_number) {
   return axios
     .get(`/api/installation_details/${contract_number}`)
     .catch(handleCommonErrors(context))
-    .then((result) => (result?.data === undefined ? undefined : result.data))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
+      return result.data
+    })
 }
 
 export default {
