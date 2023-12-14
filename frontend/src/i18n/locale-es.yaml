@@ -155,5 +155,3 @@ CONTRACT_DETAIL:
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado del contrato
-ERROR:
-  ERR_BAD_RESPONSE: Problemas con el servidor. Error inesperado

@@ -10,16 +10,6 @@ import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import SimpleTable from '../../components/SimpleTable'
 import ErrorSplash from '../../components/ErrorSplash'
 
-// TODO: create or use a generic context to set app alert messages
-const AlertError = ({ error }) => {
-  const { t } = useTranslation()
-  return (
-    <Alert sx={{ margin: '1rem' }} severity="error">
-      {t(`ERROR.${error}`)}
-    </Alert>
-  )
-}
-
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
   const { t } = useTranslation()
@@ -48,8 +38,7 @@ export default function DetailInstallationPage(params) {
     var result
     try {
       result = await ovapi.installationDetails(contract_number)
-    }
-    catch(e) {
+    } catch (e) {
       setError(e)
       return
     }
