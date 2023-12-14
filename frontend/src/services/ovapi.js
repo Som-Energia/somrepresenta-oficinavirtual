@@ -33,16 +33,12 @@ function handleCommonErrors(context) {
   }
 }
 
-async function logout() {
-  axios
-    .get('/api/auth/logout', {
-      headers: {
-        Accept: 'application/json',
-        ContentType: 'multipart/form-data',
-      },
-    })
-    .then((response) => {
-      console.log(response)
+async function version() {
+  return axios
+    .get('/api/version')
+    .then((result) => result.data.version)
+    .catch((error) => {
+      throw error
     })
 }
 
@@ -96,6 +92,19 @@ async function externalLogin(providerId) {
   }, 1)
 }
 
+async function logout() {
+  axios
+    .get('/api/auth/logout', {
+      headers: {
+        Accept: 'application/json',
+        ContentType: 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      console.log(response)
+    })
+}
+
 async function localChangePassword(currentPassword, newPassword) {
   return axios
     .post(
@@ -136,29 +145,20 @@ function signDocument(documentName) {
     })
 }
 
-async function installationDetails(contract_number) {
-  const context = i18n.t('OVAPI.CONTEXT_INSTALLATION_DETAILS')
-  return axios
-    .get(`/api/installation_details/${contract_number}`)
-    .catch(handleCommonErrors(context))
-    .then((result) => (result?.data === undefined ? undefined : result.data))
-}
-
-async function version() {
-  return axios
-    .get('/api/version')
-    .then((result) => result.data.version)
-    .catch((error) => {
-      throw error
-    })
-}
-
 async function installations() {
   const context = i18n.t('OVAPI.CONTEXT_INSTALLATIONS')
   return axios
     .get('/api/installations')
     .catch(handleCommonErrors(context))
     .then((result) => (result?.data === undefined ? [] : result.data))
+}
+
+async function installationDetails(contract_number) {
+  const context = i18n.t('OVAPI.CONTEXT_INSTALLATION_DETAILS')
+  return axios
+    .get(`/api/installation_details/${contract_number}`)
+    .catch(handleCommonErrors(context))
+    .then((result) => (result?.data === undefined ? undefined : result.data))
 }
 
 export default {
