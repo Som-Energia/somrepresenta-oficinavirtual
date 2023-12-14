@@ -1,40 +1,35 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import dummyData from '../../data/dummyinstallations.yaml'
+import dummyData from '../data/dummyinstallations.yaml'
 import Button from '@mui/material/Button'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import DeleteIcon from '@mui/icons-material/Delete'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import { Link } from 'react-router-dom'
-import TableEditor from '../../components/TableEditor'
-import { useAuth } from '../../components/AuthProvider'
-import ovapi from '../../services/ovapi'
-import { Box, Container } from '@mui/material'
-import PageTitle from '../../components/PageTitle'
-import Loading from '../../components/Loading'
+import TableEditor from '../components/TableEditor'
+import { useAuth } from '../components/AuthProvider'
+import ovapi from '../services/ovapi'
+import PageTitle from '../components/PageTitle'
+import Loading from '../components/Loading'
 
-export default function InstallationsPage(params) {
+export default function Example(params) {
   const { t, i18n } = useTranslation()
-  const [isLoading, beLoading] = React.useState(true)
-  const [rows, setRows] = React.useState([])
+  const [isLoading, beLoading] = React.useState(false)
+  const [hasSelection, haveSelection] = React.useState(true)
+  const [rows, setRows] = React.useState(dummyData)
   const { currentUser } = useAuth()
 
-  React.useEffect(() => {
-    beLoading(true)
-    setRows([])
-    ovapi
-      .installations(currentUser)
-      .then((retrievedRows) => {
-        setRows(retrievedRows)
-        beLoading(false)
-      })
-      .catch((error) => {
-        beLoading(false)
-        console.error(error)
-      })
-  }, [currentUser])
+  function handleDeleteMultiple(items) {
+    console.log(items)
+    setRows((rows) => rows.filter((r) => !items.includes(r.contract_number)))
+  }
 
   const columns = [
     {
@@ -51,7 +46,15 @@ export default function InstallationsPage(params) {
     },
   ]
   const actions = []
-  const selectionActions = []
+  const selectionActions = hasSelection
+    ? [
+        {
+          icon: <DeleteIcon />,
+          title: 'delete',
+          handler: handleDeleteMultiple,
+        },
+      ]
+    : []
   const itemActions = [
     {
       title: t('INSTALLATIONS.TOOLTIP_DETAILS'),
@@ -70,13 +73,18 @@ export default function InstallationsPage(params) {
       },
     },
   ]
-  return isLoading ? (
-    <Loading />
-  ) : (
-    <Container>
-      <PageTitle Icon={SolarPowerIcon}>
-        {t('INSTALLATIONS.INSTALLATIONS_TITLE')}
-      </PageTitle>
+  return (
+    <>
+      <h1>TableEditor</h1>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={hasSelection}
+            onChange={(e) => haveSelection(e.target.checked)}
+          />
+        }
+        label={'Selection actions'}
+      ></FormControlLabel>
       <TableEditor
         title={t('INSTALLATIONS.TABLE_TITLE')}
         defaultPageSize={12}
@@ -100,6 +108,6 @@ export default function InstallationsPage(params) {
           </TableRow>
         }
       ></TableEditor>
-    </Container>
+    </>
   )
 }

@@ -12,7 +12,6 @@ Attributes
       By default returns the value of the field at id converted to string,
       except for null and undefined that are turned into '-'.
     - numeric: if truish aligns right instead of left
-    - disablePadding: if truish set padding to none instead of normal TODO: investigate
 - rows: array of objects containing the data to display
 - title: the title of the table
 - idField: data field to be used as row identifier (default 'id'). Values must be unique.
@@ -20,7 +19,7 @@ Attributes
 - pageSizes: If available, a page size chooser will be presented to the user
 - actions: list of actions to be applied in global, context is the whole set of rows
     - title: label to be shown on hover
-    - action: function to be called with the subject as parameter
+    - handler: function to be called with the subject as parameter
     - icon: an icon for the action icon button
     - view: (optional) functor receiving the context and returning an alternative for the default icon button
 - itemActions: list of actions available for each single row, row is passed to 
@@ -240,11 +239,11 @@ function EnhancedTableHead(props) {
             />
           </TableCell>
         )}
-        {columns.map((column) => (
+        {columns.map((column, i) => (
           <TableCell
             key={column.id}
             align={column.numeric ? 'right' : 'left'}
-            padding={column.disablePadding ? 'none' : 'normal'}
+            padding={i == 0 && hasCheckbox ? 'none' : 'normal'}
             sortDirection={orderBy === column.id ? order : false}
           >
             <TableSortLabel
@@ -523,6 +522,7 @@ function TableEditor(props) {
                           <TableCell padding="checkbox">
                             <Collapse in={!isItemFiltered}>
                               <Checkbox
+                                sx={{ padding: 0 }}
                                 color="primary"
                                 checked={isItemSelected}
                                 inputProps={{
@@ -532,11 +532,14 @@ function TableEditor(props) {
                             </Collapse>
                           </TableCell>
                         )}
-                        {columns.map((column) => {
+                        {columns.map((column, i) => {
                           return (
                             <TableCell
                               align={column.numeric ? 'right' : 'left'}
                               key={row[idField] + '_' + column.id}
+                              padding={
+                                i || selectionActions.length === 0 ? 'normal' : 'none'
+                              }
                             >
                               <Collapse in={!isItemFiltered} component={null}>
                                 {column.view

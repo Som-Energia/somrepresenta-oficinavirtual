@@ -8,7 +8,7 @@ import React from 'react'
 
 const examples = [
   true && React.lazy(() => import('./SnackbarMessages.example')),
-  false && React.lazy(() => import('./SnackbarMessages.example')),
+  true && React.lazy(() => import('./TableEditor.example')),
 ]
 
 const renderLoader = () => <h1>Loading...</h1>
