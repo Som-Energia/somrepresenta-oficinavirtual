@@ -53,17 +53,18 @@ class NoSuchUser(ErpError):
 class NoDocumentVersions(ErpError):
     pass
 
+expected_erp_exceptions = [
+    ContractWithoutInstallation,
+    ContractNotExists,
+    UnauthorizedAccess,
+    NoSuchUser,
+    NoDocumentVersions,
+]
 def processErpErrors(erp_response):
     if not 'error' in erp_response: return
     erp_errors = {
         excp.__name__: excp
-        for excp in [
-            ContractWithoutInstallation,
-            ContractNotExists,
-            UnauthorizedAccess,
-            NoSuchUser,
-            NoDocumentVersions,
-        ]
+        for excp in expected_erp_exceptions
     }
     SpecificError = erp_errors.get(erp_response['code'], ErpError)
     raise SpecificError(erp_response)
