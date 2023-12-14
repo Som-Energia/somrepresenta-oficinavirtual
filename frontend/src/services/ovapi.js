@@ -129,7 +129,7 @@ function signDocument(documentName) {
     .catch(handleCommonErrors(context))
     .then((response) => {
       console.log('Response', response)
-      if (response===undefined) {
+      if (response === undefined) {
         throw i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT')
       }
       return response.data

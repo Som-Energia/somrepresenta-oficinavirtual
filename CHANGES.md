@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- New pages: Installation list, Installation details
+- New reusable components:
+  - TableEditor: to show list of items with actions
+  - SimpleTable: to show data sheets
+- SnackbarMessages: listen messages 
 - UI check API version to match and do a full reload after a countdown
 - RGPD check required to access
 - Improved model validation for vat and email fields
