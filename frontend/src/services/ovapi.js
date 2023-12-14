@@ -2,37 +2,6 @@ import axios from 'axios'
 import messages from './messages'
 import i18n from '../i18n/i18n'
 
-function handleCommonErrorsOld(context) {
-  return (error) => {
-    const t = i18n.t
-
-    console.log(`Error ${error.code} ${context}\n${error.message}`)
-    if (error.code === 'ERR_NETWORK') {
-      messages.error(t('OVAPI.ERR_NETWORK'), { context })
-      return
-    }
-    // The server returned an error response
-    if (error.response) {
-      // Gateway error (ERP down)
-      if (error.response.status === 502) {
-        messages.error(t('OVAPI.ERR_GATEWAY'), { context })
-        return
-      }
-      // API unexpected error
-      if (error.response.status === 500) {
-        const unreference = '42-666-137' // A 'random' number when no reference
-        const reference = error.response.data.reference ?? unreference
-        messages.error(t('OVAPI.ERR_INTERNAL', { reference }), {
-          context,
-        })
-        return
-      }
-    }
-    messages.error(`${error.code}: ${error.message}`)
-    throw error
-  }
-}
-
 function handleCommonErrors(context) {
   return (error) => {
     const t = i18n.t
