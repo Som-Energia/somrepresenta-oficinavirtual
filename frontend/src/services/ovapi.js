@@ -81,7 +81,9 @@ function handleRemainingErrors(context) {
   return (error) => {
     // TODO: Obtain better info from axios error
     messages.error(`${error.code}: ${error.message}`, { context })
-    return
+    return {
+      error: "Unexpected error"
+    }
   }
 }
 
@@ -193,11 +195,13 @@ function signDocument(documentName) {
   const encodedDocument = encodeURIComponent(documentName)
   return axios
     .post(`/api/sign_document/${encodedDocument}`)
-    .catch(handleCommonErrorsOld(context))
+    .catch(handleCommonErrors(context))
+    .catch(handleRemainingErrors(context))
     .then((response) => {
-      console.log('Response', response)
-      if (response === undefined) {
-        throw i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT')
+      if (response.error) {
+        throw {
+          error: i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT')
+        }
       }
       return response.data
     })
@@ -207,8 +211,14 @@ async function installations() {
   const context = i18n.t('OVAPI.CONTEXT_INSTALLATIONS')
   return axios
     .get('/api/installations')
-    .catch(handleCommonErrorsOld(context))
-    .then((result) => (result?.data === undefined ? [] : result.data))
+    .catch(handleCommonErrors(context))
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        return [] // TODO: raise and handle in user
+      }
+      return result.data
+    })
 }
 
 async function installationDetails(contract_number) {
@@ -216,6 +226,7 @@ async function installationDetails(contract_number) {
   return axios
     .get(`/api/installation_details/${contract_number}`)
     .catch(handleCommonErrors(context))
+    .catch(handleRemainingErrors(context))
     .then((result) => {
       if (result.error !== undefined) {
         throw result
