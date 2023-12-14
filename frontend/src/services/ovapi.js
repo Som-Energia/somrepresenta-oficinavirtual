@@ -66,8 +66,22 @@ function handleCommonErrors(context) {
         }
       }
     }
-    messages.error(`${error.code}: ${error.message}`)
     throw error
+  }
+}
+
+function handleHttpStatus(status, result) {
+  return (error) => {
+    if (error.response && error.response.status === status) return result
+    throw error
+  }
+}
+
+function handleRemainingErrors(context) {
+  return (error) => {
+    // TODO: Obtain better info from axios error
+    messages.error(`${error.code}: ${error.message}`, { context })
+    return
   }
 }
 
@@ -103,12 +117,18 @@ async function localLogin(username, password) {
         ContentType: 'multipart/form-data',
       },
     })
-    .catch(handleCommonErrorsOld(context))
-    .then((response) => {
-      if (response === undefined) {
-        return
-      }
-      return response
+    .catch(handleCommonErrors(context))
+    .catch(
+      handleHttpStatus(401, {
+        error: i18n.t('LOGIN.VALIDATION_ERROR'),
+        code: 'VALIDATION_ERROR',
+      }),
+    )
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      console.log(result)
+      if (result.ok) return result.data
+      return result
     })
 }
 
