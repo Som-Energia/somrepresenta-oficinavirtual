@@ -2,6 +2,13 @@ import axios from 'axios'
 import messages from './messages'
 import i18n from '../i18n/i18n'
 
+/**
+Returns a catch callback that takes common non manageable
+system errors (Network down, Erp down, API internal error...)
+reports them into the error logger and resolves
+an object with an error field.
+Any unmanaged error is rethrown.
+*/
 function handleCommonErrors(context) {
   return (error) => {
     const t = i18n.t
@@ -39,6 +46,13 @@ function handleCommonErrors(context) {
   }
 }
 
+/**
+Returns a catch callback that handles http error
+responses with a given status by returning the
+provided result and without reporting
+to the error logger.
+Any unmanaged error is rethrown.
+*/
 function handleHttpStatus(status, result) {
   return (error) => {
     if (error.response && error.response.status === status) return result
@@ -46,15 +60,24 @@ function handleHttpStatus(status, result) {
   }
 }
 
+/**
+Returns a catch callback that handles any remaining
+response errors. Sends a message to the error logger
+and returns an object with the error attribute.
+Should be the last catch callback in a pipeline.
+*/
 function handleRemainingErrors(context) {
   return (error) => {
     // TODO: Obtain better info from axios error
     messages.error(`${error.code}: ${error.message}`, { context })
     return {
-      error: "Unexpected error"
+      error: 'Unexpected error',
+      exception: error,
     }
   }
 }
+
+
 
 async function version() {
   return axios
@@ -169,7 +192,7 @@ function signDocument(documentName) {
     .then((response) => {
       if (response.error) {
         throw {
-          error: i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT')
+          error: i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT'),
         }
       }
       return response.data
