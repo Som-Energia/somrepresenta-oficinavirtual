@@ -367,6 +367,7 @@ function TableEditor(props) {
     defaultPageSize = 10,
     pageSizes = [],
     actions = [],
+    defaultAction = undefined,
     itemActions = [],
     selectionActions = [],
     loading = false,
@@ -395,7 +396,12 @@ function TableEditor(props) {
     setSelected([])
   }
 
-  const handleClick = (event, id) => {
+  const handleClick = (id) => {
+    if (defaultAction) return defaultAction(id)
+    handleSelect(id)
+  }
+
+  const handleSelect = (id) => {
     if (selectionActions.length === 0) {
       return
     }
@@ -519,7 +525,7 @@ function TableEditor(props) {
                           },
                         }}
                         hover
-                        onClick={(event) => handleClick(event, row[idField])}
+                        onClick={(event) => handleClick(row[idField])}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -534,6 +540,10 @@ function TableEditor(props) {
                                 sx={{ padding: 0 }}
                                 color="primary"
                                 checked={isItemSelected}
+                                onClick={(e) => {
+                                  handleSelect(row[idField])
+                                  e.stopPropagation()
+                                }}
                                 inputProps={{
                                   'aria-labelledby': labelId,
                                 }}
@@ -614,6 +624,7 @@ TableEditor.propTypes = {
   title: PropTypes.string.isRequired,
   actions: ActionsType,
   itemActions: ActionsType,
+  defaultAction: PropTypes.func,
   selectionActions: ActionsType,
   idField: PropTypes.string,
   defaultPageSize: PropTypes.number,
