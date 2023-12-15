@@ -1,4 +1,4 @@
-from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice
 from ..utils.gravatar import gravatar
 from yamlns import ns
 from .exceptions import(

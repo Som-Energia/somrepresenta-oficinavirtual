@@ -1,7 +1,7 @@
 from fastapi import Request, Depends, status
 from fastapi.responses import JSONResponse
-from .models import UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
-from .datasources import profile_info, sign_document, installation_list, installation_details
+from .models import UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice
+from .datasources import profile_info, sign_document, installation_list, installation_details, invoice_list
 from .erp import ErpConnectionError
 from .auth import validated_user
 from consolemsg import error
@@ -33,3 +33,6 @@ def setup_business(app):
     def api_installation_details(contract_number: str, user: dict = Depends(validated_user)) -> InstallationDetailsResult:
         return installation_details(user['username'], contract_number)
 
+    @app.get('/api/invoices')
+    def api_invoice_list(user: dict = Depends(validated_user)) -> list[Invoice]:
+        return invoice_list(user['username'])

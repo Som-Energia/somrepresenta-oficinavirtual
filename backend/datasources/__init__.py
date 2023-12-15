@@ -1,7 +1,7 @@
 import os
 from .dummy import DummyBackend
 from .erp import ErpBackend
-from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice
 
 def backend():
     # Is important not to cache the result it so that
@@ -28,3 +28,6 @@ def installation_list(username: str) -> list[InstallationSummary]:
 
 def installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
     return backend().installation_details(username, contract_number)
+
+def invoice_list( username: str) -> list[Invoice]:
+    return backend().invoice_list(username)
