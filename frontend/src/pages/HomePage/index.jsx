@@ -19,7 +19,8 @@ export default function HomePage(params) {
       }}
     >
       {menuPages
-        .filter((page) => page.path !== '/')
+        .filter((page) => page.path !== '/') // home
+        .filter((page) => !page.dev) // dev pages
         .map((page) => (
           <PageButton
             key={page.path}

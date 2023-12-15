@@ -17,3 +17,8 @@ menuPages:
   - path: /production
     text: APP_FRAME.PAGE_PRODUCTION_DATA
     icon: QueryStats
+
+  - path: /test
+    text: APP_FRAME.PAGE_COMPONENT_TEST
+    icon: Science
+    dev: true
