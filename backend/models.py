@@ -72,19 +72,29 @@ class InstallationDetails(BaseModel):
     postal_code: str
     province: str
     rated_power: int
-    technology: str | bool
-    type: str
+    technology: str | bool # TODO: restrict to enum
+    type: str # TODO: restrict to enum
 
 class ContractDetails(BaseModel):
     billing_mode: str
     cost_deviation: str
-    discharge_date: str
+    discharge_date: str # TODO: date?
     iban: str
     proxy_fee: float
     reduction_deviation: int
-    representation_type: str
-    status: str
+    representation_type: str # TODO: restrict to enum
+    status: str # TODO: restrict to enum
 
 class InstallationDetailsResult(BaseModel):
     installation_details: InstallationDetails
     contract_details: ContractDetails
+
+class Invoice(BaseModel):
+    invoice_number: str
+    contract_number: str
+    emission_date: str # TODO date?
+    first_period_date: str # TODO date?
+    last_period_date: str # TODO date?
+    amount: float
+    # TODO: liquidacio
+    # TODO: invoice_type
