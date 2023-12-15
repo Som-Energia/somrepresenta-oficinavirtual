@@ -208,6 +208,18 @@ def dummy_installation_details(username: str, contract_number: str) -> Installat
         ))
     return InstallationDetailsResult(**ns.load('frontend/src/data/dummyinstallationdetail.yaml'))
 
+def dummy_invoices(username: str) -> list[Invoice]:
+    return [
+        Invoice(
+            invoice_number="F000001",
+            contract_number="19000_1",
+            emission_date="2022-03-01",
+            first_period_date="2022-01-01",
+            last_period_date="2022-02-01",
+            amount= 10.50,
+        )
+    ]
+
 class DummyBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return dummy_user_info(login)
@@ -223,3 +235,6 @@ class DummyBackend():
 
     def installation_details(self, username: str, contract_number: str) -> InstallationDetailsResult:
         return dummy_installation_details(username, contract_number)
+    
+    def invoice_list(self, username: str) -> list[Invoice]:
+        return dummy_invoices(username)
