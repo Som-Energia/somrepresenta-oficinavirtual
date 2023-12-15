@@ -25,6 +25,7 @@ import SnackbarMessages from './components/SnackbarMessages'
 import ProfilePage from './pages/ProfilePage'
 import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
+import InvoicesPage from './pages/InvoicesPage'
 
 const routes = [
   {
@@ -80,7 +81,7 @@ const routes = [
           },
           {
             path: '/invoices',
-            element: <NotYetImplementedPage />,
+            element: <InvoicesPage />,
           },
           {
             path: '/production',
