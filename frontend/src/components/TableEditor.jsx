@@ -59,32 +59,38 @@ import { useTranslation } from 'react-i18next'
 
 const denseRowHeight = 33
 
-function Loading(props) {
+function Loading({ nCols = 3 }) {
   const { t } = useTranslation()
-  const { nCols = 3 } = props
+  const nRows = 3
   return (
     <>
-      <TableRow>
-        {Array(nCols)
-          .fill()
-          .map((v, i) => (
-            <TableCell key={i}>
-              <Skeleton animation="wave" />
-            </TableCell>
-          ))}
-      </TableRow>
-      <TableRow>
-        <TableCell colSpan={nCols}>
-          <div
-            style={{
-              width: '100%',
-              textAlign: 'center',
-            }}
-          >
-            <CircularProgress />
-          </div>
-        </TableCell>
-      </TableRow>
+      {Array(nRows)
+        .fill()
+        .map(() => (
+          <TableRow>
+            {Array(nCols)
+              .fill()
+              .map((v, i) => (
+                <TableCell key={i}>
+                  <Skeleton animation="wave" height="2rem" />
+                </TableCell>
+              ))}
+          </TableRow>
+        ))}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <CircularProgress />
+      </div>
     </>
   )
 }
@@ -482,7 +488,7 @@ function TableEditor(props) {
               rowCount={rows.length}
               hasCheckbox={selectionActions.length !== 0}
             />
-            <TableBody>
+            <TableBody sx={{ position: 'relative' }}>
               {loading ? (
                 <Loading nCols={nColumns} />
               ) : rows.length === 0 ? (
