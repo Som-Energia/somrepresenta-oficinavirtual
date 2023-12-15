@@ -85,7 +85,7 @@ export default function InstallationsPage(params) {
         <ErrorSplash
           title={error.context}
           message={error.error}
-          backaction={()=>getInstallations()}
+          backaction={() => getInstallations()}
           backtext={t('INSTALLATIONS.RELOAD')}
         />
       ) : (
