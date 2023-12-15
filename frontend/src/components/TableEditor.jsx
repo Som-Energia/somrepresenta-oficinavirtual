@@ -212,19 +212,18 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0])
 }
 
-function EnhancedTableHead(props) {
+function EnhancedTableHead({
+  columns,
+  onSelectAllClick,
+  order,
+  orderBy,
+  numSelected,
+  rowCount,
+  onRequestSort,
+  hasCheckbox,
+  hasItemActions,
+}) {
   const { t } = useTranslation()
-
-  const {
-    columns,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-    hasCheckbox,
-  } = props
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }
@@ -268,9 +267,11 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell key={'action'} align={'right'} padding={'normal'}>
-          {t('TABLE_EDITOR.ACTIONS')}
-        </TableCell>
+        {hasItemActions && (
+          <TableCell key={'action'} align={'right'} padding={'normal'}>
+            {t('TABLE_EDITOR.ACTIONS')}
+          </TableCell>
+        )}
       </TableRow>
     </TableHead>
   )
@@ -441,7 +442,8 @@ function TableEditor(props) {
   }
 
   const nFilteredRows = rows.filter(isFiltered).length
-  const nColumns = columns.length + 1
+  const nTableColumns =
+    columns.length + (itemActions.length ? 1 : 0) + (selectionActions.length ? 1 : 0)
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -487,10 +489,11 @@ function TableEditor(props) {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
               hasCheckbox={selectionActions.length !== 0}
+              hasItemActions={itemActions.length !== 0}
             />
             <TableBody sx={{ position: 'relative' }}>
               {loading ? (
-                <Loading nCols={nColumns} />
+                <Loading nCols={nTableColumns} />
               ) : rows.length === 0 ? (
                 noDataPlaceHolder
               ) : (
@@ -559,22 +562,24 @@ function TableEditor(props) {
                             </TableCell>
                           )
                         })}
-                        <TableCell>
-                          <Collapse in={!isItemFiltered} component={null}>
-                            <ActionButtons
-                              size="small"
-                              actions={itemActions}
-                              context={row}
-                            />
-                          </Collapse>
-                        </TableCell>
+                        {itemActions.length !== 0 && (
+                          <TableCell>
+                            <Collapse in={!isItemFiltered} component={null}>
+                              <ActionButtons
+                                size="small"
+                                actions={itemActions}
+                                context={row}
+                              />
+                            </Collapse>
+                          </TableCell>
+                        )}
                       </TableRow>
                     )
                   })
               )}
               {nFilteredRows > 0 && (
                 <TableRow>
-                  <TableCell colSpan={nColumns - 1}>
+                  <TableCell colSpan={nTableColumns - 1}>
                     {t('TABLE_EDITOR.N_ITEMS_FILTERED', { n: nFilteredRows })}
                   </TableCell>
                   <TableCell sx={{ textAlign: 'right' }}>
@@ -594,7 +599,7 @@ function TableEditor(props) {
                     height: denseRowHeight * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={nColumns} />
+                  <TableCell colSpan={nTableColumns} />
                 </TableRow>
               )}
             </TableBody>
