@@ -210,14 +210,8 @@ def dummy_installation_details(username: str, contract_number: str) -> Installat
 
 def dummy_invoices(username: str) -> list[Invoice]:
     return [
-        Invoice(
-            invoice_number="F000001",
-            contract_number="19000_1",
-            emission_date="2022-03-01",
-            first_period_date="2022-01-01",
-            last_period_date="2022-02-01",
-            amount= 10.50,
-        )
+        Invoice(**invoice)
+        for invoice in ns.load('frontend/src/data/dummyinvoices.yaml')
     ]
 
 class DummyBackend():
