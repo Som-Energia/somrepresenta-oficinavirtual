@@ -7,7 +7,7 @@ import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import { Link } from 'react-router-dom'
 import TableEditor from '../../components/TableEditor'
@@ -66,7 +66,7 @@ export default function InstallationsPage(params) {
             size="small"
             component={Link}
             to={`/installation/${contract.contract_number}`}
-            endIcon={<MoreVertIcon />}
+            endIcon={<ChevronRightIcon />}
           >
             {t('INSTALLATIONS.BUTTON_DETAILS')}
           </Button>
