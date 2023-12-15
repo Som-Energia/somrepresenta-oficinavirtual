@@ -1,100 +1,208 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import dummyData from '../data/dummyinstallations.yaml'
 import Button from '@mui/material/Button'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Switch from '@mui/material/Switch'
+import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-import SolarPowerIcon from '@mui/icons-material/SolarPower'
-import { Link } from 'react-router-dom'
+import CelebrationIcon from '@mui/icons-material/Celebration'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 import TableEditor from '../components/TableEditor'
-import { useAuth } from '../components/AuthProvider'
-import ovapi from '../services/ovapi'
-import PageTitle from '../components/PageTitle'
-import Loading from '../components/Loading'
+import ConfettiExplosion from 'react-confetti-explosion'
+import messages from '../services/messages'
 
 export default function Example(params) {
   const { t, i18n } = useTranslation()
   const [isLoading, beLoading] = React.useState(false)
+  const [hasDefaultAction, enableDefaultAction] = React.useState(true)
   const [hasSelection, haveSelection] = React.useState(true)
-  const [rows, setRows] = React.useState(dummyData)
-  const { currentUser } = useAuth()
+  const [hasItemActions, haveItemActions] = React.useState(true)
+  const [hasGlobalActions, haveGlobalActions] = React.useState(true)
+  const [pageSizes, setPageSizes] = React.useState('')
+  const [rows, setRows] = React.useState([])
+  const [isConfettiShown, showConfetti] = React.useState(false)
+
+  React.useEffect(() => {
+    handleAdd()
+    handleAdd()
+    handleAdd()
+    handleAdd()
+    return () => setRows([])
+  }, [])
 
   function handleDeleteMultiple(items) {
-    console.log(items)
     setRows((rows) => rows.filter((r) => !items.includes(r.contract_number)))
   }
 
+  function handleAdd() {
+    const cities = ['Manlleu', 'Manacor', 'Manresa', 'Tivisa']
+    const setups = ['Piscina', 'Pavellò', 'Deixalleria', 'Mercat']
+    function randomChoice(array) {
+      return array[Math.floor(Math.random() * array.length)]
+    }
+    setRows((rows) => [
+      ...rows,
+      {
+        contract_number: `0${Math.floor(Math.random() * 100000) + 1}`,
+        installation_name: `${randomChoice(cities)} ${randomChoice(setups)}`,
+        power: 1000 * (10 + Math.floor(Math.random() * 100)),
+      },
+    ])
+  }
+  function p(x) {
+    console.log(x)
+    return x
+  }
+  const processedPageSizes =
+    pageSizes
+      ?.split(',')
+      ?.map((x) => parseInt(x))
+      ?.filter((x) => !isNaN(x)) || []
+
+  console.log({ processedPageSizes })
+  const idField = 'contract_number'
   const columns = [
     {
       id: 'contract_number', // TODO: can we name it contract?
-      label: t('INSTALLATIONS.COLUMN_CONTRACT_NUMBER'),
+      label: 'Contract number',
       searchable: true,
       numeric: false,
     },
     {
       id: 'installation_name',
-      label: t('INSTALLATIONS.COLUMN_INSTALLATION_NAME'),
+      label: 'Plant name',
       searchable: true,
       numeric: false,
     },
+    {
+      id: 'power',
+      label: 'Nominal Power',
+      searchable: false,
+      numeric: true,
+    },
   ]
-  const actions = []
-  const selectionActions = hasSelection
-    ? [
-        {
-          icon: <DeleteIcon />,
-          title: 'delete',
-          handler: handleDeleteMultiple,
-        },
-      ]
-    : []
+  const defaultAction = (id) => {
+    messages.log(`clicked ${id}`)
+  }
+  const actions = [
+    {
+      icon: <AddCircleIcon />,
+      title: 'Add',
+      handler: handleAdd,
+    },
+    {
+      title: 'Celebrate!',
+      view: () => (
+        <>
+          <IconButton onClick={() => showConfetti(true)}>
+            <CelebrationIcon />
+          </IconButton>
+        </>
+      ),
+    },
+  ]
+  const selectionActions = [
+    {
+      icon: <DeleteIcon />,
+      title: 'Delete',
+      handler: handleDeleteMultiple,
+    },
+  ]
   const itemActions = [
     {
-      title: t('INSTALLATIONS.TOOLTIP_DETAILS'),
-      view: (contract) => {
-        return (
-          <Button
-            variant="contained"
-            size="small"
-            component={Link}
-            to={`/installation/${contract.contract_number}`}
-            endIcon={<MoreVertIcon />}
-          >
-            {t('INSTALLATIONS.BUTTON_DETAILS')}
-          </Button>
-        )
-      },
+      title: 'Edit',
+      icon: <EditIcon />,
+      handler: (row) => messages.log(`Editing ${row[idField]}`),
     },
   ]
   return (
     <>
       <h1>TableEditor</h1>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={hasSelection}
-            onChange={(e) => haveSelection(e.target.checked)}
-          />
-        }
-        label={'Selection actions'}
-      ></FormControlLabel>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3,1fr)',
+          gridAutoColumns: '10rem',
+        }}
+      >
+        {[
+          [hasDefaultAction, enableDefaultAction, 'Click action', 'On clicking in a row'],
+          [
+            hasSelection,
+            haveSelection,
+            'Selection actions',
+            'Actions to apply on selections',
+          ],
+          [
+            hasItemActions,
+            haveItemActions,
+            'Item actions',
+            'Actions to apply on each row',
+          ],
+          [
+            hasGlobalActions,
+            haveGlobalActions,
+            'Global actions',
+            'Actions applied globally',
+          ],
+          [isLoading, beLoading, 'Loading'],
+        ].map(([getter, setter, label, description], i) => (
+          <FormControlLabel
+            key={i}
+            control={
+              <Switch checked={getter} onChange={(e) => setter(e.target.checked)} />
+            }
+            label={
+              <>
+                <b>{label}: </b>
+                {description}
+              </>
+            }
+          ></FormControlLabel>
+        ))}
+        <TextField
+          variant="filled"
+          label="Page sizes"
+          helperText="Comma separated list of sizes"
+          value={pageSizes}
+          onChange={(ev) => {
+            setPageSizes(ev.target.value)
+          }}
+        />
+        <Box
+          sx={{
+            gridColumn: 'span 3',
+            justifySelf: 'center',
+            alignSelf: 'center',
+            textAlign: 'center',
+          }}
+        >
+          {isConfettiShown && (
+            <ConfettiExplosion
+              style={{ textAlign: 'center' }}
+              zIndex={9000}
+              onComplete={() => showConfetti(false)}
+            />
+          )}
+        </Box>
+      </Box>
       <TableEditor
         title={t('INSTALLATIONS.TABLE_TITLE')}
         defaultPageSize={12}
-        pageSizes={[]}
+        pageSizes={processedPageSizes}
         columns={columns}
         rows={rows}
-        actions={actions}
-        selectionActions={selectionActions}
-        itemActions={itemActions}
-        idField={'contract_number'}
+        actions={hasGlobalActions ? actions : undefined}
+        selectionActions={hasSelection ? selectionActions : undefined}
+        itemActions={hasItemActions ? itemActions : undefined}
+        defaultAction={hasDefaultAction ? defaultAction : undefined}
+        idField={idField}
         loading={isLoading}
         noDataPlaceHolder={
           <TableRow>
