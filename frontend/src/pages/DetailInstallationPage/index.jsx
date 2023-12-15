@@ -12,7 +12,7 @@ import ErrorSplash from '../../components/ErrorSplash'
 import NavigationButtons from '../../components/NavigationButtons'
 import { contractFields } from './detailInstallationData'
 import { installationFields } from './detailInstallationData'
-import { transformContractDetails } from './detailInstallationData'
+import transformContractDetails  from './detailInstallationData'
 
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
