@@ -2,7 +2,6 @@ import { beforeEach, afterEach, describe, expect, test, it } from 'vitest'
 
 import { firstPendingDocument } from './signatures'
 
-// Remove when real tests are available
 describe('firstPendingDocument', () => {
   function docversion(document, version) {
     return { document, version }

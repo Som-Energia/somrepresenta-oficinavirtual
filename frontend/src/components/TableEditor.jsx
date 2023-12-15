@@ -24,6 +24,8 @@ Attributes
     - view: (optional) functor receiving the context and returning an alternative for the default icon button
 - itemActions: list of actions available for each single row, row is passed to 
 - selectionActions = [],
+- defaultAction: Function called when clicked on a row.
+  By default will select the row if any selection action is configured.
 - loading: set to true to activate loading status
 - noDataPlaceHolder: node to show in case of no data is to be presented
 */
