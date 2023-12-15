@@ -123,6 +123,7 @@ OVAPI:
   CONTEXT_LOGIN: Error validando identidad
   CONTEXT_INSTALLATIONS: Error obteniendo la lista de instalaciones
   CONTEXT_INSTALLATION_DETAILS: Error obteniendo los detalles de la instalación
+  CONTEXT_INVOICES: Error obteniendo la lista de facturas
   CONTEXT_SIGNING_DOCUMENT: Error aceptando condiciones
   ERR_UNABLE_TO_SIGN_DOCUMENT: 'No fue posible firmar el documento'
   ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
@@ -167,3 +168,4 @@ INVOICES:
   TOOLTIP_PDF: Descarga en PDF
   TOOLTIP_DOWNLOAD_ZIP: Descarga PDF's seleccionados en un ZIP
   NO_INVOICES: No se han encontrado facturas
+  RELOAD: Recarga
