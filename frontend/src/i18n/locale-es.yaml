@@ -120,10 +120,10 @@ TABLE_EDITOR:
   N_ITEMS_FILTERED: Se han filtrado {{n}} elementos
   CLEAR_FILTER: Muestra todo
 OVAPI:
-  CONTEXT_LOGIN: Validando identidad
-  CONTEXT_INSTALLATIONS: Obteniendo la lista de instalaciones
-  CONTEXT_INSTALLATION_DETAILS: Obteniendo los detalles de la instalación
-  CONTEXT_SIGNING_DOCUMENT: Aceptando condiciones
+  CONTEXT_LOGIN: Error validando identidad
+  CONTEXT_INSTALLATIONS: Error obteniendo la lista de instalaciones
+  CONTEXT_INSTALLATION_DETAILS: Error obteniendo los detalles de la instalación
+  CONTEXT_SIGNING_DOCUMENT: Error aceptando condiciones
   ERR_UNABLE_TO_SIGN_DOCUMENT: 'No fue posible firmar el documento'
   ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
   ERR_GATEWAY: El sistema no está disponible por mantenimiento. Prueba más tarde.

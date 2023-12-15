@@ -15,27 +15,30 @@ import { useAuth } from '../../components/AuthProvider'
 import ovapi from '../../services/ovapi'
 import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
+import ErrorSplash from '../../components/ErrorSplash'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
   const [isLoading, beLoading] = React.useState(true)
   const [rows, setRows] = React.useState([])
+  const [error, setError] = React.useState(false)
   const { currentUser } = useAuth()
 
   React.useEffect(() => {
+    getInstallations()
+  }, [currentUser])
+
+  async function getInstallations() {
     beLoading(true)
     setRows([])
-    ovapi
-      .installations(currentUser)
-      .then((retrievedRows) => {
-        setRows(retrievedRows)
-        beLoading(false)
-      })
-      .catch((error) => {
-        beLoading(false)
-        console.error(error)
-      })
-  }, [currentUser])
+    setError(false)
+    try {
+      setRows(await ovapi.installations(currentUser))
+    } catch (error) {
+      setError(error)
+    }
+    beLoading(false)
+  }
 
   const columns = [
     {
@@ -78,29 +81,38 @@ export default function InstallationsPage(params) {
       <PageTitle Icon={SolarPowerIcon}>
         {t('INSTALLATIONS.INSTALLATIONS_TITLE')}
       </PageTitle>
-      <TableEditor
-        title={t('INSTALLATIONS.TABLE_TITLE')}
-        defaultPageSize={12}
-        pageSizes={[]}
-        columns={columns}
-        rows={rows}
-        actions={actions}
-        selectionActions={selectionActions}
-        itemActions={itemActions}
-        idField={'contract_number'}
-        loading={isLoading}
-        noDataPlaceHolder={
-          <TableRow>
-            <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
-              <Typography variant="h4">
-                {t('INSTALLATIONS.NO_INSTALLATIONS')}
-                <br />
-                🤷‍♀️
-              </Typography>
-            </TableCell>
-          </TableRow>
-        }
-      ></TableEditor>
+      {error ? (
+        <ErrorSplash
+          title={error.context}
+          message={error.error}
+          backaction={()=>getInstallations()}
+          backtext={t('INSTALLATIONS.RELOAD')}
+        />
+      ) : (
+        <TableEditor
+          title={t('INSTALLATIONS.TABLE_TITLE')}
+          defaultPageSize={12}
+          pageSizes={[]}
+          columns={columns}
+          rows={rows}
+          actions={actions}
+          selectionActions={selectionActions}
+          itemActions={itemActions}
+          idField={'contract_number'}
+          loading={isLoading}
+          noDataPlaceHolder={
+            <TableRow>
+              <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
+                <Typography variant="h4">
+                  {t('INSTALLATIONS.NO_INSTALLATIONS')}
+                  <br />
+                  🤷‍♀️
+                </Typography>
+              </TableCell>
+            </TableRow>
+          }
+        ></TableEditor>
+      )}
     </Container>
   )
 }

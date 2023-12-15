@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import koFirefly from '../assets/cuca-marejada.svg'
 import { useNavigate } from 'react-router-dom'
 
-export default function ErrorSplash({ title, message, backlink, backtext }) {
+export default function ErrorSplash({ title, message, backlink, backtext, backaction }) {
   const navigate = useNavigate()
   return (
     <Box
@@ -30,7 +30,7 @@ export default function ErrorSplash({ title, message, backlink, backtext }) {
         </Typography>
       )}
       <Box sx={{ display: 'flex', gap: 3 }}>
-        <Button variant="contained" color="primary" onClick={() => navigate(backlink)}>
+        <Button variant="contained" color="primary" onClick={backaction || (() => navigate(backlink))}>
           {backtext}
         </Button>
       </Box>

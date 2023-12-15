@@ -18,6 +18,7 @@ function handleCommonErrors(context) {
       messages.error(t('OVAPI.ERR_NETWORK'), { context })
       return {
         error: t('OVAPI.ERR_NETWORK'),
+        context,
       }
     }
     // The server returned an error response
@@ -27,6 +28,7 @@ function handleCommonErrors(context) {
         messages.error(t('OVAPI.ERR_GATEWAY'), { context })
         return {
           error: t('OVAPI.ERR_GATEWAY'),
+          context,
         }
       }
       // API unexpected error
@@ -38,6 +40,7 @@ function handleCommonErrors(context) {
         })
         return {
           error: t('OVAPI.ERR_INTERNAL', { reference }),
+          context,
           reference: reference,
         }
       }
@@ -207,7 +210,7 @@ async function installations() {
     .catch(handleRemainingErrors(context))
     .then((result) => {
       if (result.error !== undefined) {
-        return [] // TODO: raise and handle in user
+        throw result
       }
       return result.data
     })
