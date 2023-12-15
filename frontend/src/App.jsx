@@ -26,6 +26,7 @@ import ProfilePage from './pages/ProfilePage'
 import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
 import InvoicesPage from './pages/InvoicesPage'
+import ProductionPage from './pages/ProductionPage'
 
 const routes = [
   {
@@ -85,7 +86,7 @@ const routes = [
           },
           {
             path: '/production',
-            element: <NotYetImplementedPage />,
+            element: <ProductionPage />,
           },
         ],
       },
