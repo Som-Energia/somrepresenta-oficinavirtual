@@ -1,5 +1,10 @@
 # Pending tasks
 
+- [ ] Error Handling: Erp caigut -> VPN no passa testos
+- [ ] Els error inexperats duen una referencia que no veu al sentry
+- [ ] ErrorSplash: Boto per reportar l'error
+
+
 - [ ] Auth: Has sense to move PageGuard inside the specific page?
 - [ ] Auth: PageGuard: filter by role (attribute allowedRoles (anyOf)? requiredRoles (allOf)?)
 - [ ] BUG: Browser language CA-ES not transformed into CA in language button
