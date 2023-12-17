@@ -35,6 +35,7 @@ TERMS:
 
     **DRETS:** Pots retirar el teu consentiment en qualsevol moment, així com exercir el teu dret d'accés, rectificació, supressió, portabilitat, limitació i oposició dirigir-te a les dades del responsable. En cas de divergències, pots presentar una reclamació davant l'Agència de Protecció de Dades (www.aepd.es).
   UNEXPECTED_ERROR: Error inesperat
+  RGPD_ACCEPT: Accepto el tractament de les meves dades
 FOOTER:
   WEB: Web
   BLOG: Blog
@@ -47,7 +48,7 @@ FOOTER:
   COOKIE_POLICY: Cookies
   COOKIE_POLICY_URL: https://oficinavirtual.somenergia.coop/ca/cookies-policy/
 PROFILE:
-  PROFILE_TITLE: Perfil d'usuari
+  PROFILE_TITLE: Perfil d'usuària
   NAME: Nom
   VAT: NIF
   ROLES: Rols
@@ -59,3 +60,36 @@ PROFILE:
   PHONE: Telèfon
   PROXY_NAME: Nom representant
   PROXY_VAT: NIF representant
+VERSION_CHECKER:
+  NEW_VERSION_DETECTED_MARKDOWN: "S'ha detectat una actualització de l'aplicació {{title}}\n\
+    \n- Versió al teu navegador: `{{uiVersion}}`\n- Versió al servidor: `{{apiVersion}}`\n\
+    \nEs recarregarà l'aplicació per evitar possibles problemes\n"
+  NEW_VERSION_DETECTED_TITLE: Nova versió detectada
+  RELOADING_IN: Recarregat en  {{seconds}} segons
+  RELOADING: S'està recarregant...
+LOGIN:
+  USERNAME_HELP: Utilitza el NIF o el correu electrònic
+  SUBMIT_BUTTON_PROCESSING: Estem validant…
+  LOGIN_DIALOG_TITLE: Estem verificant la teva identitat
+  SUBMIT_BUTTON_LOGIN: Valida
+  PASSWORD_LABEL: Contrasenya
+  USERNAME_LABEL: Usuària
+  UNABLE_TO_LOGIN: No s'ha pogut validar
+  VALIDATION_ERROR: Usuària o contrasenya invàlides
+CHANGE_PASSWORD:
+  NEW_PASSWORD_TOO_SHORT_ERROR: Massa curta
+  CURRENT_PASSWORD_LABEL: Contrasenya actual
+  CHANGE_PASSWORD_DIALOG_TITLE: Estem canviant la contrasenya
+  NEW_PASSWORD_LABEL: Contrasenya nova
+  SUBMIT_BUTTON_CHANGE_PASSWORD: Canvia
+  SUBMIT_BUTTON_CHANGED_PASSWORD: Contrasenya canviada!
+  SUBMIT_BUTTON_CHANGING_PASSWORD: Estem canviant…
+  NEW_PASSWORD_MISSMATCH_ERROR: Les contrasenyes no coincideixen
+  NEW_PASSWORD_SAME_AS_CURRENT_ERROR: No pot ser igual que l'actual
+  NEW_PASSWORD_MUST_CONTAIN_LOWERCASE: Ha de tenir minúscules
+  NEW_PASSWORD_MUST_CONTAIN_UPPERCASE: Ha de tenir majúscules
+  NEW_PASSWORD_MUST_CONTAIN_DIGITS: Ha de tenir números
+  CURRENT_PASSWORD_MISSMATCH_ERROR: La contrasenya actual no és la correcta
+  CHECK_PASSWORD_LABEL: Repeteix la contrasenya nova
+  NEW_PASSWORD_MUST_CONTAIN_SYMBOLS: Ha de tenir símbols
+  PASSWORD_CHANGE_SUCCESSFUL: La contrasenya s'ha canviat correctament
