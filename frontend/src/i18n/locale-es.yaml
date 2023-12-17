@@ -15,9 +15,9 @@ APP_FRAME:
   MENU_CHANGE_PASSWORD: Cambia la contraseña
   MENU_PROFILE: Perfil
   MENU_LOGOUT: Salir
-  LOGIN: Identificate
+  LOGIN: Identifícate
   CHOOSE_USER: Escoge usuaria
-  CHOOSE_AUTH_PROVIDER: Escull com identificar-te
+  CHOOSE_AUTH_PROVIDER: Escoge cómo identificarte
   USER_REQUIRED: Se requiere usuaria
 TERMS:
   UNEXPECTED_ERROR: Error inesperado
@@ -49,32 +49,32 @@ FOOTER:
   COOKIE_POLICY_URL: https://oficinavirtual.somenergia.coop/es/cookies-policy/
 LOGIN:
   LOGIN_DIALOG_TITLE: Verificando tu identidad
-  USERNAME_LABEL: Usuario
-  USERNAME_HELP: Usa el NIF o el correo electrònico
+  USERNAME_LABEL: Usuaria
+  USERNAME_HELP: Usa el NIF o el correo electrónico
   SUBMIT_BUTTON_LOGIN: Valida
   SUBMIT_BUTTON_PROCESSING: Validando…
   PASSWORD_LABEL: Contraseña
-  UNABLE_TO_LOGIN: No ha sido posible validar
-  VALIDATION_ERROR: Usuario o contraseña invàlida.
+  UNABLE_TO_LOGIN: No se ha podido validar
+  VALIDATION_ERROR: Usuaria o contraseña inválidas
 CHANGE_PASSWORD:
   CHANGE_PASSWORD_DIALOG_TITLE: Cambiando la contraseña
   CURRENT_PASSWORD_LABEL: Contraseña actual
   NEW_PASSWORD_LABEL: Nueva contraseña
-  CHECK_PASSWORD_LABEL: Repetir la nueva contraseña
+  CHECK_PASSWORD_LABEL: Repite la nueva contraseña
   SUBMIT_BUTTON_CHANGE_PASSWORD: Cambia
-  SUBMIT_BUTTON_CHANGED_PASSWORD: ¡Contraseña Cambiada!
+  SUBMIT_BUTTON_CHANGED_PASSWORD: ¡Contraseña cambiada!
   SUBMIT_BUTTON_CHANGING_PASSWORD: Cambiando…
   NEW_PASSWORD_TOO_SHORT_ERROR: Demasiado corta
   NEW_PASSWORD_MISSMATCH_ERROR: Las contraseñas no coinciden
   NEW_PASSWORD_SAME_AS_CURRENT_ERROR: No puede ser igual que la actual
-  NEW_PASSWORD_MUST_CONTAIN_LOWERCASE: Ha de contener minúsculas
-  NEW_PASSWORD_MUST_CONTAIN_UPPERCASE: Ha de contener mayúsculas
-  NEW_PASSWORD_MUST_CONTAIN_DIGITS: Ha de contener números
-  NEW_PASSWORD_MUST_CONTAIN_SYMBOLS: Ha de contener símbolos
+  NEW_PASSWORD_MUST_CONTAIN_LOWERCASE: Tiene que tener minúsculas
+  NEW_PASSWORD_MUST_CONTAIN_UPPERCASE: Tiene que tener mayúsculas
+  NEW_PASSWORD_MUST_CONTAIN_DIGITS: Tiene que tener números
+  NEW_PASSWORD_MUST_CONTAIN_SYMBOLS: Tiene que tener símbolos
   CURRENT_PASSWORD_MISSMATCH_ERROR: La contraseña actual no es la correcta
   PASSWORD_CHANGE_SUCCESSFUL: La contraseña se ha cambiado correctamente
 PROFILE:
-  PROFILE_TITLE: Perfil de usuario
+  PROFILE_TITLE: Perfil de usuaria
   NAME: Nombre
   VAT: NIF
   ROLES: Roles
@@ -89,12 +89,12 @@ PROFILE:
 VERSION_CHECKER:
   NEW_VERSION_DETECTED_TITLE: Nueva versión detectada
   NEW_VERSION_DETECTED_MARKDOWN: |
-    Se ha detectado una actualización de la aplicación {{title}}.
+    Se ha detectado una actualización de la aplicación {{title}}
 
     - Versión en su navegador: `{{uiVersion}}`
     - Versión en el servidor: `{{apiVersion}}`
 
-    Se recargará la aplicación para evitar posibles problemas.
+    Se recargará la aplicación para evitar posibles problemas
 
   RELOADING_IN: Recargando en {{seconds}} segundos
   RELOADING: Recargando...
@@ -122,13 +122,13 @@ OVAPI:
   CONTEXT_LOGIN: Validando identidad
   CONTEXT_INSTALLATIONS: Obteniendo la lista de instalaciones
   CONTEXT_INSTALLATION_DETAILS: Obteniendo los detalles de la instalación
-  ERR_NETWORK: No se encuentra el servidor. ¿Tiene conexión a la red?
-  ERR_GATEWAY: El sistema no está disponible por mantenimiento. Pruebe más tarde.
+  ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
+  ERR_GATEWAY: El sistema no está disponible por mantenimiento. Prueba más tarde.
   ERR_INTERNAL: 'Se ha producido un error inesperado en el servidor. Referencia {{reference}}.'
 INSTALLATION_DETAIL:
   DETAILS_TITLE: Detalles
-  INSTALLATION_DETAILS_TITLE: Detalles Instalación
-  CONTRACT_DETAILS_TITLE: Detalles Contrato
+  INSTALLATION_DETAILS_TITLE: Detalles de la instalación
+  CONTRACT_DETAILS_TITLE: Detalles del contrato
   ADDRESS: Dirección
   CIL: CIL
   CITY: Municipio
@@ -136,22 +136,22 @@ INSTALLATION_DETAIL:
   COORDINATES: Coordenadas
   MINISTRY_CODE: Código del Ministerio
   NAME: Nombre
-  POSTAL_CODE: Código Postal
+  POSTAL_CODE: Código postal
   PROVINCE: Provincia
-  RATED_POWER: Potencia Nominal [kW]
+  RATED_POWER: Potencia nominal [kW]
   TECHNOLOGY: Tecnología
   TYPE: Tipo de seguidor
   ERROR_LOADING_DATA: Error cargando los datos
   BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
 CONTRACT_DETAIL:
-  CONTRACT_DETAILS_TITLE: Detalles del Contrato
+  CONTRACT_DETAILS_TITLE: Detalles del contrato
   BILLING_MODE: Modo de facturación
-  COST_DEVIATION: Coste de los desvios
-  DISCHARGE_DATE: Fecha de la alta
+  COST_DEVIATION: Coste de los desvíos
+  DISCHARGE_DATE: Fecha del alta
   IBAN: IBAN
   PROXY_FEE: Retribución para el servicio de representación [€/MWh]
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
-  STATUS: Estado del Contrato
+  STATUS: Estado del contrato
 ERROR:
-  ERR_BAD_RESPONSE: Problemas con el servidor. Error inesperado.
+  ERR_BAD_RESPONSE: Problemas con el servidor. Error inesperado
