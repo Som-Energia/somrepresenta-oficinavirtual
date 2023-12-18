@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 0.2.0 (2023-12-18)
 
 - New pages: Installation list, Installation details
 - New reusable components:
