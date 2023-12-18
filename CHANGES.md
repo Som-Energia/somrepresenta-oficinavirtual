@@ -7,7 +7,7 @@
   - TableEditor: to show list of items with actions
   - SimpleTable: to show data sheets
   - SnackbarMessages: listen messages and show temporary error messages 
-  - ErrorSpash: to show static errors
+  - ErrorSplash: to show static errors
 - RGPD check required to access
 - UI check API version to match and do a full reload after a countdown
 - Error handling:

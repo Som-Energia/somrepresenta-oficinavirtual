@@ -35,7 +35,7 @@ make tests # Pass ui and api tests
 
 ### Configuration
 
-Backend Config. Copy `.env-example` as .env and edit.
+Backend Config. Copy `.env-example` as `.env` and edit.
 
 Frontend Config: Defaults in `frontend/.env` can be overriden
 by copying `frontend/.env.local-example` as `frontend/.env.local` and editing it.
