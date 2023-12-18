@@ -2,7 +2,14 @@ from contextlib import contextmanager
 from yamlns import ns
 from consolemsg import error, success
 from pydantic import ValidationError
-from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
+from ..models import (
+    TokenUser,
+    UserProfile,
+    SignatureResult,
+    InstallationSummary,
+    InstallationDetailsResult,
+    Invoice,
+)
 from .. import erp
 from ..utils.gravatar import gravatar
 from ..utils.vat import nif2vat
@@ -15,6 +22,7 @@ from .exceptions import(
     NoSuchUser,
     NoDocumentVersions,
 )
+from .dummy import dummy_invoices
 
 @contextmanager
 def catchValidationErrors():
@@ -98,3 +106,6 @@ class ErpBackend():
 
     def installation_details(self, username: str, contract_number: str) -> InstallationDetailsResult:
         return erp_installation_details(username, contract_number)
+
+    def invoice_list(self, username: str) -> list[Invoice]:
+        return dummy_invoices(username)
