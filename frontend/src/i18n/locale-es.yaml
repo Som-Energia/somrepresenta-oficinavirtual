@@ -157,6 +157,12 @@ CONTRACT_DETAIL:
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado del contrato
+  BILLING_MODE_INDEX: Indexada
+  BILLING_MODE_ATR: ATR
+  COST_DEVIATION_INCLUDED: Incluido
+  STATUS_ACTIVE: Activo
+  REPRESENTATION_TYPE_DIRECT: Indirecta a Mercado y Directa ante la CNMC
+  REPRESENTATION_TYPE_INDIRECT: Indirecta a Mercado y Indirecta ante la CNMC
 INVOICES:
   INVOICES_TITLE: Facturas
   TABLE_TITLE: '{{n}} facturas'
