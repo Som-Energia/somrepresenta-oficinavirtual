@@ -144,9 +144,7 @@ INSTALLATION_DETAIL:
   RATED_POWER: Potencia nominal [kW]
   TECHNOLOGY: Tecnología
   CIL: CIL
-  RATED_POWER: Potencia Nominal [kW]
   TYPE: Código de instalación tipo
-  MINISTRY_CODE: Código del Ministerio
   ERROR_LOADING_DATA: Error cargando los datos
   BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
 CONTRACT_DETAIL:
@@ -156,7 +154,6 @@ CONTRACT_DETAIL:
   DISCHARGE_DATE: Fecha del alta
   IBAN: IBAN
   PROXY_FEE: Retribución para el servicio de representación [€/MWh]
-  COST_DEVIATION: Coste de los desvios
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado del contrato
