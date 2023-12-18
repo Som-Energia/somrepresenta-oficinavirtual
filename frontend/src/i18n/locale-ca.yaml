@@ -19,6 +19,7 @@ APP_FRAME:
   CHOOSE_USER: Escull usuària
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
   USER_REQUIRED: Es requereix usuaria
+  PAGE_COMPONENT_TEST: Verificació
 TERMS:
   RGPD_TITLE: Informació sobre protecció de dades
   RGPD_BODY_MARKDOWN: |
@@ -93,3 +94,19 @@ CHANGE_PASSWORD:
   CHECK_PASSWORD_LABEL: Repeteix la contrasenya nova
   NEW_PASSWORD_MUST_CONTAIN_SYMBOLS: Ha de tenir símbols
   PASSWORD_CHANGE_SUCCESSFUL: La contrasenya s'ha canviat correctament
+CONTRACT_DETAIL:
+  DISCHARGE_DATE: Data d'alta
+  COST_DEVIATION: Cost dels desviaments
+  BILLING_MODE: Mode de facturació
+  CONTRACT_DETAILS_TITLE: Detalls del contracte
+  REPRESENTATION_TYPE: Tipus de representació
+  PROXY_FEE: Retribució per al servei de representació [€/MWh]
+  IBAN: IBAN
+  STATUS: Estat del contracte
+  REDUCTION_DEVIATION: Reducció dels desviaments per efecte de cartera
+INSTALLATION_DETAIL:
+  ERROR_LOADING_DATA: Error carregant les dades
+  TYPE: Tipus de seguidor
+  TECHNOLOGY: Tecnologia
+  RATED_POWER: Potència nominal [kW]
+  BACK_TO_INSTALLATIONS: Tornar a la llista de notificacions
