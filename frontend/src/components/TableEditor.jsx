@@ -591,17 +591,24 @@ function TableEditor(props) {
               )}
               {nFilteredRows > 0 && (
                 <TableRow>
-                  <TableCell colSpan={nTableColumns - 1}>
-                    {t('TABLE_EDITOR.N_ITEMS_FILTERED', { n: nFilteredRows })}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: 'right' }}>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      onClick={() => setSearch('')}
+                  <TableCell colSpan={nTableColumns}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
                     >
-                      {t('TABLE_EDITOR.CLEAR_FILTER')}
-                    </Button>
+                      <div>
+                        {t('TABLE_EDITOR.N_ITEMS_FILTERED', { n: nFilteredRows })}
+                      </div>
+                      <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => setSearch('')}
+                      >
+                        {t('TABLE_EDITOR.CLEAR_FILTER')}
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               )}
