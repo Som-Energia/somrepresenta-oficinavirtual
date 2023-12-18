@@ -25,7 +25,7 @@ from .exceptions import(
 from .dummy import dummy_invoices
 
 @contextmanager
-def catchValidationErrors():
+def catch_validation_error():
     try: yield
     except ValidationError as exception:
         raise ErpValidationError(exception)
@@ -37,7 +37,7 @@ expected_erp_exceptions = [
     NoSuchUser,
     NoDocumentVersions,
 ]
-def processErpErrors(erp_response):
+def process_erp_errors(erp_response):
     if not 'error' in erp_response: return
     erp_errors = {
         excp.__name__: excp
@@ -50,35 +50,35 @@ def erp_user_info(login: str):
     e = erp.Erp()
     # TODO: Handle emails as login
     result = ns(e.identify(nif2vat(login)))
-    # TODO: processErpErrors(retrieved)
+    # TODO: process_erp_errors(retrieved)
     if 'error' in result:
         error(result.dump())
         return None
 
     result.avatar = gravatar(result.email)
 
-    with catchValidationErrors():
+    with catch_validation_error():
         return TokenUser(**result)
 
 def erp_profile_info(user_info: dict) -> UserProfile:
     e = erp.Erp()
     retrieved = e.profile(user_info['username'])
-    # TODO: processErpErrors(retrieved)
-    with catchValidationErrors():
+    # TODO: process_erp_errors(retrieved)
+    with catch_validation_error():
         return UserProfile(**retrieved)
 
 def erp_sign_document(username: str, document: str) -> SignatureResult:
     e = erp.Erp()
     retrieved = e.sign_document(username, document)
-    processErpErrors(retrieved)
-    with catchValidationErrors():
+    process_erp_errors(retrieved)
+    with catch_validation_error():
         return SignatureResult(**retrieved)
 
 def erp_installation_list(username: str) -> list[InstallationSummary]:
     e = erp.Erp()
     installations = e.list_installations(username)
-    processErpErrors(installations)
-    with catchValidationErrors():
+    process_erp_errors(installations)
+    with catch_validation_error():
         return [
             InstallationSummary(**installation)
             for installation in installations
@@ -87,8 +87,8 @@ def erp_installation_list(username: str) -> list[InstallationSummary]:
 def erp_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
     e = erp.Erp()
     retrieved = e.installation_details(username, contract_number)
-    processErpErrors(retrieved)
-    with catchValidationErrors():
+    process_erp_errors(retrieved)
+    with catch_validation_error():
         return InstallationDetailsResult(**retrieved)
 
 class ErpBackend():
