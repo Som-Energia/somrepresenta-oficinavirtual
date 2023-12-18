@@ -1,79 +1,87 @@
+from contextlib import contextmanager
 from yamlns import ns
 from consolemsg import error, success
+from pydantic import ValidationError
 from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
 from .. import erp
 from ..utils.gravatar import gravatar
 from ..utils.vat import nif2vat
+from .exceptions import(
+    ErpError,
+    ErpValidationError,
+    ContractWithoutInstallation,
+    ContractNotExists,
+    UnauthorizedAccess,
+    NoSuchUser,
+    NoDocumentVersions,
+)
 
-class ErpError(Exception):
-    def __init__(self, erp_error: dict):
-        formatted_trace = ''.join(erp_error['trace'])
-        super().__init__((
-            "{code}\n"
-            "{error}\n\n"
-            "Remote backtrace:\n {formatted_trace}"
-        ).format(
-            formatted_trace=formatted_trace,
-            **erp_error,
-        ))
+@contextmanager
+def catchValidationErrors():
+    try: yield
+    except ValidationError as exception:
+        raise ErpValidationError(exception)
+
+expected_erp_exceptions = [
+    ContractWithoutInstallation,
+    ContractNotExists,
+    UnauthorizedAccess,
+    NoSuchUser,
+    NoDocumentVersions,
+]
+def processErpErrors(erp_response):
+    if not 'error' in erp_response: return
+    erp_errors = {
+        excp.__name__: excp
+        for excp in expected_erp_exceptions
+    }
+    SpecificError = erp_errors.get(erp_response['code'], ErpError)
+    raise SpecificError(erp_response)
 
 def erp_user_info(login: str):
     e = erp.Erp()
     # TODO: Handle emails as login
     result = ns(e.identify(nif2vat(login)))
+    # TODO: processErpErrors(retrieved)
     if 'error' in result:
         error(result.dump())
         return None
 
     result.avatar = gravatar(result.email)
 
-    try:
+    with catchValidationErrors():
         return TokenUser(**result)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
 
 def erp_profile_info(user_info: dict) -> UserProfile:
     e = erp.Erp()
     retrieved = e.profile(user_info['username'])
-    try:
+    # TODO: processErpErrors(retrieved)
+    with catchValidationErrors():
         return UserProfile(**retrieved)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
 
 def erp_sign_document(username: str, document: str) -> SignatureResult:
     e = erp.Erp()
     retrieved = e.sign_document(username, document)
-    if 'error' in retrieved:
-        raise ErpError(retrieved)
-    try:
+    processErpErrors(retrieved)
+    with catchValidationErrors():
         return SignatureResult(**retrieved)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
 
 def erp_installation_list(username: str) -> list[InstallationSummary]:
     e = erp.Erp()
     installations = e.list_installations(username)
-    if 'error' in installations:
-        raise ErpError(installations)
-    return [
-        InstallationSummary(**installation)
-        for installation in installations
-    ]
+    processErpErrors(installations)
+    with catchValidationErrors():
+        return [
+            InstallationSummary(**installation)
+            for installation in installations
+        ]
 
 def erp_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
     e = erp.Erp()
     retrieved = e.installation_details(username, contract_number)
-    if 'error' in retrieved:
-        raise ErpError(retrieved)
-    try:
+    processErpErrors(retrieved)
+    with catchValidationErrors():
         return InstallationDetailsResult(**retrieved)
-    except Exception as exception:
-        print(ns(error=ns.loads(exception.json())).dump())
-        raise
-
 
 class ErpBackend():
     def user_info(self, login: str) -> TokenUser | None:

@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import DescriptionIcon from '@mui/icons-material/Description'
+import ScienceIcon from '@mui/icons-material/Science'
 import { useTranslation } from 'react-i18next'
 import appData from '../data/appdata.yaml'
 
@@ -12,6 +13,7 @@ const icons = {
   SolarPower: SolarPowerIcon,
   Description: DescriptionIcon,
   QueryStats: QueryStatsIcon,
+  Science: ScienceIcon,
 }
 
 // Made a hook, since it should be called always within a component
@@ -22,7 +24,7 @@ export default function useApplicationMetadata() {
   const subtitle = t('APP_FRAME.APPLICATION_SUBTITLE')
   const menuPages = appData.menuPages.map((page) => {
     return {
-      path: page.path,
+      ...page,
       text: t(page.text),
       icon: icons[page.icon],
     }

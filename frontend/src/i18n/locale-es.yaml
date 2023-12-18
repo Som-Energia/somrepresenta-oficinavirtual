@@ -8,6 +8,7 @@ APP_FRAME:
   PAGE_INSTALLATIONS: Instalaciones
   PAGE_INVOICES: Facturas
   PAGE_PRODUCTION_DATA: Producción
+  PAGE_COMPONENT_TEST: Testing
   PAGE_NOT_FOUND: No se ha encontrado la página
   NOT_YET_IMPLEMENTED: Esta página aún no está disponible
   CONTRIBUTE_TRANSLATIONS: Ayúdanos a traducir
@@ -119,9 +120,11 @@ TABLE_EDITOR:
   N_ITEMS_FILTERED: Se han filtrado {{n}} elementos
   CLEAR_FILTER: Muestra todo
 OVAPI:
-  CONTEXT_LOGIN: Validando identidad
-  CONTEXT_INSTALLATIONS: Obteniendo la lista de instalaciones
-  CONTEXT_INSTALLATION_DETAILS: Obteniendo los detalles de la instalación
+  CONTEXT_LOGIN: Error validando identidad
+  CONTEXT_INSTALLATIONS: Error obteniendo la lista de instalaciones
+  CONTEXT_INSTALLATION_DETAILS: Error obteniendo los detalles de la instalación
+  CONTEXT_SIGNING_DOCUMENT: Error aceptando condiciones
+  ERR_UNABLE_TO_SIGN_DOCUMENT: 'No fue posible firmar el documento'
   ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
   ERR_GATEWAY: El sistema no está disponible por mantenimiento. Prueba más tarde.
   ERR_INTERNAL: 'Se ha producido un error inesperado en el servidor. Referencia {{reference}}.'
@@ -153,5 +156,3 @@ CONTRACT_DETAIL:
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado del contrato
-ERROR:
-  ERR_BAD_RESPONSE: Problemas con el servidor. Error inesperado

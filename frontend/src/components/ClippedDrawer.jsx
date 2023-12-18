@@ -64,6 +64,7 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
             </>
           ) : null}
           {items.map((page, i) => {
+            if (page.dev && import.meta.env.MODE !== 'development') return
             const Icon = page.icon
             return (
               <ListItemButton

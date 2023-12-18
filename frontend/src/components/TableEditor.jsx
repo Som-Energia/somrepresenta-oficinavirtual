@@ -12,7 +12,6 @@ Attributes
       By default returns the value of the field at id converted to string,
       except for null and undefined that are turned into '-'.
     - numeric: if truish aligns right instead of left
-    - disablePadding: if truish set padding to none instead of normal TODO: investigate
 - rows: array of objects containing the data to display
 - title: the title of the table
 - idField: data field to be used as row identifier (default 'id'). Values must be unique.
@@ -20,7 +19,7 @@ Attributes
 - pageSizes: If available, a page size chooser will be presented to the user
 - actions: list of actions to be applied in global, context is the whole set of rows
     - title: label to be shown on hover
-    - action: function to be called with the subject as parameter
+    - handler: function to be called with the subject as parameter
     - icon: an icon for the action icon button
     - view: (optional) functor receiving the context and returning an alternative for the default icon button
 - itemActions: list of actions available for each single row, row is passed to 
@@ -60,32 +59,38 @@ import { useTranslation } from 'react-i18next'
 
 const denseRowHeight = 33
 
-function Loading(props) {
+function Loading({ nCols = 3 }) {
   const { t } = useTranslation()
-  const { nCols = 3 } = props
+  const nRows = 3
   return (
     <>
-      <TableRow>
-        {Array(nCols)
-          .fill()
-          .map((v, i) => (
-            <TableCell key={i}>
-              <Skeleton animation="wave" />
-            </TableCell>
-          ))}
-      </TableRow>
-      <TableRow>
-        <TableCell colSpan={nCols}>
-          <div
-            style={{
-              width: '100%',
-              textAlign: 'center',
-            }}
-          >
-            <CircularProgress />
-          </div>
-        </TableCell>
-      </TableRow>
+      {Array(nRows)
+        .fill()
+        .map(() => (
+          <TableRow>
+            {Array(nCols)
+              .fill()
+              .map((v, i) => (
+                <TableCell key={i}>
+                  <Skeleton animation="wave" height="2rem" />
+                </TableCell>
+              ))}
+          </TableRow>
+        ))}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <CircularProgress />
+      </div>
     </>
   )
 }
@@ -207,19 +212,18 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0])
 }
 
-function EnhancedTableHead(props) {
+function EnhancedTableHead({
+  columns,
+  onSelectAllClick,
+  order,
+  orderBy,
+  numSelected,
+  rowCount,
+  onRequestSort,
+  hasCheckbox,
+  hasItemActions,
+}) {
   const { t } = useTranslation()
-
-  const {
-    columns,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-    hasCheckbox,
-  } = props
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }
@@ -240,11 +244,11 @@ function EnhancedTableHead(props) {
             />
           </TableCell>
         )}
-        {columns.map((column) => (
+        {columns.map((column, i) => (
           <TableCell
             key={column.id}
             align={column.numeric ? 'right' : 'left'}
-            padding={column.disablePadding ? 'none' : 'normal'}
+            padding={i == 0 && hasCheckbox ? 'none' : 'normal'}
             sortDirection={orderBy === column.id ? order : false}
           >
             <TableSortLabel
@@ -263,9 +267,11 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell key={'action'} align={'right'} padding={'normal'}>
-          {t('TABLE_EDITOR.ACTIONS')}
-        </TableCell>
+        {hasItemActions && (
+          <TableCell key={'action'} align={'right'} padding={'normal'}>
+            {t('TABLE_EDITOR.ACTIONS')}
+          </TableCell>
+        )}
       </TableRow>
     </TableHead>
   )
@@ -361,6 +367,7 @@ function TableEditor(props) {
     defaultPageSize = 10,
     pageSizes = [],
     actions = [],
+    defaultAction = undefined,
     itemActions = [],
     selectionActions = [],
     loading = false,
@@ -389,7 +396,12 @@ function TableEditor(props) {
     setSelected([])
   }
 
-  const handleClick = (event, id) => {
+  const handleClick = (id) => {
+    if (defaultAction) return defaultAction(id)
+    handleSelect(id)
+  }
+
+  const handleSelect = (id) => {
     if (selectionActions.length === 0) {
       return
     }
@@ -436,7 +448,8 @@ function TableEditor(props) {
   }
 
   const nFilteredRows = rows.filter(isFiltered).length
-  const nColumns = columns.length + 1
+  const nTableColumns =
+    columns.length + (itemActions.length ? 1 : 0) + (selectionActions.length ? 1 : 0)
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -482,10 +495,11 @@ function TableEditor(props) {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
               hasCheckbox={selectionActions.length !== 0}
+              hasItemActions={itemActions.length !== 0}
             />
-            <TableBody>
+            <TableBody sx={{ position: 'relative' }}>
               {loading ? (
-                <Loading nCols={nColumns} />
+                <Loading nCols={nTableColumns} />
               ) : rows.length === 0 ? (
                 noDataPlaceHolder
               ) : (
@@ -511,7 +525,7 @@ function TableEditor(props) {
                           },
                         }}
                         hover
-                        onClick={(event) => handleClick(event, row[idField])}
+                        onClick={(event) => handleClick(row[idField])}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -523,8 +537,13 @@ function TableEditor(props) {
                           <TableCell padding="checkbox">
                             <Collapse in={!isItemFiltered}>
                               <Checkbox
+                                sx={{ padding: 0 }}
                                 color="primary"
                                 checked={isItemSelected}
+                                onClick={(e) => {
+                                  handleSelect(row[idField])
+                                  e.stopPropagation()
+                                }}
                                 inputProps={{
                                   'aria-labelledby': labelId,
                                 }}
@@ -532,11 +551,14 @@ function TableEditor(props) {
                             </Collapse>
                           </TableCell>
                         )}
-                        {columns.map((column) => {
+                        {columns.map((column, i) => {
                           return (
                             <TableCell
                               align={column.numeric ? 'right' : 'left'}
                               key={row[idField] + '_' + column.id}
+                              padding={
+                                i || selectionActions.length === 0 ? 'normal' : 'none'
+                              }
                             >
                               <Collapse in={!isItemFiltered} component={null}>
                                 {column.view
@@ -550,22 +572,24 @@ function TableEditor(props) {
                             </TableCell>
                           )
                         })}
-                        <TableCell>
-                          <Collapse in={!isItemFiltered} component={null}>
-                            <ActionButtons
-                              size="small"
-                              actions={itemActions}
-                              context={row}
-                            />
-                          </Collapse>
-                        </TableCell>
+                        {itemActions.length !== 0 && (
+                          <TableCell>
+                            <Collapse in={!isItemFiltered} component={null}>
+                              <ActionButtons
+                                size="small"
+                                actions={itemActions}
+                                context={row}
+                              />
+                            </Collapse>
+                          </TableCell>
+                        )}
                       </TableRow>
                     )
                   })
               )}
               {nFilteredRows > 0 && (
                 <TableRow>
-                  <TableCell colSpan={nColumns - 1}>
+                  <TableCell colSpan={nTableColumns - 1}>
                     {t('TABLE_EDITOR.N_ITEMS_FILTERED', { n: nFilteredRows })}
                   </TableCell>
                   <TableCell sx={{ textAlign: 'right' }}>
@@ -585,7 +609,7 @@ function TableEditor(props) {
                     height: denseRowHeight * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={nColumns} />
+                  <TableCell colSpan={nTableColumns} />
                 </TableRow>
               )}
             </TableBody>
@@ -600,6 +624,7 @@ TableEditor.propTypes = {
   title: PropTypes.string.isRequired,
   actions: ActionsType,
   itemActions: ActionsType,
+  defaultAction: PropTypes.func,
   selectionActions: ActionsType,
   idField: PropTypes.string,
   defaultPageSize: PropTypes.number,

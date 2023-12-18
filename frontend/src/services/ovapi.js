@@ -1,8 +1,14 @@
 import axios from 'axios'
-import wait from './wait'
 import messages from './messages'
 import i18n from '../i18n/i18n'
 
+/**
+Returns a catch callback that takes common non manageable
+system errors (Network down, Erp down, API internal error...)
+reports them into the error logger and resolves
+an object with an error field.
+Any unmanaged error is rethrown.
+*/
 function handleCommonErrors(context) {
   return (error) => {
     const t = i18n.t
@@ -10,14 +16,20 @@ function handleCommonErrors(context) {
     console.log(`Error ${error.code} ${context}\n${error.message}`)
     if (error.code === 'ERR_NETWORK') {
       messages.error(t('OVAPI.ERR_NETWORK'), { context })
-      return
+      return {
+        error: t('OVAPI.ERR_NETWORK'),
+        context,
+      }
     }
     // The server returned an error response
     if (error.response) {
       // Gateway error (ERP down)
       if (error.response.status === 502) {
         messages.error(t('OVAPI.ERR_GATEWAY'), { context })
-        return
+        return {
+          error: t('OVAPI.ERR_GATEWAY'),
+          context,
+        }
       }
       // API unexpected error
       if (error.response.status === 500) {
@@ -26,24 +38,56 @@ function handleCommonErrors(context) {
         messages.error(t('OVAPI.ERR_INTERNAL', { reference }), {
           context,
         })
-        return
+        return {
+          error: t('OVAPI.ERR_INTERNAL', { reference }),
+          context,
+          reference: reference,
+        }
       }
     }
-    messages.error(`${error.code}: ${error.message}`)
     throw error
   }
 }
 
-async function logout() {
-  axios
-    .get('/api/auth/logout', {
-      headers: {
-        Accept: 'application/json',
-        ContentType: 'multipart/form-data',
-      },
-    })
-    .then((response) => {
-      console.log(response)
+/**
+Returns a catch callback that handles http error
+responses with a given status by returning the
+provided result and without reporting
+to the error logger.
+Any unmanaged error is rethrown.
+*/
+function handleHttpStatus(status, result) {
+  return (error) => {
+    if (error.response && error.response.status === status) return result
+    throw error
+  }
+}
+
+/**
+Returns a catch callback that handles any remaining
+response errors. Sends a message to the error logger
+and returns an object with the error attribute.
+Should be the last catch callback in a pipeline.
+*/
+function handleRemainingErrors(context) {
+  return (error) => {
+    // TODO: Obtain better info from axios error
+    messages.error(`${error.code}: ${error.message}`, { context })
+    return {
+      error: 'Unexpected error',
+      exception: error,
+    }
+  }
+}
+
+
+
+async function version() {
+  return axios
+    .get('/api/version')
+    .then((result) => result.data.version)
+    .catch((error) => {
+      throw error
     })
 }
 
@@ -71,11 +115,17 @@ async function localLogin(username, password) {
       },
     })
     .catch(handleCommonErrors(context))
-    .then((response) => {
-      if (response === undefined) {
-        return
-      }
-      return response
+    .catch(
+      handleHttpStatus(401, {
+        error: i18n.t('LOGIN.VALIDATION_ERROR'),
+        code: 'VALIDATION_ERROR',
+      }),
+    )
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      console.log(result)
+      if (result.ok) return result.data
+      return result
     })
 }
 
@@ -95,6 +145,19 @@ async function externalLogin(providerId) {
       pop.close()
     }
   }, 1)
+}
+
+async function logout() {
+  axios
+    .get('/api/auth/logout', {
+      headers: {
+        Accept: 'application/json',
+        ContentType: 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      console.log(response)
+    })
 }
 
 async function localChangePassword(currentPassword, newPassword) {
@@ -122,39 +185,20 @@ async function localChangePassword(currentPassword, newPassword) {
     })
 }
 
-async function signDocument(documentName) {
+function signDocument(documentName) {
+  const context = i18n.t('OVAPI.CONTEXT_SIGNING_DOCUMENT')
   const encodedDocument = encodeURIComponent(documentName)
-  const response = await fetch(`/api/sign_document/${encodedDocument}`, {
-    method: 'POST',
-  })
-    .catch((error) => {
-      console.log('Error received', error.response.json())
-      throw 'Unable to sign document'
-    })
-    .then(async (response) => {
-      console.log('Response', response)
-      if (!response.ok) {
-        throw `Unable to sign document: ${await response.text()}`
-      }
-      return response.json()
-    })
-  return response
-}
-
-async function installationDetails(contract_number) {
-  const context = i18n.t('OVAPI.CONTEXT_INSTALLATION_DETAILS')
   return axios
-    .get(`/api/installation_details/${contract_number}`)
+    .post(`/api/sign_document/${encodedDocument}`)
     .catch(handleCommonErrors(context))
-    .then((result) => (result?.data === undefined ? undefined : result.data))
-}
-
-async function version() {
-  return axios
-    .get('/api/version')
-    .then((result) => result.data.version)
-    .catch((error) => {
-      throw error
+    .catch(handleRemainingErrors(context))
+    .then((response) => {
+      if (response.error) {
+        throw {
+          error: i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT'),
+        }
+      }
+      return response.data
     })
 }
 
@@ -163,7 +207,27 @@ async function installations() {
   return axios
     .get('/api/installations')
     .catch(handleCommonErrors(context))
-    .then((result) => (result?.data === undefined ? [] : result.data))
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
+      return result.data
+    })
+}
+
+async function installationDetails(contract_number) {
+  const context = i18n.t('OVAPI.CONTEXT_INSTALLATION_DETAILS')
+  return axios
+    .get(`/api/installation_details/${contract_number}`)
+    .catch(handleCommonErrors(context))
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
+      return result.data
+    })
 }
 
 export default {

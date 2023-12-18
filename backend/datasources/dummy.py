@@ -1,6 +1,15 @@
-from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
 from ..utils.gravatar import gravatar
 from yamlns import ns
+from .exceptions import(
+    ErpError,
+    ErpValidationError,
+    ContractWithoutInstallation,
+    ContractNotExists,
+    UnauthorizedAccess,
+    NoSuchUser,
+    NoDocumentVersions,
+)
 
 # Fake signed documents repository
 # Empties whenever the app is reloaded
@@ -170,10 +179,34 @@ def dummy_installation_list(username: str) -> list[InstallationSummary]:
             installation_name=f'{city} {install}',
         )
     return [
+        InstallationSummary(
+            contract_number=name,
+            installation_name=f"Raises a {name} error",
+        ) for name in installation_details_exceptions.keys()
+    ]+ [
         generative_installation(i)
         for i in range(int(username[-3]))
     ]
 
+installation_details_exceptions = {
+    e.__name__: e
+    for e in [
+        UnauthorizedAccess,
+        ContractWithoutInstallation,
+        ContractNotExists,
+        ErpValidationError,
+        # TODO: ErpConnectionError,
+        # TODO: ErpUnexpectedError,
+    ]
+}
+
+def dummy_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
+    if contract_number in installation_details_exceptions:
+        raise installation_details_exceptions[contract_number](dict(
+            code=contract_number,
+            error=f"{contract_number} (Dummy error)",
+        ))
+    return InstallationDetailsResult(**ns.load('frontend/src/data/dummyinstallationdetail.yaml'))
 
 class DummyBackend():
     def user_info(self, login: str) -> TokenUser | None:
@@ -188,3 +221,5 @@ class DummyBackend():
     def installation_list(self, username: str) -> list[InstallationSummary]:
         return dummy_installation_list(username)
 
+    def installation_details(self, username: str, contract_number: str) -> InstallationDetailsResult:
+        return dummy_installation_details(username, contract_number)

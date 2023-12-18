@@ -12,6 +12,7 @@ def setup():
         sentry_sdk.init(
             dsn=os.environ['SENTRY_DSN'],
             enable_tracing=True,
+            environment=os.environ.get('ENV', 'development')
         )
     app = FastAPI()
     setup_base(app)

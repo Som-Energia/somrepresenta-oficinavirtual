@@ -36,7 +36,7 @@ function TermsDialog(props) {
       onAccept && onAccept()
     } catch (e) {
       console.log(e)
-      setError(e)
+      setError(e.error)
     }
   }
 
