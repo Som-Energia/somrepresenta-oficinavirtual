@@ -101,6 +101,9 @@ class Erp:
         )
         return details
 
+    def list_invoices(self, username: str)->dict:
+        return self.object_execute('som.ov.invoices', 'get_invoices', username)
+
 
 def example():
     dotenv.load_dotenv('.env')

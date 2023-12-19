@@ -91,6 +91,16 @@ def erp_installation_details(username: str, contract_number: str) -> Installatio
     with catch_validation_error():
         return InstallationDetailsResult(**retrieved)
 
+def erp_invoice_list(username: str) -> list[Invoice]:
+    e = erp.Erp()
+    invoices = e.list_invoices(username)
+    process_erp_errors(invoices)
+    with catch_validation_error():
+        return [
+            Invoice(**invoice)
+            for invoice in invoices
+        ]
+
 class ErpBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return erp_user_info(login)
@@ -108,4 +118,4 @@ class ErpBackend():
         return erp_installation_details(username, contract_number)
 
     def invoice_list(self, username: str) -> list[Invoice]:
-        return dummy_invoices(username)
+        return erp_invoice_list(username)
