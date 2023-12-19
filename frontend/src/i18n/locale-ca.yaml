@@ -66,7 +66,7 @@ VERSION_CHECKER:
     \n- Versió al teu navegador: `{{uiVersion}}`\n- Versió al servidor: `{{apiVersion}}`\n\
     \nEs recarregarà l'aplicació per evitar possibles problemes\n"
   NEW_VERSION_DETECTED_TITLE: Nova versió detectada
-  RELOADING_IN: Recarregat en  {{seconds}} segons
+  RELOADING_IN: Recarregat en {{seconds}} segons
   RELOADING: S'està recarregant...
   RELOAD_NOW: Actualitza ara
 LOGIN:
