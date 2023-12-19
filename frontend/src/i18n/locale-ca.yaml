@@ -3,14 +3,14 @@ APP_FRAME:
   APPLICATION_SUBTITLE: Representació
   TOGGLE_COLOR_MODE: Canvia el tema de color
   CHANGE_LANGUAGE: Canvia l'idioma
-  GO_HOME: Torna al inici
+  GO_HOME: Torna a l'inici
   PAGE_HOME: Inici
   PAGE_INSTALLATIONS: Instal·lacions
   PAGE_INVOICES: Factures
   PAGE_PRODUCTION_DATA: Producció
-  PAGE_NOT_FOUND: No se ha trobat la pàgina
+  PAGE_NOT_FOUND: No s'ha trobat la pàgina
   NOT_YET_IMPLEMENTED: Aquesta pàgina encara no està disponible
-  CONTRIBUTE_TRANSLATIONS: Ajuda'ns a traduïr
+  CONTRIBUTE_TRANSLATIONS: Ajuda'ns a traduir
   PROFILE_TOOLTIP: Perfil
   MENU_CHANGE_PASSWORD: Canvia la contrasenya
   MENU_PROFILE: Perfil
@@ -18,17 +18,17 @@ APP_FRAME:
   LOGIN: Identifica't
   CHOOSE_USER: Escull usuària
   CHOOSE_AUTH_PROVIDER: Escull com identificar-te
-  USER_REQUIRED: Es requereix usuaria
+  USER_REQUIRED: Es requereix usuària
   PAGE_COMPONENT_TEST: Verificació
 TERMS:
   RGPD_TITLE: Informació sobre protecció de dades
   RGPD_BODY_MARKDOWN: |
-    **RESPONSABLE:** SOM ENERGIA, SCCL., Pic de Peguera, 11 17003 Girona ( GIRONA ),
+    **RESPONSABLE:** SOM ENERGIA, SCCL, Pic de Peguera, 11 17003 Girona (GIRONA)
     somenergia@delegado-datos.com, F55091367
 
     **FINALITAT:** Gestionar la tramitació de la teva sol·licitud.
 
-    **LEGITIMACIÓ:** Relació contractual i/o Consentiment de l'interessat.
+    **LEGITIMACIÓ:** Relació contractual i/o consentiment de la persona interessada.
 
     **CESSIONS:** No estan previstes cessions de dades a tercers, excepte obligació legal.
 
@@ -44,7 +44,7 @@ FOOTER:
   DISCLAIMER_URL: https://www.somenergia.coop/ca/avis-legal/
   PRIVACY_POLICY: Política de privacitat
   PRIVACY_POLICY_URL: https://www.somenergia.coop/ca/politica-de-privacitat/
-  HELP_CENTER: Centre de ajuda
+  HELP_CENTER: Centre d'ajuda
   HELP_CENTER_URL: https://ca.support.somenergia.coop/
   COOKIE_POLICY: Cookies
   COOKIE_POLICY_URL: https://oficinavirtual.somenergia.coop/ca/cookies-policy/
@@ -68,6 +68,7 @@ VERSION_CHECKER:
   NEW_VERSION_DETECTED_TITLE: Nova versió detectada
   RELOADING_IN: Recarregat en  {{seconds}} segons
   RELOADING: S'està recarregant...
+  RELOAD_NOW: Actualitza ara
 LOGIN:
   USERNAME_HELP: Utilitza el NIF o el correu electrònic
   SUBMIT_BUTTON_PROCESSING: Estem validant…
@@ -110,6 +111,18 @@ INSTALLATION_DETAIL:
   TECHNOLOGY: Tecnologia
   RATED_POWER: Potència nominal [kW]
   BACK_TO_INSTALLATIONS: Tornar a la llista de notificacions
+  DETAILS_TITLE: Detalls
+  INSTALLATION_DETAILS_TITLE: Detalls de la instal·lació
+  COORDINATES: Coordenades
+  MINISTRY_CODE: Codi del Ministeri
+  NAME: Nom
+  POSTAL_CODE: Codi postal
+  PROVINCE: Província
+  CONTRACT_DETAILS_TITLE: Detalls del contracte
+  CITY: Municipi
+  CONTRACT_NUMBER: Contracte
+  ADDRESS: Adreça
+  CIL: CIL
 INSTALLATIONS:
   COLUMN_CONTRACT_NUMBER: Número de contracte
   NO_INSTALLATIONS: No s'han trobat instal·lacions
@@ -128,3 +141,13 @@ TABLE_EDITOR:
   LABEL_SEARCH: Busca
   N_ITEMS_FILTERED: S'han filtrar {{n}} elements
   SELECT_ALL: Selecciona-ho tot
+  CLEAR_FILTER: Mostra-ho tot
+OVAPI:
+  CONTEXT_LOGIN: Error en validar la identitat
+  CONTEXT_INSTALLATIONS: Error en obtenir la llista d'instal·lacions
+  CONTEXT_INSTALLATION_DETAILS: Error en obtenir els detalls de la instal·lació
+  CONTEXT_SIGNING_DOCUMENT: Error en acceptar les condicions
+  ERR_UNABLE_TO_SIGN_DOCUMENT: No es pot signar el document
+  ERR_NETWORK: No es troba el servidor. Tens connexió a la xarxa?
+  ERR_GATEWAY: El sistema no està disponible per manteniment. Prova-ho més tard.
+  ERR_INTERNAL: HI ha hagut un error inesperat al servidor. Referència {{reference}}.
