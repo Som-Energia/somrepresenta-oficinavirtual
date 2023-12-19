@@ -1,7 +1,7 @@
 from fastapi import Request, Depends, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from .models import UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice
-from .datasources import profile_info, sign_document, installation_list, installation_details, invoice_list
+from .datasources import profile_info, sign_document, installation_list, installation_details, invoice_list, invoice_pdf
 from .erp import ErpConnectionError
 from .auth import validated_user
 from consolemsg import error
@@ -36,3 +36,23 @@ def setup_business(app):
     @app.get('/api/invoices')
     def api_invoice_list(user: dict = Depends(validated_user)) -> list[Invoice]:
         return invoice_list(user['username'])
+
+    @app.get('/api/invoice/{invoice_number}/pdf')
+    def api_invoice_pdf(invoice_number: str, user: dict = Depends(validated_user)):
+        #result = download_invoice_pdf(user['username'], invoice_number)
+        from yamlns import ns
+        import base64
+        import io
+        result = ns(invoice_pdf(user['username'], invoice_number))
+
+        def filestream(data_base64):
+            with io.BytesIO(base64.b64decode(data_base64)) as f:
+                yield from f
+
+        return StreamingResponse(
+            filestream(result.content),
+            media_type=result.content_type,
+            headers = {
+                'Content-Disposition': f'attachment; filename="{result.filename}"',
+            },
+        )

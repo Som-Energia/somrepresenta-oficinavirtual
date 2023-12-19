@@ -104,6 +104,9 @@ class Erp:
     def list_invoices(self, username: str)->dict:
         return self.object_execute('som.ov.invoices', 'get_invoices', username)
 
+    def invoice_pdf(self, username: str, invoice_number: str)->dict:
+        return self.object_execute('som.ov.invoices', 'download_invoice_pdf', username, invoice_number)
+
 
 def example():
     dotenv.load_dotenv('.env')

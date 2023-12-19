@@ -214,6 +214,17 @@ def dummy_invoices(username: str) -> list[Invoice]:
         for invoice in ns.load('frontend/src/data/dummyinvoices.yaml')
     ]
 
+def dummy_invoice_pdf(username: str, invoice_number: str):
+    from pathlib import Path
+    import base64
+    import io
+    data = base64.b64encode(Path('/usr/share/doc/tig/manual.pdf').read_bytes())
+    return dict(
+        content=data,
+        filename='mifactura.pdf',
+        content_type='application/pdf',
+    )
+
 class DummyBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return dummy_user_info(login)
@@ -232,3 +243,8 @@ class DummyBackend():
     
     def invoice_list(self, username: str) -> list[Invoice]:
         return dummy_invoices(username)
+
+    def invoice_pdf(self, username: str, invoice_number: str):
+        return dummy_invoice_pdf(username, invoice_number)
+
+

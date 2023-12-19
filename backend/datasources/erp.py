@@ -22,7 +22,7 @@ from .exceptions import(
     NoSuchUser,
     NoDocumentVersions,
 )
-from .dummy import dummy_invoices
+from .dummy import dummy_invoice_pdf
 
 @contextmanager
 def catch_validation_error():
@@ -101,6 +101,11 @@ def erp_invoice_list(username: str) -> list[Invoice]:
             for invoice in invoices
         ]
 
+def erp_invoice_pdf(username: str, invoice_number: str):
+    return dummy_invoice_pdf(username, invoice_number)
+    e = erp.Erp()
+    result = e.invoice_pdf(username, invoice_number)
+
 class ErpBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return erp_user_info(login)
@@ -119,3 +124,7 @@ class ErpBackend():
 
     def invoice_list(self, username: str) -> list[Invoice]:
         return erp_invoice_list(username)
+
+    def invoice_pdf(username: str, invoice_number: str):
+        return erp_invoice_pdf(username, invoice_number)
+

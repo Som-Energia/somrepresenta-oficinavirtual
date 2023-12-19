@@ -31,3 +31,6 @@ def installation_details(username: str, contract_number: str) -> InstallationDet
 
 def invoice_list( username: str) -> list[Invoice]:
     return backend().invoice_list(username)
+
+def invoice_pdf(username: str, invoice_number: str):
+    return backend().invoice_pdf(username, invoice_number)

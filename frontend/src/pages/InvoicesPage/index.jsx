@@ -107,23 +107,15 @@ export default function InvoicesPage(params) {
       icon: <DownloadIcon />,
     },
   ]
+  function onDownloadPdf(invoice) {
+    console.log('Hola', invoice.invoice_number)
+    window.location = `/api/invoice/${invoice.invoice_number}/pdf`
+  }
   const itemActions = [
     {
       title: t('INVOICES.TOOLTIP_PDF'),
       icon: <PictureAsPdfIcon />,
-      cacaview: (invoice) => {
-        return (
-          <Button
-            variant="contained"
-            size="small"
-            component={Link}
-            to={`/installation/${invoice.invoice_number}`}
-            startIcon={<PictureAsPdfIcon />}
-          >
-            {t('INVOICES.BUTTON_PDF')}
-          </Button>
-        )
-      },
+      handler: onDownloadPdf,
     },
   ]
   return isLoading ? (
