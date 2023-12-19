@@ -9,6 +9,7 @@ from ..models import (
     InstallationSummary,
     InstallationDetailsResult,
     Invoice,
+    InvoicePdf,
 )
 from .. import erp
 from ..utils.gravatar import gravatar
@@ -101,10 +102,12 @@ def erp_invoice_list(username: str) -> list[Invoice]:
             for invoice in invoices
         ]
 
-def erp_invoice_pdf(username: str, invoice_number: str):
-    return dummy_invoice_pdf(username, invoice_number)
+def erp_invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     e = erp.Erp()
-    result = e.invoice_pdf(username, invoice_number)
+    pdffile=e.invoice_pdf(username, invoice_number)
+    process_erp_errors(pdffile)
+    with catch_validation_error():
+        return InvoicePdf(**pdffile)
 
 class ErpBackend():
     def user_info(self, login: str) -> TokenUser | None:
@@ -125,6 +128,6 @@ class ErpBackend():
     def invoice_list(self, username: str) -> list[Invoice]:
         return erp_invoice_list(username)
 
-    def invoice_pdf(username: str, invoice_number: str):
+    def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return erp_invoice_pdf(username, invoice_number)
 

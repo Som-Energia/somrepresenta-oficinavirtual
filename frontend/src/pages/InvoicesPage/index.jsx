@@ -66,7 +66,7 @@ export default function InvoicesPage(params) {
       label: t('INVOICES.COLUMN_CONCEPT'),
       searchable: true,
       numeric: false,
-      view: (row)=>format.enumeration(row.concept, concept_options),
+      view: (row) => format.enumeration(row.concept, concept_options),
     },
     {
       id: 'liquidation',
@@ -79,7 +79,7 @@ export default function InvoicesPage(params) {
       label: t('INVOICES.COLUMN_EMITTED'),
       searchable: false,
       numeric: false,
-      view: (row)=>format.date(row.emission_date)
+      view: (row) => format.date(row.emission_date),
     },
     {
       id: 'first_period_date',
@@ -144,7 +144,7 @@ export default function InvoicesPage(params) {
           loading={isLoading}
           noDataPlaceHolder={
             <TableRow>
-              <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
+              <TableCell colSpan={9} sx={{ textAlign: 'center' }}>
                 <Typography variant="h4">
                   {t('INVOICES.NO_INVOICES')}
                   <br />

@@ -105,3 +105,9 @@ class Invoice(BaseModel):
     amount: float
     concept: InvoiceConcept | None = None
     liquidation: str | None
+
+class InvoicePdf(BaseModel):
+    content: str # TODO: Base64
+    content_type: str # TODO: content type check
+    filename: str
+
