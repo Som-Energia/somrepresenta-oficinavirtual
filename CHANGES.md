@@ -1,5 +1,14 @@
 # Change log
 
+## Unreleased
+
+- Invoice Page: uset wants to see invoiced addressed to her
+- Production Page: Still not yet implemented but pages has a title and icon
+- Generic unittested and localized format functions for: euros, dates
+- Autoreload api on .env changes
+- Chevron icon for details instead of threee points
+- Fix: Avoid column flicker when filtering (clear selection button changed columns required width)
+
 ## 0.2.0 (2023-12-18)
 
 - New pages: Installation list, Installation details
