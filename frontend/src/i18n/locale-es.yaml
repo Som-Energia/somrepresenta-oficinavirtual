@@ -167,6 +167,9 @@ INVOICES:
   COLUMN_AMOUNT: Importe
   COLUMN_CONCEPT: Concepto
   COLUMN_LIQUIDATION: Liquidación
+  CONCEPT_OPTION_MARKET: Mercado
+  CONCEPT_OPTION_SPECIFIC_RETRIBUTION: Retribución específica
+  CONCEPT_OPTION_SERVICES: Servicios
   TOOLTIP_PDF: Descarga en PDF
   TOOLTIP_DOWNLOAD_ZIP: Descarga PDF's seleccionados en un ZIP
   NO_INVOICES: No se han encontrado facturas

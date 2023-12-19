@@ -28,5 +28,5 @@
   first_period_date: "2022-02-01"
   last_period_date: "2022-03-01"
   amount: 523.00
-  concept: market
+  concept: null
   liquidation: null

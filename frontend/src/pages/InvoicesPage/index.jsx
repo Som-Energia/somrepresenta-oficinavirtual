@@ -42,6 +42,12 @@ export default function InvoicesPage(params) {
     beLoading(false)
   }
 
+  const concept_options = {
+    market: t('INVOICES.CONCEPT_OPTION_MARKET'),
+    specific_retribution: t('INVOICES.CONCEPT_OPTION_SPECIFIC_RETRIBUTION'),
+    services: t('INVOICES.CONCEPT_OPTION_SERVICES'),
+  }
+
   const columns = [
     {
       id: 'invoice_number', // TODO: can we name it contract?
@@ -60,6 +66,7 @@ export default function InvoicesPage(params) {
       label: t('INVOICES.COLUMN_CONCEPT'),
       searchable: true,
       numeric: false,
+      view: (row)=>format.enumeration(row.concept, concept_options),
     },
     {
       id: 'liquidation',
