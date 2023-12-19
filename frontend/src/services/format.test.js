@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, expect, test, it } from 'vitest'
-import { euros, date } from './format'
+import { euros, date, enumeration } from './format'
 import i18n from '../i18n/i18n'
 
 
@@ -78,5 +78,26 @@ describe('dates formatting', () => {
   it('undefined euskara', () => {
     i18n.changeLanguage('eu')
     expect(date(undefined)).toBe('----/--/--')
+  })
+})
+
+describe('enum formatting', () => {
+  var previousLanguage
+  var enum_options={
+    option1: "Option 1",
+    option2: "Option 2",
+  }
+
+  it('Option 1', () => {
+    expect(enumeration('option1', enum_options)).toBe('Option 1')
+  })
+  it('Option 2', () => {
+    expect(enumeration('option2', enum_options)).toBe('Option 2')
+  })
+  it('Non existing option', () => {
+    expect(enumeration('nooption', enum_options)).toBe('???')
+  })
+  it('Undefined value', () => {
+    expect(enumeration(undefined, enum_options)).toBe('-')
   })
 })

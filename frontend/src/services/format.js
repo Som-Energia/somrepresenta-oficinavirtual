@@ -23,5 +23,10 @@ function date(adate) {
   return formatter.format(new Date(adate))
 }
 
-export { euros, date }
-export default { euros, date }
+function enumeration(value, options) {
+  if (value===undefined) return '-'
+  return options[value] ?? '???'
+}
+
+export { euros, date, enumeration }
+export default { euros, date, enumeration }
