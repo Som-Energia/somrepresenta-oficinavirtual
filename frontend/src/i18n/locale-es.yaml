@@ -160,11 +160,13 @@ CONTRACT_DETAIL:
 INVOICES:
   INVOICES_TITLE: Facturas
   TABLE_TITLE: Facturas
-  COLUMN_INVOICE_NUMBER: Número de factura
+  COLUMN_INVOICE_NUMBER: Factura
   COLUMN_CONTRACT: Contrato
   COLUMN_EMITTED: Emitida
   COLUMN_PERIOD: Período
   COLUMN_AMOUNT: Importe
+  COLUMN_CONCEPT: Concepto
+  COLUMN_LIQUIDATION: Liquidación
   TOOLTIP_PDF: Descarga en PDF
   TOOLTIP_DOWNLOAD_ZIP: Descarga PDF's seleccionados en un ZIP
   NO_INVOICES: No se han encontrado facturas

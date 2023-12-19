@@ -22,6 +22,13 @@ Role = Literal[
     'staff',
 ]
 
+# TODO: Use an enum
+InvoiceConcept = Literal[
+    'market',
+    'specific_retribution',
+    'services',
+]
+
 class SignatureResult(BaseModel):
     signed_version: str # TODO: Restrict to iso datetime
 
@@ -96,5 +103,5 @@ class Invoice(BaseModel):
     first_period_date: str # TODO date?
     last_period_date: str # TODO date?
     amount: float
-    # TODO: liquidacio
-    # TODO: invoice_type
+    concept: InvoiceConcept | None = None
+    liquidation: str | None

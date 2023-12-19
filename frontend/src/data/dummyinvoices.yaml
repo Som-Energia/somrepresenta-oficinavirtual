@@ -4,21 +4,29 @@
   first_period_date: "2022-01-01"
   last_period_date: "2022-02-01"
   amount: 10.50
+  concept: market
+  liquidation: null
 - invoice_number: F000013
   contract_number: "19000_1"
   emission_date: "2022-04-01"
   first_period_date: "2022-02-01"
   last_period_date: "2022-03-01"
   amount: 320.53
+  concept: specific_retribution
+  liquidation: null
 - invoice_number: F000003
   contract_number: "19000_2"
   emission_date: "2022-03-01"
   first_period_date: "2022-01-01"
   last_period_date: "2022-02-01"
   amount: 1300.12
+  concept: services
+  liquidation: null
 - invoice_number: F000017
   contract_number: "19000_2"
   emission_date: "2022-04-01"
   first_period_date: "2022-02-01"
   last_period_date: "2022-03-01"
   amount: 523.00
+  concept: market
+  liquidation: null
