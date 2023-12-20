@@ -37,6 +37,7 @@ dependencies = [
     'consolemsg',
     'pytest',
     'pytest-cov',
+    'pytest-xdist', # test on watch
     'httpx',
     'yamlns',
     'pydantic[email]',

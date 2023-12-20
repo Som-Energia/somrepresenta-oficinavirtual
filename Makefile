@@ -5,7 +5,7 @@ default:
 
 deps: ui-deps api-deps
 
-tests: api-test ui-test-once
+tests: api-test-once ui-test-once
 
 deploy: ui-deploy api-deploy
 
@@ -26,15 +26,18 @@ ui-test:
 ui-test-once:
 	npm run test:once
 
+api-test-once:
+	.venv/bin/pytest
+
+api-test:
+	.venv/bin/pytest --looponfail --color=yes
+
 api-dev:
 	.venv/bin/python scripts/representa_api.py --debug --printrules
 
 api-deps:
 	test -e .venv || python -m venv .venv
 	.venv/bin/pip install -e .
-
-api-test:
-	.venv/bin/pytest
 
 style:
 	node_modules/.bin/prettier --write . --config .prettierrc.yaml
