@@ -1,15 +1,14 @@
-import { beforeEach, afterEach, describe, expect, test, it } from 'vitest'
+import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import { euros, date, enumeration } from './format'
 import i18n from '../i18n/i18n'
 
-
 describe('euros formatting', () => {
-  var previousLanguage
-  beforeEach(()=>{
+  let previousLanguage
+  beforeEach(() => {
     previousLanguage = i18n.language
     i18n.changeLanguage('es')
   })
-  afterEach(()=>{
+  afterEach(() => {
     i18n.changeLanguage(previousLanguage)
   })
   it('amount with no decimals', () => {
@@ -51,13 +50,12 @@ describe('euros formatting', () => {
   })
 })
 
-
 describe('dates formatting', () => {
-  var previousLanguage
-  beforeEach(()=>{
+  let previousLanguage
+  beforeEach(() => {
     previousLanguage = i18n.language
   })
-  afterEach(()=>{
+  afterEach(() => {
     i18n.changeLanguage(previousLanguage)
   })
   it('default language (english)', () => {
@@ -82,10 +80,9 @@ describe('dates formatting', () => {
 })
 
 describe('enum formatting', () => {
-  var previousLanguage
-  var enum_options={
-    option1: "Option 1",
-    option2: "Option 2",
+  const enum_options = {
+    option1: 'Option 1',
+    option2: 'Option 2',
   }
 
   it('Option 1', () => {

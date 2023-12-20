@@ -1,7 +1,5 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import dummyData from '../../data/dummyinvoices.yaml'
-import Button from '@mui/material/Button'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
@@ -10,7 +8,6 @@ import Box from '@mui/material/Box'
 import DescriptionIcon from '@mui/icons-material/Description'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import DownloadIcon from '@mui/icons-material/Download'
-import { Link } from 'react-router-dom'
 import TableEditor from '../../components/TableEditor'
 import { useAuth } from '../../components/AuthProvider'
 import ovapi from '../../services/ovapi'
@@ -18,10 +15,11 @@ import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
 import format from '../../services/format'
+//import dummyData from '../../data/dummyinvoices.yaml'
 
 export default function InvoicesPage(params) {
-  const { t, i18n } = useTranslation()
-  const [isLoading, beLoading] = React.useState(true)
+  const { t } = useTranslation()
+  const [isLoading, setIsLoading] = React.useState(true)
   const [rows, setRows] = React.useState([])
   const [error, setError] = React.useState(false)
   const { currentUser } = useAuth()
@@ -31,7 +29,7 @@ export default function InvoicesPage(params) {
   }, [currentUser])
 
   async function getInvoices() {
-    beLoading(true)
+    setIsLoading(true)
     setRows([])
     setError(false)
     try {
@@ -39,7 +37,7 @@ export default function InvoicesPage(params) {
     } catch (error) {
       setError(error)
     }
-    beLoading(false)
+    setIsLoading(false)
   }
 
   const concept_options = {
@@ -118,9 +116,8 @@ export default function InvoicesPage(params) {
       handler: onDownloadPdf,
     },
   ]
-  return isLoading ? (
-    <Loading />
-  ) : (
+  if (isLoading) return <Loading />
+  return (
     <Container>
       <PageTitle Icon={DescriptionIcon}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
       {error ? (

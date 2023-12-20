@@ -18,13 +18,13 @@ function date(adate) {
   const language = i18n.language
   const formatter = new Intl.DateTimeFormat(language)
   if (!adate) {
-    return formatter.format(new Date('1111-11-11')).replace(/[0-9]/g, '-')
+    return formatter.format(new Date('1111-11-11')).replace(/\d/g, '-')
   }
   return formatter.format(new Date(adate))
 }
 
 function enumeration(value, options) {
-  if (value===undefined) return '-'
+  if (value === undefined) return '-'
   return options[value] ?? '???'
 }
 
