@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Container from '@mui/material/Container'
@@ -15,6 +15,7 @@ import { installationFields } from './detailInstallationData'
 import transformContractDetails, {
   transformInstallationDetails,
 } from './detailInstallationData'
+import { useInstallationContext } from '../../components/InstallationProvider'
 
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
@@ -22,6 +23,7 @@ export default function DetailInstallationPage(params) {
   const [installationDetail, setInstallationDetail] = useState(undefined)
   const [contractDetail, setContractDetail] = useState(undefined)
   const [error, setError] = useState(false)
+  const data = useInstallationContext()
 
   useEffect(() => {
     getDetailInstallation()
@@ -31,11 +33,9 @@ export default function DetailInstallationPage(params) {
     setError(false)
     setInstallationDetail(undefined)
     setContractDetail(undefined)
-    var result
-    try {
-      result = await ovapi.installationDetails(contract_number)
-    } catch (e) {
-      setError(e)
+    const result = await ovapi.installationDetails(contract_number)
+    if (!result) {
+      setError(true)
       return
     }
     const installationData = transformInstallationDetails(result?.installation_details)
@@ -53,8 +53,7 @@ export default function DetailInstallationPage(params) {
       </PageTitle>
       {error ? (
         <ErrorSplash
-          title={t('INSTALLATION_DETAIL.ERROR_LOADING_DATA')}
-          message={error.error}
+          message={t('INSTALLATION_DETAIL.ERROR_LOADING_DATA')}
           backlink="/installation"
           backtext={t('INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS')}
         />

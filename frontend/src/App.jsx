@@ -26,6 +26,7 @@ import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
 import InvoicesPage from './pages/InvoicesPage'
 import ProductionPage from './pages/ProductionPage'
+import InstallationProvider from './components/InstallationProvider'
 
 const routes = [
   {
@@ -77,7 +78,11 @@ const routes = [
           },
           {
             path: '/installation/:contract_number',
-            element: <DetailInstallationPage />,
+            element: (
+              <InstallationProvider>
+                <DetailInstallationPage />
+              </InstallationProvider>
+            ),
           },
           {
             path: '/invoices',
