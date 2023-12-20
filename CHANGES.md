@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Invoice Page: uset wants to see invoiced addressed to her
+- Invoice Page: uset wants to see invoices addressed to her
 - Production Page: Still not yet implemented but pages has a title and icon
 - Generic unittested and localized format functions for: euros, dates
 - Autoreload api on .env changes

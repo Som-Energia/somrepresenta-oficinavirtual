@@ -1,4 +1,5 @@
 from yamlns import ns
+import datetime
 from pydantic import (
     BaseModel,
     Field,
@@ -86,7 +87,7 @@ class InstallationDetails(BaseModel):
 class ContractDetails(BaseModel):
     billing_mode: str
     cost_deviation: str
-    discharge_date: str # TODO: date?
+    discharge_date: datetime.date 
     iban: str
     proxy_fee: float
     reduction_deviation: int
@@ -100,12 +101,12 @@ class InstallationDetailsResult(BaseModel):
 class Invoice(BaseModel):
     invoice_number: str
     contract_number: str
-    emission_date: str # TODO date?
-    first_period_date: str # TODO date?
-    last_period_date: str # TODO date?
+    emission_date: datetime.date
+    first_period_date: datetime.date
+    last_period_date: datetime.date
     amount: float
     concept: InvoiceConcept | None = None
-    liquidation: str | None
+    liquidation: str | None = None
 
 class InvoicePdf(BaseModel):
     content: Base64Bytes
