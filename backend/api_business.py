@@ -37,7 +37,13 @@ def setup_business(app):
     def api_invoice_list(user: dict = Depends(validated_user)) -> list[Invoice]:
         return invoice_list(user['username'])
 
-    @app.get('/api/invoice/{invoice_number}/pdf')
+    class PdfStreamingResponse(StreamingResponse):
+        media_type='application/pdf'
+
+    @app.get(
+        '/api/invoice/{invoice_number}/pdf',
+        response_class=PdfStreamingResponse,
+    )
     def api_invoice_pdf(invoice_number: str, user: dict = Depends(validated_user)):
         #result = download_invoice_pdf(user['username'], invoice_number)
         from yamlns import ns
@@ -51,7 +57,6 @@ def setup_business(app):
 
         return StreamingResponse(
             filestream(result.content),
-            media_type=result.content_type,
             headers = {
                 'Content-Disposition': f'attachment; filename="{result.filename}"',
             },
