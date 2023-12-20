@@ -90,7 +90,7 @@ export default function InstallationsPage(params) {
         />
       ) : (
         <TableEditor
-          title={t('INSTALLATIONS.TABLE_TITLE')}
+          title={t('INSTALLATIONS.TABLE_TITLE', { n: rows.length })}
           defaultPageSize={12}
           pageSizes={[]}
           columns={columns}

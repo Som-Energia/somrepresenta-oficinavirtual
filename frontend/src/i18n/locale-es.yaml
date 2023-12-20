@@ -102,7 +102,7 @@ VERSION_CHECKER:
   RELOAD_NOW: Recarga ya
 INSTALLATIONS:
   INSTALLATIONS_TITLE: Instalaciones
-  TABLE_TITLE: Instalaciones
+  TABLE_TITLE: '{{n}} instalaciones'
   COLUMN_CONTRACT_NUMBER: Número de contrato
   COLUMN_INSTALLATION_NAME: Nombre de la instalación
   BUTTON_DETAILS: Detalle
@@ -159,7 +159,7 @@ CONTRACT_DETAIL:
   STATUS: Estado del contrato
 INVOICES:
   INVOICES_TITLE: Facturas
-  TABLE_TITLE: Facturas
+  TABLE_TITLE: '{{n}} facturas'
   COLUMN_INVOICE_NUMBER: Factura
   COLUMN_CONTRACT: Contrato
   COLUMN_EMITTED: Emitida

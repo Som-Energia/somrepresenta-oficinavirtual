@@ -132,7 +132,7 @@ export default function InvoicesPage(params) {
         />
       ) : (
         <TableEditor
-          title={t('INVOICES.TABLE_TITLE')}
+          title={t('INVOICES.TABLE_TITLE', { n: rows.length })}
           defaultPageSize={12}
           pageSizes={[]}
           columns={columns}
