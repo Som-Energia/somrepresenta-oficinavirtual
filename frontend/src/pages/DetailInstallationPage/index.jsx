@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Container from '@mui/material/Container'
@@ -13,9 +13,12 @@ import NavigationButtons from '../../components/NavigationButtons'
 import { contractFields } from './detailInstallationData'
 import { installationFields } from './detailInstallationData'
 import transformContractDetails, {
+  transformContractDetails,
   transformInstallationDetails,
+  computeNavigationInfo,
 } from './detailInstallationData'
-import { useInstallationContext } from '../../components/InstallationProvider'
+import { useAuth } from '../../components/AuthProvider'
+// import { useInstallationContext } from '../../components/InstallationProvider'
 
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
@@ -23,11 +26,16 @@ export default function DetailInstallationPage(params) {
   const [installationDetail, setInstallationDetail] = useState(undefined)
   const [contractDetail, setContractDetail] = useState(undefined)
   const [error, setError] = useState(false)
-  const data = useInstallationContext()
+  const [rows, setRows] = React.useState([])
+  const [navigationBeforeUrl, setNavigationBeforeUrl] = React.useState(undefined)
+  const [navigationNextUrl, setNavigationNextUrl] = React.useState(undefined)
+  // const data = useInstallationContext()
+  const { currentUser } = useAuth()
 
   useEffect(() => {
     getDetailInstallation()
-  }, [contract_number])
+    getNavigationInfo()
+  }, [contract_number, currentUser])
 
   async function getDetailInstallation() {
     setError(false)
@@ -42,6 +50,20 @@ export default function DetailInstallationPage(params) {
     setInstallationDetail(installationData)
     const contractData = transformContractDetails(result?.contract_details)
     setContractDetail(contractData)
+  }
+
+  async function getNavigationInfo() {
+    setError(false)
+    try {
+      const installations = await ovapi.installations(currentUser)
+      const navigationInfo = computeNavigationInfo(installations, installationDetail?.contract_number)
+      const navigationBeforeUrl = navigationInfo.before ? `/installation/${navigationInfo.before}` : undefined
+      const navigationNextUrl = navigationInfo.next ? `/installation/${navigationInfo.next}` : undefined
+      setNavigationBeforeUrl(navigationBeforeUrl)
+      setNavigationNextUrl(navigationNextUrl)
+    } catch (error) {
+      setError(error)
+    }
   }
 
   return !error && (!installationDetail || !contractDetail) ? (
@@ -59,10 +81,9 @@ export default function DetailInstallationPage(params) {
         />
       ) : (
         <>
-          {/* TODO: get the before and after user installations */}
           <NavigationButtons
-            toBefore="/installation/00001"
-            toNext="/installation/00001"
+            toBefore={navigationBeforeUrl}
+            toNext={navigationNextUrl}
             toReturn="/installation"
             returnIcon={<FormatListBulletedIcon />}
           />

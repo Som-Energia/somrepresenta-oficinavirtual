@@ -26,6 +26,7 @@ export const contractFields = [
   'discharge_date',
   'status',
 ]
+
 export function transformInstallationDetails(data) {
   const t = i18n.t
   const productionTecnologyOptions = {
@@ -39,7 +40,7 @@ export function transformInstallationDetails(data) {
     technology: format.enumeration(data.technology, productionTecnologyOptions),
   }
 }
-export default function transformContractDetails(contract) {
+function transformContractDetails(contract) {
   const t = i18n.t
   const billingModeOptions = {
     index: t('CONTRACT_DETAIL.BILLING_MODE_INDEX'),
@@ -88,3 +89,26 @@ export default function transformContractDetails(contract) {
 
   return contract
 }
+
+function computeNavigationInfo(installations, currentInstallationContractNumber) {
+  if (installations.length < 2) {
+    return {}
+  }
+
+  // Find the index of the current installation
+  const currentIndex = installations.findIndex(
+    (installation) => installation.contract_number === currentInstallationContractNumber,
+  )
+
+  // Determine the index of the previous and next installations
+  const previousIndex = currentIndex > 0 ? currentIndex - 1 : installations.length - 1
+  const nextIndex = currentIndex < installations.length - 1 ? currentIndex + 1 : 0
+
+  // Extract the contract numbers for the previous and next installations
+  const before = installations[previousIndex].contract_number
+  const next = installations[nextIndex].contract_number
+
+  return { before, next }
+}
+
+export { transformContractDetails, computeNavigationInfo }

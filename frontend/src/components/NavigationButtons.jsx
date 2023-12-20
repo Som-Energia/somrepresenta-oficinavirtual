@@ -19,6 +19,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 const NavigationButtons = (props) => {
   const { toBefore, toNext, toReturn, returnIcon } = props
+
   return (
     <Box
       sx={{
@@ -30,12 +31,16 @@ const NavigationButtons = (props) => {
       }}
     >
       <ButtonGroup size="small">
-        <StyledButton component={Link} to={toBefore}>
-          <NavigateBeforeIcon />
-        </StyledButton>
-        <StyledButton component={Link} to={toNext}>
-          <NavigateNextIcon />
-        </StyledButton>
+        {toBefore && (
+          <StyledButton component={Link} to={toBefore}>
+            <NavigateBeforeIcon />
+          </StyledButton>
+        )}
+        {toNext && (
+          <StyledButton component={Link} to={toNext}>
+            <NavigateNextIcon />
+          </StyledButton>
+        )}
         <StyledButton component={Link} to={toReturn}>
           {returnIcon}
         </StyledButton>
