@@ -216,8 +216,22 @@ def dummy_invoices(username: str) -> list[Invoice]:
         for invoice in ns.load('frontend/src/data/dummyinvoices.yaml')
     ]
 
+def pdf_content(invoice_number):
+    from xhtml2pdf import pisa
+    import io
+    with io.BytesIO() as output:
+        pisa.CreatePDF(
+            src=f""""
+            <style>h1 {{font-size: 2rem}}</style>
+            <h1>Factura {invoice_number}</h1>
+            """,
+            dest=output,
+        )
+        return output.getvalue()
+
 def dummy_invoice_pdf(username: str, invoice_number: str):
     base64_data = base64.b64encode(Path('/usr/share/doc/tig/manual.pdf').read_bytes())
+    base64_data = base64.b64encode(pdf_content(invoice_number))
     return InvoicePdf(
         content=base64_data,
         filename=f'factura-{invoice_number}.pdf',

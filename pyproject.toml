@@ -47,6 +47,7 @@ dependencies = [
     'itsdangerous', # remote auth (via SessionMiddleware)
     'typer[all]', # CLI tool
     'pygments', # CLI tool
+    'xhtml2pdf',
     'sentry-sdk[fastapi]',
 ]
 
