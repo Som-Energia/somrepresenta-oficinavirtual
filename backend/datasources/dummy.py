@@ -219,12 +219,13 @@ def dummy_invoices(username: str) -> list[Invoice]:
 def pdf_content(invoice_number):
     from xhtml2pdf import pisa
     import io
+    html=f"""
+        <style>h1 {{font-size: 4rem}}</style>
+        <h1>Factura {invoice_number}</h1>
+    """
     with io.BytesIO() as output:
         pisa.CreatePDF(
-            src=f""""
-            <style>h1 {{font-size: 2rem}}</style>
-            <h1>Factura {invoice_number}</h1>
-            """,
+            src=html,
             dest=output,
         )
         return output.getvalue()
