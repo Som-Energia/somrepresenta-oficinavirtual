@@ -10,7 +10,7 @@ class PdfStreamingResponse(StreamingResponse):
             with io.BytesIO(binary_data) as f:
                 yield from f
 
-        return super().__init__(
+        super().__init__(
             binary_stream(binary_data),
             headers = {
                 'Content-Disposition': f'attachment; filename="{filename}"',
