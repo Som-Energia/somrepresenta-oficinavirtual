@@ -6,6 +6,7 @@ from pydantic import (
     ValidationInfo,
     AfterValidator,
     EmailStr,
+    Base64Bytes,
 )
 from typing import Literal, Annotated
 import stdnum.eu.vat
@@ -107,7 +108,7 @@ class Invoice(BaseModel):
     liquidation: str | None
 
 class InvoicePdf(BaseModel):
-    content: str # TODO: Base64
+    content: Base64Bytes
     content_type: str # TODO: content type check
     filename: str
 

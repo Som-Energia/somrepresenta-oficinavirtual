@@ -1,6 +1,8 @@
-from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice, InvoicePdf
 from ..utils.gravatar import gravatar
 from yamlns import ns
+from pathlib import Path
+import base64
 from .exceptions import(
     ErpError,
     ErpValidationError,
@@ -215,13 +217,10 @@ def dummy_invoices(username: str) -> list[Invoice]:
     ]
 
 def dummy_invoice_pdf(username: str, invoice_number: str):
-    from pathlib import Path
-    import base64
-    import io
-    data = base64.b64encode(Path('/usr/share/doc/tig/manual.pdf').read_bytes())
-    return dict(
-        content=data,
-        filename='mifactura.pdf',
+    base64_data = base64.b64encode(Path('/usr/share/doc/tig/manual.pdf').read_bytes())
+    return InvoicePdf(
+        content=base64_data,
+        filename=f'factura-{invoice_number}.pdf',
         content_type='application/pdf',
     )
 
@@ -244,7 +243,7 @@ class DummyBackend():
     def invoice_list(self, username: str) -> list[Invoice]:
         return dummy_invoices(username)
 
-    def invoice_pdf(self, username: str, invoice_number: str):
+    def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return dummy_invoice_pdf(username, invoice_number)
 
 

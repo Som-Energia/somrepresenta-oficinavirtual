@@ -1,9 +1,24 @@
 from fastapi import Request, Depends, status
-from fastapi.responses import JSONResponse, StreamingResponse
-from .models import UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice
-from .datasources import profile_info, sign_document, installation_list, installation_details, invoice_list, invoice_pdf
+from fastapi.responses import JSONResponse
+from .models import (
+    UserProfile,
+    SignatureResult,
+    InstallationSummary,
+    InstallationDetailsResult,
+    Invoice,
+    InvoicePdf,
+)
+from .datasources import (
+    profile_info,
+    sign_document,
+    installation_list,
+    installation_details,
+    invoice_list,
+    invoice_pdf,
+)
 from .erp import ErpConnectionError
 from .auth import validated_user
+from .utils.responses import PdfStreamingResponse
 from consolemsg import error
 
 def setup_business(app):
@@ -37,27 +52,15 @@ def setup_business(app):
     def api_invoice_list(user: dict = Depends(validated_user)) -> list[Invoice]:
         return invoice_list(user['username'])
 
-    class PdfStreamingResponse(StreamingResponse):
-        media_type='application/pdf'
-
     @app.get(
         '/api/invoice/{invoice_number}/pdf',
         response_class=PdfStreamingResponse,
     )
     def api_invoice_pdf(invoice_number: str, user: dict = Depends(validated_user)):
-        #result = download_invoice_pdf(user['username'], invoice_number)
         from yamlns import ns
-        import base64
-        import io
-        result = ns(invoice_pdf(user['username'], invoice_number))
+        result: InvoicePdf = invoice_pdf(user['username'], invoice_number)
 
-        def filestream(data_base64):
-            with io.BytesIO(base64.b64decode(data_base64)) as f:
-                yield from f
-
-        return StreamingResponse(
-            filestream(result.content),
-            headers = {
-                'Content-Disposition': f'attachment; filename="{result.filename}"',
-            },
+        return PdfStreamingResponse(
+            binary_data=result.content,
+            filename=result.filename,
         )
