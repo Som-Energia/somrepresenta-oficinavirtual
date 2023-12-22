@@ -72,6 +72,12 @@ export default function DetailInstallationPage(params) {
     <Container>
       <PageTitle Icon={SolarPowerIcon}>
         {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
+        <NavigationButtons
+          toBefore={navigationBeforeUrl}
+          toNext={navigationNextUrl}
+          toReturn="/installation"
+          returnIcon={<FormatListBulletedIcon />}
+        />
       </PageTitle>
       {error ? (
         <ErrorSplash
@@ -81,12 +87,6 @@ export default function DetailInstallationPage(params) {
         />
       ) : (
         <>
-          <NavigationButtons
-            toBefore={navigationBeforeUrl}
-            toNext={navigationNextUrl}
-            toReturn="/installation"
-            returnIcon={<FormatListBulletedIcon />}
-          />
           <SimpleTable
             fields={installationDetail}
             fieldsOrder={installationFields}

@@ -23,7 +23,8 @@ const NavigationButtons = (props) => {
   return (
     <Box
       sx={{
-        widht: '100%',
+        width: '100%',
+        ml: '.5rem',
         display: 'flex',
         justifyContent: 'flex-end',
         marginRight: '1rem',
