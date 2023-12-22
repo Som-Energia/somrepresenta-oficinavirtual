@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 0.3.0 (2023-12-22)
 
 - Invoice Page: uset wants to see invoices addressed to her
 - Production Page: Still not yet implemented but pages has a title and icon
