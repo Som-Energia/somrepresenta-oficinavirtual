@@ -6,6 +6,10 @@
 - Production Page: Still not yet implemented but pages has a title and icon
 - Generic unittested and localized format functions for: euros, dates
 - Autoreload api on .env changes
+- Order fields in contract details table
+- Create navigation component
+- Add button to return to installations list
+- Add missing translations
 - Chevron icon for details instead of threee points
 - Fix: Avoid column flicker when filtering (clear selection button changed columns required width)
 - api-test are run in autoreload mode like ui-test
