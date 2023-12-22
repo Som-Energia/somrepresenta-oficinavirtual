@@ -33,8 +33,14 @@ def main(debug, host, port, printrules):
     step("Starting API")
     if printrules:
         os.environ["SHOW_ROUTES"]="1"
+    extra_watched=[
+        '.*', # to include .env s
+    ]
+    extra_excluded=[
+        '*.swp', # to exclude swaps excluded in the old .* exclusion
+    ]
     import uvicorn
-    uvicorn.run("backend.api:app", host=host, port=port, reload=debug)
+    uvicorn.run("backend.api:app", host=host, port=port, reload=debug, reload_includes=extra_watched, reload_excludes=extra_excluded)
     step("API stopped")
 
 if __name__=='__main__':

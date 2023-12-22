@@ -24,6 +24,8 @@ Attributes
     - view: (optional) functor receiving the context and returning an alternative for the default icon button
 - itemActions: list of actions available for each single row, row is passed to 
 - selectionActions = [],
+- defaultAction: Function called when clicked on a row.
+  By default will select the row if any selection action is configured.
 - loading: set to true to activate loading status
 - noDataPlaceHolder: node to show in case of no data is to be presented
 */
@@ -589,17 +591,24 @@ function TableEditor(props) {
               )}
               {nFilteredRows > 0 && (
                 <TableRow>
-                  <TableCell colSpan={nTableColumns - 1}>
-                    {t('TABLE_EDITOR.N_ITEMS_FILTERED', { n: nFilteredRows })}
-                  </TableCell>
-                  <TableCell sx={{ textAlign: 'right' }}>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      onClick={() => setSearch('')}
+                  <TableCell colSpan={nTableColumns}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
                     >
-                      {t('TABLE_EDITOR.CLEAR_FILTER')}
-                    </Button>
+                      <div>
+                        {t('TABLE_EDITOR.N_ITEMS_FILTERED', { n: nFilteredRows })}
+                      </div>
+                      <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => setSearch('')}
+                      >
+                        {t('TABLE_EDITOR.CLEAR_FILTER')}
+                      </Button>
+                    </Box>
                   </TableCell>
                 </TableRow>
               )}

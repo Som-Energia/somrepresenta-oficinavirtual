@@ -13,7 +13,6 @@ import GlobalTheme from './components/GlobalTheme'
 import TestPage from './components/TestPage'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './NotFoundPage'
-import NotYetImplementedPage from './NotYetImplementedPage'
 import DialogProvider from './components/DialogProvider'
 import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
@@ -25,6 +24,8 @@ import SnackbarMessages from './components/SnackbarMessages'
 import ProfilePage from './pages/ProfilePage'
 import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
+import InvoicesPage from './pages/InvoicesPage'
+import ProductionPage from './pages/ProductionPage'
 
 const routes = [
   {
@@ -80,11 +81,11 @@ const routes = [
           },
           {
             path: '/invoices',
-            element: <NotYetImplementedPage />,
+            element: <InvoicesPage />,
           },
           {
             path: '/production',
-            element: <NotYetImplementedPage />,
+            element: <ProductionPage />,
           },
         ],
       },

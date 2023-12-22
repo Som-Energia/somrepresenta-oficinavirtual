@@ -1,6 +1,8 @@
-from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult
+from ..models import TokenUser, UserProfile, SignatureResult, InstallationSummary, InstallationDetailsResult, Invoice, InvoicePdf
 from ..utils.gravatar import gravatar
 from yamlns import ns
+from pathlib import Path
+import base64
 from .exceptions import(
     ErpError,
     ErpValidationError,
@@ -208,6 +210,35 @@ def dummy_installation_details(username: str, contract_number: str) -> Installat
         ))
     return InstallationDetailsResult(**ns.load('frontend/src/data/dummyinstallationdetail.yaml'))
 
+def dummy_invoices(username: str) -> list[Invoice]:
+    return [
+        Invoice(**invoice)
+        for invoice in ns.load('frontend/src/data/dummyinvoices.yaml')
+    ]
+
+def pdf_content(invoice_number):
+    from xhtml2pdf import pisa
+    import io
+    html=f"""
+        <style>h1 {{font-size: 4rem}}</style>
+        <h1>Factura {invoice_number}</h1>
+    """
+    with io.BytesIO() as output:
+        pisa.CreatePDF(
+            src=html,
+            dest=output,
+        )
+        return output.getvalue()
+
+def dummy_invoice_pdf(username: str, invoice_number: str):
+    base64_data = base64.b64encode(Path('/usr/share/doc/tig/manual.pdf').read_bytes())
+    base64_data = base64.b64encode(pdf_content(invoice_number))
+    return InvoicePdf(
+        content=base64_data,
+        filename=f'factura-{invoice_number}.pdf',
+        content_type='application/pdf',
+    )
+
 class DummyBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return dummy_user_info(login)
@@ -223,3 +254,11 @@ class DummyBackend():
 
     def installation_details(self, username: str, contract_number: str) -> InstallationDetailsResult:
         return dummy_installation_details(username, contract_number)
+    
+    def invoice_list(self, username: str) -> list[Invoice]:
+        return dummy_invoices(username)
+
+    def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
+        return dummy_invoice_pdf(username, invoice_number)
+
+

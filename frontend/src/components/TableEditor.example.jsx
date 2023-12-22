@@ -193,7 +193,7 @@ export default function Example(params) {
         </Box>
       </Box>
       <TableEditor
-        title={t('INSTALLATIONS.TABLE_TITLE')}
+        title={t('INSTALLATIONS.TABLE_TITLE', { n: rows.length })}
         defaultPageSize={12}
         pageSizes={processedPageSizes}
         columns={columns}

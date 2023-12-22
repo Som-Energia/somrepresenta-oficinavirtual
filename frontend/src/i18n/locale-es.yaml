@@ -102,7 +102,7 @@ VERSION_CHECKER:
   RELOAD_NOW: Recarga ya
 INSTALLATIONS:
   INSTALLATIONS_TITLE: Instalaciones
-  TABLE_TITLE: Instalaciones
+  TABLE_TITLE: '{{n}} instalaciones'
   COLUMN_CONTRACT_NUMBER: Número de contrato
   COLUMN_INSTALLATION_NAME: Nombre de la instalación
   BUTTON_DETAILS: Detalle
@@ -123,6 +123,7 @@ OVAPI:
   CONTEXT_LOGIN: Error validando identidad
   CONTEXT_INSTALLATIONS: Error obteniendo la lista de instalaciones
   CONTEXT_INSTALLATION_DETAILS: Error obteniendo los detalles de la instalación
+  CONTEXT_INVOICES: Error obteniendo la lista de facturas
   CONTEXT_SIGNING_DOCUMENT: Error aceptando condiciones
   ERR_UNABLE_TO_SIGN_DOCUMENT: 'No fue posible firmar el documento'
   ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
@@ -156,3 +157,22 @@ CONTRACT_DETAIL:
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado del contrato
+INVOICES:
+  INVOICES_TITLE: Facturas
+  TABLE_TITLE: '{{n}} facturas'
+  COLUMN_INVOICE_NUMBER: Factura
+  COLUMN_CONTRACT: Contrato
+  COLUMN_EMITTED: Emitida
+  COLUMN_PERIOD: Período
+  COLUMN_AMOUNT: Importe
+  COLUMN_CONCEPT: Concepto
+  COLUMN_LIQUIDATION: Liquidación
+  CONCEPT_OPTION_MARKET: Mercado
+  CONCEPT_OPTION_SPECIFIC_RETRIBUTION: Retribución específica
+  CONCEPT_OPTION_SERVICES: Servicios
+  TOOLTIP_PDF: Descarga en PDF
+  TOOLTIP_DOWNLOAD_ZIP: Descarga PDF's seleccionados en un ZIP
+  NO_INVOICES: No se han encontrado facturas
+  RELOAD: Recarga
+PRODUCTION:
+  PRODUCTION_TITLE: Producción

@@ -80,8 +80,6 @@ function handleRemainingErrors(context) {
   }
 }
 
-
-
 async function version() {
   return axios
     .get('/api/version')
@@ -230,6 +228,20 @@ async function installationDetails(contract_number) {
     })
 }
 
+async function invoices() {
+  const context = i18n.t('OVAPI.CONTEXT_INVOICES')
+  return axios
+    .get('/api/invoices')
+    .catch(handleCommonErrors(context))
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
+      return result.data
+    })
+}
+
 export default {
   version,
   logout,
@@ -240,4 +252,5 @@ export default {
   signDocument,
   installations,
   installationDetails,
+  invoices,
 }

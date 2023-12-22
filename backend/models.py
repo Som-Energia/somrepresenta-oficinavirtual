@@ -1,4 +1,5 @@
 from yamlns import ns
+import datetime
 from pydantic import (
     BaseModel,
     Field,
@@ -6,6 +7,7 @@ from pydantic import (
     ValidationInfo,
     AfterValidator,
     EmailStr,
+    Base64Bytes,
 )
 from typing import Literal, Annotated
 import stdnum.eu.vat
@@ -20,6 +22,13 @@ VatNumber = Annotated[
 Role = Literal[
     'customer',
     'staff',
+]
+
+# TODO: Use an enum
+InvoiceConcept = Literal[
+    'market',
+    'specific_retribution',
+    'services',
 ]
 
 class SignatureResult(BaseModel):
@@ -72,19 +81,35 @@ class InstallationDetails(BaseModel):
     postal_code: str
     province: str
     rated_power: int
-    technology: str | bool
-    type: str
+    technology: str | bool # TODO: restrict to enum
+    type: str # TODO: restrict to enum
 
 class ContractDetails(BaseModel):
     billing_mode: str
     cost_deviation: str
-    discharge_date: str
+    discharge_date: datetime.date 
     iban: str
     proxy_fee: float
     reduction_deviation: int
-    representation_type: str
-    status: str
+    representation_type: str # TODO: restrict to enum
+    status: str # TODO: restrict to enum
 
 class InstallationDetailsResult(BaseModel):
     installation_details: InstallationDetails
     contract_details: ContractDetails
+
+class Invoice(BaseModel):
+    invoice_number: str
+    contract_number: str
+    emission_date: datetime.date
+    first_period_date: datetime.date
+    last_period_date: datetime.date
+    amount: float
+    concept: InvoiceConcept | None = None
+    liquidation: str | None = None
+
+class InvoicePdf(BaseModel):
+    content: Base64Bytes
+    content_type: str # TODO: content type check
+    filename: str
+

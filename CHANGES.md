@@ -1,5 +1,17 @@
 # Change log
 
+## Unreleased
+
+- Invoice Page: uset wants to see invoices addressed to her
+- Production Page: Still not yet implemented but pages has a title and icon
+- Generic unittested and localized format functions for: euros, dates
+- Autoreload api on .env changes
+- Chevron icon for details instead of threee points
+- Fix: Avoid column flicker when filtering (clear selection button changed columns required width)
+- api-test are run in autoreload mode like ui-test
+- Deployment test:
+    - New system dependency: libcairo-dev to generate dummy pdf's
+
 ## 0.2.0 (2023-12-18)
 
 - New pages: Installation list, Installation details
@@ -7,7 +19,7 @@
   - TableEditor: to show list of items with actions
   - SimpleTable: to show data sheets
   - SnackbarMessages: listen messages and show temporary error messages 
-  - ErrorSpash: to show static errors
+  - ErrorSplash: to show static errors
 - RGPD check required to access
 - UI check API version to match and do a full reload after a countdown
 - Error handling:

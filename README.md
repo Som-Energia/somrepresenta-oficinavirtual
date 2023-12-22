@@ -6,9 +6,10 @@ Virtual office of somenergia's representation service
 
 ### Requirements
 
-- python>=3.8
+- python>=3.10
 - make
 - node>=20.4.0
+- libcairo-dev
 
 Early versions could work but not tested.
 
@@ -17,8 +18,8 @@ the recommended path is to use pyenv to install the required version
 and activate it local in the project directory before installing dependencies.
 
 ```bash
-pyenv install 3.11
-pyenv local 3.11
+pyenv install 3.10
+pyenv local 3.10
 ```
 
 ### Dependencies
@@ -33,9 +34,17 @@ make deps # Installs dependencies (for python creates the virtual environment if
 make tests # Pass ui and api tests
 ```
 
+While in a test driven session you can run test in auto reload mode.
+But you have to run ui and api tests separatelly.
+
+```bash
+make ui-test
+make api-test
+```
+
 ### Configuration
 
-Backend Config. Copy `.env-example` as .env and edit.
+Backend Config. Copy `.env-example` as `.env` and edit.
 
 Frontend Config: Defaults in `frontend/.env` can be overriden
 by copying `frontend/.env.local-example` as `frontend/.env.local` and editing it.

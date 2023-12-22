@@ -37,6 +37,7 @@ dependencies = [
     'consolemsg',
     'pytest',
     'pytest-cov',
+    'pytest-xdist', # test on watch
     'httpx',
     'yamlns',
     'pydantic[email]',
@@ -46,6 +47,7 @@ dependencies = [
     'itsdangerous', # remote auth (via SessionMiddleware)
     'typer[all]', # CLI tool
     'pygments', # CLI tool
+    'xhtml2pdf',
     'sentry-sdk[fastapi]',
 ]
 

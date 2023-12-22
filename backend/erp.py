@@ -92,14 +92,20 @@ class Erp:
         self.object_execute('som.ov.signed.document', 'unlink', ids)
         return deleted
 
-    def list_installations(self, vat):
-        return self.object_execute('som.ov.installations', 'get_installations', vat)
+    def list_installations(self, username):
+        return self.object_execute('som.ov.installations', 'get_installations', username)
 
     def installation_details(self, username, contract_number):
         details = self.object_execute(
             "som.ov.installations", "get_installation_details", username, contract_number
         )
         return details
+
+    def list_invoices(self, username: str)->dict:
+        return self.object_execute('som.ov.invoices', 'get_invoices', username)
+
+    def invoice_pdf(self, username: str, invoice_number: str)->dict:
+        return self.object_execute('som.ov.invoices', 'download_invoice_pdf', username, invoice_number)
 
 
 def example():
