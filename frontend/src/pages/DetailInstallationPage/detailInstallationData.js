@@ -26,16 +26,15 @@ export const contractFields = [
   'discharge_date',
   'status',
 ]
-const RepresentationType = {
-  DIRECT: 'directa_cnmc',
-  INDIRECT: 'indirecta_cnmc',
-}
-
 export default function transformContractDetails(contractData) {
   const t = i18n.t
   const billingModeOptions = {
     index: t('CONTRACT_DETAIL.BILLING_MODE_INDEX'),
     atr: t('CONTRACT_DETAIL.BILLING_MODE_ATR'),
+  }
+  const representationTypeOptions = {
+    directa_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT'),
+    indirecta_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_INDIRECT'),
   }
 
   if (contractData.cost_deviation == 'included') {
@@ -51,12 +50,10 @@ export default function transformContractDetails(contractData) {
     contractData.billing_mode,
     billingModeOptions,
   )
-  if (contractData.representation_type == RepresentationType.DIRECT) {
-    contractData.representation_type = t('CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT')
-  }
-  if (contractData.representation_type == RepresentationType.INDIRECT) {
-    contractData.representation_type = t('CONTRACT_DETAIL.REPRESENTATION_TYPE_INDIRECT')
-  }
+  contractData.representation_type = format.enumeration(
+    contractData.representation_type,
+    representationTypeOptions,
+  )
 
   contractData.status = t('CONTRACT_DETAIL.STATUS_ACTIVE')
 
