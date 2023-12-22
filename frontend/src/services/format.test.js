@@ -91,8 +91,14 @@ describe('enum formatting', () => {
   it('Option 2', () => {
     expect(enumeration('option2', enum_options)).toBe('Option 2')
   })
-  it('Non existing option', () => {
-    expect(enumeration('nooption', enum_options)).toBe('???')
+  it('Non existing option, return the unstranslated option', () => {
+    expect(enumeration('nooption', enum_options)).toBe('nooption')
+  })
+  it('Non existing option with fallback', () => {
+    expect(enumeration('nooption', enum_options, '???')).toBe('???')
+  })
+  it('Option 1 with fallback, still Option 1', () => {
+    expect(enumeration('option1', enum_options, '???')).toBe('Option 1')
   })
   it('Undefined value', () => {
     expect(enumeration(undefined, enum_options)).toBe('-')
