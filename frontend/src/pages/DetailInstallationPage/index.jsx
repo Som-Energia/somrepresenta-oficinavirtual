@@ -25,14 +25,21 @@ export default function DetailInstallationPage() {
   const [installationDetail, setInstallationDetail] = useState(undefined)
   const [contractDetail, setContractDetail] = useState(undefined)
   const [error, setError] = useState(false)
-  const [navigationBeforeUrl, setNavigationBeforeUrl] = React.useState(undefined)
-  const [navigationNextUrl, setNavigationNextUrl] = React.useState(undefined)
   const { installations } = useContext(InstallationContext)
   const memoizedInstallations = useMemo(() => installations, [installations])
+  const navigationInfo = computeNavigationInfo(
+    memoizedInstallations,
+    installationDetail?.contract_number,
+  )
+  const navigationBeforeUrl = navigationInfo.before
+    ? `/installation/${navigationInfo.before}`
+    : undefined
+  const navigationNextUrl = navigationInfo.next
+    ? `/installation/${navigationInfo.next}`
+    : undefined
 
   useEffect(() => {
     getDetailInstallation()
-    setNavigationInfo()
   }, [contract_number, memoizedInstallations])
 
   async function getDetailInstallation() {
@@ -51,19 +58,6 @@ export default function DetailInstallationPage() {
     } catch (error) {
       setError(true)
     }
-  }
-
-  function setNavigationInfo() {
-    const navigationInfo = computeNavigationInfo(
-      memoizedInstallations,
-      installationDetail?.contract_number,
-    )
-    setNavigationBeforeUrl(
-      navigationInfo.before ? `/installation/${navigationInfo.before}` : undefined,
-    )
-    setNavigationNextUrl(
-      navigationInfo.next ? `/installation/${navigationInfo.next}` : undefined,
-    )
   }
 
   return !error && (!installationDetail || !contractDetail) ? (
