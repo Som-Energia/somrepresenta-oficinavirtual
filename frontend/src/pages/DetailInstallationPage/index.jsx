@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Container from '@mui/material/Container'
@@ -12,58 +12,58 @@ import ErrorSplash from '../../components/ErrorSplash'
 import NavigationButtons from '../../components/NavigationButtons'
 import { contractFields } from './detailInstallationData'
 import { installationFields } from './detailInstallationData'
-import transformContractDetails, {
+import {
   transformContractDetails,
   transformInstallationDetails,
   computeNavigationInfo,
 } from './detailInstallationData'
-import { useAuth } from '../../components/AuthProvider'
-// import { useInstallationContext } from '../../components/InstallationProvider'
+import { InstallationContext } from '../../components/InstallationProvider'
 
-export default function DetailInstallationPage(params) {
+export default function DetailInstallationPage() {
   const { contract_number } = useParams()
   const { t } = useTranslation()
   const [installationDetail, setInstallationDetail] = useState(undefined)
   const [contractDetail, setContractDetail] = useState(undefined)
   const [error, setError] = useState(false)
-  const [rows, setRows] = React.useState([])
   const [navigationBeforeUrl, setNavigationBeforeUrl] = React.useState(undefined)
   const [navigationNextUrl, setNavigationNextUrl] = React.useState(undefined)
-  // const data = useInstallationContext()
-  const { currentUser } = useAuth()
+  const { installations } = useContext(InstallationContext)
+  const memoizedInstallations = useMemo(() => installations, [installations])
 
   useEffect(() => {
     getDetailInstallation()
-    getNavigationInfo()
-  }, [contract_number, currentUser])
+    setNavigationInfo()
+  }, [contract_number, memoizedInstallations])
 
   async function getDetailInstallation() {
     setError(false)
     setInstallationDetail(undefined)
     setContractDetail(undefined)
-    const result = await ovapi.installationDetails(contract_number)
-    if (!result) {
+    try {
+      const result = await ovapi.installationDetails(contract_number)
+      if (!result) {
+        setError(true)
+        return
+      }
+      setInstallationDetail(result?.installation_details)
+      const contractData = transformContractDetails(result?.contract_details)
+      setContractDetail(contractData)
+    } catch (error) {
       setError(true)
-      return
     }
-    const installationData = transformInstallationDetails(result?.installation_details)
-    setInstallationDetail(installationData)
-    const contractData = transformContractDetails(result?.contract_details)
-    setContractDetail(contractData)
   }
 
-  async function getNavigationInfo() {
-    setError(false)
-    try {
-      const installations = await ovapi.installations(currentUser)
-      const navigationInfo = computeNavigationInfo(installations, installationDetail?.contract_number)
-      const navigationBeforeUrl = navigationInfo.before ? `/installation/${navigationInfo.before}` : undefined
-      const navigationNextUrl = navigationInfo.next ? `/installation/${navigationInfo.next}` : undefined
-      setNavigationBeforeUrl(navigationBeforeUrl)
-      setNavigationNextUrl(navigationNextUrl)
-    } catch (error) {
-      setError(error)
-    }
+  function setNavigationInfo() {
+    const navigationInfo = computeNavigationInfo(
+      memoizedInstallations,
+      installationDetail?.contract_number,
+    )
+    setNavigationBeforeUrl(
+      navigationInfo.before ? `/installation/${navigationInfo.before}` : undefined,
+    )
+    setNavigationNextUrl(
+      navigationInfo.next ? `/installation/${navigationInfo.next}` : undefined,
+    )
   }
 
   return !error && (!installationDetail || !contractDetail) ? (
