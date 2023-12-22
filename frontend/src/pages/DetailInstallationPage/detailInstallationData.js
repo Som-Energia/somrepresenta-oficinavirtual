@@ -1,4 +1,5 @@
 import i18n from '../../i18n/i18n'
+import format from '../../services/format'
 
 export const installationFields = [
   'contract_number',
@@ -25,12 +26,6 @@ export const contractFields = [
   'discharge_date',
   'status',
 ]
-
-const BillingMode = {
-  INDEX: 'index',
-  ATR: 'atr',
-}
-
 const RepresentationType = {
   DIRECT: 'directa_cnmc',
   INDIRECT: 'indirecta_cnmc',
@@ -38,6 +33,10 @@ const RepresentationType = {
 
 export default function transformContractDetails(contractData) {
   const t = i18n.t
+  const billingModeOptions = {
+    index: t('CONTRACT_DETAIL.BILLING_MODE_INDEX'),
+    atr: t('CONTRACT_DETAIL.BILLING_MODE_ATR'),
+  }
 
   if (contractData.cost_deviation == 'included') {
     contractData.reduction_deviation += ' %'
@@ -48,12 +47,10 @@ export default function transformContractDetails(contractData) {
   if (contractData.cost_deviation == 'included') {
     contractData.cost_deviation = t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED')
   }
-  if (contractData.billing_mode === BillingMode.INDEX) {
-    contractData.billing_mode = t('CONTRACT_DETAIL.BILLING_MODE_INDEX')
-  }
-  if (contractData.billing_mode === BillingMode.ATR) {
-    contractData.billing_mode = t('CONTRACT_DETAIL.BILLING_MODE_ATR')
-  }
+  contractData.billing_mode = format.enumeration(
+    contractData.billing_mode,
+    billingModeOptions,
+  )
   if (contractData.representation_type == RepresentationType.DIRECT) {
     contractData.representation_type = t('CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT')
   }
