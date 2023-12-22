@@ -1,34 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { useAuth } from './AuthProvider'
 import ovapi from '../services/ovapi'
 
 const InstallationContext = React.createContext()
 
-export default function InstallationProvider({ children }) {
+const InstallationContextProvider = ({ children }) => {
   const { currentUser } = useAuth()
+  const [installations, setInstallations] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const memoizedCurrentUser = useMemo(() => currentUser, [currentUser])
 
-  const getInstallations = () => {
-    return ovapi.installations(currentUser)
-      .then((data) => {
-        // setInstallations(data);
-        // setLoading(false);
-        console.log(data);
-        return data;
-      })
-      .catch((error) => {
-        console.error(error);
-        // setLoading(false);
-        // throw error;
-      });
-  };
+  useEffect(() => {
+    const getInstallations = async () => {
+      try {
+        const installationsData = await ovapi.installations(memoizedCurrentUser)
+        setInstallations(installationsData)
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  const contextValue = getInstallations()
+    getInstallations()
+  }, [memoizedCurrentUser])
 
-  return (
-    <InstallationContext.Provider value={contextValue}>
+  return installations !== null ? (
+    <InstallationContext.Provider value={{ installations, loading, error }}>
       {children}
     </InstallationContext.Provider>
-  )
+  ) : null
 }
 
-export const useInstallationContext = () => React.useContext(InstallationContext)
+export { InstallationContext, InstallationContextProvider }
