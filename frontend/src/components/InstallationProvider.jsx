@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react'
+import PropTypes from 'prop-types'
 import { useAuth } from './AuthProvider'
 import ovapi from '../services/ovapi'
 
@@ -25,12 +26,23 @@ const InstallationContextProvider = ({ children }) => {
 
     getInstallations()
   }, [memoizedCurrentUser])
+    getInstallations()
+  }, [memoizedCurrentUser])
+
+  const contextValue = useMemo(
+    () => ({ installations, loading, error }),
+    [installations, loading, error],
+  )
 
   return installations !== null ? (
-    <InstallationContext.Provider value={{ installations, loading, error }}>
+    <InstallationContext.Provider value={contextValue}>
       {children}
     </InstallationContext.Provider>
   ) : null
+}
+
+InstallationContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export { InstallationContext, InstallationContextProvider }
