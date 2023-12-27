@@ -108,6 +108,7 @@ INSTALLATIONS:
   BUTTON_DETAILS: Detalle
   TOOLTIP_DETAILS: Detalle
   NO_INSTALLATIONS: No se han encontrado instalaciones
+  RELOAD: Recarga
 TABLE_EDITOR:
   LOADING: Cargando datos...
   SELECT_ALL: Selecciona todo
