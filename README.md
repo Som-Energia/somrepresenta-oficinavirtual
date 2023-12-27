@@ -2,6 +2,10 @@
 
 Virtual office of somenergia's representation service
 
+[![CI Status](https://github.com/Som-Energia/somrepresenta-oficinavirtual/actions/workflows/main.yml/badge.svg)](https://github.com/Som-Energia/somrepresenta-oficinavirtual/actions/workflows/main.yml)
+[![Coverage Status](https://coveralls.io/repos/github/Som-Energia/somrepresenta-oficinavirtual/badge.svg?branch=main)](https://coveralls.io/github/Som-Energia/somrepresenta-oficinavirtual?branch=main)
+
+
 ## Development setup
 
 ### Requirements
