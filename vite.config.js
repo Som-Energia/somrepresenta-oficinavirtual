@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import ViteYaml from '@modyfi/vite-plugin-yaml'
+import viteyaml from '@modyfi/vite-plugin-yaml'
 import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
@@ -12,7 +12,11 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
-  plugins: [react(), ViteYaml(), svgr()],
+  plugins: [
+    react(),
+    viteyaml(),
+    svgr(),
+  ],
   server: {
     proxy: {
       '/api': 'http://localhost:5500',
