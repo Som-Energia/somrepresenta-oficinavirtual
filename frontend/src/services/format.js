@@ -28,5 +28,18 @@ function enumeration(value, options, fallback) {
   return options[value] ?? fallback ?? value
 }
 
-export { euros, date, enumeration }
-export default { euros, date, enumeration }
+function percent(amount, decimals) {
+  const asFloat = parseFloat(amount)
+  if (isNaN(asFloat)) return '-- %'
+  const language = i18n.language
+  const localized = (asFloat / 100).toLocaleString(language, {
+    style: 'percent',
+    maximumFractionDigits: decimals ?? 2,
+    minimumFractionDigits: decimals ?? 2,
+    useGrouping: true,
+  })
+  return `${localized}`
+}
+
+export { euros, percent, date, enumeration }
+export default { euros, percent, date, enumeration }

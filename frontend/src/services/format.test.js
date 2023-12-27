@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
-import { euros, date, enumeration } from './format'
+import { euros, percent, date, enumeration } from './format'
 import i18n from '../i18n/i18n'
 
 describe('euros formatting', () => {
@@ -37,7 +37,6 @@ describe('euros formatting', () => {
   })
   it('amount over thousands puts point', () => {
     i18n.changeLanguage('es')
-
     expect(euros(2345)).toBe('2.345,00 €')
   })
   it('basque locale', () => {
@@ -47,6 +46,56 @@ describe('euros formatting', () => {
   it('english locale', () => {
     i18n.changeLanguage('en')
     expect(euros(2345)).toBe('€2,345.00')
+  })
+})
+
+describe('percent formatting', () => {
+  let previousLanguage
+  beforeEach(() => {
+    previousLanguage = i18n.language
+    i18n.changeLanguage('es')
+  })
+  afterEach(() => {
+    i18n.changeLanguage(previousLanguage)
+  })
+  it('amount with no decimals', () => {
+    expect(percent(2)).toBe('2,00 %')
+  })
+  it('amount with two decimals', () => {
+    expect(percent(2.15)).toBe('2,15 %')
+  })
+  it('amount with rounding up', () => {
+    expect(percent(2.159)).toBe('2,16 %')
+  })
+  it('amount with rounding down', () => {
+    expect(percent(2.151)).toBe('2,15 %')
+  })
+  it('amount with rounding middle', () => {
+    expect(percent(2.155)).toBe('2,16 %')
+  })
+  it('amount with negative', () => {
+    expect(percent(-2)).toBe('-2,00 %')
+  })
+  it('amount with string number', () => {
+    expect(percent('-2')).toBe('-2,00 %')
+  })
+  it('amount with undefined', () => {
+    expect(percent(undefined)).toBe('-- %')
+  })
+  it('amount over thousands puts point', () => {
+    i18n.changeLanguage('es')
+    expect(percent(2345)).toBe('2.345,00 %')
+  })
+  it('basque locale, prefixed percent sign', () => {
+    i18n.changeLanguage('eu')
+    expect(percent(2345)).toBe('% 2.345,00')
+  })
+  it('english locale, no gap with percent sign', () => {
+    i18n.changeLanguage('en')
+    expect(percent(2345)).toBe('2,345.00%')
+  })
+  it('explicit decimals', () => {
+    expect(percent(2.155, 0)).toBe('2 %')
   })
 })
 
