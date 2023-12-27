@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased
+
+- Continuous integration enabled
+- Fix: Animated error image
+
 ## 0.3.0 (2023-12-22)
 
 - Invoice Page: uset wants to see invoices addressed to her
