@@ -106,8 +106,7 @@ export default function InvoicesPage(params) {
     },
   ]
   function onDownloadPdf(invoice) {
-    console.log('Hola', invoice.invoice_number)
-    window.location = `/api/invoice/${invoice.invoice_number}/pdf`
+    ovapi.invoicePdf(invoice.invoice_number)
   }
   const itemActions = [
     {
