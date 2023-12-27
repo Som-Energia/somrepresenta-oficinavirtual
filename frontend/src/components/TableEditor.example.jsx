@@ -99,11 +99,9 @@ export default function Example(params) {
     {
       title: 'Celebrate!',
       view: () => (
-        <>
-          <IconButton onClick={() => showConfetti(true)}>
-            <CelebrationIcon />
-          </IconButton>
-        </>
+        <IconButton onClick={() => showConfetti(true)}>
+          <CelebrationIcon />
+        </IconButton>
       ),
     },
   ]
