@@ -27,7 +27,7 @@ import os
     help="Prints the url patterns being serverd",
     )
 def main(debug, host, port, printrules):
-    "Runs the Tomatic web and API"
+    "Runs the web and API"
     print(debug, host, port, printrules)
 
     step("Starting API")
