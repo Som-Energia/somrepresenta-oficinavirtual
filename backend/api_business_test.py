@@ -88,6 +88,9 @@ class ApiBusiness_Test(unittest.TestCase):
         with (
             environ('DATA_BACKEND', 'erp'),
             environ('ERP_BASEURL', 'http://noexisto.com'),
+            environ('ERP_DATABASE', "mydatabase"),
+            environ('ERP_USER', "myuser"),
+            environ('ERP_PASSWORD', "mypassword"),
         ):
             r = self.client.get('/api/me')
         self.assertResponseEqual(r, """\
