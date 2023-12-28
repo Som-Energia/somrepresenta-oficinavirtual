@@ -259,9 +259,12 @@ function invoicePdf(invoiceNumber) {
       link.href = url
       const filename =
         result.headers['content-disposition'].match(/filename="([^"]+)"/)[1]
-      link.setAttribute('download', filename)
+      if (filename) link.setAttribute('download', filename)
       document.body.appendChild(link)
       link.click()
+      // clean up
+      document.body.removeChild(link)
+      url.revokeObjectURL(href)
       return result.data
     })
 }
