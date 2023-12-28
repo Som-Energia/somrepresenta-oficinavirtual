@@ -264,7 +264,7 @@ function invoicePdf(invoiceNumber) {
       link.click()
       // clean up
       document.body.removeChild(link)
-      url.revokeObjectURL(href)
+      URL.revokeObjectURL(url)
       return result.data
     })
 }
