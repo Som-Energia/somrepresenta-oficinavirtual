@@ -27,7 +27,14 @@ export const contractFields = [
   'status',
 ]
 export function transformInstallationDetails(data) {
+  const t = i18n.t
+  const productionTecnologyOptions = {
+    FV: t('INSTALLATION_DETAIL.TECHNOLOGY_PHOTOVOLTAIC'),
+    H: t('INSTALLATION_DETAIL.TECHNOLOGY_HYDRO'),
+    E: t('INSTALLATION_DETAIL.TECHNOLOGY_WIND'),
+  }
   data.rated_power = format.units(data.rated_power, 'kW', 0)
+  data.technology = format.enumeration(data.technology, productionTecnologyOptions)
   return data
 }
 export default function transformContractDetails(contractData) {
