@@ -109,17 +109,6 @@ INSTALLATIONS:
   TOOLTIP_DETAILS: Detalle
   NO_INSTALLATIONS: No se han encontrado instalaciones
   RELOAD: Recarga
-TABLE_EDITOR:
-  LOADING: Cargando datos...
-  SELECT_ALL: Selecciona todo
-  ACTIONS: Acciones
-  SORTED_DESCENDING: Orden descendiente
-  SORTED_ASCENDING: Orden ascendiente
-  N_SELECTED: '{{numSelected}} seleccionados'
-  PLACEHOLDER_SEARCH: 'Busca...'
-  LABEL_SEARCH: 'Busca'
-  N_ITEMS_FILTERED: Se han filtrado {{n}} elementos
-  CLEAR_FILTER: Muestra todo
 OVAPI:
   CONTEXT_LOGIN: Error validando identidad
   CONTEXT_INSTALLATIONS: Error obteniendo la lista de instalaciones
