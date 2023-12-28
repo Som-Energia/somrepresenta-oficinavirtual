@@ -64,12 +64,10 @@ export default function transformContractDetails(contractData) {
     included: t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED'),
     not_included: t('CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED'),
   }
-  if (contractData.cost_deviation == 'included') {
-    contractData.reduction_deviation += ' %'
-  }
-  if (contractData.cost_deviation != 'included') {
-    contractData.reduction_deviation = 'N/A'
-  }
+  contractData.reduction_deviation =
+    contractData.cost_deviation === 'included'
+      ? format.percent(contractData.reduction_deviation, 0)
+      : 'N/A'
   contractData.cost_deviation = format.enumeration(
     contractData.cost_deviation,
     costDeviationIncludedOptions,
