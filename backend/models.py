@@ -18,17 +18,52 @@ VatNumber = Annotated[
     AfterValidator(stdnum.eu.vat.validate),
 ]
 
-# TODO: Use an enum
+# TODO: Use Enums for those literals
+
 Role = Literal[
     'customer',
     'staff',
 ]
 
-# TODO: Use an enum
 InvoiceConcept = Literal[
     'market',
     'specific_retribution',
     'services',
+]
+
+BillingMode = Literal[
+    'atr',
+    'index',
+]
+
+RepresentationType = Literal[
+    'directa_cnmc',
+    'indirecta_cnmc',
+]
+
+ProductionTechnology = Literal[
+    'FV', # Photovoltaic
+    'H', # Hidraulic
+    'E', # Eolic
+]
+
+DeviationIncluded = Literal[
+    'included',
+    'not_included',
+]
+
+ContractStatus = Literal[
+    'esborrany',
+    'validar',
+    'pendent',
+    'activa',
+    'cancelada',
+    'contracte',
+    'novapolissa',
+    'modcontractual',
+    'impagament',
+    'tall',
+    'baixa',
 ]
 
 class SignatureResult(BaseModel):
@@ -81,18 +116,18 @@ class InstallationDetails(BaseModel):
     postal_code: str
     province: str
     rated_power: int
-    technology: str | bool # TODO: restrict to enum
-    type: str # TODO: restrict to enum
+    technology: ProductionTechnology | bool | None # TODO: restrict to enum # TODO: Remove bool when fixed in ERP
+    type: str # TODO: Rename to installaton_type_code
 
 class ContractDetails(BaseModel):
-    billing_mode: str
-    cost_deviation: str
+    billing_mode: BillingMode
+    cost_deviation: DeviationIncluded
     discharge_date: datetime.date 
     iban: str
     proxy_fee: float
     reduction_deviation: int
-    representation_type: str # TODO: restrict to enum
-    status: str # TODO: restrict to enum
+    representation_type: RepresentationType
+    status: ContractStatus
 
 class InstallationDetailsResult(BaseModel):
     installation_details: InstallationDetails
