@@ -47,6 +47,19 @@ export default function transformContractDetails(contractData) {
     directa_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT'),
     indirecta_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_INDIRECT'),
   }
+  const contractStatusOptions = {
+    esborrany: t('CONTRACT_DETAIL.CONTRACT_STATUS_DRAFT'),
+    validar: t('CONTRACT_DETAIL.CONTRACT_STATUS_VALIDATION'),
+    pendent: t('CONTRACT_DETAIL.CONTRACT_STATUS_PENDING'),
+    activa: t('CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVE'),
+    cancelada: t('CONTRACT_DETAIL.CONTRACT_STATUS_CANCELLED'),
+    contracte: t('CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVATION'),
+    novapolissa: t('CONTRACT_DETAIL.CONTRACT_STATUS_NEW_CONTRACT'),
+    modcontractual: t('CONTRACT_DETAIL.CONTRACT_STATUS_MODIFICATION'),
+    impagament: t('CONTRACT_DETAIL.CONTRACT_STATUS_UNPAID'),
+    tall: t('CONTRACT_DETAIL.CONTRACT_STATUS_CUT'),
+    baixa: t('CONTRACT_DETAIL.CONTRACT_STATUS_ENDED'),
+  }
   const costDeviationIncludedOptions = {
     included: t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED'),
     not_included: t('CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED'),
@@ -71,7 +84,7 @@ export default function transformContractDetails(contractData) {
   )
   contractData.discharge_date = format.date(contractData.discharge_date)
 
-  contractData.status = t('CONTRACT_DETAIL.STATUS_ACTIVE')
+  contractData.status = format.enumeration(contractData.status, contractStatusOptions)
 
   return contractData
 }
