@@ -41,5 +41,17 @@ function percent(amount, decimals) {
   return `${localized}`
 }
 
-export { euros, percent, date, enumeration }
-export default { euros, percent, date, enumeration }
+function units(amount, unit, decimals) {
+  const asFloat = parseFloat(amount)
+  if (isNaN(asFloat)) return `-- ${unit}`
+  const language = i18n.language
+  const localized = asFloat.toLocaleString(language, {
+    maximumFractionDigits: decimals ?? 2,
+    minimumFractionDigits: decimals ?? 2,
+    useGrouping: true,
+  })
+  return `${localized} ${unit}`
+}
+
+export { euros, units, percent, date, enumeration }
+export default { euros, units, percent, date, enumeration }
