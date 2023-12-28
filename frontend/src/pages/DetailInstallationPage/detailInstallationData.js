@@ -47,16 +47,20 @@ export default function transformContractDetails(contractData) {
     directa_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT'),
     indirecta_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_INDIRECT'),
   }
-
+  const costDeviationIncludedOptions = {
+    included: t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED'),
+    not_included: t('CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED'),
+  }
   if (contractData.cost_deviation == 'included') {
     contractData.reduction_deviation += ' %'
   }
   if (contractData.cost_deviation != 'included') {
     contractData.reduction_deviation = 'N/A'
   }
-  if (contractData.cost_deviation == 'included') {
-    contractData.cost_deviation = t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED')
-  }
+  contractData.cost_deviation = format.enumeration(
+    contractData.cost_deviation,
+    costDeviationIncludedOptions,
+  )
   contractData.billing_mode = format.enumeration(
     contractData.billing_mode,
     billingModeOptions,
