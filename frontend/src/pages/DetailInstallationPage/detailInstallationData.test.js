@@ -1,8 +1,17 @@
 import { describe, expect, it } from 'vitest'
+import i18n from '../../i18n/i18n'
 
 import transformContractDetails from './detailInstallationData'
 
 describe('transformContractDetails', () => {
+  let previousLanguage
+  beforeEach(() => {
+    previousLanguage = i18n.language
+    i18n.changeLanguage('es')
+  })
+  afterEach(() => {
+    i18n.changeLanguage(previousLanguage)
+  })
   it('Add `%` to reduction_deviation if cost_deviation is `included`', () => {
     const contractData = {
       cost_deviation: 'included',
