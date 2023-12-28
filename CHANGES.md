@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Continuous integration enabled
+- Using component library
 - Fix: Animated error image
 
 ## 0.3.0 (2023-12-22)
