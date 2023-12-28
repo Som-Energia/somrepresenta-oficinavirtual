@@ -69,6 +69,7 @@ export default function transformContractDetails(contractData) {
     contractData.representation_type,
     representationTypeOptions,
   )
+  contractData.discharge_date = format.date(contractData.discharge_date)
 
   contractData.status = t('CONTRACT_DETAIL.STATUS_ACTIVE')
 
