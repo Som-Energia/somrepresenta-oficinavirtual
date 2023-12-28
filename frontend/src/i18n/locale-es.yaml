@@ -131,7 +131,7 @@ INSTALLATION_DETAIL:
   NAME: Nombre
   POSTAL_CODE: Código postal
   PROVINCE: Provincia
-  RATED_POWER: Potencia nominal [kW]
+  RATED_POWER: Potencia nominal
   TECHNOLOGY: Tecnología
   CIL: CIL
   TYPE: Código de instalación tipo

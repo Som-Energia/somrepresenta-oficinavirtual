@@ -26,6 +26,10 @@ export const contractFields = [
   'discharge_date',
   'status',
 ]
+export function transformInstallationDetails(data) {
+  data.rated_power = format.units(data.rated_power, 'kW', 0)
+  return data
+}
 export default function transformContractDetails(contractData) {
   const t = i18n.t
   const billingModeOptions = {

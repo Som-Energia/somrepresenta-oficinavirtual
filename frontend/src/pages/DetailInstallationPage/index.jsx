@@ -12,7 +12,9 @@ import ErrorSplash from '../../components/ErrorSplash'
 import NavigationButtons from '../../components/NavigationButtons'
 import { contractFields } from './detailInstallationData'
 import { installationFields } from './detailInstallationData'
-import transformContractDetails  from './detailInstallationData'
+import transformContractDetails, {
+  transformInstallationDetails,
+} from './detailInstallationData'
 
 export default function DetailInstallationPage(params) {
   const { contract_number } = useParams()
@@ -36,7 +38,8 @@ export default function DetailInstallationPage(params) {
       setError(e)
       return
     }
-    setInstallationDetail(result?.installation_details)
+    const installationData = transformInstallationDetails(result?.installation_details)
+    setInstallationDetail(installationData)
     const contractData = transformContractDetails(result?.contract_details)
     setContractDetail(contractData)
   }
