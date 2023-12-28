@@ -10,6 +10,7 @@ from .exceptions import(
     ContractNotExists,
     UnauthorizedAccess,
     NoSuchUser,
+    NoSuchInvoice,
     NoDocumentVersions,
 )
 
@@ -210,10 +211,31 @@ def dummy_installation_details(username: str, contract_number: str) -> Installat
         ))
     return InstallationDetailsResult(**ns.load('frontend/src/data/dummyinstallationdetail.yaml'))
 
+invoice_pdf_exceptions = {
+    e.__name__: e
+    for e in [
+        UnauthorizedAccess,
+        NoSuchUser,
+        NoSuchInvoice,
+        ErpValidationError,
+        # TODO: ErpConnectionError,
+        # TODO: ErpUnexpectedError,
+    ]
+}
+
 def dummy_invoices(username: str) -> list[Invoice]:
     return [
         Invoice(**invoice)
         for invoice in ns.load('frontend/src/data/dummyinvoices.yaml')
+    ]+[
+        Invoice(
+            invoice_number=name,
+            contract_number='10002',
+            emission_date='2020-01-01',
+            first_period_date='2020-01-01',
+            last_period_date='2020-01-01',
+            amount=200,
+        ) for name in invoice_pdf_exceptions.keys()
     ]
 
 def pdf_content(invoice_number):
@@ -231,6 +253,11 @@ def pdf_content(invoice_number):
         return output.getvalue()
 
 def dummy_invoice_pdf(username: str, invoice_number: str):
+    if invoice_number in invoice_pdf_exceptions:
+        raise invoice_pdf_exceptions[invoice_number](dict(
+            code=invoice_number,
+            error=f"{invoice_number} (Dummy error)",
+        ))
     base64_data = base64.b64encode(Path('/usr/share/doc/tig/manual.pdf').read_bytes())
     base64_data = base64.b64encode(pdf_content(invoice_number))
     return InvoicePdf(

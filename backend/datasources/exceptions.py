@@ -39,5 +39,8 @@ class UnauthorizedAccess(ErpError):
 class NoSuchUser(ErpError):
     pass
 
+class NoSuchInvoice(ErpError):
+    pass
+
 class NoDocumentVersions(ErpError):
     pass
