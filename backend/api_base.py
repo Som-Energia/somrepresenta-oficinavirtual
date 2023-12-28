@@ -14,7 +14,7 @@ from . import __version__ as version
 def setup_base(app):
 
     @app.get('/api/version')
-    def apiVersion():
+    def api_version():
         return dict(
             version = version,
         )
