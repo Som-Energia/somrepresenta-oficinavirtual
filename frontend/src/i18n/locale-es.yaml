@@ -185,5 +185,8 @@ INVOICES:
   TOOLTIP_DOWNLOAD_ZIP: Descarga PDF's seleccionados en un ZIP
   NO_INVOICES: No se han encontrado facturas
   RELOAD: Recarga
+  DOWNLOAD_TOOLTIP_DOWNLOAD: Descarga
+  DOWNLOAD_TOOLTIP_SUCCESS: Descarga finalizada
+  DOWNLOAD_TOOLTIP_ONGOING: En proceso
 PRODUCTION:
   PRODUCTION_TITLE: Producción

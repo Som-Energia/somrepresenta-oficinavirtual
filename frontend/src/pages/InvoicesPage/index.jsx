@@ -110,7 +110,9 @@ export default function InvoicesPage(params) {
     {
       title: t('INVOICES.TOOLTIP_PDF'),
       icon: <PictureAsPdfIcon />,
-      view: (invoice) => <DownloadButton context={invoice} />,
+      view: (invoice) => (
+        <DownloadButton context={invoice} title={t('INVOICES.TOOLTIP_PDF')} />
+      ),
     },
   ]
   if (isLoading) return <Loading />
