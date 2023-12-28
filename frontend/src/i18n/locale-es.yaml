@@ -146,7 +146,7 @@ CONTRACT_DETAIL:
   COST_DEVIATION: Coste de los desvíos
   DISCHARGE_DATE: Fecha del alta
   IBAN: IBAN
-  PROXY_FEE: Retribución para el servicio de representación [€/MWh]
+  PROXY_FEE: Retribución para el servicio de representación
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado del contrato

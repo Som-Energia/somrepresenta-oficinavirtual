@@ -83,6 +83,7 @@ export default function transformContractDetails(contractData) {
     representationTypeOptions,
   )
   contractData.discharge_date = format.date(contractData.discharge_date)
+  contractData.proxy_fee = format.units(contractData.proxy_fee, '€/MWh', 2)
 
   contractData.status = format.enumeration(contractData.status, contractStatusOptions)
 
