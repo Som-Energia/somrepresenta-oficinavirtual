@@ -33,9 +33,11 @@ export function transformInstallationDetails(data) {
     H: t('INSTALLATION_DETAIL.TECHNOLOGY_HYDRO'),
     E: t('INSTALLATION_DETAIL.TECHNOLOGY_WIND'),
   }
-  data.rated_power = format.units(data.rated_power, 'kW', 0)
-  data.technology = format.enumeration(data.technology, productionTecnologyOptions)
-  return data
+  return {
+    ...data,
+    rated_power: format.units(data.rated_power, 'kW', 0),
+    technology: format.enumeration(data.technology, productionTecnologyOptions),
+  }
 }
 export default function transformContractDetails(contract) {
   const t = i18n.t
@@ -64,22 +66,25 @@ export default function transformContractDetails(contract) {
     included: t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED'),
     not_included: t('CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED'),
   }
-  contract.reduction_deviation =
-    contract.cost_deviation === 'included'
-      ? format.percent(contract.reduction_deviation, 0)
-      : 'N/A'
-  contract.cost_deviation = format.enumeration(
-    contract.cost_deviation,
-    costDeviationIncludedOptions,
-  )
-  contract.billing_mode = format.enumeration(contract.billing_mode, billingModeOptions)
-  contract.representation_type = format.enumeration(
-    contract.representation_type,
-    representationTypeOptions,
-  )
-  contract.discharge_date = format.date(contract.discharge_date)
-  contract.proxy_fee = format.units(contract.proxy_fee, '€/MWh', 2)
-  contract.status = format.enumeration(contract.status, contractStatusOptions)
+  return {
+    ...contract,
+    reduction_deviation:
+      contract.cost_deviation === 'included'
+        ? format.percent(contract.reduction_deviation, 0)
+        : 'N/A',
+    cost_deviation: format.enumeration(
+      contract.cost_deviation,
+      costDeviationIncludedOptions,
+    ),
+    billing_mode: format.enumeration(contract.billing_mode, billingModeOptions),
+    representation_type: format.enumeration(
+      contract.representation_type,
+      representationTypeOptions,
+    ),
+    discharge_date: format.date(contract.discharge_date),
+    proxy_fee: format.units(contract.proxy_fee, '€/MWh', 2),
+    status: format.enumeration(contract.status, contractStatusOptions),
+  }
 
   return contract
 }
