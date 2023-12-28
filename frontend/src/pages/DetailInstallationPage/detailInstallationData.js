@@ -37,7 +37,7 @@ export function transformInstallationDetails(data) {
   data.technology = format.enumeration(data.technology, productionTecnologyOptions)
   return data
 }
-export default function transformContractDetails(contractData) {
+export default function transformContractDetails(contract) {
   const t = i18n.t
   const billingModeOptions = {
     index: t('CONTRACT_DETAIL.BILLING_MODE_INDEX'),
@@ -64,26 +64,22 @@ export default function transformContractDetails(contractData) {
     included: t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED'),
     not_included: t('CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED'),
   }
-  contractData.reduction_deviation =
-    contractData.cost_deviation === 'included'
-      ? format.percent(contractData.reduction_deviation, 0)
+  contract.reduction_deviation =
+    contract.cost_deviation === 'included'
+      ? format.percent(contract.reduction_deviation, 0)
       : 'N/A'
-  contractData.cost_deviation = format.enumeration(
-    contractData.cost_deviation,
+  contract.cost_deviation = format.enumeration(
+    contract.cost_deviation,
     costDeviationIncludedOptions,
   )
-  contractData.billing_mode = format.enumeration(
-    contractData.billing_mode,
-    billingModeOptions,
-  )
-  contractData.representation_type = format.enumeration(
-    contractData.representation_type,
+  contract.billing_mode = format.enumeration(contract.billing_mode, billingModeOptions)
+  contract.representation_type = format.enumeration(
+    contract.representation_type,
     representationTypeOptions,
   )
-  contractData.discharge_date = format.date(contractData.discharge_date)
-  contractData.proxy_fee = format.units(contractData.proxy_fee, '€/MWh', 2)
+  contract.discharge_date = format.date(contract.discharge_date)
+  contract.proxy_fee = format.units(contract.proxy_fee, '€/MWh', 2)
+  contract.status = format.enumeration(contract.status, contractStatusOptions)
 
-  contractData.status = format.enumeration(contractData.status, contractStatusOptions)
-
-  return contractData
+  return contract
 }
