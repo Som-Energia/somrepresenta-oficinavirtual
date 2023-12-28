@@ -8,13 +8,10 @@ from decorator import decorator
 # TODO; Use erppeek, connection pool management, transactions...
 
 @decorator
-def requiresToken(f, self, *args, **kwds):
-    try:
-        if not self._token:
-            self.token()
-        return f(self, *args, **kwds)
-    except Exception as e:
-        raise 
+def requires_token(f, self, *args, **kwds):
+    if not self._token:
+        self.token()
+    return f(self, *args, **kwds)
 
 class ErpConnectionError(Exception): pass
 
@@ -56,7 +53,7 @@ class Erp:
     def token(self):
         self._token = self._post('/common', 'token', self.db, self.user, self.password)
 
-    @requiresToken
+    @requires_token
     def object_execute(self, *args):
         return self._post('/object', 'execute', self.db, 'token', self._token, *args)
 

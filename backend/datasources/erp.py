@@ -39,7 +39,7 @@ expected_erp_exceptions = [
     NoDocumentVersions,
 ]
 def process_erp_errors(erp_response):
-    if not 'error' in erp_response: return
+    if 'error' not in erp_response: return
     erp_errors = {
         excp.__name__: excp
         for excp in expected_erp_exceptions
