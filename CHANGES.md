@@ -4,7 +4,9 @@
 
 - Continuous integration enabled
 - Using component library
-- Fix: Animated error image
+- Animated error image
+- Localized formatting for installation details fields
+- Added missing translations for enum values from ERP
 
 ## 0.3.0 (2023-12-22)
 

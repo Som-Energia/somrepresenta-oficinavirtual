@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
-import { euros, percent, date, enumeration } from './format'
+import { euros, units, percent, date, enumeration } from './format'
 import i18n from '../i18n/i18n'
 
 describe('euros formatting', () => {
@@ -46,6 +46,56 @@ describe('euros formatting', () => {
   it('english locale', () => {
     i18n.changeLanguage('en')
     expect(euros(2345)).toBe('€2,345.00')
+  })
+})
+
+describe('units formatting', () => {
+  let previousLanguage
+  beforeEach(() => {
+    previousLanguage = i18n.language
+    i18n.changeLanguage('es')
+  })
+  afterEach(() => {
+    i18n.changeLanguage(previousLanguage)
+  })
+  it('amount with no decimals', () => {
+    expect(units(2, 'kWh')).toBe('2,00 kWh')
+  })
+  it('amount with two decimals', () => {
+    expect(units(2.15, 'kWh')).toBe('2,15 kWh')
+  })
+  it('amount with rounding up', () => {
+    expect(units(2.159, 'kWh')).toBe('2,16 kWh')
+  })
+  it('amount with rounding down', () => {
+    expect(units(2.151, 'kWh')).toBe('2,15 kWh')
+  })
+  it('amount with rounding middle', () => {
+    expect(units(2.155, 'kWh')).toBe('2,16 kWh')
+  })
+  it('amount with negative', () => {
+    expect(units(-2, 'kWh')).toBe('-2,00 kWh')
+  })
+  it('amount with string number', () => {
+    expect(units('-2', 'kWh')).toBe('-2,00 kWh')
+  })
+  it('amount with undefined', () => {
+    expect(units(undefined, 'kWh')).toBe('-- kWh')
+  })
+  it('amount over thousands puts point', () => {
+    i18n.changeLanguage('es')
+    expect(units(2345, 'kWh')).toBe('2.345,00 kWh')
+  })
+  it('basque locale, do not frexises units sign like for money and percent', () => {
+    i18n.changeLanguage('eu')
+    expect(units(2345, 'kWh')).toBe('2.345,00 kWh')
+  })
+  it('english locale, switch of separators', () => {
+    i18n.changeLanguage('en')
+    expect(units(2345, 'kWh')).toBe('2,345.00 kWh')
+  })
+  it('explicit decimals', () => {
+    expect(units(2.155, 'kWh', 0)).toBe('2 kWh')
   })
 })
 

@@ -26,7 +26,20 @@ export const contractFields = [
   'discharge_date',
   'status',
 ]
-export default function transformContractDetails(contractData) {
+export function transformInstallationDetails(data) {
+  const t = i18n.t
+  const productionTecnologyOptions = {
+    FV: t('INSTALLATION_DETAIL.TECHNOLOGY_PHOTOVOLTAIC'),
+    H: t('INSTALLATION_DETAIL.TECHNOLOGY_HYDRO'),
+    E: t('INSTALLATION_DETAIL.TECHNOLOGY_WIND'),
+  }
+  return {
+    ...data,
+    rated_power: format.units(data.rated_power, 'kW', 0),
+    technology: format.enumeration(data.technology, productionTecnologyOptions),
+  }
+}
+export default function transformContractDetails(contract) {
   const t = i18n.t
   const billingModeOptions = {
     index: t('CONTRACT_DETAIL.BILLING_MODE_INDEX'),
@@ -36,26 +49,42 @@ export default function transformContractDetails(contractData) {
     directa_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT'),
     indirecta_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_INDIRECT'),
   }
-
-  if (contractData.cost_deviation == 'included') {
-    contractData.reduction_deviation += ' %'
+  const contractStatusOptions = {
+    esborrany: t('CONTRACT_DETAIL.CONTRACT_STATUS_DRAFT'),
+    validar: t('CONTRACT_DETAIL.CONTRACT_STATUS_VALIDATION'),
+    pendent: t('CONTRACT_DETAIL.CONTRACT_STATUS_PENDING'),
+    activa: t('CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVE'),
+    cancelada: t('CONTRACT_DETAIL.CONTRACT_STATUS_CANCELLED'),
+    contracte: t('CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVATION'),
+    novapolissa: t('CONTRACT_DETAIL.CONTRACT_STATUS_NEW_CONTRACT'),
+    modcontractual: t('CONTRACT_DETAIL.CONTRACT_STATUS_MODIFICATION'),
+    impagament: t('CONTRACT_DETAIL.CONTRACT_STATUS_UNPAID'),
+    tall: t('CONTRACT_DETAIL.CONTRACT_STATUS_CUT'),
+    baixa: t('CONTRACT_DETAIL.CONTRACT_STATUS_ENDED'),
   }
-  if (contractData.cost_deviation != 'included') {
-    contractData.reduction_deviation = 'N/A'
+  const costDeviationIncludedOptions = {
+    included: t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED'),
+    not_included: t('CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED'),
   }
-  if (contractData.cost_deviation == 'included') {
-    contractData.cost_deviation = t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED')
+  return {
+    ...contract,
+    reduction_deviation:
+      contract.cost_deviation === 'included'
+        ? format.percent(contract.reduction_deviation, 0)
+        : 'N/A',
+    cost_deviation: format.enumeration(
+      contract.cost_deviation,
+      costDeviationIncludedOptions,
+    ),
+    billing_mode: format.enumeration(contract.billing_mode, billingModeOptions),
+    representation_type: format.enumeration(
+      contract.representation_type,
+      representationTypeOptions,
+    ),
+    discharge_date: format.date(contract.discharge_date),
+    proxy_fee: format.units(contract.proxy_fee, '€/MWh', 2),
+    status: format.enumeration(contract.status, contractStatusOptions),
   }
-  contractData.billing_mode = format.enumeration(
-    contractData.billing_mode,
-    billingModeOptions,
-  )
-  contractData.representation_type = format.enumeration(
-    contractData.representation_type,
-    representationTypeOptions,
-  )
 
-  contractData.status = t('CONTRACT_DETAIL.STATUS_ACTIVE')
-
-  return contractData
+  return contract
 }

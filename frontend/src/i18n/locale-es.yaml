@@ -131,28 +131,42 @@ INSTALLATION_DETAIL:
   NAME: Nombre
   POSTAL_CODE: Código postal
   PROVINCE: Provincia
-  RATED_POWER: Potencia nominal [kW]
+  RATED_POWER: Potencia nominal
   TECHNOLOGY: Tecnología
   CIL: CIL
   TYPE: Código de instalación tipo
   ERROR_LOADING_DATA: Error cargando los datos
   BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
+  TECHNOLOGY_PHOTOVOLTAIC: Fotovoltáica
+  TECHNOLOGY_HYDRO: Hidroeléctrica
+  TECHNOLOGY_WIND: Eólica
 CONTRACT_DETAIL:
   CONTRACT_DETAILS_TITLE: Detalles del contrato
   BILLING_MODE: Modo de facturación
   COST_DEVIATION: Coste de los desvíos
   DISCHARGE_DATE: Fecha del alta
   IBAN: IBAN
-  PROXY_FEE: Retribución para el servicio de representación [€/MWh]
+  PROXY_FEE: Retribución para el servicio de representación
   REDUCTION_DEVIATION: Reducción de los desvíos por efecto cartera
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado del contrato
   BILLING_MODE_INDEX: Indexada
   BILLING_MODE_ATR: ATR
   COST_DEVIATION_INCLUDED: Incluido
-  STATUS_ACTIVE: Activo
+  COST_DEVIATION_NOT_INCLUDED: No incluido
   REPRESENTATION_TYPE_DIRECT: Indirecta a Mercado y Directa ante la CNMC
   REPRESENTATION_TYPE_INDIRECT: Indirecta a Mercado y Indirecta ante la CNMC
+  CONTRACT_STATUS_DRAFT: Borrador
+  CONTRACT_STATUS_VALIDATION: Validándose
+  CONTRACT_STATUS_PENDING: Pendiente
+  CONTRACT_STATUS_ACTIVE: Activo
+  CONTRACT_STATUS_CANCELLED: Cancelado
+  CONTRACT_STATUS_ACTIVATION: Proceso de activación
+  CONTRACT_STATUS_NEW_CONTRACT: Proceso nuevo contrato
+  CONTRACT_STATUS_MODIFICATION: Modificación contractual
+  CONTRACT_STATUS_UNPAID: Impago
+  CONTRACT_STATUS_CUT: Corte
+  CONTRACT_STATUS_ENDED: Baja
 INVOICES:
   INVOICES_TITLE: Facturas
   TABLE_TITLE: '{{n}} facturas'
