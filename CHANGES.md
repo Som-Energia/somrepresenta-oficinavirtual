@@ -1,13 +1,15 @@
 # Change log
 
-## Unreleased
+## 0.4.0 (2023-12-19)
 
 - Smart invoice pdf buttons (show progress, errors, completion)
-- Continuous integration enabled
-- Using component library
+- Contract navigation
 - Animated error image
 - Localized formatting for installation details fields
 - Added missing translations for enum values from ERP
+- Development infrastructure
+    - Continuous integration enabled
+    - Using component library
 
 ## 0.3.0 (2023-12-22)
 
