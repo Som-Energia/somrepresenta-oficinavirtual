@@ -76,17 +76,19 @@ const routes = [
             path: '/installation',
             element: (
               <InstallationContextProvider>
-                <InstallationsPage />
+                <Outlet />
               </InstallationContextProvider>
             ),
-          },
-          {
-            path: '/installation/:contract_number',
-            element: (
-              <InstallationContextProvider>
-                <DetailInstallationPage />
-              </InstallationContextProvider>
-            ),
+            children: [
+              {
+                path: '',
+                element: <InstallationsPage />,
+              },
+              {
+                path: ':contract_number',
+                element: <DetailInstallationPage />,
+              },
+            ],
           },
           {
             path: '/invoices',
