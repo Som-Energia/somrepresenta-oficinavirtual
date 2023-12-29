@@ -137,8 +137,8 @@ INSTALLATION_DETAIL:
   TYPE: Código de instalación tipo
   ERROR_LOADING_DATA: Error cargando los datos
   BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
-  TECHNOLOGY_PHOTOVOLTAIC: Fotovoltàica
-  TECHNOLOGY_HYDRO: Hidroelèctrica
+  TECHNOLOGY_PHOTOVOLTAIC: Fotovoltáica
+  TECHNOLOGY_HYDRO: Hidroeléctrica
   TECHNOLOGY_WIND: Eólica
 CONTRACT_DETAIL:
   CONTRACT_DETAILS_TITLE: Detalles del contrato
