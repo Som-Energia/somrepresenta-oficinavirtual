@@ -25,7 +25,7 @@ IMPORTANT: `subscribe()` returns a function to unsubscribe. Use it.
 
 const _subscribers = new Set()
 function _notify(message, level, extra) {
-  _subscribers.forEach((l) => l({ message, level, ...(extra || {}) }))
+  _subscribers.forEach((l) => l({ message, level, ...extra }))
 }
 
 function subscribe(subscriber) {

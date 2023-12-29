@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import i18n from '../../i18n/i18n'
 
-import transformContractDetails, {
+import {
+  transformContractDetails,
   transformInstallationDetails,
+  computeNavigationInfo,
 } from './detailInstallationData'
 
 describe('transformContractDetails', () => {
@@ -136,5 +138,79 @@ describe('transformInstallationDetails', () => {
     }
     const result = transformInstallationDetails(contractData)
     expect(result['rated_power']).toEqual('11 kW')
+  })
+})
+
+describe('computeNavigationInfo', () => {
+  it('Returns empty when installations length is smaller than 2', () => {
+    const installations = [
+      {
+        contract_number: 'a_contract_number',
+        installation_name: 'an_installation_name',
+      },
+    ]
+    const currentInstallationContractNumber = 'a_contract_number'
+
+    const result = computeNavigationInfo(installations, currentInstallationContractNumber)
+
+    expect(result).toEqual({})
+  })
+
+  describe('Having the installation 2 elements', () => {
+    it('Returns the not current element as before and next navigation values', () => {
+      const installations = [
+        {
+          contract_number: 'a_contract_number',
+          installation_name: 'an_installation_name',
+        },
+        {
+          contract_number: 'another_contract_number',
+          installation_name: 'another_installation_name',
+        },
+      ]
+      const currentInstallationContractNumber = 'a_contract_number'
+
+      const result = computeNavigationInfo(
+        installations,
+        currentInstallationContractNumber,
+      )
+
+      const expected_result = {
+        before: 'another_contract_number',
+        next: 'another_contract_number',
+      }
+      expect(result).toEqual(expected_result)
+    })
+  })
+
+  describe('Having the installation more than 2 elements', () => {
+    it('Returns the not current element as before and next navigation values', () => {
+      const installations = [
+        {
+          contract_number: 'a_contract_number',
+          installation_name: 'an_installation_name',
+        },
+        {
+          contract_number: 'another_contract_number',
+          installation_name: 'another_installation_name',
+        },
+        {
+          contract_number: 'yet_another_contract_number',
+          installation_name: 'yet_another_installation_name',
+        },
+      ]
+      const currentInstallationContractNumber = 'another_contract_number'
+
+      const result = computeNavigationInfo(
+        installations,
+        currentInstallationContractNumber,
+      )
+
+      const expected_result = {
+        before: 'a_contract_number',
+        next: 'yet_another_contract_number',
+      }
+      expect(result).toEqual(expected_result)
+    })
   })
 })

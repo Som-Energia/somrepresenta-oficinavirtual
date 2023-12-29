@@ -209,7 +209,9 @@ def dummy_installation_details(username: str, contract_number: str) -> Installat
             code=contract_number,
             error=f"{contract_number} (Dummy error)",
         ))
-    return InstallationDetailsResult(**ns.load('frontend/src/data/dummyinstallationdetail.yaml'))
+    details = InstallationDetailsResult(**ns.load('frontend/src/data/dummyinstallationdetail.yaml'))
+    details.installation_details.contract_number = contract_number
+    return details
 
 invoice_pdf_exceptions = {
     e.__name__: e

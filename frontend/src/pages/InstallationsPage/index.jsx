@@ -1,44 +1,31 @@
-import React from 'react'
+import React, { useContext, useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import dummyData from '../../data/dummyinstallations.yaml'
 import Button from '@mui/material/Button'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import SolarPowerIcon from '@mui/icons-material/SolarPower'
 import { Link } from 'react-router-dom'
 import TableEditor from '../../components/TableEditor'
-import { useAuth } from '../../components/AuthProvider'
-import ovapi from '../../services/ovapi'
 import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
+import { InstallationContext } from '../../components/InstallationProvider'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
-  const [isLoading, beLoading] = React.useState(true)
-  const [rows, setRows] = React.useState([])
-  const [error, setError] = React.useState(false)
-  const { currentUser } = useAuth()
+  const [pageLoading, setPageLoading] = useState(true)
+  const { installations, error } = useContext(InstallationContext)
+  const memoizedInstallations = useMemo(() => installations, [installations])
 
-  React.useEffect(() => {
-    getInstallations()
-  }, [currentUser])
-
-  async function getInstallations() {
-    beLoading(true)
-    setRows([])
-    setError(false)
-    try {
-      setRows(await ovapi.installations(currentUser))
-    } catch (error) {
-      setError(error)
+  useEffect(() => {
+    setPageLoading(true)
+    if (installations) {
+      setPageLoading(false)
     }
-    beLoading(false)
-  }
+  }, [installations])
 
   const columns = [
     {
@@ -54,27 +41,28 @@ export default function InstallationsPage(params) {
       numeric: false,
     },
   ]
+
   const actions = []
   const selectionActions = []
+
   const itemActions = [
     {
       title: t('INSTALLATIONS.TOOLTIP_DETAILS'),
-      view: (contract) => {
-        return (
-          <Button
-            variant="contained"
-            size="small"
-            component={Link}
-            to={`/installation/${contract.contract_number}`}
-            endIcon={<ChevronRightIcon />}
-          >
-            {t('INSTALLATIONS.BUTTON_DETAILS')}
-          </Button>
-        )
-      },
+      view: (contract) => (
+        <Button
+          variant="contained"
+          size="small"
+          component={Link}
+          to={`/installation/${contract.contract_number}`}
+          endIcon={<ChevronRightIcon />}
+        >
+          {t('INSTALLATIONS.BUTTON_DETAILS')}
+        </Button>
+      ),
     },
   ]
-  return isLoading ? (
+
+  return pageLoading ? (
     <Loading />
   ) : (
     <Container>
@@ -85,21 +73,21 @@ export default function InstallationsPage(params) {
         <ErrorSplash
           title={error.context}
           message={error.error}
-          backaction={() => getInstallations()}
+          backlink="/installation"
           backtext={t('INSTALLATIONS.RELOAD')}
         />
       ) : (
         <TableEditor
-          title={t('INSTALLATIONS.TABLE_TITLE', { n: rows.length })}
+          title={t('INSTALLATIONS.TABLE_TITLE', { n: memoizedInstallations.length })}
           defaultPageSize={12}
           pageSizes={[]}
           columns={columns}
-          rows={rows}
+          rows={memoizedInstallations}
           actions={actions}
           selectionActions={selectionActions}
           itemActions={itemActions}
           idField={'contract_number'}
-          loading={isLoading}
+          loading={pageLoading}
           noDataPlaceHolder={
             <TableRow>
               <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
@@ -111,7 +99,7 @@ export default function InstallationsPage(params) {
               </TableCell>
             </TableRow>
           }
-        ></TableEditor>
+        />
       )}
     </Container>
   )

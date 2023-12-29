@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Container from '@mui/material/Container'
@@ -12,36 +12,52 @@ import ErrorSplash from '../../components/ErrorSplash'
 import NavigationButtons from '../../components/NavigationButtons'
 import { contractFields } from './detailInstallationData'
 import { installationFields } from './detailInstallationData'
-import transformContractDetails, {
+import {
+  transformContractDetails,
   transformInstallationDetails,
+  computeNavigationInfo,
 } from './detailInstallationData'
+import { InstallationContext } from '../../components/InstallationProvider'
 
-export default function DetailInstallationPage(params) {
+export default function DetailInstallationPage() {
   const { contract_number } = useParams()
   const { t } = useTranslation()
   const [installationDetail, setInstallationDetail] = useState(undefined)
   const [contractDetail, setContractDetail] = useState(undefined)
   const [error, setError] = useState(false)
+  const { installations } = useContext(InstallationContext)
+  const memoizedInstallations = useMemo(() => installations, [installations])
+  const navigationInfo = computeNavigationInfo(
+    memoizedInstallations,
+    installationDetail?.contract_number,
+  )
+  const navigationBeforeUrl = navigationInfo.before
+    ? `/installation/${navigationInfo.before}`
+    : undefined
+  const navigationNextUrl = navigationInfo.next
+    ? `/installation/${navigationInfo.next}`
+    : undefined
 
   useEffect(() => {
     getDetailInstallation()
-  }, [contract_number])
+  }, [contract_number, memoizedInstallations])
 
   async function getDetailInstallation() {
     setError(false)
     setInstallationDetail(undefined)
     setContractDetail(undefined)
-    var result
     try {
-      result = await ovapi.installationDetails(contract_number)
-    } catch (e) {
-      setError(e)
-      return
+      const result = await ovapi.installationDetails(contract_number)
+      if (!result) {
+        setError(true)
+        return
+      }
+      setInstallationDetail(result?.installation_details)
+      const contractData = transformContractDetails(result?.contract_details)
+      setContractDetail(contractData)
+    } catch (error) {
+      setError(true)
     }
-    const installationData = transformInstallationDetails(result?.installation_details)
-    setInstallationDetail(installationData)
-    const contractData = transformContractDetails(result?.contract_details)
-    setContractDetail(contractData)
   }
 
   return !error && (!installationDetail || !contractDetail) ? (
@@ -50,23 +66,21 @@ export default function DetailInstallationPage(params) {
     <Container>
       <PageTitle Icon={SolarPowerIcon}>
         {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
+        <NavigationButtons
+          toBefore={navigationBeforeUrl}
+          toNext={navigationNextUrl}
+          toReturn="/installation"
+          returnIcon={<FormatListBulletedIcon />}
+        />
       </PageTitle>
       {error ? (
         <ErrorSplash
-          title={t('INSTALLATION_DETAIL.ERROR_LOADING_DATA')}
-          message={error.error}
+          message={t('INSTALLATION_DETAIL.ERROR_LOADING_DATA')}
           backlink="/installation"
           backtext={t('INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS')}
         />
       ) : (
         <>
-          {/* TODO: get the before and after user installations */}
-          <NavigationButtons
-            toBefore="/installation/00001"
-            toNext="/installation/00001"
-            toReturn="/installation"
-            returnIcon={<FormatListBulletedIcon />}
-          />
           <SimpleTable
             fields={installationDetail}
             fieldsOrder={installationFields}
