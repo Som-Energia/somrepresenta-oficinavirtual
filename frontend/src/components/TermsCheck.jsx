@@ -47,7 +47,7 @@ function TermsDialog(props) {
         sx={{
           display: 'flex',
           flexFlow: 'column',
-          alignItems: 'left',
+          alignItems: 'end',
           p: 2,
           gap: 2,
           maxWidth: '50rem',
