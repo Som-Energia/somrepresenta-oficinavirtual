@@ -21,6 +21,7 @@ from .exceptions import(
     ContractNotExists,
     UnauthorizedAccess,
     NoSuchUser,
+    NoSuchInvoice,
     NoDocumentVersions,
 )
 from .dummy import dummy_invoice_pdf
@@ -36,6 +37,7 @@ expected_erp_exceptions = [
     ContractNotExists,
     UnauthorizedAccess,
     NoSuchUser,
+    NoSuchInvoice,
     NoDocumentVersions,
 ]
 def process_erp_errors(erp_response):

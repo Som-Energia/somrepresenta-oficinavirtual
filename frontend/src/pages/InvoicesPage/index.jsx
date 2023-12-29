@@ -15,6 +15,7 @@ import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
 import format from '../../services/format'
+import DownloadButton from './DownloadButton'
 //import dummyData from '../../data/dummyinvoices.yaml'
 
 export default function InvoicesPage(params) {
@@ -105,15 +106,13 @@ export default function InvoicesPage(params) {
       icon: <DownloadIcon />,
     },
   ]
-  function onDownloadPdf(invoice) {
-    console.log('Hola', invoice.invoice_number)
-    window.location = `/api/invoice/${invoice.invoice_number}/pdf`
-  }
   const itemActions = [
     {
       title: t('INVOICES.TOOLTIP_PDF'),
       icon: <PictureAsPdfIcon />,
-      handler: onDownloadPdf,
+      view: (invoice) => (
+        <DownloadButton context={invoice} title={t('INVOICES.TOOLTIP_PDF')} />
+      ),
     },
   ]
   if (isLoading) return <Loading />

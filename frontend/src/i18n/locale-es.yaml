@@ -115,6 +115,7 @@ OVAPI:
   CONTEXT_INSTALLATION_DETAILS: Error obteniendo los detalles de la instalación
   CONTEXT_INVOICES: Error obteniendo la lista de facturas
   CONTEXT_SIGNING_DOCUMENT: Error aceptando condiciones
+  CONTEXT_INVOICE_PDF_DOWNLOAD: Error descargando la factura {{invoice}}
   ERR_UNABLE_TO_SIGN_DOCUMENT: 'No fue posible firmar el documento'
   ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
   ERR_GATEWAY: El sistema no está disponible por mantenimiento. Prueba más tarde.
@@ -184,5 +185,8 @@ INVOICES:
   TOOLTIP_DOWNLOAD_ZIP: Descarga PDF's seleccionados en un ZIP
   NO_INVOICES: No se han encontrado facturas
   RELOAD: Recarga
+  DOWNLOAD_TOOLTIP_DOWNLOAD: Descarga
+  DOWNLOAD_TOOLTIP_SUCCESS: Descarga finalizada
+  DOWNLOAD_TOOLTIP_ONGOING: En proceso
 PRODUCTION:
   PRODUCTION_TITLE: Producción

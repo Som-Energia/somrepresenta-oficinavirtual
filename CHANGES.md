@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Smart invoice pdf buttons (show progress, errors, completion)
 - Continuous integration enabled
 - Using component library
 - Animated error image

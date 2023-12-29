@@ -242,6 +242,33 @@ async function invoices() {
     })
 }
 
+function invoicePdf(invoiceNumber) {
+  const context = i18n.t('OVAPI.CONTEXT_INVOICE_PDF_DOWNLOAD', { invoice: invoiceNumber })
+  return axios
+    .get(`/api/invoice/${invoiceNumber}/pdf`, {
+      responseType: 'blob',
+    })
+    .catch(handleCommonErrors(context))
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
+      const url = window.URL.createObjectURL(new Blob([result.data]))
+      const link = document.createElement('a')
+      link.href = url
+      const filename =
+        result.headers['content-disposition'].match(/filename="([^"]+)"/)[1]
+      if (filename) link.setAttribute('download', filename)
+      document.body.appendChild(link)
+      link.click()
+      // clean up
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+      return result.data
+    })
+}
+
 export default {
   version,
   logout,
@@ -253,4 +280,5 @@ export default {
   installations,
   installationDetails,
   invoices,
+  invoicePdf,
 }
