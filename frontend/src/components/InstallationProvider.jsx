@@ -26,8 +26,6 @@ const InstallationContextProvider = ({ children }) => {
 
     getInstallations()
   }, [memoizedCurrentUser])
-    getInstallations()
-  }, [memoizedCurrentUser])
 
   const contextValue = useMemo(
     () => ({ installations, loading, error }),
