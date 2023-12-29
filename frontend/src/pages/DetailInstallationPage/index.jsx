@@ -52,7 +52,8 @@ export default function DetailInstallationPage() {
         setError(true)
         return
       }
-      setInstallationDetail(result?.installation_details)
+      const installData = transformInstallationDetails(result?.installationDetails)
+      setInstallationDetail(installData)
       const contractData = transformContractDetails(result?.contract_details)
       setContractDetail(contractData)
     } catch (error) {
