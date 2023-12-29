@@ -86,8 +86,6 @@ function transformContractDetails(contract) {
     proxy_fee: format.units(contract.proxy_fee, '€/MWh', 2),
     status: format.enumeration(contract.status, contractStatusOptions),
   }
-
-  return contract
 }
 
 function computeNavigationInfo(installations, currentInstallationContractNumber) {
