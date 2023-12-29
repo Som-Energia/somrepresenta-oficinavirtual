@@ -16,7 +16,7 @@ export default function BreakPointIndicator() {
         minWidth: '4rem',
         padding: '0.5rem 0.9rem',
         borderRadius: '5px',
-        alignText: 'center',
+        textAlign: 'center',
         color: 'black',
         backgroundColor: {
           xs: '#d99a',
