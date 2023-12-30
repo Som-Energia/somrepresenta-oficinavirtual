@@ -1,6 +1,15 @@
 # Change log
 
-## 0.4.0 (2023-12-19)
+## 0.4.1 (2023-12-30)
+
+- Fixed numerous problems with translations and libraries
+  due to 3rd party duplication via the component library.
+- Chunked vendor output modules
+- Fixed some code messed up during the last merge
+- Linter clean up (bad css, unreachable returns...)
+- Removed all mui full imports
+
+## 0.4.0 (2023-12-29)
 
 - Smart invoice pdf buttons (show progress, errors, completion)
 - Contract navigation
