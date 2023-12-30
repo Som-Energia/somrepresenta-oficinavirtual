@@ -62,7 +62,8 @@ PROFILE:
   PROXY_NAME: Nom representant
   PROXY_VAT: NIF representant
 VERSION_CHECKER:
-  NEW_VERSION_DETECTED_MARKDOWN: "S'ha detectat una actualització de l'aplicació {{title}}\n\
+  NEW_VERSION_DETECTED_MARKDOWN:
+    "S'ha detectat una actualització de l'aplicació {{title}}\n\
     \n- Versió al teu navegador: `{{uiVersion}}`\n- Versió al servidor: `{{apiVersion}}`\n\
     \nEs recarregarà l'aplicació per evitar possibles problemes\n"
   NEW_VERSION_DETECTED_TITLE: Nova versió detectada
@@ -131,17 +132,6 @@ INSTALLATIONS:
   COLUMN_INSTALLATION_NAME: Nom de la instal·lació
   BUTTON_DETAILS: Detall
   TOOLTIP_DETAILS: Detall
-TABLE_EDITOR:
-  LOADING: Estem carregant dades...
-  ACTIONS: Accions
-  SORTED_DESCENDING: Ordre descendent
-  SORTED_ASCENDING: Ordre ascendent
-  N_SELECTED: '{{numSelected}} seleccionats'
-  PLACEHOLDER_SEARCH: Busca...
-  LABEL_SEARCH: Busca
-  N_ITEMS_FILTERED: S'han filtrar {{n}} elements
-  SELECT_ALL: Selecciona-ho tot
-  CLEAR_FILTER: Mostra-ho tot
 OVAPI:
   CONTEXT_LOGIN: Error en validar la identitat
   CONTEXT_INSTALLATIONS: Error en obtenir la llista d'instal·lacions
