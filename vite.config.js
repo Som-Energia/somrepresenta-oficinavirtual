@@ -5,7 +5,12 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  resolve: {
+    dedupe: Object.keys(pkg.dependencies),
+  },
   build: {
+    manifest: true,
+    sourcemap: true,
     outDir: '../backend/dist',
   },
   root: 'frontend',
