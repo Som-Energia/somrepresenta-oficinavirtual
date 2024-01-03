@@ -16,16 +16,7 @@ import { InstallationContext } from '../../components/InstallationProvider'
 
 export default function InstallationsPage(params) {
   const { t, i18n } = useTranslation()
-  const [pageLoading, setPageLoading] = useState(true)
-  const { installations, error } = useContext(InstallationContext)
-  const memoizedInstallations = useMemo(() => installations, [installations])
-
-  useEffect(() => {
-    setPageLoading(true)
-    if (installations) {
-      setPageLoading(false)
-    }
-  }, [installations])
+  const { installations, loading, error } = useContext(InstallationContext)
 
   const columns = [
     {
@@ -62,7 +53,7 @@ export default function InstallationsPage(params) {
     },
   ]
 
-  return pageLoading ? (
+  return loading ? (
     <Loading />
   ) : (
     <Container>
@@ -78,16 +69,16 @@ export default function InstallationsPage(params) {
         />
       ) : (
         <TableEditor
-          title={t('INSTALLATIONS.TABLE_TITLE', { n: memoizedInstallations.length })}
+          title={t('INSTALLATIONS.TABLE_TITLE', { n: installations.length })}
           defaultPageSize={12}
           pageSizes={[]}
           columns={columns}
-          rows={memoizedInstallations}
+          rows={installations}
           actions={actions}
           selectionActions={selectionActions}
           itemActions={itemActions}
           idField={'contract_number'}
-          loading={pageLoading}
+          loading={loading}
           noDataPlaceHolder={
             <TableRow>
               <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
