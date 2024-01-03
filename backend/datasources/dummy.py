@@ -3,6 +3,7 @@ from ..utils.gravatar import gravatar
 from yamlns import ns
 from pathlib import Path
 import base64
+from pydantic import ValidationError
 from .exceptions import(
     ErpError,
     ErpValidationError,
@@ -204,6 +205,11 @@ installation_details_exceptions = {
 }
 
 def dummy_installation_details(username: str, contract_number: str) -> InstallationDetailsResult:
+    if contract_number == "ErpValidationError":
+        try:
+            InstallationDetailsResult() # Missing all attributes
+        except ValidationError as error:
+            raise ErpValidationError(error)
     if contract_number in installation_details_exceptions:
         raise installation_details_exceptions[contract_number](dict(
             code=contract_number,
