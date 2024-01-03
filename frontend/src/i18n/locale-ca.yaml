@@ -107,7 +107,6 @@ CONTRACT_DETAIL:
   STATUS: Estat del contracte
   REDUCTION_DEVIATION: Reducció dels desviaments per efecte de cartera
 INSTALLATION_DETAIL:
-  ERROR_LOADING_DATA: Error carregant les dades
   TYPE: Tipus de seguidor
   TECHNOLOGY: Tecnologia
   RATED_POWER: Potència nominal [kW]

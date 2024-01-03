@@ -19,6 +19,24 @@ import {
 } from './detailInstallationData'
 import { InstallationContext } from '../../components/InstallationProvider'
 
+function PageWrapper({ navigationNextUrl, navigationBeforeUrl, children }) {
+  const { t } = useTranslation()
+  return (
+    <Container>
+      <PageTitle Icon={SolarPowerIcon}>
+        {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
+        <NavigationButtons
+          toBefore={navigationBeforeUrl}
+          toNext={navigationNextUrl}
+          toReturn="/installation"
+          returnIcon={<FormatListBulletedIcon />}
+        />
+      </PageTitle>
+      {children}
+    </Container>
+  )
+}
+
 export default function DetailInstallationPage() {
   const { contract_number } = useParams()
   const { t } = useTranslation()
@@ -64,7 +82,7 @@ export default function DetailInstallationPage() {
         }
         setDetails(result)
       } catch (error) {
-        setError(true)
+        setError(error)
       } finally {
         setLoading(false)
       }
@@ -72,41 +90,56 @@ export default function DetailInstallationPage() {
     getDetailInstallation()
   }, [contract_number, installations])
 
-  return !error && !details ? (
-    <Loading />
-  ) : (
-    <Container>
-      <PageTitle Icon={SolarPowerIcon}>
-        {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
-        <NavigationButtons
-          toBefore={navigationBeforeUrl}
-          toNext={navigationNextUrl}
-          toReturn="/installation"
-          returnIcon={<FormatListBulletedIcon />}
-        />
-      </PageTitle>
-      {error ? (
+  if (listError)
+    return (
+      <PageWrapper
+        navigationBeforeUrl={navigationBeforeUrl}
+        navigationNextUrl={navigationNextUrl}
+      >
         <ErrorSplash
-          message={t('INSTALLATION_DETAIL.ERROR_LOADING_DATA')}
+          title={listError.context}
+          message={listError.error}
           backlink="/installation"
           backtext={t('INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS')}
         />
-      ) : (
-        <>
-          <SimpleTable
-            fields={installationDetails}
-            fieldsOrder={installationFields}
-            translationsPrefix="INSTALLATION_DETAIL"
-            title={t('INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE')}
-          />
-          <SimpleTable
-            fields={contractDetails}
-            fieldsOrder={contractFields}
-            translationsPrefix="CONTRACT_DETAIL"
-            title={t('CONTRACT_DETAIL.CONTRACT_DETAILS_TITLE')}
-          />
-        </>
-      )}
-    </Container>
+      </PageWrapper>
+    )
+
+  if (error)
+    return (
+      <PageWrapper
+        navigationBeforeUrl={navigationBeforeUrl}
+        navigationNextUrl={navigationNextUrl}
+      >
+        <ErrorSplash
+          title={error.context}
+          message={error.error}
+          backlink="/installation"
+          backtext={t('INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS')}
+        />
+      </PageWrapper>
+    )
+
+  if (loading || listLoading || !installationDetails || !contractDetails)
+    return <Loading />
+
+  return (
+    <PageWrapper
+      navigationBeforeUrl={navigationBeforeUrl}
+      navigationNextUrl={navigationNextUrl}
+    >
+      <SimpleTable
+        fields={installationDetails}
+        fieldsOrder={installationFields}
+        translationsPrefix="INSTALLATION_DETAIL"
+        title={t('INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE')}
+      />
+      <SimpleTable
+        fields={contractDetails}
+        fieldsOrder={contractFields}
+        translationsPrefix="CONTRACT_DETAIL"
+        title={t('CONTRACT_DETAIL.CONTRACT_DETAILS_TITLE')}
+      />
+    </PageWrapper>
   )
 }

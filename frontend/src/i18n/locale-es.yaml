@@ -136,7 +136,6 @@ INSTALLATION_DETAIL:
   TECHNOLOGY: Tecnología
   CIL: CIL
   TYPE: Código de instalación tipo
-  ERROR_LOADING_DATA: Error cargando los datos
   BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
   TECHNOLOGY_PHOTOVOLTAIC: Fotovoltáica
   TECHNOLOGY_HYDRO: Hidroeléctrica
