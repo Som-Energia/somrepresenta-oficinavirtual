@@ -80,15 +80,11 @@ export default function InstallationsPage(params) {
           idField={'contract_number'}
           loading={loading}
           noDataPlaceHolder={
-            <TableRow>
-              <TableCell colSpan={4} sx={{ textAlign: 'center' }}>
-                <Typography variant="h4">
-                  {t('INSTALLATIONS.NO_INSTALLATIONS')}
-                  <br />
-                  🤷‍♀️
-                </Typography>
-              </TableCell>
-            </TableRow>
+            <Typography variant="h4">
+              {t('INSTALLATIONS.NO_INSTALLATIONS')}
+              <br />
+              🤷‍♀️
+            </Typography>
           }
         />
       )}
