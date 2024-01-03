@@ -8,6 +8,7 @@ import ErrorIcon from '@mui/icons-material/Error'
 import { useTranslation } from 'react-i18next'
 import ovapi from '../../services/ovapi'
 
+// States
 const idle = 'idle'
 const done = 'done'
 const inprogress = 'inprogress'
@@ -40,10 +41,10 @@ export default function DownloadButton({ context, title }) {
     state === idle
       ? title ?? t('INVOICES.DOWNLOAD_TOOLTIP_DOWNLOAD')
       : state === inprogress
-      ? t('INVOICES.DOWNLOAD_TOOLTIP_ONGOING')
-      : error
-      ? error.error
-      : t('INVOICES.DOWNLOAD_TOOLTIP_SUCCESS')
+        ? t('INVOICES.DOWNLOAD_TOOLTIP_ONGOING')
+        : error
+          ? error.error
+          : t('INVOICES.DOWNLOAD_TOOLTIP_SUCCESS')
 
   const color = state !== done ? 'default' : error ? 'error' : 'success'
 
