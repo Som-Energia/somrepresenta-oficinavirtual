@@ -10,12 +10,13 @@ const InstallationContextProvider = ({ children }) => {
   const [installations, setInstallations] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const memoizedCurrentUser = useMemo(() => currentUser, [currentUser])
 
   useEffect(() => {
     const getInstallations = async () => {
+      console.log('Reloading install lists')
+      setLoading(true)
       try {
-        const installationsData = await ovapi.installations(memoizedCurrentUser)
+        const installationsData = await ovapi.installations(currentUser)
         setInstallations(installationsData)
       } catch (error) {
         setError(error)
@@ -25,18 +26,18 @@ const InstallationContextProvider = ({ children }) => {
     }
 
     getInstallations()
-  }, [memoizedCurrentUser])
+  }, [currentUser])
 
   const contextValue = useMemo(
     () => ({ installations, loading, error }),
     [installations, loading, error],
   )
 
-  return installations !== null ? (
+  return (
     <InstallationContext.Provider value={contextValue}>
       {children}
     </InstallationContext.Provider>
-  ) : null
+  )
 }
 
 InstallationContextProvider.propTypes = {
