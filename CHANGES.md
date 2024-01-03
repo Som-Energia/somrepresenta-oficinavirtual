@@ -1,5 +1,13 @@
 # Change log
 
+## 0.4.2 (2024-01-03)
+
+- Fix: details failed because misspelled attribute name
+- Fix: error handling in install details and list pages
+- Fix: misspelled ca translation
+- Fix: installation list with nodata failed
+- Android downloads (see somrepresenta-android repo)
+
 ## 0.4.1 (2023-12-30)
 
 - Fixed numerous problems with translations and libraries
