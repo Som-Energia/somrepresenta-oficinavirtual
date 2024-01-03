@@ -22,14 +22,26 @@ import { InstallationContext } from '../../components/InstallationProvider'
 export default function DetailInstallationPage() {
   const { contract_number } = useParams()
   const { t } = useTranslation()
-  const [installationDetail, setInstallationDetail] = useState(undefined)
-  const [contractDetail, setContractDetail] = useState(undefined)
+  const {
+    installations,
+    loading: listLoading,
+    error: listError,
+  } = useContext(InstallationContext)
+  const [details, setDetails] = useState(undefined)
   const [error, setError] = useState(false)
-  const { installations } = useContext(InstallationContext)
-  const memoizedInstallations = useMemo(() => installations, [installations])
-  const navigationInfo = computeNavigationInfo(
-    memoizedInstallations,
-    installationDetail?.contract_number,
+  const [loading, setLoading] = useState(false)
+
+  const contractDetails = React.useMemo(
+    () => transformContractDetails(details?.contract_details),
+    [details],
+  )
+  const installationDetails = React.useMemo(
+    () => transformInstallationDetails(details?.installation_details),
+    [details],
+  )
+  const navigationInfo = React.useMemo(
+    () => computeNavigationInfo(installations, contract_number),
+    [installations, contract_number],
   )
   const navigationBeforeUrl = navigationInfo.before
     ? `/installation/${navigationInfo.before}`
@@ -39,29 +51,28 @@ export default function DetailInstallationPage() {
     : undefined
 
   useEffect(() => {
-    getDetailInstallation()
-  }, [contract_number, memoizedInstallations])
-
-  async function getDetailInstallation() {
-    setError(false)
-    setInstallationDetail(undefined)
-    setContractDetail(undefined)
-    try {
-      const result = await ovapi.installationDetails(contract_number)
-      if (!result) {
+    async function getDetailInstallation() {
+      setError(false)
+      setLoading(true)
+      setDetails(undefined)
+      try {
+        console.log('Getting Details', contract_number)
+        const result = await ovapi.installationDetails(contract_number)
+        if (!result) {
+          setError(true)
+          return
+        }
+        setDetails(result)
+      } catch (error) {
         setError(true)
-        return
+      } finally {
+        setLoading(false)
       }
-      const installData = transformInstallationDetails(result?.installation_details)
-      setInstallationDetail(installData)
-      const contractData = transformContractDetails(result?.contract_details)
-      setContractDetail(contractData)
-    } catch (error) {
-      setError(true)
     }
-  }
+    getDetailInstallation()
+  }, [contract_number, installations])
 
-  return !error && (!installationDetail || !contractDetail) ? (
+  return !error && !details ? (
     <Loading />
   ) : (
     <Container>
@@ -83,13 +94,13 @@ export default function DetailInstallationPage() {
       ) : (
         <>
           <SimpleTable
-            fields={installationDetail}
+            fields={installationDetails}
             fieldsOrder={installationFields}
             translationsPrefix="INSTALLATION_DETAIL"
             title={t('INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE')}
           />
           <SimpleTable
-            fields={contractDetail}
+            fields={contractDetails}
             fieldsOrder={contractFields}
             translationsPrefix="CONTRACT_DETAIL"
             title={t('CONTRACT_DETAIL.CONTRACT_DETAILS_TITLE')}

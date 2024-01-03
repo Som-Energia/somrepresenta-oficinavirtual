@@ -28,6 +28,7 @@ export const contractFields = [
 ]
 
 export function transformInstallationDetails(data) {
+  if (!data) return undefined
   const t = i18n.t
   const productionTecnologyOptions = {
     FV: t('INSTALLATION_DETAIL.TECHNOLOGY_PHOTOVOLTAIC'),
@@ -41,6 +42,7 @@ export function transformInstallationDetails(data) {
   }
 }
 function transformContractDetails(contract) {
+  if (!contract) return undefined
   const t = i18n.t
   const billingModeOptions = {
     index: t('CONTRACT_DETAIL.BILLING_MODE_INDEX'),
@@ -89,6 +91,7 @@ function transformContractDetails(contract) {
 }
 
 function computeNavigationInfo(installations, currentInstallationContractNumber) {
+  if (!installations) return {}
   if (installations.length < 2) {
     return {}
   }
