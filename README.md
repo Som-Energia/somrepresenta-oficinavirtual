@@ -57,7 +57,7 @@ by copying `frontend/.env.local-example` as `frontend/.env.local` and editing it
 
 ```bash
 # In diferent consoles:
-make ui-dev # runs the frontend server at localhost:5123
+make ui-dev # runs the frontend server at localhost:5173
 make api-dev # runs the backend server at localhost:5500
 ```
 
