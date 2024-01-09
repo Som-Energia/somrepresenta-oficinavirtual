@@ -85,23 +85,16 @@ describe('transformInstallationDetails', () => {
     const result = transformInstallationDetails(contractData)
     expect(result['technology']).toEqual('-')
   })
-  it('technology, replace E by Eólica', () => {
-    const contractData = {
-      technology: 'E',
-    }
-    const result = transformInstallationDetails(contractData)
-    expect(result['technology']).toEqual('Eólica')
-  })
   it('technology, replace PV by Fotovoltáica', () => {
     const contractData = {
-      technology: 'FV',
+      technology: 'b11',
     }
     const result = transformInstallationDetails(contractData)
     expect(result['technology']).toEqual('Fotovoltáica')
   })
   it('technology, replace H by Hidroeléctrica', () => {
     const contractData = {
-      technology: 'H',
+      technology: 'b42',
     }
     const result = transformInstallationDetails(contractData)
     expect(result['technology']).toEqual('Hidroeléctrica')

@@ -31,9 +31,8 @@ export function transformInstallationDetails(data) {
   if (!data) return undefined
   const t = i18n.t
   const productionTecnologyOptions = {
-    FV: t('INSTALLATION_DETAIL.TECHNOLOGY_PHOTOVOLTAIC'),
-    H: t('INSTALLATION_DETAIL.TECHNOLOGY_HYDRO'),
-    E: t('INSTALLATION_DETAIL.TECHNOLOGY_WIND'),
+    b11: t('INSTALLATION_DETAIL.TECHNOLOGY_PHOTOVOLTAIC'),
+    b42: t('INSTALLATION_DETAIL.TECHNOLOGY_HYDRO'),
   }
   return {
     ...data,

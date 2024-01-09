@@ -42,9 +42,8 @@ RepresentationType = Literal[
 ]
 
 ProductionTechnology = Literal[
-    'FV', # Photovoltaic
-    'H', # Hidraulic
-    'E', # Eolic
+    'b11', # Photovoltaic
+    'b42', # Hidraulic
 ]
 
 DeviationIncluded = Literal[
