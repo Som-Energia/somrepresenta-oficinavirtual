@@ -14,6 +14,7 @@ APP_FRAME:
   PROFILE_TOOLTIP: Perfil
   MENU_CHANGE_PASSWORD: Canvia la contrasenya
   MENU_PROFILE: Perfil
+  MENU_HIJACK: Suplantar
   MENU_LOGOUT: Surt
   LOGIN: Identifica't
   CHOOSE_USER: Escull usuària
