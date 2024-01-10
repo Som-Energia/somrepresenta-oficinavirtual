@@ -3,12 +3,12 @@ from typing import Annotated
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, APIKeyHeader
 from fastapi.responses import JSONResponse
-from fastapi import Depends, Body
+from fastapi import Depends, Body, Form
 from jose import JWTError, jwt
 from consolemsg import error, success
 import os
 from yamlns import ns
-from .auth import auth_error, validated_user, JWT_ALGORITHM
+from .auth import auth_error, validated_user, validated_staff, JWT_ALGORITHM
 from .models import TokenUser
 from .datasources import user_info
 
@@ -103,11 +103,41 @@ def setup_authlocal(app):
             raise
         return response
 
+    @app.post("/api/auth/hijack", response_model=dict)
+    async def login_hijack(
+        username: str = Form(),
+        staff_user: dict = Depends(validated_staff)
+    ):
+        try:
+            hijacked = user_info(username)
+            if not hijacked:
+                raise auth_error("Incorrect username")
+
+            access_token = create_access_token(hijacked.data())
+
+            response = JSONResponse(dict(
+                access_token= access_token,
+                token_type= "bearer",
+            ))
+            expires_seconds = int(os.getenv("JWT_EXPIRES"))
+            response.set_cookie(
+                "Authorization",
+                value=f"Bearer {access_token}",
+                max_age=expires_seconds,
+                expires=expires_seconds,
+                secure=True, # TODO: just if https in request
+                httponly=True,
+            )
+        except Exception as e:
+            error(f"While autenticating: {type(e)} {e}")
+            raise
+        return response
+
     @app.post('/api/auth/change_password')
     def local_auth_change_password(
         current_password: Annotated[str, Body()],
         new_password: Annotated[str, Body()],
-        user: dict = Depends(validated_user)
+        user: dict = Depends(validated_user),
     ):
         user = TokenUser(**user)
         "Change the password for the Local Authentication"
