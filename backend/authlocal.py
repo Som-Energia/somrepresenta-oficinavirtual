@@ -113,6 +113,9 @@ def setup_authlocal(app):
             if not hijacked:
                 raise auth_error("Incorrect username")
 
+            if 'staff' in hijacked.roles:
+                raise forbidden_error(f"Staff {hijacked.username} is not hijackable")
+
             access_token = create_access_token(hijacked.data())
 
             response = JSONResponse(dict(

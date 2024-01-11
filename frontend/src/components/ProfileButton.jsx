@@ -107,6 +107,7 @@ function ProfileButton(params) {
       text: t('APP_FRAME.MENU_HIJACK'),
       icon: <SensorOccupiedIcon />,
       onclick: hijack,
+      hidden: !currentUser?.roles.includes('staff')
     },
     {
       text: t('APP_FRAME.MENU_LOGOUT'),
