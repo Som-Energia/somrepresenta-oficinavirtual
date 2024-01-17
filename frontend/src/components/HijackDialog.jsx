@@ -8,8 +8,10 @@ import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import { useTranslation } from 'react-i18next'
+import { useCookies } from "react-cookie";
 import ov from '../services/ovapi'
 import wait from '../services/wait'
+import useLocalStorage from '../hooks/LocalStorage'
 
 // TODO: Let the user inject the specific function
 // to actually perform the action and thus removing the
@@ -20,6 +22,7 @@ function HijackDialog(params) {
     const [username, setUsername] = React.useState('')
     const [isLoading, beLoading] = React.useState(false)
     const [error, setError] = React.useState()
+    const [cookies, setCookie] = useCookies(['Hijacked']);
     const { t, i18n } = useTranslation()
 
     async function handleSubmit(ev) {
@@ -37,6 +40,7 @@ function HijackDialog(params) {
             beLoading(false)
             return
           }
+          setCookie('Hijacked', true)
           closeDialog()
         })
     }

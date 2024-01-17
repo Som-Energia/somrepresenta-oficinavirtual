@@ -1,27 +1,50 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import IconLogout from '@mui/icons-material/Logout'
 import { useTranslation } from 'react-i18next'
-import useLocalStorage from '../hooks/LocalStorage'
+import { useCookies } from 'react-cookie'
+import { useAuth } from './AuthProvider'
 
-
-function HijackWarning (params){
-  const [hijacked, setHijacked] = useLocalStorage('hijacked', true)
+function HijackWarning() {
   const { t, i18n } = useTranslation()
+  const { logout } = useAuth()
   const [open, setOpen] = useState(true)
+  const [cookies, setCookie, removeCookie] = useCookies(['Hijacked'])
+
   useEffect(() => {
-    console.log(hijacked)
-  }, [hijacked])
-  function handleClose () {
-    setHijacked(false)
+    setOpen(cookies['Hijacked'])
+  }, [cookies])
+
+  function handleClose() {
+    setCookie('Hijacked', false)
+    logout()
   }
-    return hijacked && (
-      <div style={{position: 'fixed', bottom: '30px', right: '20px'}}>
-    <Box component="section" sx={{ p: 2, border: '1px solid black', backgroundColor: 'lightgrey' }}>
-      Modo suplantación activado
-      <Button onClick={handleClose}>AAAH</Button>
-    </Box>
+
+  return (
+    open && (
+      <div style={{ position: 'fixed', bottom: '30px', right: '20px' }}>
+        <Box
+          component="section"
+          sx={{
+            p: 2,
+            backgroundColor: 'lightgrey',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            size: 'large'
+          }}
+        >
+          Modo suplantación activado
+          <Button variant="contained" startIcon={<IconLogout />}
+            style={{
+              backgroundColor: 'grey',
+              marginTop: '8px',
+            }}
+            onClick={handleClose}>Salir</Button>
+        </Box>
       </div>
-    );
+    )
+  )
 }
 export default HijackWarning
