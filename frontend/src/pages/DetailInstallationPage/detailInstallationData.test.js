@@ -94,6 +94,13 @@ describe('transformInstallationDetails', () => {
   })
   it('technology, replace H by Hidroeléctrica', () => {
     const contractData = {
+      technology: 'b41',
+    }
+    const result = transformInstallationDetails(contractData)
+    expect(result['technology']).toEqual('Hidroeléctrica')
+  })
+  it('technology, replace H by Hidroeléctrica', () => {
+    const contractData = {
       technology: 'b42',
     }
     const result = transformInstallationDetails(contractData)

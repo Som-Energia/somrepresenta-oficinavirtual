@@ -43,6 +43,7 @@ RepresentationType = Literal[
 
 ProductionTechnology = Literal[
     'b11', # Photovoltaic
+    'b41', # Hidraulic
     'b42', # Hidraulic
 ]
 
@@ -121,7 +122,7 @@ class InstallationDetails(BaseModel):
 class ContractDetails(BaseModel):
     billing_mode: BillingMode
     cost_deviation: DeviationIncluded
-    discharge_date: datetime.date 
+    discharge_date: datetime.date
     iban: str
     proxy_fee: float
     reduction_deviation: int
