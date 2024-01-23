@@ -1,5 +1,9 @@
 # Change log
 
+## 0.5.0 (2024-01-23)
+
+- Hijack implementation
+
 ## 0.4.2 (2024-01-03)
 
 - Fix: details failed because misspelled attribute name
@@ -50,7 +54,7 @@
 - New reusable components:
   - TableEditor: to show list of items with actions
   - SimpleTable: to show data sheets
-  - SnackbarMessages: listen messages and show temporary error messages 
+  - SnackbarMessages: listen messages and show temporary error messages
   - ErrorSplash: to show static errors
 - RGPD check required to access
 - UI check API version to match and do a full reload after a countdown
