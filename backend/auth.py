@@ -24,6 +24,15 @@ def auth_error(message):
         headers={"WWW-Authenticate": "Bearer"},
     )
 
+def forbidden_error(message):
+    error(message)
+    return HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail=message,
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+
 
 async def validated_user(authorization: str = Depends(oauth2)):
     schema, token = get_authorization_scheme_param(authorization)
@@ -39,6 +48,12 @@ async def validated_user(authorization: str = Depends(oauth2)):
     except JWTError as e:
         raise auth_error(f"Token decoding failed: {e}")
     return payload
+
+async def validated_staff(user: dict = Depends(validated_user)):
+    if 'staff' not in user.get('roles', []):
+        raise forbidden_error(r"{user['username']} is not staff")
+    return user
+
 
 def on_auth(auth, user):
     print("on_auth", auth, user)

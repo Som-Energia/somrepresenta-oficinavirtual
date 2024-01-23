@@ -183,6 +183,32 @@ async function localChangePassword(currentPassword, newPassword) {
     })
 }
 
+async function hijack(username) {
+  const context = i18n.t('OVAPI.CONTEXT_HIJACK')
+  const formData = new FormData()
+  formData.append('username', username)
+  return axios
+    .post('/api/auth/hijack', formData, {
+      headers: {
+        Accept: 'application/json',
+        ContentType: 'multipart/form-data',
+      },
+    })
+    .catch(handleCommonErrors(context))
+    .catch(
+      handleHttpStatus(401, {
+        error: i18n.t('HIJACK.VALIDATION_ERROR'),
+        code: 'VALIDATION_ERROR',
+      }),
+    )
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      console.log(result)
+      if (result.ok) return result.data
+      return result
+    })
+}
+
 function signDocument(documentName) {
   const context = i18n.t('OVAPI.CONTEXT_SIGNING_DOCUMENT')
   const encodedDocument = encodeURIComponent(documentName)
@@ -297,6 +323,7 @@ export default {
   localLogin,
   externalLogin,
   localChangePassword,
+  hijack,
   currentUser,
   signDocument,
   installations,

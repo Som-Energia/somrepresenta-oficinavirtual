@@ -12,12 +12,14 @@ import ov from '../services/ovapi'
 import wait from '../services/wait'
 import ChangePasswordDialog from './ChangePasswordDialog'
 import LoginDialog from './LoginDialog'
+import HijackDialog from './HijackDialog'
 
 const noFunction = () => undefined
 
 const AuthContext = React.createContext({
   login: noFunction,
   logout: noFunction,
+  hijack: noFunction,
   reloadUser: noFunction,
   currentUser: null,
 })
@@ -55,6 +57,19 @@ function AuthProvider({ children }) {
     ov.logout()
   }, [])
 
+  const hijack = React.useCallback(() => {
+    openDialog({
+      children: (
+        <HijackDialog
+          closeDialog={() => {
+            closeDialog()
+            reloadUser()
+          }}
+        />
+      ),
+    })
+  }, [])
+
   const changePassword = React.useCallback(() => {
     openDialog({
       children: (
@@ -84,6 +99,7 @@ function AuthProvider({ children }) {
         reloadUser,
         currentUser,
         changePassword,
+        hijack,
       }}
     >
       {children}

@@ -15,6 +15,7 @@ APP_FRAME:
   PROFILE_TOOLTIP: Perfil
   MENU_CHANGE_PASSWORD: Cambia la contraseña
   MENU_PROFILE: Perfil
+  MENU_HIJACK: Suplantar
   MENU_LOGOUT: Salir
   LOGIN: Identifícate
   CHOOSE_USER: Escoge usuaria
@@ -57,6 +58,14 @@ LOGIN:
   PASSWORD_LABEL: Contraseña
   UNABLE_TO_LOGIN: No se ha podido validar
   VALIDATION_ERROR: Usuaria o contraseña inválidas
+HIJACK:
+  HIJACK_DIALOG_TITLE: Suplantando a otra usuaria
+  USERNAME_LABEL: Usuaria a suplantar
+  USERNAME_HELP: Usa el NIF o el correo electrónico
+  SUBMIT_BUTTON_HIJACK: Suplanta
+  SUBMIT_BUTTON_PROCESSING: Suplantando…
+  UNABLE_TO_HIJACK: No se ha podido suplantar
+  VALIDATION_ERROR: Usuaria inválida
 CHANGE_PASSWORD:
   CHANGE_PASSWORD_DIALOG_TITLE: Cambiando la contraseña
   CURRENT_PASSWORD_LABEL: Contraseña actual
@@ -111,6 +120,7 @@ INSTALLATIONS:
   RELOAD: Recarga
 OVAPI:
   CONTEXT_LOGIN: Error validando identidad
+  CONTEXT_HIJACK: Error suplantando usuaria
   CONTEXT_INSTALLATIONS: Error obteniendo la lista de instalaciones
   CONTEXT_INSTALLATION_DETAILS: Error obteniendo los detalles de la instalación
   CONTEXT_INVOICES: Error obteniendo la lista de facturas

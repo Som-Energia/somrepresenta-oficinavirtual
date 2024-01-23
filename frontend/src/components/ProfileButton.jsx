@@ -18,6 +18,7 @@ import IconKey from '@mui/icons-material/Key'
 import IconLogout from '@mui/icons-material/Logout'
 import IconLogin from '@mui/icons-material/Login'
 import IconPerson from '@mui/icons-material/Person'
+import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
@@ -77,7 +78,7 @@ function ProfileMenu(params) {
 function ProfileButton(params) {
   const { onMenuClose } = params
   const { t, i18n } = useTranslation()
-  const { currentUser, login, logout, changePassword } = useAuth()
+  const { currentUser, login, logout, changePassword, hijack } = useAuth()
   const navigate = useNavigate()
 
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -103,11 +104,17 @@ function ProfileButton(params) {
       hidden: changePassword === undefined,
     },
     {
+      text: t('APP_FRAME.MENU_HIJACK'),
+      icon: <SensorOccupiedIcon />,
+      onclick: hijack,
+      hidden: !currentUser?.roles.includes('staff')
+    },
+    {
       text: t('APP_FRAME.MENU_LOGOUT'),
       icon: <IconLogout />,
       onclick: logout,
     },
-  ]
+      ]
 
   const initials = (name) =>
     name

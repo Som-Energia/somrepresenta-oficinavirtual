@@ -21,6 +21,7 @@ import VersionCheck from './components/VersionCheck'
 import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
 import SnackbarMessages from './components/SnackbarMessages'
+import HijackWarning from './components/HijackWarning'
 import ProfilePage from './pages/ProfilePage'
 import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
@@ -39,6 +40,7 @@ const routes = [
               <ScrollRestoration /> {/* Scroll up on page switch */}
               <BreakPointIndicator />
               <SnackbarMessages variant="filled" />
+              <HijackWarning />
               <AppFrame>
                 <TermsCheck />
                 <Outlet />
