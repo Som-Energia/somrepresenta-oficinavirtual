@@ -65,11 +65,11 @@ class Erp:
         ids = self.object_execute('res.users', 'search', [['id','<>', False]])
         return self.object_execute('res.users', 'read', ids,)# ['login', 'name'])
 
-    def identify(self, vat):
-        return self.object_execute('som.ov.users', 'identify_login', vat)
+    def identify(self, login):
+        return self.object_execute('som.ov.users', 'identify_login', login)
 
-    def profile(self, vat):
-        return self.object_execute('som.ov.users', 'get_profile', vat)
+    def profile(self, username):
+        return self.object_execute('som.ov.users', 'get_profile', username)
 
     def sign_document(self, username, document):
         return self.object_execute('som.ov.users', 'sign_document', username, document)
