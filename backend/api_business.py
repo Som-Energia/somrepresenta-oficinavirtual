@@ -15,6 +15,7 @@ from .datasources import (
     installation_details,
     invoice_list,
     invoice_pdf,
+    production_data,
 )
 from .erp import ErpConnectionError
 from .auth import validated_user
@@ -64,3 +65,7 @@ def setup_business(app):
             binary_data=result.content,
             filename=result.filename,
         )
+
+    @app.get('/api/production_data')
+    def api_production_data(user: dict = Depends(validated_user)):
+        return production_data(user['username'])

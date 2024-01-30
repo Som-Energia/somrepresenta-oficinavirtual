@@ -111,6 +111,20 @@ def erp_invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     with catch_validation_error():
         return InvoicePdf(**pdffile)
 
+
+def erp_production_data(username: str) -> list[ProductionData]:
+    # TODO: waiting for erp function
+    # e = erp.Erp()
+    # production_data = e.production_data(username)
+    # process_erp_errors(production_data)
+    # with catch_validation_error():
+    #     return [
+    #         ProductionData(**data)
+    #         for data in production_data
+    #     ]
+    return []
+
+
 class ErpBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return erp_user_info(login)
@@ -133,3 +147,5 @@ class ErpBackend():
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return erp_invoice_pdf(username, invoice_number)
 
+    def production_data(self, username: str) -> list[ProductionData]:
+        return erp_production_data(username)

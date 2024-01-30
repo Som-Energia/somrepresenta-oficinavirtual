@@ -275,6 +275,11 @@ def dummy_invoice_pdf(username: str, invoice_number: str):
         content_type='application/pdf',
     )
 
+def dummy_production_data(username: str) -> list[ProductionData]:
+    data = ns.load("frontend/src/data/dummyproductiondata.yaml")
+    return data
+
+
 class DummyBackend():
     def user_info(self, login: str) -> TokenUser | None:
         return dummy_user_info(login)
@@ -297,4 +302,5 @@ class DummyBackend():
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return dummy_invoice_pdf(username, invoice_number)
 
-
+    def production_data(self, username: str) -> list[ProductionData]:
+        return dummy_production_data(username)

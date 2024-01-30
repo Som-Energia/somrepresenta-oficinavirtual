@@ -34,3 +34,7 @@ def invoice_list( username: str) -> list[Invoice]:
 
 def invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     return backend().invoice_pdf(username, invoice_number)
+
+
+def production_data(username: str) -> list[ProductionData]:
+    return backend().production_data(username)
