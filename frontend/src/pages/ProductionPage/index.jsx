@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import Container from '@mui/material/Container'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import PageTitle from '../../components/PageTitle'
-import NotYetImplementedPage from '../../NotYetImplementedPage'
 import ChartProductionData from '../../components/ChartProductionData'
 
 export default function ProductionPage(params) {

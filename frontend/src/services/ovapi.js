@@ -1,7 +1,6 @@
 import axios from 'axios'
 import messages from './messages'
 import i18n from '../i18n/i18n'
-import charts from '../data/exampleData'
 
 /**
 Returns a catch callback that takes common non manageable
@@ -319,22 +318,17 @@ function regulardownload(filename, blob) {
 }
 
 async function productionData() {
-  const result = {
-    data: charts,
-  }
-  return result.data
-  // TODO: waiting for ERP
-  // const context = i18n.t('OVAPI.CONTEXT_PRODUCTION_DATA')
-  // return axios
-  //   .get('/api/production_data')
-  //   .catch(handleCommonErrors(context))
-  //   .catch(handleRemainingErrors(context))
-  //   .then((result) => {
-  //     if (result.error !== undefined) {
-  //       throw result
-  //     }
-  //     return result.data
-  //   })
+  const context = i18n.t('OVAPI.CONTEXT_PRODUCTION_DATA')
+  return axios
+    .get('/api/production_data')
+    .catch(handleCommonErrors(context))
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
+      return result.data
+    })
 }
 
 export default {
