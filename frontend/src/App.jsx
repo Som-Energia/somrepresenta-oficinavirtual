@@ -98,7 +98,11 @@ const routes = [
           },
           {
             path: '/production',
-            element: <ProductionPage />,
+            element: (
+              <InstallationContextProvider>
+                <ProductionPage />
+              </InstallationContextProvider>
+            ),
           },
         ],
       },

@@ -203,10 +203,12 @@ INVOICES:
   PAID_STATUS_OPTION_DRAFT: En proceso
 PRODUCTION:
   PRODUCTION_TITLE: Producción
-CHART_PERIOD:
-  DIARY: Diaria
-  WEEKLY: Semanal
-  MONTHLY: Mensual
-  YEARLY: Anual
-  BAR: Barras
-  LINE: Linias
+  LABEL_CONTRACT: Contrato
+  LABEL_PERIOD: Intérvalo temporal
+  PERIOD_DIARY: Diaria
+  PERIOD_WEEKLY: Semanal
+  PERIOD_MONTHLY: Mensual
+  PERIOD_YEARLY: Anual
+  LABEL_PLOT_STYLE: Estilo de gráfica
+  STYLE_BAR: Barras
+  STYLE_LINE: Linias

@@ -7,8 +7,15 @@ import ToggleButton from '@mui/material/ToggleButton'
 import Chart from '@somenergia/somenergia-ui/Chart'
 import ovapi from '../services/ovapi'
 import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
+import { InstallationContext } from './InstallationProvider'
+import PageTitle from './PageTitle'
 
 const DAILY = 'DAILY'
 const WEEKLY = 'WEEKLY'
@@ -23,8 +30,19 @@ const ChartProductionData = () => {
   const [productionBarData, setProductionBarData] = useState({})
   const [compareData, setCompareData] = useState([])
   const [line, setLine] = useState(true)
+  const [contract, setContract] = useState(null)
   const [period, setPeriod] = useState(DAILY)
+  const {
+    installations,
+    loading: listLoading,
+    error: listError,
+  } = React.useContext(InstallationContext)
   const { t, i18n } = useTranslation()
+
+  React.useEffect(() => {
+    if (installations === null) return
+    setContract(installations[0].contract_number)
+  }, [installations])
 
   const transformBarChartData = (data) => {
     return {
@@ -60,12 +78,51 @@ const ChartProductionData = () => {
 
   return (
     <>
+      <PageTitle Icon={QueryStatsIcon}>
+        {t('PRODUCTION.PRODUCTION_TITLE')}
+
+        {installations && (
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'flex-end',
+              marginTop: '1rem',
+            }}
+          >
+            <FormControl size="small">
+              <InputLabel id="contract-select-label">
+                {t('PRODUCTION.LABEL_CONTRACT')}
+              </InputLabel>
+              <Select
+                size="sm"
+                labelId="contract-select-label"
+                id="contract-select"
+                value={contract || installations[0].contract_number}
+                label={t('PRODUCTION.LABEL_CONTRACT')}
+                onChange={(ev) => setContract(ev.target.value)}
+              >
+                {installations &&
+                  installations.map(({ contract_number, installation_name }) => {
+                    return (
+                      <MenuItem key={contract_number} value={contract_number}>
+                        {`${installation_name} [${contract_number}]`}
+                      </MenuItem>
+                    )
+                  })}
+              </Select>
+            </FormControl>
+          </Box>
+        )}
+      </PageTitle>
       <Box
         sx={{
           width: '100%',
           display: 'flex',
+          flexFlow: 'wrap',
           justifyContent: 'space-between',
           marginBottom: '2rem',
+          gap: '1rem',
         }}
       >
         <ToggleButtonGroup
@@ -75,12 +132,12 @@ const ChartProductionData = () => {
           onChange={(event, value) => {
             setPeriod(value)
           }}
-          aria-label="Platform"
+          aria-label={t('PRODUCTION.LABEL_PERIOD')}
         >
-          <ToggleButton value={DAILY}>{t('CHART_PERIOD.DIARY')}</ToggleButton>
-          <ToggleButton value={WEEKLY}>{t('CHART_PERIOD.WEEKLY')}</ToggleButton>
-          <ToggleButton value={MONTHLY}>{t('CHART_PERIOD.MONTHLY')}</ToggleButton>
-          <ToggleButton value={YEARLY}>{t('CHART_PERIOD.YEARLY')}</ToggleButton>
+          <ToggleButton value={DAILY}>{t('PRODUCTION.PERIOD_DIARY')}</ToggleButton>
+          <ToggleButton value={WEEKLY}>{t('PRODUCTION.PERIOD_WEEKLY')}</ToggleButton>
+          <ToggleButton value={MONTHLY}>{t('PRODUCTION.PERIOD_MONTHLY')}</ToggleButton>
+          <ToggleButton value={YEARLY}>{t('PRODUCTION.PERIOD_YEARLY')}</ToggleButton>
         </ToggleButtonGroup>
 
         <ToggleButtonGroup
@@ -90,12 +147,12 @@ const ChartProductionData = () => {
           onChange={(event, value) => {
             setLine(!!value)
           }}
-          aria-label={t('CHART_PERIOD.PLOT_STYLE')}
+          aria-label={t('PRODUCTION.LABEL_PLOT_STYLE')}
         >
-          <ToggleButton value={0} aria-label={t('CHART_PERIOD.BAR')}>
+          <ToggleButton value={0} aria-label={t('PRODUCTION.STYLE_BAR')}>
             <BarChartIcon />
           </ToggleButton>
-          <ToggleButton value={1} aria-label={t('CHART_PERIOD.LINE')}>
+          <ToggleButton value={1} aria-label={t('PRODUCTION.STYLE_LINE')}>
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
