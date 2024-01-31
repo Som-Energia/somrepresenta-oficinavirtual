@@ -25,13 +25,7 @@ const YEARLY = 'YEARLY'
 const LINE = 'LINE'
 const BAR = 'BAR'
 
-const ChartProductionData = () => {
-  const [productionLineData, setProductionLineData] = useState([])
-  const [productionBarData, setProductionBarData] = useState({})
-  const [compareData, setCompareData] = useState([])
-  const [line, setLine] = useState(true)
-  const [contract, setContract] = useState(null)
-  const [period, setPeriod] = useState(DAILY)
+const ContractSelector = ({ setContract, contract }) => {
   const {
     installations,
     loading: listLoading,
@@ -43,6 +37,50 @@ const ChartProductionData = () => {
     if (installations === null) return
     setContract(installations[0].contract_number)
   }, [installations])
+
+  return (
+    installations && (
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <FormControl size="small">
+          <InputLabel id="contract-select-label">
+            {t('PRODUCTION.LABEL_CONTRACT')}
+          </InputLabel>
+          <Select
+            labelId="contract-select-label"
+            id="contract-select"
+            value={contract || installations[0].contract_number}
+            label={t('PRODUCTION.LABEL_CONTRACT')}
+            onChange={(ev) => setContract(ev.target.value)}
+          >
+            {installations &&
+              installations.map(({ contract_number, installation_name }) => {
+                return (
+                  <MenuItem key={contract_number} value={contract_number}>
+                    {`${installation_name} [${contract_number}]`}
+                  </MenuItem>
+                )
+              })}
+          </Select>
+        </FormControl>
+      </Box>
+    )
+  )
+}
+
+const ChartProductionData = () => {
+  const [productionLineData, setProductionLineData] = useState([])
+  const [productionBarData, setProductionBarData] = useState({})
+  const [compareData, setCompareData] = useState([])
+  const [line, setLine] = useState(true)
+  const [contract, setContract] = useState(null)
+  const [period, setPeriod] = useState(DAILY)
+  const { t, i18n } = useTranslation()
 
   const transformBarChartData = (data) => {
     return {
@@ -80,40 +118,7 @@ const ChartProductionData = () => {
     <>
       <PageTitle Icon={QueryStatsIcon}>
         {t('PRODUCTION.PRODUCTION_TITLE')}
-
-        {installations && (
-          <Box
-            sx={{
-              display: 'flex',
-              width: '100%',
-              justifyContent: 'flex-end',
-              marginTop: '1rem',
-            }}
-          >
-            <FormControl size="small">
-              <InputLabel id="contract-select-label">
-                {t('PRODUCTION.LABEL_CONTRACT')}
-              </InputLabel>
-              <Select
-                size="sm"
-                labelId="contract-select-label"
-                id="contract-select"
-                value={contract || installations[0].contract_number}
-                label={t('PRODUCTION.LABEL_CONTRACT')}
-                onChange={(ev) => setContract(ev.target.value)}
-              >
-                {installations &&
-                  installations.map(({ contract_number, installation_name }) => {
-                    return (
-                      <MenuItem key={contract_number} value={contract_number}>
-                        {`${installation_name} [${contract_number}]`}
-                      </MenuItem>
-                    )
-                  })}
-              </Select>
-            </FormControl>
-          </Box>
-        )}
+        <ContractSelector {...{ setContract, contract }} />
       </PageTitle>
       <Box
         sx={{
