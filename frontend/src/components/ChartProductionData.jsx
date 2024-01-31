@@ -6,7 +6,9 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ToggleButton from '@mui/material/ToggleButton'
 import Chart from '@somenergia/somenergia-ui/Chart'
 import ovapi from '../services/ovapi'
-import { Box } from '@mui/material'
+import Box from '@mui/material/Box'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import TimelineIcon from '@mui/icons-material/Timeline'
 
 const DAILY = 'DAILY'
 const WEEKLY = 'WEEKLY'
@@ -81,18 +83,22 @@ const ChartProductionData = () => {
           <ToggleButton value={YEARLY}>{t('CHART_PERIOD.YEARLY')}</ToggleButton>
         </ToggleButtonGroup>
 
-        <Grid container alignItems="center" sx={{ width: 'auto' }}>
-          <Grid item>{t('CHART_PERIOD.BAR')}</Grid>
-          <Grid item>
-            <Switch
-              checked={line}
-              onChange={(event, value) => {
-                setLine(value)
-              }}
-            />
-          </Grid>
-          <Grid item>{t('CHART_PERIOD.LINE')}</Grid>
-        </Grid>
+        <ToggleButtonGroup
+          color="primary"
+          value={line ? 1 : 0}
+          exclusive
+          onChange={(event, value) => {
+            setLine(!!value)
+          }}
+          aria-label={t('CHART_PERIOD.PLOT_STYLE')}
+        >
+          <ToggleButton value={0} aria-label={t('CHART_PERIOD.BAR')}>
+            <BarChartIcon />
+          </ToggleButton>
+          <ToggleButton value={1} aria-label={t('CHART_PERIOD.LINE')}>
+            <TimelineIcon />
+          </ToggleButton>
+        </ToggleButtonGroup>
       </Box>
       <Chart
         period={period}
