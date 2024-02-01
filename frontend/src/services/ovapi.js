@@ -317,10 +317,12 @@ function regulardownload(filename, blob) {
   return blob
 }
 
-async function productionData() {
+async function productionData(first_timestamp_utc, last_timestamp_utc) {
   const context = i18n.t('OVAPI.CONTEXT_PRODUCTION_DATA')
   return axios
-    .get('/api/production_data')
+    .get('/api/production_data', {params: {
+      first_timestamp_utc, last_timestamp_utc
+    }})
     .catch(handleCommonErrors(context))
     .catch(handleRemainingErrors(context))
     .then((result) => {

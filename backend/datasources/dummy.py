@@ -1,3 +1,9 @@
+from yamlns import ns
+from pathlib import Path
+import datetime
+import base64
+from pydantic import ValidationError, AwareDatetime
+from ..utils.gravatar import gravatar
 from ..models import (
     TokenUser,
     UserProfile,
@@ -7,12 +13,9 @@ from ..models import (
     Invoice,
     InvoicePdf,
     ProductionData,
+    CustomerProductionData,
+    ContractProductionData,
 )
-from ..utils.gravatar import gravatar
-from yamlns import ns
-from pathlib import Path
-import base64
-from pydantic import ValidationError
 from .exceptions import (
     ErpError,
     ErpValidationError,
@@ -309,6 +312,39 @@ def dummy_production_data(username: str) -> list[ProductionData]:
     return data
 
 
+def dummy_production_data(
+    username: str,
+    first_timestamp_utc: AwareDatetime,
+    last_timestamp_utc: AwareDatetime,
+) -> CustomerProductionData:
+
+    nhours = round((last_timestamp_utc - first_timestamp_utc) / datetime.timedelta(hours=1))
+    maturity_options = ['H2', 'H3', 'HP', 'HC', None]
+
+    return CustomerProductionData(
+        data = [
+            ContractProductionData(
+                contract_number = contract.contract_number,
+                first_timestamp_utc = first_timestamp_utc,
+                last_timestamp_utc = last_timestamp_utc,
+                forecast_kwh = [
+                    i%24 + j
+                    for i in range(nhours)
+                ],
+                measured_kwh = [
+                    j*(i%24) + 6
+                    for i in range(nhours)
+                ],
+                maturity = [
+                    maturity_options[i%len(maturity_options)]
+                    for i in range(nhours)
+                ],
+            )
+            for j, contract in enumerate(dummy_installation_list(username))
+        ],
+    )
+
+
 class DummyBackend:
     def user_info(self, login: str) -> TokenUser | None:
         return dummy_user_info(login)
@@ -333,5 +369,10 @@ class DummyBackend:
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return dummy_invoice_pdf(username, invoice_number)
 
-    def production_data(self, username: str) -> list[ProductionData]:
-        return dummy_production_data(username)
+    def production_data(
+        self,
+        username: str,
+        first_timestamp_utc: AwareDatetime,
+        last_timestamp_utc: AwareDatetime,
+    ) -> CustomerProductionData:
+        return dummy_production_data(username, first_timestamp_utc, last_timestamp_utc)

@@ -95,7 +95,7 @@ def setup_authlocal(app):
                 value=f"Bearer {access_token}",
                 max_age=expires_seconds,
                 expires=expires_seconds,
-                secure=True, # TODO: just if https in request
+                #secure=True, # TODO: just if https in request
                 httponly=True,
             )
         except Exception as e:

@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from yamlns import ns
 from consolemsg import error, success
-from pydantic import ValidationError
+from pydantic import ValidationError, AwareDatetime
 from ..models import (
     TokenUser,
     UserProfile,
@@ -10,7 +10,7 @@ from ..models import (
     InstallationDetailsResult,
     Invoice,
     InvoicePdf,
-    ProductionData,
+    CustomerProductionData,
 )
 from .. import erp
 from ..utils.gravatar import gravatar
@@ -119,17 +119,18 @@ def erp_invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
         return InvoicePdf(**pdffile)
 
 
-def erp_production_data(username: str) -> list[ProductionData]:
+def erp_production_data(
+        username: str,
+        first_timestamp_utc: AwareDatetime,
+        last_timestamp_utc: AwareDatetime,
+    ) -> CustomerProductionData:
     # TODO: waiting for erp function
     # e = erp.Erp()
-    # production_data = e.production_data(username)
+    # production_data = e.production_data(username, first_timestamp_utc, last_timestamp_utc)
     # process_erp_errors(production_data)
     # with catch_validation_error():
-    #     return [
-    #         ProductionData(**data)
-    #         for data in production_data
-    #     ]
-    return []
+    # return CustomerProductionData(**data)
+    return "CACA"
 
 
 class ErpBackend:
@@ -156,5 +157,10 @@ class ErpBackend:
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return erp_invoice_pdf(username, invoice_number)
 
-    def production_data(self, username: str) -> list[ProductionData]:
-        return erp_production_data(username)
+    def production_data(
+        self,
+        username: str,
+        first_timestamp_utc: AwareDatetime,
+        last_timestamp_utc: AwareDatetime,
+    ) -> CustomerProductionData:
+        return erp_production_data(username, first_timestamp_utc, last_timestamp_utc)

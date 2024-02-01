@@ -1,3 +1,15 @@
+"""
+Delegatable data source
+
+Functions in this module abstract different data sources that can be
+configured by using DATA_BACKEND environment.
+
+Specific implementation are chosen by the backend() function
+and are implemented in a module in this package.
+
+Backend objects are guaranteed to be created and destroyed for each function call (no state kept).
+"""
+
 import os
 from .dummy import DummyBackend
 from .erp import ErpBackend
@@ -9,8 +21,9 @@ from ..models import (
     InstallationDetailsResult,
     Invoice,
     InvoicePdf,
-    ProductionData,
+    CustomerProductionData,
 )
+from pydantic import AwareDatetime
 
 def backend():
     # Is important not to cache the result it so that
@@ -54,5 +67,10 @@ def invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     return backend().invoice_pdf(username, invoice_number)
 
 
-def production_data(username: str) -> list[ProductionData]:
-    return backend().production_data(username)
+def production_data(
+    username: str,
+    first_timestamp_utc: AwareDatetime,
+    last_timestamp_utc: AwareDatetime,
+) -> CustomerProductionData:
+    return backend().production_data(username, first_timestamp_utc, last_timestamp_utc)
+

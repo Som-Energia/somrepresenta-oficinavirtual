@@ -16,6 +16,7 @@ import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import { InstallationContext } from './InstallationProvider'
 import PageTitle from './PageTitle'
+import {array2datapoints} from '../services/curves'
 
 const DAILY = 'DAILY'
 const WEEKLY = 'WEEKLY'
@@ -76,6 +77,7 @@ const ContractSelector = ({ setContract, contract }) => {
 const ChartProductionData = () => {
   const [productionLineData, setProductionLineData] = useState([])
   const [productionBarData, setProductionBarData] = useState({})
+  const [productionData, setProductionData] = useState(undefined)
   const [compareData, setCompareData] = useState([])
   const [line, setLine] = useState(true)
   const [contract, setContract] = useState(null)
@@ -103,10 +105,31 @@ const ChartProductionData = () => {
   }
 
   const getProductionData = () => {
-    ovapi.productionData().then((data) => {
-      setProductionLineData(data)
-      let transdormedData = transformBarChartData(data)
+    const years = 1
+    const last_timestamp_utc = new Date()
+    last_timestamp_utc.setHours(0)
+    last_timestamp_utc.setMinutes(0)
+    last_timestamp_utc.setSeconds(0)
+    last_timestamp_utc.setMilliseconds(0)
+    const first_timestamp_utc = new Date(last_timestamp_utc)
+    first_timestamp_utc.setFullYear(first_timestamp_utc.getFullYear()-years)
+
+    ovapi.productionData(first_timestamp_utc, last_timestamp_utc).then((data) => {
+      setProductionData(data)
+      console.log(data)
+      var current_contract_data = data.data[0] // TODO: Choose the current one not the first
+      var measured_data = array2datapoints(
+        new Date(current_contract_data.first_timestamp_utc),
+        current_contract_data.measured_kwh,
+      )
+      var forecast_data = array2datapoints(
+        new Date(current_contract_data.first_timestamp_utc),
+        current_contract_data.forecast_kwh,
+      )
+      setProductionLineData(measured_data)
+      let transdormedData = transformBarChartData(measured_data)
       setProductionBarData(transdormedData)
+      setCompareData(forecast_data)
     })
   }
 
@@ -162,6 +185,7 @@ const ChartProductionData = () => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
+
       <Chart
         period={period}
         data={line ? productionLineData : productionBarData}
