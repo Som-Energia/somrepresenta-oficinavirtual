@@ -37,5 +37,36 @@ function array2datapoints(first_timestamp, values, step_ms = 60 * 60 * 1000) {
   })
 }
 
-export { time2index, index2time, array2datapoints }
-export default { time2index, index2time, array2datapoints }
+function timeInterval(scope, current_date) {
+  const start = new Date(current_date)
+  start.setHours(0)
+  start.setMinutes(0)
+  start.setSeconds(0)
+  start.setMilliseconds(0)
+  if (scope === "MONTHLY") {
+    start.setDate(1)
+  }
+  const end = new Date(start)
+  switch (scope) {
+    case "DAILY":
+      end.setDate(end.getDate()+1)
+      break
+    case "MONTHLY":
+      end.setMonth(end.getMonth()+1)
+      break  
+  }
+  return [
+    start,
+    end,
+  ]
+}
+
+function timeSlice(timeOffset, values, indexStart, indexEnd) {
+  var adjustedIndexStart = Math.max(0, indexStart)
+  const newTimeOffset = index2time(timeOffset, adjustedIndexStart)
+  return array2datapoints(newTimeOffset, values.slice(adjustedIndexStart, indexEnd))
+}
+
+
+export { time2index, index2time, array2datapoints, timeInterval, timeSlice }
+export default { time2index, index2time, array2datapoints, timeInterval, timeSlice }

@@ -1,6 +1,6 @@
 import { beforeEach, afterEach, describe, expect, test, it } from 'vitest'
 
-import { array2datapoints, time2index, index2time } from './curves'
+import { array2datapoints, time2index, index2time, timeInterval, timeSlice } from './curves'
 
 const d_2020_02_02_Z = '2020-02-02T00:00:00Z'
 const d_2020_02_03_Z = '2020-02-03T00:00:00Z'
@@ -75,3 +75,82 @@ describe('index2time', () => {
   })
   // TODO: Unexpected inputs
 })
+
+describe('timeInterval', () => {
+  it('Day time interval, current start of day', () => {
+    expect(timeInterval('DAILY', new Date('2020-03-02T00:00:00'))).toStrictEqual([
+      new Date('2020-03-02T00:00:00'),
+      new Date('2020-03-03T00:00:00'),
+    ])
+  })
+  it('Day time interval, within day', () => {
+    expect(timeInterval('DAILY', new Date('2020-03-02T09:00:00'))).toStrictEqual([
+      new Date('2020-03-02T00:00:00'),
+      new Date('2020-03-03T00:00:00'),
+    ])
+  })
+  it('Day time interval, within day in UTC offset affects', () => {
+    expect(timeInterval('DAILY', new Date('2020-03-01T23:10:00Z'))).toStrictEqual([
+      new Date('2020-03-02T00:00:00'),
+      new Date('2020-03-03T00:00:00'),
+    ])
+  })
+  it('Day time interval, within day in UTC offset does not affect', () => {
+    expect(timeInterval('DAILY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
+      new Date('2020-03-02T00:00:00'),
+      new Date('2020-03-03T00:00:00'),
+    ])
+  })
+  it('Month time interval, within month', () => {
+    expect(timeInterval('MONTHLY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
+      new Date('2020-03-01T00:00:00'),
+      new Date('2020-04-01T00:00:00'),
+    ])
+  })
+})
+
+describe('timeSlice', () => {
+  it('no offset', () => {
+    const baseDate = new Date(d_2020_08_02_M)
+    const base = 1596319200000 // baseDate.getTime()
+    expect(timeSlice(baseDate, [1, 2, 3, 4, 5, 6], 0, 6)).toStrictEqual([
+      { value: 1, date: base + 0 * 3600000 },
+      { value: 2, date: base + 1 * 3600000 },
+      { value: 3, date: base + 2 * 3600000 },
+      { value: 4, date: base + 3 * 3600000 },
+      { value: 5, date: base + 4 * 3600000 },
+      { value: 6, date: base + 5 * 3600000 },
+    ])
+  })
+  it('offsets inside array', () => {
+    const baseDate = new Date(d_2020_08_02_M)
+    const base = 1596319200000 // baseDate.getTime()
+    expect(timeSlice(baseDate, [1, 2, 3, 4, 5, 6], 2, 4)).toStrictEqual([
+      { value: 3, date: base + 2 * 3600000 },
+      { value: 4, date: base + 3 * 3600000 },
+    ])
+  })
+  it('starting before the data', () => {
+    const baseDate = new Date(d_2020_08_02_M)
+    const base = 1596319200000 // baseDate.getTime()
+    expect(timeSlice(baseDate, [1, 2, 3, 4, 5, 6], -2, 4)).toStrictEqual([
+      { value: 1, date: base + 0 * 3600000 },
+      { value: 2, date: base + 1 * 3600000 },
+      { value: 3, date: base + 2 * 3600000 },
+      { value: 4, date: base + 3 * 3600000 },
+    ])
+  })
+  it('ending after the data', () => {
+    const baseDate = new Date(d_2020_08_02_M)
+    const base = 1596319200000 // baseDate.getTime()
+    expect(timeSlice(baseDate, [1, 2, 3, 4, 5, 6], 0, 8)).toStrictEqual([
+      { value: 1, date: base + 0 * 3600000 },
+      { value: 2, date: base + 1 * 3600000 },
+      { value: 3, date: base + 2 * 3600000 },
+      { value: 4, date: base + 3 * 3600000 },
+      { value: 5, date: base + 4 * 3600000 },
+      { value: 6, date: base + 5 * 3600000 },
+    ])
+  })
+})
+

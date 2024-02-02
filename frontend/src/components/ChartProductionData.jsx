@@ -16,7 +16,7 @@ import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import { InstallationContext } from './InstallationProvider'
 import PageTitle from './PageTitle'
-import {array2datapoints} from '../services/curves'
+import { time2index, timeInterval, timeSlice } from '../services/curves'
 
 const DAILY = 'DAILY'
 const WEEKLY = 'WEEKLY'
@@ -74,6 +74,9 @@ const ContractSelector = ({ setContract, contract }) => {
   )
 }
 
+const yesterday = new Date()
+yesterday.setDate(yesterday.getDate()-1)
+
 const ChartProductionData = () => {
   const [productionLineData, setProductionLineData] = useState([])
   const [productionBarData, setProductionBarData] = useState({})
@@ -82,6 +85,7 @@ const ChartProductionData = () => {
   const [line, setLine] = useState(true)
   const [contract, setContract] = useState(null)
   const [period, setPeriod] = useState(DAILY)
+  const [currentTime, setCurrentTime] = useState(yesterday)
   const { t, i18n } = useTranslation()
 
   const transformBarChartData = (data) => {
@@ -112,20 +116,30 @@ const ChartProductionData = () => {
     last_timestamp_utc.setSeconds(0)
     last_timestamp_utc.setMilliseconds(0)
     const first_timestamp_utc = new Date(last_timestamp_utc)
-    first_timestamp_utc.setFullYear(first_timestamp_utc.getFullYear()-years)
+    first_timestamp_utc.setFullYear(first_timestamp_utc.getFullYear() - years)
 
     ovapi.productionData(first_timestamp_utc, last_timestamp_utc).then((data) => {
       setProductionData(data)
       console.log(data)
       var current_contract_data = data.data[0] // TODO: Choose the current one not the first
-      var measured_data = array2datapoints(
-        new Date(current_contract_data.first_timestamp_utc),
+      const offsetDate = new Date(current_contract_data.first_timestamp_utc)
+      var [startTime, endTime] = timeInterval(period, currentTime)
+      var startIndex = time2index(offsetDate, startTime)
+      var endIndex = time2index(offsetDate, endTime)
+
+      var measured_data = timeSlice(
+        offsetDate,
         current_contract_data.measured_kwh,
+        startIndex,
+        endIndex,
       )
-      var forecast_data = array2datapoints(
-        new Date(current_contract_data.first_timestamp_utc),
+      var forecast_data = timeSlice(
+        offsetDate,
         current_contract_data.forecast_kwh,
+        startIndex,
+        endIndex,
       )
+      console.log(measured_data)
       setProductionLineData(measured_data)
       let transdormedData = transformBarChartData(measured_data)
       setProductionBarData(transdormedData)
