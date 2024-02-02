@@ -9,14 +9,20 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import IconButton from '@mui/material/IconButton'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
+import minMax from 'dayjs/plugin/minMax'
 import { InstallationContext } from './InstallationProvider'
 import PageTitle from './PageTitle'
 import { time2index, timeInterval, timeSlice } from '../services/curves'
+
+dayjs.extend(minMax)
 
 const DAILY = 'DAILY'
 const WEEKLY = 'WEEKLY'
@@ -75,7 +81,7 @@ const ContractSelector = ({ setContract, contract }) => {
 }
 
 const yesterday = new Date()
-yesterday.setDate(yesterday.getDate()-1)
+yesterday.setDate(yesterday.getDate() - 1)
 
 const ChartProductionData = () => {
   const [productionData, setProductionData] = useState(undefined)
@@ -87,6 +93,15 @@ const ChartProductionData = () => {
   const [period, setPeriod] = useState(DAILY)
   const [currentTime, setCurrentTime] = useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
+
+  const years = 1
+  const maxDate = new Date()
+  maxDate.setHours(0)
+  maxDate.setMinutes(0)
+  maxDate.setSeconds(0)
+  maxDate.setMilliseconds(0)
+  const minDate = new Date(maxDate)
+  minDate.setFullYear(minDate.getFullYear() - years)
 
   const transformBarChartData = (data) => {
     return {
@@ -109,22 +124,13 @@ const ChartProductionData = () => {
   }
 
   const getProductionData = () => {
-    const years = 1
-    const last_timestamp_utc = new Date()
-    last_timestamp_utc.setHours(0)
-    last_timestamp_utc.setMinutes(0)
-    last_timestamp_utc.setSeconds(0)
-    last_timestamp_utc.setMilliseconds(0)
-    const first_timestamp_utc = new Date(last_timestamp_utc)
-    first_timestamp_utc.setFullYear(first_timestamp_utc.getFullYear() - years)
-
-    ovapi.productionData(first_timestamp_utc, last_timestamp_utc).then((data) => {
+    ovapi.productionData(minDate, maxDate).then((data) => {
       setProductionData(data)
       console.log(data)
     })
   }
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     const data = productionData
     if (!data) {
       setProductionLineData([])
@@ -150,7 +156,7 @@ const ChartProductionData = () => {
       startIndex,
       endIndex,
     )
-    console.log({period, startIndex, endIndex, measured_data})
+    console.log({ period, startIndex, endIndex, measured_data })
     setProductionLineData(measured_data)
     let transdormedData = transformBarChartData(measured_data)
     setProductionBarData(transdormedData)
@@ -160,6 +166,21 @@ const ChartProductionData = () => {
   useEffect(() => {
     getProductionData()
   }, [])
+
+  const dayjsperiods = {
+    DAILY: 'd',
+    WEEKLY: 'w',
+    MONTHLY: 'M',
+    YEARLY: 'y',
+  }
+
+  function prevTimeWindow() {
+    setCurrentTime(dayjs.max(dayjs(minDate), currentTime.subtract(1, dayjsperiods[period])))
+  }
+
+  function nextTimeWindow() {
+    setCurrentTime(dayjs.min(dayjs(maxDate), currentTime.add(1, dayjsperiods[period])))
+  }
 
   return (
     <>
@@ -192,7 +213,25 @@ const ChartProductionData = () => {
           <ToggleButton value={YEARLY}>{t('PRODUCTION.PERIOD_YEARLY')}</ToggleButton>
         </ToggleButtonGroup>
 
-        <DatePicker value={currentTime} onChange={setCurrentTime} />
+        <IconButton onClick={prevTimeWindow}>
+          <ArrowBackIosOutlinedIcon />
+        </IconButton>
+        <DatePicker
+          value={currentTime}
+          onChange={setCurrentTime}
+          views={
+            period === YEARLY
+              ? ['year']
+              : period === MONTHLY
+                ? ['month', 'year']
+                : undefined
+          }
+          minDate={dayjs(minDate)}
+          maxDate={dayjs(maxDate)}
+        />
+        <IconButton onClick={nextTimeWindow}>
+          <ArrowForwardIosOutlinedIcon />
+        </IconButton>
 
         <ToggleButtonGroup
           color="primary"

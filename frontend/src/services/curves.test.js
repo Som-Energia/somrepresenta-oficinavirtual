@@ -107,6 +107,36 @@ describe('timeInterval', () => {
       new Date('2020-04-01T00:00:00'),
     ])
   })
+  it('Year time interval, within year', () => {
+    expect(timeInterval('YEARLY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
+      new Date('2020-01-01T00:00:00'),
+      new Date('2021-01-01T00:00:00'),
+    ])
+  })
+  it('Week time interval, monday', () => {
+    expect(timeInterval('WEEKLY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
+      new Date('2020-03-02T00:00:00'),
+      new Date('2020-03-09T00:00:00'),
+    ])
+  })
+  it('Week time interval, tuesday', () => {
+    expect(timeInterval('WEEKLY', new Date('2020-03-03T22:10:00Z'))).toStrictEqual([
+      new Date('2020-03-02T00:00:00'),
+      new Date('2020-03-09T00:00:00'),
+    ])
+  })
+  it('Week time interval, sunday', () => {
+    expect(timeInterval('WEEKLY', new Date('2020-03-08T22:10:00Z'))).toStrictEqual([
+      new Date('2020-03-02T00:00:00'),
+      new Date('2020-03-09T00:00:00'),
+    ])
+  })
+  it('Week time interval, sunday, crossing months', () => {
+    expect(timeInterval('WEEKLY', new Date('2020-03-01T22:10:00Z'))).toStrictEqual([
+      new Date('2020-02-24T00:00:00'),
+      new Date('2020-03-02T00:00:00'),
+    ])
+  })
 })
 
 describe('timeSlice', () => {

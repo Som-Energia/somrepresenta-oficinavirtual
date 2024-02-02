@@ -46,6 +46,15 @@ function timeInterval(scope, current_date) {
   if (scope === "MONTHLY") {
     start.setDate(1)
   }
+  if (scope === "YEARLY") {
+    start.setDate(1) // Month days are 1 based
+    start.setMonth(0) // Month are 0 based
+  }
+  if (scope === "WEEKLY") {
+    var weekday_shift = (start.getDay() + 6) % 7
+    start.setDate(start.getDate() - weekday_shift)
+  }
+
   const end = new Date(start)
   switch (scope) {
     case "DAILY":
@@ -53,7 +62,13 @@ function timeInterval(scope, current_date) {
       break
     case "MONTHLY":
       end.setMonth(end.getMonth()+1)
-      break  
+      break 
+    case "YEARLY":
+      end.setFullYear(end.getFullYear()+1)
+      break
+    case "WEEKLY":
+      end.setDate(end.getDate()+7)
+      break
   }
   return [
     start,
