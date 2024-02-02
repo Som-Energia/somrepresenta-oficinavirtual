@@ -10,6 +10,7 @@ import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
@@ -183,7 +184,9 @@ const ChartProductionData = () => {
   }
 
   function prevTimeWindow() {
-    setCurrentTime(dayjs.max(dayjs(minDate), currentTime.subtract(1, dayjsperiods[period])))
+    setCurrentTime(
+      dayjs.max(dayjs(minDate), currentTime.subtract(1, dayjsperiods[period])),
+    )
   }
 
   function nextTimeWindow() {
@@ -221,25 +224,31 @@ const ChartProductionData = () => {
           <ToggleButton value={YEARLY}>{t('PRODUCTION.PERIOD_YEARLY')}</ToggleButton>
         </ToggleButtonGroup>
 
-        <IconButton onClick={prevTimeWindow}>
-          <ArrowBackIosOutlinedIcon />
-        </IconButton>
-        <DatePicker
-          value={currentTime}
-          onChange={setCurrentTime}
-          views={
-            period === YEARLY
-              ? ['year']
-              : period === MONTHLY
-                ? ['month', 'year']
-                : undefined
-          }
-          minDate={dayjs(minDate)}
-          maxDate={dayjs(maxDate)}
-        />
-        <IconButton onClick={nextTimeWindow}>
-          <ArrowForwardIosOutlinedIcon />
-        </IconButton>
+        <Box
+          sx={{
+            display: 'flex',
+          }}
+        >
+          <Button onClick={prevTimeWindow}>
+            <ArrowBackIosOutlinedIcon />
+          </Button>
+          <DatePicker
+            value={currentTime}
+            onChange={setCurrentTime}
+            views={
+              period === YEARLY
+                ? ['year']
+                : period === MONTHLY
+                  ? ['month', 'year']
+                  : undefined
+            }
+            minDate={dayjs(minDate)}
+            maxDate={dayjs(maxDate)}
+          />
+          <Button onClick={nextTimeWindow}>
+            <ArrowForwardIosOutlinedIcon />
+          </Button>
+        </Box>
 
         <ToggleButtonGroup
           color="primary"
