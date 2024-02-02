@@ -130,33 +130,41 @@ const ChartProductionData = () => {
     })
   }
 
-  React.useEffect(() => {
+  function currentContractData() {
     const data = productionData
-    if (!data) {
+    if (!data) return undefined
+    for (const contractData of data.data) {
+      if (contractData.contract_number !== contract) continue
+      return contractData
+    }
+    return undefined
+  }
+
+  React.useEffect(() => {
+    const contractData = currentContractData()
+    if (!contractData) {
       setProductionLineData([])
       setProductionBarData({})
       setCompareData([])
       return
     }
-    const current_contract_data = data.data[0] // TODO: Choose the current one not the first
-    const offsetDate = new Date(current_contract_data.first_timestamp_utc)
+    const offsetDate = new Date(contractData.first_timestamp_utc)
     var [startTime, endTime] = timeInterval(period, currentTime)
     var startIndex = time2index(offsetDate, startTime)
     var endIndex = time2index(offsetDate, endTime)
 
     var measured_data = timeSlice(
       offsetDate,
-      current_contract_data.measured_kwh,
+      contractData.measured_kwh,
       startIndex,
       endIndex,
     )
     var forecast_data = timeSlice(
       offsetDate,
-      current_contract_data.forecast_kwh,
+      contractData.forecast_kwh,
       startIndex,
       endIndex,
     )
-    console.log({ period, startIndex, endIndex, measured_data })
     setProductionLineData(measured_data)
     let transdormedData = transformBarChartData(measured_data)
     setProductionBarData(transdormedData)
