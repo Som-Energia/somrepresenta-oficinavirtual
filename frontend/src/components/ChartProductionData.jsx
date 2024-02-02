@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import Grid from '@mui/material/Grid'
-import Switch from '@mui/material/Switch'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ToggleButton from '@mui/material/ToggleButton'
 import Chart from '@somenergia/somenergia-ui/Chart'
@@ -14,6 +12,8 @@ import MenuItem from '@mui/material/MenuItem'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import dayjs from 'dayjs'
 import { InstallationContext } from './InstallationProvider'
 import PageTitle from './PageTitle'
 import { time2index, timeInterval, timeSlice } from '../services/curves'
@@ -78,14 +78,14 @@ const yesterday = new Date()
 yesterday.setDate(yesterday.getDate()-1)
 
 const ChartProductionData = () => {
+  const [productionData, setProductionData] = useState(undefined)
   const [productionLineData, setProductionLineData] = useState([])
   const [productionBarData, setProductionBarData] = useState({})
-  const [productionData, setProductionData] = useState(undefined)
   const [compareData, setCompareData] = useState([])
   const [line, setLine] = useState(true)
   const [contract, setContract] = useState(null)
   const [period, setPeriod] = useState(DAILY)
-  const [currentTime, setCurrentTime] = useState(yesterday)
+  const [currentTime, setCurrentTime] = useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
 
   const transformBarChartData = (data) => {
@@ -121,31 +121,41 @@ const ChartProductionData = () => {
     ovapi.productionData(first_timestamp_utc, last_timestamp_utc).then((data) => {
       setProductionData(data)
       console.log(data)
-      var current_contract_data = data.data[0] // TODO: Choose the current one not the first
-      const offsetDate = new Date(current_contract_data.first_timestamp_utc)
-      var [startTime, endTime] = timeInterval(period, currentTime)
-      var startIndex = time2index(offsetDate, startTime)
-      var endIndex = time2index(offsetDate, endTime)
-
-      var measured_data = timeSlice(
-        offsetDate,
-        current_contract_data.measured_kwh,
-        startIndex,
-        endIndex,
-      )
-      var forecast_data = timeSlice(
-        offsetDate,
-        current_contract_data.forecast_kwh,
-        startIndex,
-        endIndex,
-      )
-      console.log(measured_data)
-      setProductionLineData(measured_data)
-      let transdormedData = transformBarChartData(measured_data)
-      setProductionBarData(transdormedData)
-      setCompareData(forecast_data)
     })
   }
+
+  React.useEffect(()=> {
+    const data = productionData
+    if (!data) {
+      setProductionLineData([])
+      setProductionBarData({})
+      setCompareData([])
+      return
+    }
+    const current_contract_data = data.data[0] // TODO: Choose the current one not the first
+    const offsetDate = new Date(current_contract_data.first_timestamp_utc)
+    var [startTime, endTime] = timeInterval(period, currentTime)
+    var startIndex = time2index(offsetDate, startTime)
+    var endIndex = time2index(offsetDate, endTime)
+
+    var measured_data = timeSlice(
+      offsetDate,
+      current_contract_data.measured_kwh,
+      startIndex,
+      endIndex,
+    )
+    var forecast_data = timeSlice(
+      offsetDate,
+      current_contract_data.forecast_kwh,
+      startIndex,
+      endIndex,
+    )
+    console.log({period, startIndex, endIndex, measured_data})
+    setProductionLineData(measured_data)
+    let transdormedData = transformBarChartData(measured_data)
+    setProductionBarData(transdormedData)
+    setCompareData(forecast_data)
+  }, [productionData, period, currentTime, contract])
 
   useEffect(() => {
     getProductionData()
@@ -181,6 +191,8 @@ const ChartProductionData = () => {
           <ToggleButton value={MONTHLY}>{t('PRODUCTION.PERIOD_MONTHLY')}</ToggleButton>
           <ToggleButton value={YEARLY}>{t('PRODUCTION.PERIOD_YEARLY')}</ToggleButton>
         </ToggleButtonGroup>
+
+        <DatePicker value={currentTime} onChange={setCurrentTime} />
 
         <ToggleButtonGroup
           color="primary"

@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.9",
     "@mui/material": "^5.14.6",
+    "@mui/x-date-pickers": "^6.19.3",
     "@prettier/plugin-xml": "^3.2.2",
     "@somenergia/somenergia-ui": "^0.2.0",
     "axios": "^1.5.1",
