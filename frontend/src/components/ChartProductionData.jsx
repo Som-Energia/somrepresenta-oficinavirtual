@@ -263,7 +263,7 @@ const ChartProductionData = () => {
           }}
           aria-label={t('PRODUCTION.LABEL_PLOT_STYLE')}
         >
-          <ToggleButton value={0} aria-label={t('PRODUCTION.STYLE_BAR')}>
+          <ToggleButton disabled value={0} aria-label={t('PRODUCTION.STYLE_BAR')}>
             <BarChartIcon />
           </ToggleButton>
           <ToggleButton value={1} aria-label={t('PRODUCTION.STYLE_LINE')}>
