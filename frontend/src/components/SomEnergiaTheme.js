@@ -68,7 +68,11 @@ export default function SomEnergiaTheme(isDarkMode) {
         contentLight: 'rgba(0, 0, 0, 0.03)',
         contentDark: '#1A2027',
       },
-    },
+      chartlines: {
+        production: '#96b633',
+        foreseen: '#f2970f'
+      }
+    }
   })
   return responsiveFontSizes(theme, {
     variants: standardTypographies.concat(customTypographies),

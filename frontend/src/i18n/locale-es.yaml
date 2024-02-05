@@ -212,3 +212,5 @@ PRODUCTION:
   LABEL_PLOT_STYLE: Estilo de gráfica
   STYLE_BAR: Barras
   STYLE_LINE: Linias
+  LEGEND_PRODUCTION: Producción (kWh)
+  LEGEND_FORESEEN: Predicción (kWh)

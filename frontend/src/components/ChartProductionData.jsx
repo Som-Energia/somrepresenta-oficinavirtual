@@ -22,6 +22,8 @@ import minMax from 'dayjs/plugin/minMax'
 import { InstallationContext } from './InstallationProvider'
 import PageTitle from './PageTitle'
 import { time2index, timeInterval, timeSlice } from '../services/curves'
+import Checkbox from '@mui/material/Checkbox'
+import { FormControlLabel } from '@mui/material'
 
 dayjs.extend(minMax)
 
@@ -94,6 +96,8 @@ const ChartProductionData = () => {
   const [period, setPeriod] = useState(DAILY)
   const [currentTime, setCurrentTime] = useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
+  const [showProduction, setShowProduction] = useState(true)
+  const [showForeseen, setShowForeseen] = useState(true)
 
   const years = 1
   const maxDate = new Date()
@@ -270,12 +274,53 @@ const ChartProductionData = () => {
 
       <Chart
         period={period}
-        data={line ? productionLineData : productionBarData}
+        data= { line ? showProduction && productionLineData : productionBarData}
         legend={true}
         type={line ? LINE : BAR}
         lang={i18n?.language}
-        compareData={compareData}
+        compareData={showForeseen ? compareData : []}
       />
+      <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexFlow: 'wrap',
+        justifyContent: 'center',
+        marginBottom: '2rem',
+        gap: '1rem',
+      }}
+      >
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={showProduction}
+              onChange={(event) => setShowProduction(event.target.checked)}
+              sx={{
+                color: 'chartlines.production',
+                '&.Mui-checked': {
+                  color: 'chartlines.production',
+                },
+              }}
+            />
+          }
+          label={t("PRODUCTION.LEGEND_PRODUCTION")}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={showForeseen}
+              onChange={(event) => setShowForeseen(event.target.checked)}
+              sx={{
+                color: 'chartlines.foreseen',
+                '&.Mui-checked': {
+                  color: 'chartlines.foreseen',
+                },
+              }}
+            />
+          }
+          label={t("PRODUCTION.LEGEND_FORESEEN")}
+        />
+      </Box>
     </>
   )
 }
