@@ -99,6 +99,8 @@ const ChartProductionData = () => {
   const { t, i18n } = useTranslation()
   const [showProduction, setShowProduction] = useState(true)
   const [showForeseen, setShowForeseen] = useState(true)
+  const [totalKwh, setTotalKwh] = useState(0)
+  const [foreseenTotalKwh, setForeseenTotalKwh] = useState(0)
 
   const years = 1
   const maxDate = new Date()
@@ -146,6 +148,15 @@ const ChartProductionData = () => {
     return undefined
   }
 
+  function calculateTotalKwh(measured_data, foreseen_data) {
+    const initValue = 0
+    const measuredSum = measured_data.reduce((n, { value }) => n + value, initValue)
+    const foreseenSum = foreseen_data.reduce((n, { value }) => n + value, initValue)
+    console.log(measuredSum)
+    setTotalKwh(measuredSum)
+    setForeseenTotalKwh(foreseenSum)
+  }
+
   React.useEffect(() => {
     const contractData = currentContractData()
     if (!contractData) {
@@ -165,7 +176,7 @@ const ChartProductionData = () => {
       startIndex,
       endIndex,
     )
-    var forecast_data = timeSlice(
+    var foreseen_data = timeSlice(
       offsetDate,
       contractData.forecast_kwh,
       startIndex,
@@ -174,7 +185,8 @@ const ChartProductionData = () => {
     setProductionLineData(measured_data)
     let transdormedData = transformBarChartData(measured_data)
     setProductionBarData(transdormedData)
-    setCompareData(forecast_data)
+    setCompareData(foreseen_data)
+    calculateTotalKwh(measured_data, foreseen_data)
   }, [productionData, period, currentTime, contract])
 
   useEffect(() => {
@@ -255,8 +267,6 @@ const ChartProductionData = () => {
           </Button>
         </Box>
 
-        <SumDisplay period={period} currentDate={currentTime} totalKwh={5} />
-
         <ToggleButtonGroup
           color="primary"
           value={line ? 1 : 0}
@@ -283,46 +293,59 @@ const ChartProductionData = () => {
         lang={i18n?.language}
         compareData={showForeseen ? compareData : []}
       />
-
       <Box
         sx={{
           width: '100%',
           display: 'flex',
           flexFlow: 'wrap',
-          justifyContent: 'center',
-          marginBottom: '2rem',
+          justifyContent: 'space-between',
+          margin: '1rem',
           gap: '1rem',
         }}
       >
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showProduction}
-              onChange={(event) => setShowProduction(event.target.checked)}
-              sx={{
-                color: 'chartlines.production',
-                '&.Mui-checked': {
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={showProduction}
+                onChange={(event) => setShowProduction(event.target.checked)}
+                sx={{
                   color: 'chartlines.production',
-                },
-              }}
-            />
-          }
-          label={t('PRODUCTION.LEGEND_PRODUCTION')}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showForeseen}
-              onChange={(event) => setShowForeseen(event.target.checked)}
-              sx={{
-                color: 'chartlines.foreseen',
-                '&.Mui-checked': {
+                  '&.Mui-checked': {
+                    color: 'chartlines.production',
+                  },
+                }}
+              />
+            }
+            label={t('PRODUCTION.LEGEND_PRODUCTION')}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={showForeseen}
+                onChange={(event) => setShowForeseen(event.target.checked)}
+                sx={{
                   color: 'chartlines.foreseen',
-                },
-              }}
-            />
-          }
-          label={t('PRODUCTION.LEGEND_FORESEEN')}
+                  '&.Mui-checked': {
+                    color: 'chartlines.foreseen',
+                  },
+                }}
+              />
+            }
+            label={t('PRODUCTION.LEGEND_FORESEEN')}
+          />
+        </Box>
+        <SumDisplay
+          period={period}
+          currentDate={showProduction ? currentTime : false}
+          totalKwh={totalKwh}
+          compareDate={showForeseen ? currentTime : false}
+          compareTotalKwh={foreseenTotalKwh}
         />
       </Box>
     </>
