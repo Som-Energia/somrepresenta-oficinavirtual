@@ -22,6 +22,7 @@ import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
 import SnackbarMessages from './components/SnackbarMessages'
 import HijackWarning from './components/HijackWarning'
+import CookiesBanner from './components/CookiesBanner'
 import ProfilePage from './pages/ProfilePage'
 import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
@@ -35,6 +36,7 @@ const routes = [
   {
     element: (
       <GlobalTheme>
+        <CookiesBanner />
         <DialogProvider>
           <VersionCheck />
           <CookiesProvider>
