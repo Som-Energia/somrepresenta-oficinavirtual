@@ -32,7 +32,8 @@
     "react-i18next": "^14.0.0",
     "react-jwt": "^1.2.0",
     "react-router-dom": "^6.15.0",
-    "recharts": "^2.11.0"
+    "recharts": "^2.11.0",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@modyfi/vite-plugin-yaml": "^1.0.4",
