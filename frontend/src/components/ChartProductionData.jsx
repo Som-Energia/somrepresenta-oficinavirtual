@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ToggleButton from '@mui/material/ToggleButton'
 import Chart from '@somenergia/somenergia-ui/Chart'
+import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
 import ovapi from '../services/ovapi'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
@@ -254,6 +255,8 @@ const ChartProductionData = () => {
           </Button>
         </Box>
 
+        <SumDisplay period={period} currentDate={currentTime} totalKwh={5} />
+
         <ToggleButtonGroup
           color="primary"
           value={line ? 1 : 0}
@@ -274,21 +277,22 @@ const ChartProductionData = () => {
 
       <Chart
         period={period}
-        data= { line ? showProduction && productionLineData : productionBarData}
+        data={line ? showProduction && productionLineData : productionBarData}
         legend={true}
         type={line ? LINE : BAR}
         lang={i18n?.language}
         compareData={showForeseen ? compareData : []}
       />
+
       <Box
-      sx={{
-        width: '100%',
-        display: 'flex',
-        flexFlow: 'wrap',
-        justifyContent: 'center',
-        marginBottom: '2rem',
-        gap: '1rem',
-      }}
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexFlow: 'wrap',
+          justifyContent: 'center',
+          marginBottom: '2rem',
+          gap: '1rem',
+        }}
       >
         <FormControlLabel
           control={
@@ -303,7 +307,7 @@ const ChartProductionData = () => {
               }}
             />
           }
-          label={t("PRODUCTION.LEGEND_PRODUCTION")}
+          label={t('PRODUCTION.LEGEND_PRODUCTION')}
         />
         <FormControlLabel
           control={
@@ -318,7 +322,7 @@ const ChartProductionData = () => {
               }}
             />
           }
-          label={t("PRODUCTION.LEGEND_FORESEEN")}
+          label={t('PRODUCTION.LEGEND_FORESEEN')}
         />
       </Box>
     </>
