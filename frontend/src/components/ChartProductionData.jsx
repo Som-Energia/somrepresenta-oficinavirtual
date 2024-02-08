@@ -134,7 +134,6 @@ const ChartProductionData = () => {
   const getProductionData = () => {
     ovapi.productionData(minDate, maxDate).then((data) => {
       setProductionData(data)
-      console.log(data)
     })
   }
 
@@ -142,7 +141,7 @@ const ChartProductionData = () => {
     const data = productionData
     if (!data) return undefined
     for (const contractData of data.data) {
-      if (contractData.contract_number !== contract) continue
+      if (contractData.contract_name !== contract) continue
       return contractData
     }
     return undefined
@@ -152,7 +151,6 @@ const ChartProductionData = () => {
     const initValue = 0
     const measuredSum = measured_data.reduce((n, { value }) => n + value, initValue)
     const foreseenSum = foreseen_data.reduce((n, { value }) => n + value, initValue)
-    console.log(measuredSum)
     setTotalKwh(measuredSum)
     setForeseenTotalKwh(foreseenSum)
   }
