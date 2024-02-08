@@ -31,6 +31,7 @@ import ProductionPage from './pages/ProductionPage'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { InstallationContextProvider } from './components/InstallationProvider'
+import CookiesPolicyPage from './pages/CookiesPolicyPage'
 
 const routes = [
   {
@@ -109,6 +110,10 @@ const routes = [
                 <ProductionPage />
               </InstallationContextProvider>
             ),
+          },
+          {
+            path: '/cookies_policy',
+            element: <CookiesPolicyPage />,
           },
         ],
       },

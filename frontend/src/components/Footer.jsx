@@ -35,7 +35,7 @@ export default function Footer(params) {
     },
     {
       text: t('FOOTER.COOKIE_POLICY'),
-      url: t('FOOTER.COOKIE_POLICY_URL'),
+      url: `#/cookies_policy/`,
     },
   ]
   return (
