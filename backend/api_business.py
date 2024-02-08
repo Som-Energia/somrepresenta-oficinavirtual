@@ -70,8 +70,8 @@ def setup_business(app):
 
     @app.get('/api/production_data')
     def api_production_data(
-        first_timestamp_utc: AwareDatetime,
-        last_timestamp_utc: AwareDatetime,
+        first_timestamp_utc: str,
+        last_timestamp_utc: str,
         user: dict = Depends(validated_user),
     ) -> CustomerProductionData:
         return production_data(user['username'], first_timestamp_utc, last_timestamp_utc)

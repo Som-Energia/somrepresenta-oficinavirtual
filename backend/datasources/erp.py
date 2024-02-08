@@ -121,8 +121,8 @@ def erp_invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
 
 def erp_production_data(
         username: str,
-        first_timestamp_utc: AwareDatetime,
-        last_timestamp_utc: AwareDatetime,
+        first_timestamp_utc: str,
+        last_timestamp_utc: str,
     ) -> CustomerProductionData:
     # TODO: waiting for erp function
     # e = erp.Erp()
@@ -160,7 +160,7 @@ class ErpBackend:
     def production_data(
         self,
         username: str,
-        first_timestamp_utc: AwareDatetime,
-        last_timestamp_utc: AwareDatetime,
+        first_timestamp_utc: str,
+        last_timestamp_utc: str,
     ) -> CustomerProductionData:
         return erp_production_data(username, first_timestamp_utc, last_timestamp_utc)

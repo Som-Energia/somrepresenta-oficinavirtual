@@ -327,7 +327,7 @@ def dummy_production_data(
                 contract_number = contract.contract_number,
                 first_timestamp_utc = first_timestamp_utc,
                 last_timestamp_utc = last_timestamp_utc,
-                forecast_kwh = [
+                foreseen_kwh = [
                     i%24 + j
                     for i in range(nhours)
                 ],
@@ -372,7 +372,7 @@ class DummyBackend:
     def production_data(
         self,
         username: str,
-        first_timestamp_utc: AwareDatetime,
-        last_timestamp_utc: AwareDatetime,
+        first_timestamp_utc: str,
+        last_timestamp_utc: str,
     ) -> CustomerProductionData:
         return dummy_production_data(username, first_timestamp_utc, last_timestamp_utc)

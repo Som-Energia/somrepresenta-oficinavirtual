@@ -178,7 +178,7 @@ const ChartProductionData = () => {
     )
     var foreseen_data = timeSlice(
       offsetDate,
-      contractData.forecast_kwh,
+      contractData.foreseen_kwh,
       startIndex,
       endIndex,
     )
