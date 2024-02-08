@@ -307,37 +307,33 @@ def dummy_invoice_pdf(username: str, invoice_number: str):
         content_type="application/pdf",
     )
 
-def dummy_production_data(username: str) -> list[ProductionData]:
-    data = ns.load("frontend/src/data/dummyproductiondata.yaml")
-    return data
 
 
 def dummy_production_data(
     username: str,
-    first_timestamp_utc: AwareDatetime,
-    last_timestamp_utc: AwareDatetime,
+    first_timestamp_utc: str,
+    last_timestamp_utc: str,
 ) -> CustomerProductionData:
 
-    nhours = round((last_timestamp_utc - first_timestamp_utc) / datetime.timedelta(hours=1))
-    maturity_options = ['H2', 'H3', 'HP', 'HC', None]
+    last_timestamp_date = datetime.datetime.fromisoformat(last_timestamp_utc)
+    first_timestamp_date = datetime.datetime.fromisoformat(first_timestamp_utc)
+
+    nhours = round(
+        (last_timestamp_date - first_timestamp_date) / datetime.timedelta(hours=1)
+    )
+    maturity_options = ["H2", "H3", "HP", "HC", None]
 
     return CustomerProductionData(
-        data = [
+        data=[
             ContractProductionData(
-                contract_number = contract.contract_number,
-                first_timestamp_utc = first_timestamp_utc,
-                last_timestamp_utc = last_timestamp_utc,
-                foreseen_kwh = [
-                    i%24 + j
-                    for i in range(nhours)
-                ],
-                measured_kwh = [
-                    j*(i%24) + 6
-                    for i in range(nhours)
-                ],
-                maturity = [
-                    maturity_options[i%len(maturity_options)]
-                    for i in range(nhours)
+                contract_name=contract.contract_number,
+                first_timestamp_utc=first_timestamp_utc,
+                last_timestamp_utc=last_timestamp_utc,
+                foreseen_kwh=[i % 24 + j for i in range(nhours)],
+                measure_kwh=[j * (i % 24) + 6 for i in range(nhours)],
+                estimated=[False for i in range(nhours)],
+                maturity=[
+                    maturity_options[i % len(maturity_options)] for i in range(nhours)
                 ],
             )
             for j, contract in enumerate(dummy_installation_list(username))
