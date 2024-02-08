@@ -172,7 +172,7 @@ const ChartProductionData = () => {
 
     var measured_data = timeSlice(
       offsetDate,
-      contractData.measured_kwh,
+      contractData.measure_kwh,
       startIndex,
       endIndex,
     )
@@ -216,6 +216,7 @@ const ChartProductionData = () => {
         {t('PRODUCTION.PRODUCTION_TITLE')}
         <ContractSelector {...{ setContract, contract }} />
       </PageTitle>
+
       <Box
         sx={{
           width: '100%',

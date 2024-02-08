@@ -172,7 +172,7 @@ class ContractProductionData(BaseModel):
     first_timestamp_utc: AwareDatetime
     last_timestamp_utc: AwareDatetime
     forecast_kwh: list[float | None]
-    measured_kwh: list[float | None]
+    measure_kwh: list[float | None]
     maturity: list[DataMaturity | None]
 
 class CustomerProductionData(BaseModel):
