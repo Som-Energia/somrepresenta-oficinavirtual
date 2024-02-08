@@ -124,13 +124,11 @@ def erp_production_data(
         first_timestamp_utc: str,
         last_timestamp_utc: str,
     ) -> CustomerProductionData:
-    # TODO: waiting for erp function
-    # e = erp.Erp()
-    # production_data = e.production_data(username, first_timestamp_utc, last_timestamp_utc)
-    # process_erp_errors(production_data)
-    # with catch_validation_error():
-    # return CustomerProductionData(**data)
-    return "CACA"
+    e = erp.Erp()
+    production_data = e.production_data(username, first_timestamp_utc, last_timestamp_utc)
+    process_erp_errors(production_data)
+    with catch_validation_error():
+        return CustomerProductionData(**production_data)
 
 
 class ErpBackend:
