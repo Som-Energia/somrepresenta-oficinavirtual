@@ -1,6 +1,3 @@
-import i18n from '../../i18n/i18n'
-import format from '../../services/format'
-
 export const cookiesPolicyPurpose = {
   technical_cookies:
     'Les cookies tècniques són aquelles que faciliten la navegació de la persona usuària i la utilització de les diferents opcions o serveis que ofereix el web, com ara identificar la sessió, permetre l’accés a determinades àrees, facilitar comandes, compres, omplir formularis, inscripcions, seguretat, facilitar funcionalitats (vídeos, xarxes socials,...).',
@@ -37,3 +34,17 @@ export const cookiesDescription = {
 export const cookiesSomDetails = {
   chrome: 'url',
 }
+
+function createData(name, path, url) {
+    return { name, path, url }
+}
+
+
+export const desactivateCookies = [
+    createData('Chrome', 'Configuració > Mostrar opcions avançades > Privacitat > Configuració de contingut.', 'support.google.com'),
+    createData('Firefox', 'Eines > Opcions > Privacitat > Historial > Configuració personalitzada.', 'support.mozilla.org'),
+    createData('Internet Explorer', 'Eines > Opcions d’Internet > Privacitat > Configuració.', 'support.microsoft.com'),
+    createData('Opera', 'Eines > Preferències > Editar preferències > Cookies', 'help.opera.com'),
+    createData('Safari', 'Preferències > Seguretat.', 'support.apple.com'),
+    createData('Edge', 'Configuració > Vegeu configuració avançada > Privacitat i serveis > Cookies.', 'support.microsoft.com'),
+  ]

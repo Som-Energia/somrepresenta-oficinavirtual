@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next'
 import CookieIcon from '@mui/icons-material/Cookie'
 import SimpleTable from '../../components/SimpleTable'
 import CookiesReport from '../../components/CookiesReport'
+import BasicTable from '../../components/BasicTable'
 import {
   cookiesPolicyPurpose,
   cookiesPolicyTerm,
   cookiesPolicyOwnership,
   cookiesDescription,
+  desactivateCookies,
 } from './cookiesPolicyData'
 
-console.log(CookiesReport)
 export default function CookiesPolicyPage() {
   const { t } = useTranslation()
 
@@ -57,6 +58,7 @@ export default function CookiesPolicyPage() {
       >
         {t('COOKIES_POLICY.SOM_DETAILS')}
       </Typography>
+      <BasicTable row={desactivateCookies}></BasicTable>
     </Container>
   )
 }
