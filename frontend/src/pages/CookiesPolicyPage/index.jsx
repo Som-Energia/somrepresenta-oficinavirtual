@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import PageTitle from '../../components/PageTitle'
 import { useTranslation } from 'react-i18next'
 import CookieIcon from '@mui/icons-material/Cookie'
@@ -18,7 +18,10 @@ export default function CookiesPolicyPage() {
   return (
     <Container>
       <PageTitle Icon={CookieIcon}>{t('COOKIES_POLICY.TITLE')}</PageTitle>
-      <Typography variant="subtitle1" sx={{ my: 3, display: 'flex', alignItems: 'center' }}>
+      <Typography
+        variant="subtitle1"
+        sx={{ my: 3, display: 'flex', alignItems: 'center' }}
+      >
         {t('COOKIES_POLICY.SUBTITLE')}
       </Typography>
       <SimpleTable
@@ -36,7 +39,10 @@ export default function CookiesPolicyPage() {
         translationsPrefix="COOKIES_POLICY"
         title={t('COOKIES_POLICY.OWNERSHIP')}
       />
-      <CookiesReport></CookiesReport>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', margin: 2, gap: 2 }}>
+        <div data-cookiescriptreport="report" />
+        <CookiesReport></CookiesReport>
+      </Box>
 
       <Typography
         variant="subtitle2"
