@@ -271,7 +271,7 @@ const ChartProductionData = () => {
           value={line ? 1 : 0}
           exclusive
           onChange={(event, value) => {
-            setLine(!!value)
+            value !== null && setLine(!!value)
           }}
           aria-label={t('PRODUCTION.LABEL_PLOT_STYLE')}
         >
@@ -286,7 +286,7 @@ const ChartProductionData = () => {
 
       <Chart
         period={period}
-        data={line ? showProduction && productionLineData : productionBarData}
+        data={line ? (showProduction ? productionLineData : []) : productionBarData}
         legend={true}
         type={line ? LINE : BAR}
         lang={i18n?.language}
