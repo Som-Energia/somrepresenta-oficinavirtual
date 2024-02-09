@@ -16,7 +16,9 @@ import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
 import format from '../../services/format'
 import DownloadButton from './DownloadButton'
-//import dummyData from '../../data/dummyinvoices.yaml'
+import RestartAltIcon from '@mui/icons-material/RestartAlt'
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export default function InvoicesPage(params) {
   const { t } = useTranslation()
@@ -45,6 +47,12 @@ export default function InvoicesPage(params) {
     market: t('INVOICES.CONCEPT_OPTION_MARKET'),
     specific_retribution: t('INVOICES.CONCEPT_OPTION_SPECIFIC_RETRIBUTION'),
     services: t('INVOICES.CONCEPT_OPTION_SERVICES'),
+  }
+
+  const state_options = {
+    paid: <><DoneIcon style={{ color: '#96B633', verticalAlign: 'middle'}} /> {t('INVOICES.PAID_STATUS_OPTION_PAID')}</>,
+    open: <><ClearIcon style={{ color: 'red',  verticalAlign: 'middle'}} />  {t('INVOICES.PAID_STATUS_OPTION_OPEN')}</>,
+    draft: <><RestartAltIcon style={{ color: '#FFC300', verticalAlign: 'middle'}}/> {t('INVOICES.PAID_STATUS_OPTION_DRAFT')}</>,
   }
 
   const columns = [
@@ -97,6 +105,13 @@ export default function InvoicesPage(params) {
       searchable: false,
       numeric: true,
       view: (row) => format.euros(row.amount),
+    },
+    {
+      id: 'state',
+      label: t('INVOICES.COLUMN_PAID_STATUS'),
+      searchable: false,
+      numeric: false,
+      view: (row) => format.enumeration(row.state, state_options),
     },
   ]
   const actions = []
