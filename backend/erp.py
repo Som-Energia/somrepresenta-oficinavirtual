@@ -2,6 +2,7 @@ import httpx
 import dotenv
 import os
 from decorator import decorator
+from pydantic import AwareDatetime
 
 # TODO: Please do not let this evolve without major refactor!
 # TODO: This is a quick proof of concept
@@ -132,7 +133,7 @@ class Erp:
             "som.ov.invoices", "download_invoice_pdf", username, invoice_number
         )
 
-    def production_data(self, username, first_timestamp_utc, last_timestamp_utc):
+    def production_data(self, username: str, first_timestamp_utc: AwareDatetime, last_timestamp_utc: AwareDatetime):
         data = self.object_execute(
             "som.ov.production.data",
             "measures",

@@ -169,8 +169,8 @@ DataMaturity = Literal[
 
 class ContractProductionData(BaseModel):
     contract_name: str
-    first_timestamp_utc: str
-    last_timestamp_utc: str
+    first_timestamp_utc: AwareDatetime
+    last_timestamp_utc: AwareDatetime
     foreseen_kwh: list[float | None]
     measure_kwh: list[float | None]
     estimated: list [bool | None]

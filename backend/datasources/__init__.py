@@ -69,8 +69,8 @@ def invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
 
 def production_data(
     username: str,
-    first_timestamp_utc: str,
-    last_timestamp_utc: str,
+    first_timestamp_utc: AwareDatetime,
+    last_timestamp_utc: AwareDatetime,
 ) -> CustomerProductionData:
     return backend().production_data(username, first_timestamp_utc, last_timestamp_utc)
 

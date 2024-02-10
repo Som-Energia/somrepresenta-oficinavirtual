@@ -311,8 +311,8 @@ def dummy_invoice_pdf(username: str, invoice_number: str):
 
 def dummy_production_data(
     username: str,
-    first_timestamp_utc: str,
-    last_timestamp_utc: str,
+    first_timestamp_utc: AwareDatetime,
+    last_timestamp_utc: AwareDatetime,
 ) -> CustomerProductionData:
 
     last_timestamp_date = datetime.datetime.fromisoformat(last_timestamp_utc)
@@ -368,7 +368,7 @@ class DummyBackend:
     def production_data(
         self,
         username: str,
-        first_timestamp_utc: str,
-        last_timestamp_utc: str,
+        first_timestamp_utc: AwareDatetime,
+        last_timestamp_utc: AwareDatetime,
     ) -> CustomerProductionData:
         return dummy_production_data(username, first_timestamp_utc, last_timestamp_utc)
