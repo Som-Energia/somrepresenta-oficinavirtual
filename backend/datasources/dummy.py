@@ -243,6 +243,7 @@ def dummy_invoices(username: str) -> list[Invoice]:
             first_period_date='2020-01-01',
             last_period_date='2020-01-01',
             amount=200,
+            payment_status='open',
         ) for name in invoice_pdf_exceptions.keys()
     ]
 
@@ -289,7 +290,7 @@ class DummyBackend():
 
     def installation_details(self, username: str, contract_number: str) -> InstallationDetailsResult:
         return dummy_installation_details(username, contract_number)
-    
+
     def invoice_list(self, username: str) -> list[Invoice]:
         return dummy_invoices(username)
 

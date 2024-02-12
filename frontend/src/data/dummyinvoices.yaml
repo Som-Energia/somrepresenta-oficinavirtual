@@ -6,6 +6,7 @@
   amount: 10.50
   concept: market
   liquidation: null
+  payment_status: paid
 - invoice_number: F000013
   contract_number: "19000_1"
   emission_date: "2022-04-01"
@@ -14,6 +15,7 @@
   amount: 320.53
   concept: specific_retribution
   liquidation: null
+  payment_status: open
 - invoice_number: F000003
   contract_number: "19000_2"
   emission_date: "2022-03-01"
@@ -22,6 +24,7 @@
   amount: 1300.12
   concept: services
   liquidation: null
+  payment_status: draft
 - invoice_number: F000017
   contract_number: "19000_2"
   emission_date: "2022-04-01"
@@ -30,3 +33,4 @@
   amount: 523.00
   concept: null
   liquidation: null
+  payment_status: paid

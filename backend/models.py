@@ -31,6 +31,12 @@ InvoiceConcept = Literal[
     'services',
 ]
 
+InvoicePaymentStatus = Literal[
+    'open',
+    'paid',
+    'draft',
+]
+
 BillingMode = Literal[
     'atr',
     'index',
@@ -142,6 +148,7 @@ class Invoice(BaseModel):
     amount: float
     concept: InvoiceConcept | None = None
     liquidation: str | None = None
+    payment_status: InvoicePaymentStatus
 
 class InvoicePdf(BaseModel):
     content: Base64Bytes

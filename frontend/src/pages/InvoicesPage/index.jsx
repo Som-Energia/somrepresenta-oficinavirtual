@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
@@ -8,6 +9,9 @@ import Box from '@mui/material/Box'
 import DescriptionIcon from '@mui/icons-material/Description'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import DownloadIcon from '@mui/icons-material/Download'
+import RestartAltIcon from '@mui/icons-material/RestartAlt'
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 import TableEditor from '../../components/TableEditor'
 import { useAuth } from '../../components/AuthProvider'
 import ovapi from '../../services/ovapi'
@@ -16,9 +20,35 @@ import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
 import format from '../../services/format'
 import DownloadButton from './DownloadButton'
-//import dummyData from '../../data/dummyinvoices.yaml'
 
-export default function InvoicesPage(params) {
+
+function PaymentCell({payment_status}) {
+  const { t } = useTranslation()
+  const color = {
+    paid: 'success.main',
+    open: 'error.main',
+    draft: 'warning.main',
+  }[payment_status] || 'warning.main'
+  const Icon = {
+    paid: DoneIcon,
+    open: ClearIcon,
+    draft: RestartAltIcon,
+  }[payment_status] || RestartAltIcon
+  const payment_status_options = {
+    paid: t('INVOICES.PAID_STATUS_OPTION_PAID'),
+    open: t('INVOICES.PAID_STATUS_OPTION_OPEN'),
+    draft: t('INVOICES.PAID_STATUS_OPTION_DRAFT'),
+  }
+  return <>
+    <Icon sx={{color, verticalAlign: 'middle'}} />{format.enumeration(payment_status, payment_status_options)}
+  </>
+}
+
+PaymentCell.propTypes = {
+  payment_status: PropTypes.oneOf(['paid', 'open', 'draft']).isRequired
+}
+
+export default function InvoicesPage() {
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = React.useState(true)
   const [rows, setRows] = React.useState([])
@@ -67,12 +97,12 @@ export default function InvoicesPage(params) {
       numeric: false,
       view: (row) => format.enumeration(row.concept, concept_options),
     },
-    {
-      id: 'liquidation',
-      label: t('INVOICES.COLUMN_LIQUIDATION'),
-      searchable: true,
-      numeric: false,
-    },
+    // {
+    //   id: 'liquidation',
+    //   label: t('INVOICES.COLUMN_LIQUIDATION'),
+    //   searchable: true,
+    //   numeric: false,
+    // },
     {
       id: 'emission_date',
       label: t('INVOICES.COLUMN_EMITTED'),
@@ -97,6 +127,13 @@ export default function InvoicesPage(params) {
       searchable: false,
       numeric: true,
       view: (row) => format.euros(row.amount),
+    },
+    {
+      id: 'state',
+      label: t('INVOICES.COLUMN_PAID_STATUS'),
+      searchable: false,
+      numeric: false,
+      view: (row) => <PaymentCell payment_status={row.payment_status} />,
     },
   ]
   const actions = []
