@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased
+
+- PaymentCell component to show Invoice Payment
+Status information
+
 ## 0.5.0 (2024-01-23)
 
 - Hijack implementation
