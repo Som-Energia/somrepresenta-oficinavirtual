@@ -77,12 +77,6 @@ export default function InvoicesPage() {
     services: t('INVOICES.CONCEPT_OPTION_SERVICES'),
   }
 
-  const state_options = {
-    paid: <><DoneIcon style={{ color: '#96B633', verticalAlign: 'middle'}} /> {t('INVOICES.PAID_STATUS_OPTION_PAID')}</>,
-    open: <><ClearIcon style={{ color: 'red',  verticalAlign: 'middle'}} />  {t('INVOICES.PAID_STATUS_OPTION_OPEN')}</>,
-    draft: <><RestartAltIcon style={{ color: '#FFC300', verticalAlign: 'middle'}}/> {t('INVOICES.PAID_STATUS_OPTION_DRAFT')}</>,
-  }
-
   const columns = [
     {
       id: 'invoice_number', // TODO: can we name it contract?
@@ -139,7 +133,7 @@ export default function InvoicesPage() {
       label: t('INVOICES.COLUMN_PAID_STATUS'),
       searchable: false,
       numeric: false,
-      view: (row) => format.enumeration(row.state, state_options),
+      view: (row) => <PaymentCell payment_status={row.payment_status} />,
     },
   ]
   const actions = []
