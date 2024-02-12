@@ -31,7 +31,7 @@ InvoiceConcept = Literal[
     'services',
 ]
 
-InvoiceState = Literal[
+InvoicePaymentStatus = Literal[
     'open',
     'paid',
     'draft',
@@ -148,7 +148,7 @@ class Invoice(BaseModel):
     amount: float
     concept: InvoiceConcept | None = None
     liquidation: str | None = None
-    state: InvoiceState
+    payment_status: InvoicePaymentStatus
 
 class InvoicePdf(BaseModel):
     content: Base64Bytes

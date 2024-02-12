@@ -243,7 +243,7 @@ def dummy_invoices(username: str) -> list[Invoice]:
             first_period_date='2020-01-01',
             last_period_date='2020-01-01',
             amount=200,
-            state='open',
+            payment_status='open',
         ) for name in invoice_pdf_exceptions.keys()
     ]
 
