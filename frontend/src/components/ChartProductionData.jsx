@@ -102,7 +102,7 @@ const ChartProductionData = () => {
   const [totalKwh, setTotalKwh] = useState(0)
   const [foreseenTotalKwh, setForeseenTotalKwh] = useState(0)
 
-  const years = 1
+  const years = 4
   const maxDate = new Date()
   maxDate.setHours(0)
   maxDate.setMinutes(0)
