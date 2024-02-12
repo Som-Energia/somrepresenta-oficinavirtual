@@ -1,34 +1,27 @@
+import { useTranslation as t } from 'react-i18next'
+
 export const cookiesPolicyPurpose = {
-  technical_cookies:
-    'Les cookies tècniques són aquelles que faciliten la navegació de la persona usuària i la utilització de les diferents opcions o serveis que ofereix el web, com ara identificar la sessió, permetre l’accés a determinades àrees, facilitar comandes, compres, omplir formularis, inscripcions, seguretat, facilitar funcionalitats (vídeos, xarxes socials,...).',
-  customization_cookies:
-    'Les cookies de personalització permeten a la persona usuària accedir als serveis segons les seves preferències (llengua, navegador, configuració,...).',
-  analytics_cookies:
-    'Les cookies d’anàlisi són les utilitzades per dur a terme l’anàlisi anònima del comportament de les persones usuàries del web i que permeten mesurar l’activitat de la usuària o usuari, i elaborar perfils de navegació amb l’objectiu de millorar els llocs web.',
-  advertising_cookies:
-    'Les cookies publicitàries permeten la gestió dels espais publicitaris del web. A més, aquestes cookies poden ser de publicitat personalitzada i permetre així la gestió dels espais publicitaris del web basant-se en el comportament i els hàbits de navegació de la usuària o usuari, d’on se n’obté el perfil, i permeten personalitzar la publicitat que es mostra en el navegador de la persona usuària, o bé altres perfils i xarxes socials de l’usuari o usuària.',
+  technical_cookies: 'COOKIES_POLICY.TECHNICAL_COOKIES_DESCRIPTION',
+  customization_cookies: 'COOKIES_POLICY.CUSTOMIZATION_COOKIES_DESCRIPTION',
+  analytics_cookies: 'COOKIES_POLICY.ANALYTICS_COOKIES_DESCRIPTION',
+  advertising_cookies: 'COOKIES_POLICY.ADVERTISING_COOKIES_DESCRIPTION',
 }
 
 export const cookiesPolicyTerm = {
-  session_cookies:
-    'Les cookies de sessió són aquelles que duren el temps que la persona usuària està navegant per la pàgina web i s’esborren quan es tanca el navegador.',
-  persistent_cookies:
-    'Les cookies de sessió són aquelles que duren el temps que la persona usuària està navegant per la pàgina web i s’esborren quan es tanca el navegador.',
+  session_cookies: 'COOKIES_POLICY.SESSION_COOKIES_DESCRIPTION',
+  persistent_cookies: 'COOKIES_POLICY.PERSISTENT_COOKIES_DESCRIPTION',
 }
 
 export const cookiesPolicyOwnership = {
-  own_cookies:
-    'Aquelles que s’envien a l’equip terminal de l’usuari o usuària des d’un equip o domini gestionat pel mateix editor o editora i des del qual es presta el servei sol·licitat per la persona usuària.',
-  thirdparty_cookies:
-    'Aquelles que s’envien a l’equip terminal de la persona usuària des d’un equip o domini que no és gestionat per l’editor o editora, sinó per una altra entitat que tracta les dades obtingudes mitjançant les cookies.',
+  own_cookies: 'COOKIES_POLICY.OWN_COOKIES_DESCRIPTION',
+  thirdparty_cookies: 'COOKIES_POLICY.THIRDPARTY_COOKIES_DESCRIPTION',
 }
 
 export const cookiesDescription = {
-  basic: 'Cookies Tècniques pròpies i de sessió.',
-  performance:
-    'Cookies Tècniques pròpies i persistens. Cookies de Personalització pròpies o de tercers, de sessió o persistents.',
-  statistics: 'Cookies Analítiques i Pulicitàries persistents, pròpies i de tercers.',
-  functionality: 'Cookies Tècniques de tercers, de sessió o persistents.',
+  basic: 'COOKIES_POLICY.BASIC_DESCRIPTION',
+  performance: 'COOKIES_POLICY.PERFORMANCE_DESCRIPTION',
+  statistics: 'COOKIES_POLICY.STATISTICS_DESCRIPTION',
+  functionality: 'COOKIES_POLICY.FUNCTIONALITY_DESCRIPTION',
 }
 
 export const cookiesSomDetails = {
@@ -36,15 +29,22 @@ export const cookiesSomDetails = {
 }
 
 function createData(name, path, url) {
-    return { name, path, url }
+  return { name, path, url }
 }
 
-
 export const desactivateCookies = [
-    createData('Chrome', 'Configuració > Mostrar opcions avançades > Privacitat > Configuració de contingut.', 'support.google.com'),
-    createData('Firefox', 'Eines > Opcions > Privacitat > Historial > Configuració personalitzada.', 'support.mozilla.org'),
-    createData('Internet Explorer', 'Eines > Opcions d’Internet > Privacitat > Configuració.', 'support.microsoft.com'),
-    createData('Opera', 'Eines > Preferències > Editar preferències > Cookies', 'help.opera.com'),
-    createData('Safari', 'Preferències > Seguretat.', 'support.apple.com'),
-    createData('Edge', 'Configuració > Vegeu configuració avançada > Privacitat i serveis > Cookies.', 'support.microsoft.com'),
-  ]
+  createData('Chrome', 'COOKIES_POLICY.CHROME_DESACTIVATE_COOKIES', 'support.google.com'),
+  createData(
+    'Firefox',
+    'COOKIES_POLICY.FIREFOX_DESACTIVATE_COOKIES',
+    'support.mozilla.org',
+  ),
+  createData(
+    'Internet Explorer',
+    'COOKIES_POLICY.EXPLORER_DESACTIVATE_COOKIES',
+    'support.microsoft.com',
+  ),
+  createData('Opera', 'COOKIES_POLICY.EXPLORER_DESACTIVATE_COOKIES', 'help.opera.com'),
+  createData('Safari', 'COOKIES_POLICY.SAFARI_DESACTIVATE_COOKIES', 'support.apple.com'),
+  createData('Edge', 'COOKIES_POLICY.EDGE_DESACTIVATE_COOKIES', 'support.microsoft.com'),
+]

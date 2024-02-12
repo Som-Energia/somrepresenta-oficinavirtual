@@ -19,21 +19,16 @@ export default function CookiesPolicyPage() {
   return (
     <Container>
       <PageTitle Icon={CookieIcon}>{t('COOKIES_POLICY.TITLE')}</PageTitle>
-      <Typography
-        variant="subtitle1"
-        sx={{ my: 3, display: 'flex', alignItems: 'center' }}
-      >
-        {t('COOKIES_POLICY.SUBTITLE')}
-      </Typography>
+      <Typography variant="h4">{t('COOKIES_POLICY.SUBTITLE')}</Typography>
       <SimpleTable
         fields={cookiesPolicyPurpose}
         translationsPrefix="COOKIES_POLICY"
-        title={t('COOKIES_POLICY.TERM')}
+        title={t('COOKIES_POLICY.PURPOSE')}
       />
       <SimpleTable
         fields={cookiesPolicyTerm}
         translationsPrefix="COOKIES_POLICY"
-        title={t('COOKIES_POLICY.OWNERSHIP')}
+        title={t('COOKIES_POLICY.TERM')}
       />
       <SimpleTable
         fields={cookiesPolicyOwnership}
@@ -43,22 +38,23 @@ export default function CookiesPolicyPage() {
       <Box sx={{ display: 'flex', flexWrap: 'wrap', margin: 2, gap: 2 }}>
         <div data-cookiescriptreport="report" />
         <CookiesReport></CookiesReport>
+
+        <div>
+          <p>{t('COOKIES_POLICY.TABLE_DESCRIPTION')}:</p>
+          <p>{t('COOKIES_POLICY.TABLE_COOKIES_CLASSIFICATION')}:</p>
+        </div>
       </Box>
 
-      <Typography
-        variant="subtitle2"
-        sx={{ my: 3, mx: 3, display: 'flex', alignItems: 'center' }}
-      >
-        {t('COOKIES_POLICY.TABLE_DESCRIPTION')}
-      </Typography>
       <SimpleTable fields={cookiesDescription} translationsPrefix="COOKIES_POLICY" />
-      <Typography
-        variant="subtitle2"
-        sx={{ my: 3, mx: 3, display: 'flex', alignItems: 'center' }}
-      >
-        {t('COOKIES_POLICY.SOM_DETAILS')}
-      </Typography>
-      <BasicTable row={desactivateCookies}></BasicTable>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', margin: 2, gap: 2 }}>
+        <div>
+          <p>{t('COOKIES_POLICY.SOM_COOKIES')}</p>
+          <p>{t('COOKIES_POLICY.SOM_COOKIES_EXPLANATION')}</p>
+          <p>{t('COOKIES_POLICY.DEACTIVATE_COOKIES_TABLE')}:</p>
+        </div>
+
+        <BasicTable row={desactivateCookies}></BasicTable>
+      </Box>
     </Container>
   )
 }

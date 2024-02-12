@@ -3,8 +3,12 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const BasicTable = ({ row }) => {
+  const { t } = useTranslation()
+
   return (
     <TableContainer>
       <Table
@@ -12,6 +16,7 @@ const BasicTable = ({ row }) => {
           borderTop: 1,
           borderBottom: 1,
           borderColor: '#8080804a',
+          padding: 0,
         }}
       >
         <TableBody>
@@ -24,10 +29,12 @@ const BasicTable = ({ row }) => {
                 {row.name}
               </TableCell>
               <TableCell align="justify" sx={{ border: 0 }}>
-                {row.path}
+                {t(row.path)}
               </TableCell>
-              <TableCell align="justify" sx={{ border: 0 }}>
-                {row.url}
+              <TableCell align="right" sx={{ border: 0 }}>
+                <Link to={`https://${row.url}`} activeClassName="current">
+                  {row.url}
+                </Link>
               </TableCell>
             </TableRow>
           ))}
