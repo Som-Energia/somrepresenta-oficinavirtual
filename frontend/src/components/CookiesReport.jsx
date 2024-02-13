@@ -1,14 +1,16 @@
 import { useEffect } from 'react'
 
+const cookieScriptId = import.meta.env.VITE_COOKIE_SCRIPT_ID
+
 export default function CookiesReport() {
   useEffect(() => {
     const script = document.createElement('script')
 
-    script.src = "//report.cookie-script.com/r/7fd67909c826ccd5a817b2e250aa80fc.js"
+    script.src = `//report.cookie-script.com/r/${cookieScriptId}.js`
     script.async = true
     document.body.appendChild(script)
 
-  return () => {
+    return () => {
       document.body.removeChild(script)
     }
   }, [])
