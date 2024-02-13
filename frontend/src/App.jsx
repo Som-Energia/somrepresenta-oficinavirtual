@@ -27,6 +27,8 @@ import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
 import InvoicesPage from './pages/InvoicesPage'
 import ProductionPage from './pages/ProductionPage'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { InstallationContextProvider } from './components/InstallationProvider'
 
 const routes = [
@@ -36,16 +38,18 @@ const routes = [
         <DialogProvider>
           <VersionCheck />
           <CookiesProvider>
-            <AuthProvider>
-              <ScrollRestoration /> {/* Scroll up on page switch */}
-              <BreakPointIndicator />
-              <SnackbarMessages variant="filled" />
-              <HijackWarning />
-              <AppFrame>
-                <TermsCheck />
-                <Outlet />
-              </AppFrame>
-            </AuthProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18n.language}>
+              <AuthProvider>
+                <ScrollRestoration /> {/* Scroll up on page switch */}
+                <BreakPointIndicator />
+                <SnackbarMessages variant="filled" />
+                <HijackWarning />
+                <AppFrame>
+                  <TermsCheck />
+                  <Outlet />
+                </AppFrame>
+              </AuthProvider>
+            </LocalizationProvider>
           </CookiesProvider>
         </DialogProvider>
       </GlobalTheme>
@@ -98,7 +102,11 @@ const routes = [
           },
           {
             path: '/production',
-            element: <ProductionPage />,
+            element: (
+              <InstallationContextProvider>
+                <ProductionPage />
+              </InstallationContextProvider>
+            ),
           },
         ],
       },

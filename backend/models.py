@@ -7,6 +7,7 @@ from pydantic import (
     ValidationInfo,
     AfterValidator,
     EmailStr,
+    AwareDatetime,
     Base64Bytes,
 )
 from typing import Literal, Annotated
@@ -154,4 +155,27 @@ class InvoicePdf(BaseModel):
     content: Base64Bytes
     content_type: str # TODO: content type check
     filename: str
+
+class ProductionData(BaseModel):
+    data: str
+    value: int
+
+DataMaturity = Literal[
+    'H2',
+    'H3',
+    'HP',
+    'HC',
+]
+
+class ContractProductionData(BaseModel):
+    contract_name: str
+    first_timestamp_utc: AwareDatetime
+    last_timestamp_utc: AwareDatetime
+    foreseen_kwh: list[float | None]
+    measure_kwh: list[float | None]
+    estimated: list [bool | None]
+    maturity: list[DataMaturity | None]
+
+class CustomerProductionData(BaseModel):
+    data: list[ContractProductionData]
 

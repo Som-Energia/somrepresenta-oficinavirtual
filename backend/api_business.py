@@ -1,5 +1,6 @@
 from fastapi import Request, Depends, status
 from fastapi.responses import JSONResponse
+from pydantic import AwareDatetime
 from .models import (
     UserProfile,
     SignatureResult,
@@ -7,6 +8,7 @@ from .models import (
     InstallationDetailsResult,
     Invoice,
     InvoicePdf,
+    CustomerProductionData,
 )
 from .datasources import (
     profile_info,
@@ -15,6 +17,7 @@ from .datasources import (
     installation_details,
     invoice_list,
     invoice_pdf,
+    production_data,
 )
 from .erp import ErpConnectionError
 from .auth import validated_user
@@ -64,3 +67,11 @@ def setup_business(app):
             binary_data=result.content,
             filename=result.filename,
         )
+
+    @app.get('/api/production_data')
+    def api_production_data(
+        first_timestamp_utc: str,
+        last_timestamp_utc: str,
+        user: dict = Depends(validated_user),
+    ) -> CustomerProductionData:
+        return production_data(user['username'], first_timestamp_utc, last_timestamp_utc)

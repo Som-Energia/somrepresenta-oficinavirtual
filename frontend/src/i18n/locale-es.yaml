@@ -203,3 +203,14 @@ INVOICES:
   PAID_STATUS_OPTION_DRAFT: En proceso
 PRODUCTION:
   PRODUCTION_TITLE: Producción
+  LABEL_CONTRACT: Contrato
+  LABEL_PERIOD: Intérvalo temporal
+  PERIOD_DIARY: Diaria
+  PERIOD_WEEKLY: Semanal
+  PERIOD_MONTHLY: Mensual
+  PERIOD_YEARLY: Anual
+  LABEL_PLOT_STYLE: Estilo de gráfica
+  STYLE_BAR: Barras
+  STYLE_LINE: Linias
+  LEGEND_PRODUCTION: Producción (kWh)
+  LEGEND_FORESEEN: Previsión (kWh)
