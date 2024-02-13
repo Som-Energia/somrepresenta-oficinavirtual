@@ -71,6 +71,10 @@ const routes = [
         element: <HomePage />,
       },
       {
+        path: '/cookies_policy',
+        element: <CookiesPolicyPage />,
+      },
+      {
         element: (
           <PageGuard>
             <Outlet />
@@ -110,10 +114,6 @@ const routes = [
                 <ProductionPage />
               </InstallationContextProvider>
             ),
-          },
-          {
-            path: '/cookies_policy',
-            element: <CookiesPolicyPage />,
           },
         ],
       },

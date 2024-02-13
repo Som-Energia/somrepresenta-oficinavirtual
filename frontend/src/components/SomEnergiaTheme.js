@@ -67,6 +67,7 @@ export default function SomEnergiaTheme(isDarkMode) {
         titleColor: 'rgb(150,182,51,0.7)',
         contentLight: 'rgba(0, 0, 0, 0.03)',
         contentDark: '#1A2027',
+        line: '#8080804a'
       },
       chartlines: {
         production: '#96b633',
