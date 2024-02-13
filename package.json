@@ -8,8 +8,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build --emptyOutDir",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "test": "vitest",
-    "test:once": "vitest run",
+    "test": "TZ=Europe/Madrid vitest",
+    "test:once": "TZ=Europe/Madrid vitest run",
     "preview": "vite preview"
   },
   "dependencies": {
