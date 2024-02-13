@@ -1,9 +1,10 @@
 # Change log
 
-## Unreleased
+## unreleased
 
-- PaymentCell component to show Invoice Payment
-Status information
+- Add production data page with foreseen and production measures
+- PaymentCell component to show Invoice Payment Status information
+
 
 ## 0.5.0 (2024-01-23)
 
