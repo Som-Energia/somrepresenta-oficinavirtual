@@ -315,8 +315,8 @@ def dummy_production_data(
     last_timestamp_utc: AwareDatetime,
 ) -> CustomerProductionData:
 
-    last_timestamp_date = datetime.datetime.fromisoformat(last_timestamp_utc)
-    first_timestamp_date = datetime.datetime.fromisoformat(first_timestamp_utc)
+    last_timestamp_date = datetime.datetime.strptime(last_timestamp_utc, '%Y-%m-%dT%H:%M:%S.%fZ')
+    first_timestamp_date = datetime.datetime.strptime(first_timestamp_utc, '%Y-%m-%dT%H:%M:%S.%fZ')
 
     nhours = round(
         (last_timestamp_date - first_timestamp_date) / datetime.timedelta(hours=1)
