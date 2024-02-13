@@ -315,11 +315,8 @@ def dummy_production_data(
     last_timestamp_utc: AwareDatetime,
 ) -> CustomerProductionData:
 
-    last_timestamp_date = datetime.datetime.strptime(last_timestamp_utc, '%Y-%m-%dT%H:%M:%S.%fZ')
-    first_timestamp_date = datetime.datetime.strptime(first_timestamp_utc, '%Y-%m-%dT%H:%M:%S.%fZ')
-
     nhours = round(
-        (last_timestamp_date - first_timestamp_date) / datetime.timedelta(hours=1)
+        (last_timestamp_utc - first_timestamp_utc) / datetime.timedelta(hours=1)
     )
     maturity_options = ["H2", "H3", "HP", "HC", None]
 
