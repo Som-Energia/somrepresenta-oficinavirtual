@@ -138,8 +138,8 @@ class Erp:
             "som.ov.production.data",
             "measures",
             username,
-            first_timestamp_utc,
-            last_timestamp_utc,
+            str(first_timestamp_utc),
+            str(last_timestamp_utc),
         )
         return data
 
