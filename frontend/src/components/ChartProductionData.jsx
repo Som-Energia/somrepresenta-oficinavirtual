@@ -21,6 +21,8 @@ import { time2index, timeInterval, timeSlice } from '../services/curves'
 import Checkbox from '@mui/material/Checkbox'
 import { FormControlLabel } from '@mui/material'
 import { ContractSelector } from './ContractSelector'
+import {CSVLink} from "react-csv"
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 dayjs.extend(minMax)
 
@@ -34,6 +36,25 @@ const BAR = 'BAR'
 
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
+
+const DownloadCsvButton = () => {
+  //const [headers, data] = CsvformatData()
+  return (
+    <Button variant="contained">
+    <CSVLink
+      filename={'holi.csv'}
+      headers={[
+        { label: 'label1', key: 'id1' },
+        { label: 'label2', key: 'id2' },
+      ]}
+      data={[
+        { id1: 'objeto1 value1', id2: 'objeto1 value2' },
+        { id1: 'objeto2 value1', id2: 'objeto2 value2' },
+      ]}
+    ><FileDownloadOutlinedIcon/> </CSVLink>
+    </Button>
+  )
+}
 
 const ChartProductionData = () => {
   const [productionData, setProductionData] = useState(undefined)
@@ -230,6 +251,7 @@ const ChartProductionData = () => {
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
+        <DownloadCsvButton> </DownloadCsvButton>
       </Box>
 
       <Chart
