@@ -13,7 +13,6 @@ const InstallationContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getInstallations = async () => {
-      console.log('Reloading install lists')
       setLoading(true)
       try {
         const installationsData = await ovapi.installations(currentUser)
