@@ -17,7 +17,12 @@ export default function CookiesPolicyPage() {
   const { t } = useTranslation()
 
   return (
-    <Container>
+    <Container
+      sx={{
+        '& a': { color: 'primary.main' },
+        '& input[type="checkbox"]': { accentColor: '#96b633' }, // TODO: use palette instead of number color
+      }}
+    >
       <PageTitle Icon={CookieIcon}>{t('COOKIES_POLICY.TITLE')}</PageTitle>
       <Typography variant="h4">{t('COOKIES_POLICY.SUBTITLE')}</Typography>
       <SimpleTable

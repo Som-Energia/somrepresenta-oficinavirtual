@@ -36,10 +36,6 @@ body {
   }
 }
 
-a {
+#cookiescript_injected a {
   color: #96b633;
-}
-
-input[type="checkbox"] {
-  accent-color: #96b633;
 }
