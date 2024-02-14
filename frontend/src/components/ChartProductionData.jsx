@@ -6,10 +6,6 @@ import Chart from '@somenergia/somenergia-ui/Chart'
 import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
 import ovapi from '../services/ovapi'
 import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
@@ -20,11 +16,11 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
-import { InstallationContext } from './InstallationProvider'
 import PageTitle from './PageTitle'
 import { time2index, timeInterval, timeSlice } from '../services/curves'
 import Checkbox from '@mui/material/Checkbox'
 import { FormControlLabel } from '@mui/material'
+import { ContractSelector } from './ContractSelector'
 
 dayjs.extend(minMax)
 
@@ -35,54 +31,6 @@ const YEARLY = 'YEARLY'
 
 const LINE = 'LINE'
 const BAR = 'BAR'
-
-const ContractSelector = ({ setContract, contract }) => {
-  const {
-    installations,
-    loading: listLoading,
-    error: listError,
-  } = React.useContext(InstallationContext)
-  const { t, i18n } = useTranslation()
-
-  React.useEffect(() => {
-    if (installations === null) return
-    setContract(installations[0].contract_number)
-  }, [installations])
-
-  return (
-    installations && (
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <FormControl size="small">
-          <InputLabel id="contract-select-label">
-            {t('PRODUCTION.LABEL_CONTRACT')}
-          </InputLabel>
-          <Select
-            labelId="contract-select-label"
-            id="contract-select"
-            value={contract || installations[0].contract_number}
-            label={t('PRODUCTION.LABEL_CONTRACT')}
-            onChange={(ev) => setContract(ev.target.value)}
-          >
-            {installations &&
-              installations.map(({ contract_number, installation_name }) => {
-                return (
-                  <MenuItem key={contract_number} value={contract_number}>
-                    {`${installation_name} [${contract_number}]`}
-                  </MenuItem>
-                )
-              })}
-          </Select>
-        </FormControl>
-      </Box>
-    )
-  )
-}
 
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
