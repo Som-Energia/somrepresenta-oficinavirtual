@@ -35,3 +35,7 @@ body {
     background-color: #111;
   }
 }
+
+#cookiescript_injected a {
+  color: #96b633;
+}

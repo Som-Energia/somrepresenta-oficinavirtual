@@ -51,7 +51,7 @@ const SimpleTable = ({
               </Item>
             </Grid>
             <Grid item xs={8} sx={{ display: 'grid', overflow: 'hidden' }}>
-              <Item>{fields[detail] ? fields[detail] : '-'}</Item>
+              <Item>{fields[detail] ? t(fields[detail]) : '-'}</Item>
             </Grid>
           </Box>
         ))}

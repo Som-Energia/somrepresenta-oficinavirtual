@@ -141,3 +141,44 @@ OVAPI:
   ERR_NETWORK: No es troba el servidor. Tens connexió a la xarxa?
   ERR_GATEWAY: El sistema no està disponible per manteniment. Prova-ho més tard.
   ERR_INTERNAL: HI ha hagut un error inesperat al servidor. Referència {{reference}}.
+COOKIES_POLICY:
+  TITLE: Política de cookies
+  SUBTITLE: Quin ús fem dels tipus de cookies?
+  PURPOSE: Segons la finalitat
+  TERM: Segons el seu termini
+  OWNERSHIP: Segons la seva titularitat
+  TABLE_DESCRIPTION: La taula següent recull la classificació i descripció de les galetes utilitzades en la present pàgina web perquè pugueu identificar-les en el vostre navegador
+  TABLE_COOKIES_CLASSIFICATION: Les cookies es poden classificar en diferents paràmetres, és a dir, segons la seva funció, titularitat i terminis. Seguint aquesta classificació, i per tal que la informació proporcionada sigui el més transparent possible, SOM ENERGIA ha elaborat aquesta taula que recull tota la informació i descripció de les cookies utilitzades d’acord amb la següent classificació
+  SOM_COOKIES: SOM ENERGIA utilitza galetes tècniques, de personalització, anàlisi i publicitàries, pròpies i de tercers, que tracten dades de connexió i/o de dispositiu, així com hàbits de navegació per a finalitats estadístiques i publicitàries.
+  SOM_COOKIES_EXPLANATION: Per això, en accedir al nostre web, en compliment de l’article 22 de la Llei de serveis de la societat de la informació, hem sol·licitat el vostre consentiment per al seu ús. El subministrament de dades personals a través del nostre portal i el consentiment per a l’ús de galetes requereix una edat mínima de 18 anys i l’acceptació expressa de la nostra política de privacitat.
+  DEACTIVATE_COOKIES_TABLE: De tota manera, us informem que podeu activar o desactivar les galetes seguint les instruccions del vostre navegador d’Internet
+  TECHNICAL_COOKIES: Cookies tècniques
+  TECHNICAL_COOKIES_DESCRIPTION: Les cookies tècniques són aquelles que faciliten la navegació de la persona usuària i la utilització de les diferents opcions o serveis que ofereix el web, com ara identificar la sessió, permetre l’accés a determinades àrees, facilitar comandes, compres, omplir formularis, inscripcions, seguretat, facilitar funcionalitats (vídeos, xarxes socials,...).
+  CUSTOMIZATION_COOKIES: Cookies de personalització
+  CUSTOMIZATION_COOKIES_DESCRIPTION: Les cookies de personalització permeten a la persona usuària accedir als serveis segons les seves preferències (llengua, navegador, configuració,...).
+  ANALYTICS_COOKIES: Cookies analítiques
+  ANALYTICS_COOKIES_DESCRIPTION: Les cookies d’anàlisi són les utilitzades per dur a terme l’anàlisi anònima del comportament de les persones usuàries del web i que permeten mesurar l’activitat de la usuària o usuari, i elaborar perfils de navegació amb l’objectiu de millorar els llocs web.
+  ADVERTISING_COOKIES: Cookies publicitàries
+  ADVERTISING_COOKIES_DESCRIPTION: Les cookies publicitàries permeten la gestió dels espais publicitaris del web. A més, aquestes cookies poden ser de publicitat personalitzada i permetre així la gestió dels espais publicitaris del web basant-se en el comportament i els hàbits de navegació de la usuària o usuari, d’on se n’obté el perfil, i permeten personalitzar la publicitat que es mostra en el navegador de la persona usuària, o bé altres perfils i xarxes socials de l’usuari o usuària.
+  SESSION_COOKIES: Cookies de sessió
+  SESSION_COOKIES_DESCRIPTION: Les cookies de sessió són aquelles que duren el temps que la persona usuària està navegant per la pàgina web i s’esborren quan es tanca el navegador.
+  PERSISTENT_COOKIES: Cookies persistents
+  PERSISTENT_COOKIES_DESCRIPTION: Les cookies de sessió són aquelles que duren el temps que la persona usuària està navegant per la pàgina web i s’esborren quan es tanca el navegador.
+  OWN_COOKIES: Cookies pròpies
+  OWN_COOKIES_DESCRIPTION: Aquelles que s’envien a l’equip terminal de l’usuari o usuària des d’un equip o domini gestionat pel mateix editor o editora i des del qual es presta el servei sol·licitat per la persona usuària.
+  THIRDPARTY_COOKIES: Cookies de tercers
+  THIRDPARTY_COOKIES_DESCRIPTION: Aquelles que s’envien a l’equip terminal de la persona usuària des d’un equip o domini que no és gestionat per l’editor o editora, sinó per una altra entitat que tracta les dades obtingudes mitjançant les cookies.
+  BASIC: BÀSIQUES
+  BASIC_DESCRIPTION: Cookies Tècniques pròpies i de sessió.
+  PERFORMANCE: RENDIMENT
+  PERFORMANCE_DESCRIPTION: Cookies Tècniques pròpies i persistens. Cookies de Personalització pròpies o de tercers, de sessió o persistents.
+  STATISTICS: ESTADÍSTICA
+  STATISTICS_DESCRIPTION: Cookies Analítiques i Pulicitàries persistents, pròpies i de tercers.
+  FUNCTIONALITY: FUNCIONALITAT
+  FUNCTIONALITY_DESCRIPTION: Cookies Tècniques de tercers, de sessió o persistents.
+  CHROME_DESACTIVATE_COOKIES: Configuració > Mostrar opcions avançades > Privacitat > Configuració de contingut.
+  FIREFOX_DESACTIVATE_COOKIES: Eines > Opcions > Privacitat > Historial > Configuració personalitzada.
+  EXPLORER_DESACTIVATE_COOKIES: Eines > Opcions d’Internet > Privacitat > Configuració.
+  OPERA_DESACTIVATE_COOKIES: Eines > Preferències > Editar preferències > Cookies
+  SAFARI_DESACTIVATE_COOKIES: Preferències > Seguretat.
+  EDGE_DESACTIVATE_COOKIES: Configuració > Vegeu configuració avançada > Privacitat i serveis > Cookies.

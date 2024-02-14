@@ -4,6 +4,7 @@
 
 - Add production data page with foreseen and production measures
 - PaymentCell component to show Invoice Payment Status information
+- Add cookies' banner and policy page
 
 
 ## 0.5.0 (2024-01-23)

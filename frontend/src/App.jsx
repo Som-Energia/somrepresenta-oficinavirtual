@@ -22,6 +22,7 @@ import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
 import SnackbarMessages from './components/SnackbarMessages'
 import HijackWarning from './components/HijackWarning'
+import CookiesBanner from './components/CookiesBanner'
 import ProfilePage from './pages/ProfilePage'
 import InstallationsPage from './pages/InstallationsPage'
 import DetailInstallationPage from './pages/DetailInstallationPage'
@@ -30,11 +31,13 @@ import ProductionPage from './pages/ProductionPage'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { InstallationContextProvider } from './components/InstallationProvider'
+import CookiesPolicyPage from './pages/CookiesPolicyPage'
 
 const routes = [
   {
     element: (
       <GlobalTheme>
+        <CookiesBanner />
         <DialogProvider>
           <VersionCheck />
           <CookiesProvider>
@@ -66,6 +69,10 @@ const routes = [
       {
         path: '/',
         element: <HomePage />,
+      },
+      {
+        path: '/cookies_policy',
+        element: <CookiesPolicyPage />,
       },
       {
         element: (
