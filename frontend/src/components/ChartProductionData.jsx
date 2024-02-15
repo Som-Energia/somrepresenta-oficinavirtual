@@ -38,14 +38,17 @@ const BAR = 'BAR'
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
 
-const DownloadCsvButton = () => {
-  const [downloading, setDownloading] = useState(false)
+const DownloadCsvButton = ({productionData}) => {
   function handleClick() {
-    setDownloading(true)
-    const data = Papa.unparse([
-      { id1: 'objeto1 value1', id2: 'objeto1 value2' },
-      { id1: 'objeto2 value1', id2: 'objeto2 value2' },
-    ])
+    console.log({productionData})
+    const data = Papa.unparse(
+      productionData.data[0].measure_kwh.map((_, i)=>[
+        productionData.data[0].foreseen_kwh[i],
+        productionData.data[0].measure_kwh[i], 
+        productionData.data[0].maturity[i],
+        productionData.data[0].estimated[i],
+      ]
+    ))
     downloadTextFile('holi',data,'text/csv')
   }
   return (
@@ -250,7 +253,9 @@ const ChartProductionData = () => {
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-        <DownloadCsvButton> </DownloadCsvButton>
+        <DownloadCsvButton
+          productionData={productionData}
+        />
       </Box>
 
       <Chart
