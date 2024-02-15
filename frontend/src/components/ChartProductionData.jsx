@@ -21,8 +21,9 @@ import { time2index, timeInterval, timeSlice } from '../services/curves'
 import Checkbox from '@mui/material/Checkbox'
 import { FormControlLabel } from '@mui/material'
 import { ContractSelector } from './ContractSelector'
-import {CSVLink} from "react-csv"
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
+import Papa from 'papaparse'
+import { downloadTextFile } from '../services/download'
 
 dayjs.extend(minMax)
 
@@ -38,20 +39,18 @@ const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
 
 const DownloadCsvButton = () => {
-  //const [headers, data] = CsvformatData()
+  const [downloading, setDownloading] = useState(false)
+  function handleClick() {
+    setDownloading(true)
+    const data = Papa.unparse([
+      { id1: 'objeto1 value1', id2: 'objeto1 value2' },
+      { id1: 'objeto2 value1', id2: 'objeto2 value2' },
+    ])
+    downloadTextFile('holi',data,'text/csv')
+  }
   return (
-    <Button variant="contained">
-    <CSVLink
-      filename={'holi.csv'}
-      headers={[
-        { label: 'label1', key: 'id1' },
-        { label: 'label2', key: 'id2' },
-      ]}
-      data={[
-        { id1: 'objeto1 value1', id2: 'objeto1 value2' },
-        { id1: 'objeto2 value1', id2: 'objeto2 value2' },
-      ]}
-    ><FileDownloadOutlinedIcon/> </CSVLink>
+    <Button variant="contained" onClick={handleClick}>
+      <FileDownloadOutlinedIcon />
     </Button>
   )
 }
