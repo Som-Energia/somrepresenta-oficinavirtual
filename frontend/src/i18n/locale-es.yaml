@@ -223,6 +223,8 @@ PRODUCTION:
   CSV_COLUMN_MEASURE: Producción (kWh)
   CSV_COLUMN_MATURITY: Madureza
   CSV_COLUMN_ESTIMATED: Tipo de medida
+  CSV_VALUE_ESTIMATED: Estimada
+  CSV_VALUE_REAL: Real
 COOKIES_POLICY:
   TITLE: Política de cookies
   SUBTITLE: Quin ús fem dels tipus de cookies?

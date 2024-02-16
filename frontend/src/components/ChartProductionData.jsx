@@ -17,7 +17,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
 import PageTitle from './PageTitle'
-import { time2index, timeInterval, timeSlice } from '../services/curves'
+import { index2time, time2index, timeInterval, timeSlice } from '../services/curves'
 import Checkbox from '@mui/material/Checkbox'
 import { FormControlLabel } from '@mui/material'
 import { ContractSelector } from './ContractSelector'
@@ -55,18 +55,34 @@ const DownloadCsvButton = ({ productionData, contractName }) => {
         t('PRODUCTION.CSV_COLUMN_MEASURE'),
         t('PRODUCTION.CSV_COLUMN_MATURITY'),
         t('PRODUCTION.CSV_COLUMN_ESTIMATED'),
-      ]
+      ],
     ]
     const data = Papa.unparse(
       header.concat(
-        contractData.measure_kwh.map((_, i) => [
-          '',
-          '',
-          contractData.foreseen_kwh[i],
-          contractData.measure_kwh[i],
-          contractData.maturity[i],
-          contractData.estimated[i],
-        ]),
+        contractData.measure_kwh.map((_, i) => {
+          function localisodate(date) {
+            function zeropadding(n) {
+              return ('' + n).padStart(2, '0')
+            }
+            return `${date.getFullYear()}-${zeropadding(
+              date.getMonth() + 1,
+            )}-${zeropadding(date.getDate())} ${zeropadding(
+              date.getHours(),
+            )}:${zeropadding(date.getMinutes())}:${zeropadding(date.getSeconds())}`
+          }
+
+          const date = index2time(contractData.first_timestamp_utc, i)
+          return [
+            localisodate(date),
+            date.getTimezoneOffset() / 60,
+            contractData.foreseen_kwh[i],
+            contractData.measure_kwh[i],
+            contractData.maturity[i],
+            contractData.estimated[i] === true
+              ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
+              : t('PRODUCTION.CSV_VALUE_REAL'),
+          ]
+        }),
       ),
     )
     downloadTextFile('holi', data, 'text/csv')
