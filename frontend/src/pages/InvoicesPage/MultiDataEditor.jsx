@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import TableEditor from '../../components/TableEditor'
-import InvoiceList from './InvoiceList'
+import ListEditor from './ListEditor'
 
 /**
 Provides responsive interaction with a list of objects.
@@ -30,7 +30,7 @@ export default function MultiDataEditor({
   const useList = useMediaQuery(theme.breakpoints.down(tableBreakPoint))
   if (useList)
     return (
-      <InvoiceList
+      <ListEditor
         rows={rows}
         columns={columns}
         idField={idField}

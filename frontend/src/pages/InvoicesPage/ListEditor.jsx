@@ -13,7 +13,12 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import { useTranslation } from 'react-i18next'
 import format from '../../services/format'
 
-export default function InvoiceList({
+/**
+ Generic item editor using a list widget.
+
+ TODO: Achieve feature parity with TableEditor
+*/
+export default function ListEditor({
   rows,
   columns,
   idField,
