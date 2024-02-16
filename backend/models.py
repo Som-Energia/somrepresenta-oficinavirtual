@@ -35,7 +35,7 @@ InvoiceConcept = Literal[
 InvoicePaymentStatus = Literal[
     'open',
     'paid',
-    'draft',
+    'unpaid',
 ]
 
 BillingMode = Literal[

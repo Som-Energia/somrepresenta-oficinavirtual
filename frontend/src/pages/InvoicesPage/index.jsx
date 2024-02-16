@@ -26,18 +26,18 @@ function PaymentCell({payment_status}) {
   const { t } = useTranslation()
   const color = {
     paid: 'success.main',
-    open: 'error.main',
-    draft: 'warning.main',
+    open: 'warning.main',
+    unpaid: 'error.main',
   }[payment_status] || 'warning.main'
   const Icon = {
     paid: DoneIcon,
-    open: ClearIcon,
-    draft: RestartAltIcon,
+    open: RestartAltIcon,
+    unpaid: ClearIcon,
   }[payment_status] || RestartAltIcon
   const payment_status_options = {
     paid: t('INVOICES.PAID_STATUS_OPTION_PAID'),
     open: t('INVOICES.PAID_STATUS_OPTION_OPEN'),
-    draft: t('INVOICES.PAID_STATUS_OPTION_DRAFT'),
+    unpaid: t('INVOICES.PAID_STATUS_OPTION_UNPAID'),
   }
   return <>
     <Icon sx={{color, verticalAlign: 'middle'}} />{format.enumeration(payment_status, payment_status_options)}
@@ -45,7 +45,7 @@ function PaymentCell({payment_status}) {
 }
 
 PaymentCell.propTypes = {
-  payment_status: PropTypes.oneOf(['paid', 'open', 'draft']).isRequired
+  payment_status: PropTypes.oneOf(['paid', 'open', 'unpaid']).isRequired
 }
 
 export default function InvoicesPage() {
