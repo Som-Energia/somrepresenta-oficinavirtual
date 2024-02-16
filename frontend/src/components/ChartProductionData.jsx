@@ -6,24 +6,24 @@ import Chart from '@somenergia/somenergia-ui/Chart'
 import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
 import ovapi from '../services/ovapi'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
-import PageTitle from './PageTitle'
-import { index2time, time2index, timeInterval, timeSlice } from '../services/curves'
-import Checkbox from '@mui/material/Checkbox'
-import { FormControlLabel } from '@mui/material'
-import { ContractSelector } from './ContractSelector'
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
 import Papa from 'papaparse'
+import { index2time, time2index, timeInterval, timeSlice } from '../services/curves'
 import { downloadTextFile } from '../services/download'
+import format from '../services/format'
+import PageTitle from './PageTitle'
+import { ContractSelector } from './ContractSelector'
 
 dayjs.extend(minMax)
 
@@ -60,20 +60,9 @@ const DownloadCsvButton = ({ productionData, contractName }) => {
     const data = Papa.unparse(
       header.concat(
         contractData.measure_kwh.map((_, i) => {
-          function localisodate(date) {
-            function zeropadding(n) {
-              return ('' + n).padStart(2, '0')
-            }
-            return `${date.getFullYear()}-${zeropadding(
-              date.getMonth() + 1,
-            )}-${zeropadding(date.getDate())} ${zeropadding(
-              date.getHours(),
-            )}:${zeropadding(date.getMinutes())}:${zeropadding(date.getSeconds())}`
-          }
-
           const date = index2time(contractData.first_timestamp_utc, i)
           return [
-            localisodate(date),
+            format.localISODateTime(date),
             date.getTimezoneOffset() / 60,
             contractData.foreseen_kwh[i],
             contractData.measure_kwh[i],

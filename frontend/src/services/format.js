@@ -53,5 +53,16 @@ function units(amount, unit, decimals) {
   return `${localized} ${unit}`
 }
 
-export { euros, units, percent, date, enumeration }
-export default { euros, units, percent, date, enumeration }
+function localISODateTime(date) {
+  function zeropadding(n) {
+    return ('' + n).padStart(2, '0')
+  }
+  return `${date.getFullYear()}-${zeropadding(date.getMonth() + 1)}-${zeropadding(
+    date.getDate(),
+  )} ${zeropadding(date.getHours())}:${zeropadding(date.getMinutes())}:${zeropadding(
+    date.getSeconds(),
+  )}`
+}
+
+export { euros, units, percent, date, enumeration, localISODateTime }
+export default { euros, units, percent, date, enumeration, localISODateTime }
