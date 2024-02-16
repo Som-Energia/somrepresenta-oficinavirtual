@@ -214,6 +214,15 @@ PRODUCTION:
   STYLE_LINE: Linias
   LEGEND_PRODUCTION: Producción (kWh)
   LEGEND_FORESEEN: Previsión (kWh)
+  CSV_COLUMN_CONTRACT_NUMBER: Número de contrato
+  CSV_COLUMN_CIL: CIL
+  CSV_COLUMN_INSTALL_NAME: Nombre de la instalación
+  CSV_COLUMN_DATETIME: Día/hora
+  CSV_COLUMN_UTC_OFFSET: Diferencia UTC (h)
+  CSV_COLUMN_FORESEEN: Previsión (kWh)
+  CSV_COLUMN_MEASURE: Producción (kWh)
+  CSV_COLUMN_MATURITY: Madureza
+  CSV_COLUMN_ESTIMATED: Tipo de medida
 COOKIES_POLICY:
   TITLE: Política de cookies
   SUBTITLE: Quin ús fem dels tipus de cookies?

@@ -38,18 +38,38 @@ const BAR = 'BAR'
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
 
-const DownloadCsvButton = ({productionData}) => {
+const DownloadCsvButton = ({ productionData, contractName }) => {
+  const { t, i18n } = useTranslation()
   function handleClick() {
-    console.log({productionData})
-    const data = Papa.unparse(
-      productionData.data[0].measure_kwh.map((_, i)=>[
-        productionData.data[0].foreseen_kwh[i],
-        productionData.data[0].measure_kwh[i], 
-        productionData.data[0].maturity[i],
-        productionData.data[0].estimated[i],
+    console.log({ productionData, contractName })
+    const contractData = productionData.data[0]
+    const header = [
+      [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
+      [t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
+      [t('PRODUCTION.CSV_COLUMN_INSTALL_NAME'), 'La meva insta·lació'],
+      [],
+      [
+        t('PRODUCTION.CSV_COLUMN_DATETIME'),
+        t('PRODUCTION.CSV_COLUMN_UTC_OFFSET'),
+        t('PRODUCTION.CSV_COLUMN_FORESEEN'),
+        t('PRODUCTION.CSV_COLUMN_MEASURE'),
+        t('PRODUCTION.CSV_COLUMN_MATURITY'),
+        t('PRODUCTION.CSV_COLUMN_ESTIMATED'),
       ]
-    ))
-    downloadTextFile('holi',data,'text/csv')
+    ]
+    const data = Papa.unparse(
+      header.concat(
+        contractData.measure_kwh.map((_, i) => [
+          '',
+          '',
+          contractData.foreseen_kwh[i],
+          contractData.measure_kwh[i],
+          contractData.maturity[i],
+          contractData.estimated[i],
+        ]),
+      ),
+    )
+    downloadTextFile('holi', data, 'text/csv')
   }
   return (
     <Button variant="contained" onClick={handleClick}>
@@ -253,9 +273,7 @@ const ChartProductionData = () => {
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-        <DownloadCsvButton
-          productionData={productionData}
-        />
+        <DownloadCsvButton productionData={productionData} contractName={contract} />
       </Box>
 
       <Chart
