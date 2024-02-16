@@ -38,15 +38,26 @@ const BAR = 'BAR'
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
 
+function currentContractData(productionData, contract) {
+  const data = productionData
+  if (!data) return undefined
+  for (const contractData of data.data) {
+    if (contractData.contract_name !== contract) continue
+    return contractData
+  }
+  return undefined
+}
+
+
 const DownloadCsvButton = ({ productionData, contractName }) => {
   const { t, i18n } = useTranslation()
   function handleClick() {
     console.log({ productionData, contractName })
-    const contractData = productionData.data[0]
+    const contractData = currentContractData(productionData, contractName)
     const header = [
       [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
-      [t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
-      [t('PRODUCTION.CSV_COLUMN_INSTALL_NAME'), 'La meva insta·lació'],
+      //[t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
+      //[t('PRODUCTION.CSV_COLUMN_INSTALL_NAME'), 'La meva insta·lació'],
       [],
       [
         t('PRODUCTION.CSV_COLUMN_DATETIME'),
@@ -133,16 +144,6 @@ const ChartProductionData = () => {
     })
   }
 
-  function currentContractData() {
-    const data = productionData
-    if (!data) return undefined
-    for (const contractData of data.data) {
-      if (contractData.contract_name !== contract) continue
-      return contractData
-    }
-    return undefined
-  }
-
   function calculateTotalKwh(measured_data, foreseen_data) {
     const initValue = 0
     const measuredSum = measured_data.reduce((n, { value }) => n + value, initValue)
@@ -152,7 +153,7 @@ const ChartProductionData = () => {
   }
 
   React.useEffect(() => {
-    const contractData = currentContractData()
+    const contractData = currentContractData(productionData, contract)
     if (!contractData) {
       setProductionLineData([])
       setProductionBarData({})
