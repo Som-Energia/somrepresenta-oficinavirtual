@@ -24,7 +24,7 @@
   amount: 1300.12
   concept: services
   liquidation: null
-  payment_status: draft
+  payment_status: unpaid
 - invoice_number: F000017
   contract_number: "19000_2"
   emission_date: "2022-04-01"
