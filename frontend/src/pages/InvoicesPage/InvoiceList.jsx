@@ -17,12 +17,10 @@ export default function InvoiceList({
   rows,
   columns,
   idField,
-  primaryText,
-  secondaryText,
-  ternaryText,
-  quaternaryText,
+  itemHeader,
+  itemBody,
   itemActions,
-  avatar,
+  itemAvatar,
 }) {
   const { t } = useTranslation()
   function handleClick(item) {
@@ -44,13 +42,13 @@ export default function InvoiceList({
           >
             <ListItemAvatar>
               <Avatar>
-                {avatar(row)}
+                {itemAvatar(row)}
               </Avatar>
             </ListItemAvatar>
             <ListItemText
               id={labelId}
-              primary={primaryText(row)}
-              secondary={secondaryText(row)}
+              primary={itemHeader(row)}
+              secondary={itemBody(row)}
             />
             <ListItemIcon sx={{
               justifyContent: 'end',

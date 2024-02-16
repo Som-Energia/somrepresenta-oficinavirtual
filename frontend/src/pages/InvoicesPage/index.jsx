@@ -17,58 +17,67 @@ import StorefrontIcon from '@mui/icons-material/Storefront'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import DownloadIcon from '@mui/icons-material/Download'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
-import DoneIcon from '@mui/icons-material/Done';
-import ClearIcon from '@mui/icons-material/Clear';
+import DoneIcon from '@mui/icons-material/Done'
+import ClearIcon from '@mui/icons-material/Clear'
+import ScheduleIcon from '@mui/icons-material/Schedule'
 import TableEditor from '../../components/TableEditor'
 import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
-import format from '../../services/format'
+import { useAuth } from '../../components/AuthProvider'
 import DownloadButton from './DownloadButton'
 import DownloadZipButton from './DownloadZipButton'
 import InvoiceList from './InvoiceList'
-import { useAuth } from '../../components/AuthProvider'
 import ovapi from '../../services/ovapi'
+import format from '../../services/format'
 import messages from '../../services/messages'
 //import dummyData from '../../data/dummyinvoices.yaml'
 
 const paymentColors = {
   paid: 'success.main',
-  open: 'error.main',
-  draft: 'warning.main',
+  unpaid: 'error.main',
+  open: 'warning.main',
 }
 
 const paymentIcons = {
   paid: DoneIcon,
-  open: ClearIcon,
-  draft: RestartAltIcon,
+  unpaid: ClearIcon,
+  open: RestartAltIcon,
 }
 
-function PaymentIcon({payment_status}) {
+function PaymentIcon({ payment_status }) {
   const { t } = useTranslation()
-  const color = {
-    paid: 'success.main',
-    open: 'error.main',
-    draft: 'warning.main',
-  }[payment_status] || 'warning.main'
-  const Icon = {
-    paid: DoneIcon,
-    open: ClearIcon,
-    draft: RestartAltIcon,
-  }[payment_status] || RestartAltIcon
+  const color =
+    {
+      paid: 'success.main',
+      unpaid: 'error.main',
+      open: 'warning.main',
+    }[payment_status] || 'warning.main'
+  const Icon =
+    {
+      paid: DoneIcon,
+      unpaid: ClearIcon,
+      open: ScheduleIcon,
+    }[payment_status] || RestartAltIcon
   const payment_status_options = {
-    paid: t('INVOICES.PAID_STATUS_OPTION_PAID'),
-    open: t('INVOICES.PAID_STATUS_OPTION_OPEN'),
-    draft: t('INVOICES.PAID_STATUS_OPTION_DRAFT'),
+    paid: t('INVOICES.PAID_STATUS_OPTION_PAID_VERBOSE'),
+    unpaid: t('INVOICES.PAID_STATUS_OPTION_UNPAID_VERBOSE'),
+    open: t('INVOICES.PAID_STATUS_OPTION_OPEN_VERBOSE'),
   }
-  return <>
-    {format.enumeration(payment_status, payment_status_options)}
-    <Icon sx={{color, verticalAlign: 'middle'}} {...{"aria-description": format.enumeration(payment_status, payment_status_options)}} />
-  </>
+  return (
+    <>
+      {
+        //format.enumeration(payment_status, payment_status_options)
+      }
+      <Icon
+        sx={{ color, verticalAlign: 'middle' }}
+        {...{'aria-description': format.enumeration(payment_status, payment_status_options)}}
+      />
+    </>
+  )
 }
 
-
-function PaymentCell({payment_status}) {
+function PaymentCell({ payment_status }) {
   const { t } = useTranslation()
   const color = {
     paid: 'success.main',
@@ -85,9 +94,12 @@ function PaymentCell({payment_status}) {
     open: t('INVOICES.PAID_STATUS_OPTION_OPEN'),
     unpaid: t('INVOICES.PAID_STATUS_OPTION_UNPAID'),
   }
-  return <>
-    <Icon sx={{color, verticalAlign: 'middle'}} />{format.enumeration(payment_status, payment_status_options)}
-  </>
+  return (
+    <>
+      <Icon sx={{ color, verticalAlign: 'middle' }} />
+      {format.enumeration(payment_status, payment_status_options)}
+    </>
+  )
 }
 
 PaymentCell.propTypes = {
@@ -125,6 +137,12 @@ export default function InvoicesPage() {
     specific_retribution: t('INVOICES.CONCEPT_OPTION_SPECIFIC_RETRIBUTION'),
     services: t('INVOICES.CONCEPT_OPTION_SERVICES'),
   }
+  const concept_icons = {
+      market: StorefrontIcon,
+      specific_retribution: RequestQuoteIcon,
+      services: RoomServiceIcon,
+  }
+
 
   const columns = [
     {
@@ -144,7 +162,7 @@ export default function InvoicesPage() {
       label: t('INVOICES.COLUMN_CONCEPT'),
       searchable: true,
       numeric: false,
-      view: (row) => format.enumeration(row.concept, concept_options),
+      view: (invoice) => format.enumeration(invoice.concept, concept_options),
     },
     // {
     //   id: 'liquidation',
@@ -157,17 +175,17 @@ export default function InvoicesPage() {
       label: t('INVOICES.COLUMN_EMITTED'),
       searchable: false,
       numeric: false,
-      view: (row) => format.date(row.emission_date),
+      view: (invoice) => format.date(invoice.emission_date),
     },
     {
       id: 'first_period_date',
       label: t('INVOICES.COLUMN_PERIOD'),
       searchable: false,
       numeric: false,
-      view: (row) => (
+      view: (invoice) => (
         <Box sx={{ whiteSpace: 'nowrap' }}>{`${format.date(
-          row.first_period_date,
-        )} - ${format.date(row.last_period_date)}`}</Box>
+          invoice.first_period_date,
+        )} - ${format.date(invoice.last_period_date)}`}</Box>
       ),
     },
     {
@@ -175,14 +193,14 @@ export default function InvoicesPage() {
       label: t('INVOICES.COLUMN_AMOUNT'),
       searchable: false,
       numeric: true,
-      view: (row) => format.euros(row.amount),
+      view: (invoice) => format.euros(invoice.amount),
     },
     {
       id: 'state',
       label: t('INVOICES.COLUMN_PAID_STATUS'),
       searchable: false,
       numeric: false,
-      view: (row) => <PaymentCell payment_status={row.payment_status} />,
+      view: (invoice) => <PaymentCell payment_status={invoice.payment_status} />,
     },
   ]
   const actions = []
@@ -200,7 +218,11 @@ export default function InvoicesPage() {
       title: t('INVOICES.TOOLTIP_PDF'),
       icon: <PictureAsPdfIcon />,
       view: (invoice) => (
-        <DownloadButton size={isSm?"large":"small"} context={invoice} title={t('INVOICES.TOOLTIP_PDF')} />
+        <DownloadButton
+          size={isSm ? 'large' : 'small'}
+          context={invoice}
+          title={t('INVOICES.TOOLTIP_PDF')}
+        />
       ),
     },
   ]
@@ -215,47 +237,54 @@ export default function InvoicesPage() {
           backaction={() => getInvoices()}
           backtext={t('INVOICES.RELOAD')}
         />
-      ) : (
-        isSm?
+      ) : isSm ? (
         <InvoiceList
           rows={rows}
           columns={columns}
           idField={'invoice_number'}
-          avatar={(row)=>{
-            const Icon = {
-              market: StorefrontIcon,
-              specific_retribution: RequestQuoteIcon,
-              services: RoomServiceIcon,
-            }[row.concept] || React.Fragment
-            console.log(row.concept)
-            return <Icon/>
+          itemAvatar={(invoice) => {
+            const Icon = concept_icons[invoice.concept] || React.Fragment
+            return <Icon />
           }}
-          primaryText={(row)=>(
-            <Box sx={{display: 'flex', flex:'inline', justifyContent: 'space-between', fontWeight: 550}}>
-              <span>{`Factura ${row.invoice_number}`}</span>
-              <span>{`${format.euros(row.amount)}`}</span>
+          itemHeader={(invoice) => (
+            <Box
+              sx={{
+                display: 'flex',
+                flex: 'inline',
+                justifyContent: 'space-between',
+                fontWeight: 550,
+              }}
+            >
+              <span>{`Factura ${invoice.invoice_number}`}</span>
+              <span>{`${format.euros(invoice.amount)}`}</span>
             </Box>
-          )} 
-          secondaryText={(row)=>(<>
-            <Box sx={{display: 'flex', flex:'inline', justifyContent: 'space-between'}}>
-              <span>{`${format.date(row.emission_date)}`}</span>
-              <span><PaymentIcon payment_status={row.payment_status}/></span>
-            </Box>
-            <Box sx={{display: 'flex', flex:'inline', justifyContent: 'space-between'}}>
-              <span>{`${t("INVOICES.COLUMN_CONTRACT")}: ${row.contract_number}`}</span>
-            </Box>
-            <Box sx={{display: 'flex', flex:'inline', justifyContent: 'space-between'}}>
-              <span>{`${t("INVOICES.COLUMN_CONCEPT")}: ${format.enumeration(row.concept, concept_options)}`}</span>
-            </Box>
-            <Box sx={{display: 'flex', flex:'inline', justifyContent: 'space-between'}}>
-              <span sx={{ whiteSpace: 'nowrap' }}>{`${t("INVOICES.COLUMN_PERIOD")}: ${format.date(
-                row.first_period_date,
-              )} - ${format.date(row.last_period_date)}`}
-              </span>
-            </Box>
-          </>)}
+          )}
+          itemBody={(invoice) => (
+            <>
+              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
+                <span>{`${format.date(invoice.emission_date)}`}</span>
+                <span>
+                  <PaymentIcon payment_status={invoice.payment_status} />
+                </span>
+              </Box>
+              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
+                <span>{`${t('INVOICES.COLUMN_CONTRACT')}: ${invoice.contract_number}`}</span>
+              </Box>
+              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
+                <span>{`${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(invoice.concept, concept_options)}`}</span>
+              </Box>
+              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
+                <span sx={{ whiteSpace: 'nowrap' }}>
+                  {`${t('INVOICES.COLUMN_PERIOD')}: ${format.date(
+                    invoice.first_period_date,
+                  )} - ${format.date(invoice.last_period_date)}`}
+                </span>
+              </Box>
+            </>
+          )}
           itemActions={itemActions}
-        />:
+        />
+      ) : (
         <TableEditor
           title={t('INVOICES.TABLE_TITLE', { n: rows.length })}
           defaultPageSize={12}
