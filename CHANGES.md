@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Responsive invoice page
+- New widget: ListEditor (mobile)
+- New widget: MultiDataEditor (responsive, choses between a TableEditor or a ListEditor)
 - Production page: Added a button to download data as csv
 - Fix: Production data: Convert to string dates sent to erp
 
