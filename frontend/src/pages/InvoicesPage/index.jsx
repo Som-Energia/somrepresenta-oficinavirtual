@@ -1,15 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import Stack from '@mui/material/Stack'
+
 import DescriptionIcon from '@mui/icons-material/Description'
 import RoomServiceIcon from '@mui/icons-material/RoomService'
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
@@ -20,14 +18,15 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import DoneIcon from '@mui/icons-material/Done'
 import ClearIcon from '@mui/icons-material/Clear'
 import ScheduleIcon from '@mui/icons-material/Schedule'
-import TableEditor from '../../components/TableEditor'
+
 import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
 import { useAuth } from '../../components/AuthProvider'
 import DownloadButton from './DownloadButton'
 import DownloadZipButton from './DownloadZipButton'
-import InvoiceList from './InvoiceList'
+import MultiDataEditor from './MultiDataEditor'
+
 import ovapi from '../../services/ovapi'
 import format from '../../services/format'
 import messages from '../../services/messages'
@@ -42,10 +41,10 @@ const paymentColors = {
 const paymentIcons = {
   paid: DoneIcon,
   unpaid: ClearIcon,
-  open: RestartAltIcon,
+  open: ScheduleIcon,
 }
 
-function PaymentIcon({ payment_status }) {
+function PaymentStatus({ payment_status }) {
   const { t } = useTranslation()
   const color =
     {
@@ -58,7 +57,7 @@ function PaymentIcon({ payment_status }) {
       paid: DoneIcon,
       unpaid: ClearIcon,
       open: ScheduleIcon,
-    }[payment_status] || RestartAltIcon
+    }[payment_status] || ScheduleIcon
   const payment_status_options = {
     paid: t('INVOICES.PAID_STATUS_OPTION_PAID_VERBOSE'),
     unpaid: t('INVOICES.PAID_STATUS_OPTION_UNPAID_VERBOSE'),
@@ -71,24 +70,36 @@ function PaymentIcon({ payment_status }) {
       }
       <Icon
         sx={{ color, verticalAlign: 'middle' }}
-        {...{'aria-description': format.enumeration(payment_status, payment_status_options)}}
+        {...{
+          'aria-description': format.enumeration(payment_status, payment_status_options),
+        }}
       />
     </>
   )
 }
 
-function PaymentCell({ payment_status }) {
+function ContentRow({ children, ...props }) {
+  return (
+    <Stack direction="row" justifyContent="space-between" spacing={1} {...props}>
+      {children}
+    </Stack>
+  )
+}
+
+function PaymentStatusCell({ payment_status }) {
   const { t } = useTranslation()
-  const color = {
-    paid: 'success.main',
-    open: 'warning.main',
-    unpaid: 'error.main',
-  }[payment_status] || 'warning.main'
-  const Icon = {
-    paid: DoneIcon,
-    open: RestartAltIcon,
-    unpaid: ClearIcon,
-  }[payment_status] || RestartAltIcon
+  const color =
+    {
+      paid: 'success.main',
+      open: 'warning.main',
+      unpaid: 'error.main',
+    }[payment_status] || 'warning.main'
+  const Icon =
+    {
+      paid: DoneIcon,
+      open: RestartAltIcon,
+      unpaid: ClearIcon,
+    }[payment_status] || RestartAltIcon
   const payment_status_options = {
     paid: t('INVOICES.PAID_STATUS_OPTION_PAID'),
     open: t('INVOICES.PAID_STATUS_OPTION_OPEN'),
@@ -102,8 +113,8 @@ function PaymentCell({ payment_status }) {
   )
 }
 
-PaymentCell.propTypes = {
-  payment_status: PropTypes.oneOf(['paid', 'open', 'unpaid']).isRequired
+PaymentStatusCell.propTypes = {
+  payment_status: PropTypes.oneOf(['paid', 'open', 'unpaid']).isRequired,
 }
 
 export default function InvoicesPage() {
@@ -112,9 +123,10 @@ export default function InvoicesPage() {
   const [rows, setRows] = React.useState([])
   const [error, setError] = React.useState(false)
   const { currentUser } = useAuth()
-  const theme = useTheme()
-  const isSm = useMediaQuery(theme.breakpoints.down('md'))
   const isPaymentEnabled = import.meta.env.VITE_ENABLE_INVOICE_PAYMENT == false
+  const tableBreakPoint = 'md'
+  const theme = useTheme()
+  const useList = useMediaQuery(theme.breakpoints.down(tableBreakPoint))
 
   React.useEffect(() => {
     getInvoices()
@@ -138,11 +150,10 @@ export default function InvoicesPage() {
     services: t('INVOICES.CONCEPT_OPTION_SERVICES'),
   }
   const concept_icons = {
-      market: StorefrontIcon,
-      specific_retribution: RequestQuoteIcon,
-      services: RoomServiceIcon,
+    market: StorefrontIcon,
+    specific_retribution: RequestQuoteIcon,
+    services: RoomServiceIcon,
   }
-
 
   const columns = [
     {
@@ -200,7 +211,7 @@ export default function InvoicesPage() {
       label: t('INVOICES.COLUMN_PAID_STATUS'),
       searchable: false,
       numeric: false,
-      view: (invoice) => <PaymentCell payment_status={invoice.payment_status} />,
+      view: (invoice) => <PaymentStatusCell payment_status={invoice.payment_status} />,
     },
   ]
   const actions = []
@@ -219,7 +230,7 @@ export default function InvoicesPage() {
       icon: <PictureAsPdfIcon />,
       view: (invoice) => (
         <DownloadButton
-          size={isSm ? 'large' : 'small'}
+          size={useList ? 'large' : 'small'}
           context={invoice}
           title={t('INVOICES.TOOLTIP_PDF')}
         />
@@ -227,88 +238,77 @@ export default function InvoicesPage() {
     },
   ]
   if (isLoading) return <Loading />
-  return (
-    <Container>
-      <PageTitle Icon={DescriptionIcon}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
-      {error ? (
+  if (error)
+    return (
+      <Container>
+        <PageTitle Icon={DescriptionIcon}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
         <ErrorSplash
           title={error.context}
           message={error.error}
           backaction={() => getInvoices()}
           backtext={t('INVOICES.RELOAD')}
         />
-      ) : isSm ? (
-        <InvoiceList
-          rows={rows}
-          columns={columns}
-          idField={'invoice_number'}
-          itemAvatar={(invoice) => {
-            const Icon = concept_icons[invoice.concept] || React.Fragment
-            return <Icon />
-          }}
-          itemHeader={(invoice) => (
-            <Box
-              sx={{
-                display: 'flex',
-                flex: 'inline',
-                justifyContent: 'space-between',
-                fontWeight: 550,
-              }}
-            >
-              <span>{`Factura ${invoice.invoice_number}`}</span>
-              <span>{`${format.euros(invoice.amount)}`}</span>
-            </Box>
-          )}
-          itemBody={(invoice) => (
-            <>
-              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
-                <span>{`${format.date(invoice.emission_date)}`}</span>
-                <span>
-                  <PaymentIcon payment_status={invoice.payment_status} />
-                </span>
-              </Box>
-              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
-                <span>{`${t('INVOICES.COLUMN_CONTRACT')}: ${invoice.contract_number}`}</span>
-              </Box>
-              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
-                <span>{`${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(invoice.concept, concept_options)}`}</span>
-              </Box>
-              <Box sx={{ display: 'flex', flex: 'inline', justifyContent: 'space-between' }} >
-                <span sx={{ whiteSpace: 'nowrap' }}>
-                  {`${t('INVOICES.COLUMN_PERIOD')}: ${format.date(
-                    invoice.first_period_date,
-                  )} - ${format.date(invoice.last_period_date)}`}
-                </span>
-              </Box>
-            </>
-          )}
-          itemActions={itemActions}
-        />
-      ) : (
-        <TableEditor
-          title={t('INVOICES.TABLE_TITLE', { n: rows.length })}
-          defaultPageSize={12}
-          pageSizes={[]}
-          columns={columns}
-          rows={rows}
-          actions={actions}
-          selectionActions={selectionActions}
-          itemActions={itemActions}
-          idField={'invoice_number'}
-          loading={isLoading}
-          noDataPlaceHolder={
-            <TableRow>
-              <TableCell colSpan={9} sx={{ textAlign: 'center' }}>
-                <Typography variant="h4">
-                  {t('INVOICES.NO_INVOICES')}
-                  <br />
-                  🤷‍♀️
-                </Typography>
-              </TableCell>
-            </TableRow>
-          }
-        ></TableEditor>
-      )}
+      </Container>
+    )
+  return (
+    <Container>
+      <PageTitle Icon={DescriptionIcon}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
+      <MultiDataEditor
+        title={t('INVOICES.TABLE_TITLE', { n: rows.length })}
+        defaultPageSize={12}
+        pageSizes={[]}
+        columns={columns}
+        rows={rows}
+        actions={actions}
+        selectionActions={selectionActions}
+        itemActions={itemActions}
+        idField={'invoice_number'}
+        isLoading={isLoading}
+        itemAvatar={(invoice) => {
+          const Icon = concept_icons[invoice.concept] || React.Fragment
+          return <Icon />
+        }}
+        itemHeader={(invoice) => (
+          <ContentRow
+            sx={{
+              fontWeight: 550,
+            }}
+          >
+            <span>{`Factura ${invoice.invoice_number}`}</span>
+            <span>{`${format.euros(invoice.amount)}`}</span>
+          </ContentRow>
+        )}
+        itemBody={(invoice) => (
+          <>
+            <ContentRow>
+              <span>{`${format.date(invoice.emission_date)}`}</span>
+              <span>
+                <PaymentStatus payment_status={invoice.payment_status} />
+              </span>
+            </ContentRow>
+            <ContentRow>
+              <span>{`${t('INVOICES.COLUMN_CONTRACT')}: ${invoice.contract_number}`}</span>
+            </ContentRow>
+            <ContentRow>
+              <span>{`${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(invoice.concept, concept_options)}`}</span>
+            </ContentRow>
+            <ContentRow>
+              <span sx={{ whiteSpace: 'nowrap' }}>
+                {`${t('INVOICES.COLUMN_PERIOD')}: ${format.date(
+                  invoice.first_period_date,
+                )} - ${format.date(invoice.last_period_date)}`}
+              </span>
+            </ContentRow>
+          </>
+        )}
+        noDataPlaceHolder={
+          <Typography variant="h4">
+            {t('INVOICES.NO_INVOICES')}
+            <br />
+            🤷‍♀️
+          </Typography>
+        }
+      />
     </Container>
   )
 }
