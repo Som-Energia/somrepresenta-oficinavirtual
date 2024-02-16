@@ -14,7 +14,7 @@ import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined'
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
@@ -52,7 +52,6 @@ function currentContractData(productionData, contract) {
 const DownloadCsvButton = ({ productionData, contractName }) => {
   const { t, i18n } = useTranslation()
   function handleClick() {
-    console.log({ productionData, contractName })
     const contractData = currentContractData(productionData, contractName)
     const header = [
       [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
@@ -68,7 +67,7 @@ const DownloadCsvButton = ({ productionData, contractName }) => {
         t('PRODUCTION.CSV_COLUMN_ESTIMATED'),
       ],
     ]
-    const data = Papa.unparse(
+    const csvdata = Papa.unparse(
       header.concat(
         contractData.measure_kwh.map((_, i) => {
           const date = index2time(contractData.first_timestamp_utc, i)
@@ -85,11 +84,11 @@ const DownloadCsvButton = ({ productionData, contractName }) => {
         }),
       ),
     )
-    downloadTextFile('holi', data, 'text/csv')
+    downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
   }
   return (
-    <Button variant="contained" onClick={handleClick}>
-      <FileDownloadOutlinedIcon />
+    <Button color="primary" onClick={handleClick}>
+      <FileDownloadRoundedIcon />
     </Button>
   )
 }
