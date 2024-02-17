@@ -268,39 +268,23 @@ export default function InvoicesPage() {
           const Icon = concept_icons[invoice.concept] || React.Fragment
           return <Icon />
         }}
-        itemHeader={(invoice) => (
-          <ContentRow
-            sx={{
-              fontWeight: 550,
-            }}
-          >
-            <span>{`Factura ${invoice.invoice_number}`}</span>
-            <span>{`${format.euros(invoice.amount)}`}</span>
-          </ContentRow>
-        )}
-        itemBody={(invoice) => (
-          <>
-            <ContentRow>
-              <span>{`${format.date(invoice.emission_date)}`}</span>
-              <span>
-                <PaymentStatus payment_status={invoice.payment_status} />
-              </span>
-            </ContentRow>
-            <ContentRow>
-              <span>{`${t('INVOICES.COLUMN_CONTRACT')}: ${invoice.contract_number}`}</span>
-            </ContentRow>
-            <ContentRow>
-              <span>{`${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(invoice.concept, concept_options)}`}</span>
-            </ContentRow>
-            <ContentRow>
-              <span sx={{ whiteSpace: 'nowrap' }}>
-                {`${t('INVOICES.COLUMN_PERIOD')}: ${format.date(
-                  invoice.first_period_date,
-                )} - ${format.date(invoice.last_period_date)}`}
-              </span>
-            </ContentRow>
-          </>
-        )}
+        itemHeader={(invoice) => [[
+          `Factura ${invoice.invoice_number}`,
+          `${format.euros(invoice.amount)}`,
+        ]]}
+        itemBody={(invoice) => [
+          [
+            `${format.date(invoice.emission_date)}`,
+            <PaymentStatus payment_status={invoice.payment_status} />,
+          ],
+          `${t('INVOICES.COLUMN_CONTRACT')}: ${invoice.contract_number}`,
+          `${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(invoice.concept, concept_options)}`,
+          <span sx={{ whiteSpace: 'nowrap' }}>
+            {`${t('INVOICES.COLUMN_PERIOD')}: ${format.date(
+              invoice.first_period_date,
+            )} - ${format.date(invoice.last_period_date)}`}
+          </span>,
+        ]}
         noDataPlaceHolder={
           <Typography variant="h4">
             {t('INVOICES.NO_INVOICES')}

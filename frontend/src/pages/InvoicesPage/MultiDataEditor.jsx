@@ -31,6 +31,7 @@ export default function MultiDataEditor({
   if (useList)
     return (
       <ListEditor
+        title={title}
         rows={rows}
         columns={columns}
         idField={idField}
@@ -38,6 +39,7 @@ export default function MultiDataEditor({
         itemHeader={itemHeader}
         itemBody={itemBody}
         itemActions={itemActions}
+        actions={actions}
       />
     )
   return (
