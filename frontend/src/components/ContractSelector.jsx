@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { InstallationContext } from './InstallationProvider';
 
-export const ContractSelector = ({ setContract, contract }) => {
+export default function ContractSelector({ setContract, contract }) {
   const {
     installations, loading: listLoading, error: listError,
   } = React.useContext(InstallationContext);
