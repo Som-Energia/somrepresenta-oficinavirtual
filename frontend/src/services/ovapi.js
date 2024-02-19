@@ -1,6 +1,7 @@
 import axios from 'axios'
 import messages from './messages'
 import i18n from '../i18n/i18n'
+import {downloadBlob} from './download'
 
 /**
 Returns a catch callback that takes common non manageable
@@ -283,38 +284,9 @@ function invoicePdf(invoiceNumber) {
       const filename =
         result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
         `factura-${invoiceNumber}.pdf`
-      if (androidDownload(filename, result.data)) return result
-      regulardownload(filename, result.data)
+      downloadBlob(filename, result.data, 'application/pdf')
       return result
     })
-}
-
-function androidDownload(filename, blob) {
-  // SomenergiaPlatform is injected in mobile applications
-  // as alternative to save the PDF, since the method used
-  // for regular browers won't work. We need to convert
-  // the blob to base64 though.
-  if (!window.SomenergiaPlatform) return
-  var reader = new FileReader()
-  reader.readAsDataURL(blob)
-  reader.onloadend = function () {
-    // Remove trailing url header
-    let base64String = reader.result.replace(/.*,/, '')
-    window.SomenergiaPlatform.save(filename, base64String)
-    return base64String
-  }
-}
-function regulardownload(filename, blob) {
-  const url = window.URL.createObjectURL(new Blob([blob]))
-  const link = document.createElement('a')
-  link.href = url
-  if (filename) link.setAttribute('download', filename)
-  document.body.appendChild(link)
-  link.click()
-  // clean up
-  document.body.removeChild(link)
-  URL.revokeObjectURL(url)
-  return blob
 }
 
 async function productionData(first_timestamp_utc, last_timestamp_utc) {
