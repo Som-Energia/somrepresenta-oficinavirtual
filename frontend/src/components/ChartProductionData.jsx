@@ -87,7 +87,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
     downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
   }
   return (
-    <Button color="primary" onClick={handleClick}>
+    <Button disabled={productionData===undefined} color="primary" onClick={handleClick}>
       <FileDownloadRoundedIcon />
     </Button>
   )
