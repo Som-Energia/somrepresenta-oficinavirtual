@@ -52,7 +52,11 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
   const { t, i18n } = useTranslation()
   function handleClick() {
     const contractData = currentContractData(productionData, contractName)
-    const [startIndex, endIndex] = sliceIndexes(contractData.first_timestamp_utc, period, currentTime)
+    const [startIndex, endIndex] = sliceIndexes(
+      contractData.first_timestamp_utc,
+      period,
+      currentTime,
+    )
     const header = [
       [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
       //[t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
@@ -69,10 +73,10 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
     ]
     const csvdata = Papa.unparse(
       header.concat(
-        [...Array(endIndex-startIndex).keys()].map((_, i) => {
+        [...Array(endIndex - startIndex).keys()].map((_, i) => {
           const j = i + startIndex
           const date = index2time(contractData.first_timestamp_utc, j)
-          return[
+          return [
             format.localISODateTime(date),
             date.getTimezoneOffset() / 60,
             contractData.foreseen_kwh[j],
@@ -87,7 +91,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
     downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
   }
   return (
-    <Button disabled={productionData===undefined} color="primary" onClick={handleClick}>
+    <Button disabled={productionData === undefined} color="primary" onClick={handleClick}>
       <FileDownloadRoundedIcon />
     </Button>
   )
@@ -160,7 +164,11 @@ const ChartProductionData = () => {
       return
     }
     const offsetDate = new Date(contractData.first_timestamp_utc)
-    const [startIndex, endIndex] = sliceIndexes(contractData.first_timestamp_utc, period, currentTime)
+    const [startIndex, endIndex] = sliceIndexes(
+      contractData.first_timestamp_utc,
+      period,
+      currentTime,
+    )
 
     var measured_data = timeSlice(
       offsetDate,
@@ -276,7 +284,12 @@ const ChartProductionData = () => {
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-        <DownloadCsvButton productionData={productionData} contractName={contract} period={period} currentTime={currentTime}/>
+        <DownloadCsvButton
+          productionData={productionData}
+          contractName={contract}
+          period={period}
+          currentTime={currentTime}
+        />
       </Box>
 
       <Chart
