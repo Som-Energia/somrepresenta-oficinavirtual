@@ -22,7 +22,7 @@ import PageTitle from './PageTitle'
 import ContractSelector from './ContractSelector'
 import ovapi from '../services/ovapi'
 import format from '../services/format'
-import { index2time, time2index, timeInterval, timeSlice } from '../services/curves'
+import { index2time, timeSlice, sliceIndexes } from '../services/curves'
 import { downloadTextFile } from '../services/download'
 
 dayjs.extend(minMax)
@@ -48,11 +48,11 @@ function currentContractData(productionData, contract) {
   return undefined
 }
 
-
-const DownloadCsvButton = ({ productionData, contractName }) => {
+const DownloadCsvButton = ({ productionData, contractName, period, currentTime }) => {
   const { t, i18n } = useTranslation()
   function handleClick() {
     const contractData = currentContractData(productionData, contractName)
+    const [startIndex, endIndex] = sliceIndexes(contractData.first_timestamp_utc, period, currentTime)
     const header = [
       [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
       //[t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
@@ -69,19 +69,19 @@ const DownloadCsvButton = ({ productionData, contractName }) => {
     ]
     const csvdata = Papa.unparse(
       header.concat(
-        contractData.measure_kwh.map((_, i) => {
-          const date = index2time(contractData.first_timestamp_utc, i)
-          return [
+        [...Array(endIndex-startIndex).keys()].map((_, i) => {
+          const j = i + startIndex
+          const date = index2time(contractData.first_timestamp_utc, j)
+          return[
             format.localISODateTime(date),
             date.getTimezoneOffset() / 60,
-            contractData.foreseen_kwh[i],
-            contractData.measure_kwh[i],
-            contractData.maturity[i],
-            contractData.estimated[i] === true
+            contractData.foreseen_kwh[j],
+            contractData.measure_kwh[j],
+            contractData.maturity[j],
+            contractData.estimated[j] === true
               ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
               : t('PRODUCTION.CSV_VALUE_REAL'),
-          ]
-        }),
+        ]}),
       ),
     )
     downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
@@ -160,9 +160,7 @@ const ChartProductionData = () => {
       return
     }
     const offsetDate = new Date(contractData.first_timestamp_utc)
-    var [startTime, endTime] = timeInterval(period, currentTime)
-    var startIndex = time2index(offsetDate, startTime)
-    var endIndex = time2index(offsetDate, endTime)
+    const [startIndex, endIndex] = sliceIndexes(contractData.first_timestamp_utc, period, currentTime)
 
     var measured_data = timeSlice(
       offsetDate,
@@ -278,7 +276,7 @@ const ChartProductionData = () => {
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
-        <DownloadCsvButton productionData={productionData} contractName={contract} />
+        <DownloadCsvButton productionData={productionData} contractName={contract} period={period} currentTime={currentTime}/>
       </Box>
 
       <Chart
