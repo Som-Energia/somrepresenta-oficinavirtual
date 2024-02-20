@@ -7,7 +7,7 @@ function androidSaveBase64(filename, blob, mimetype) {
   reader.readAsDataURL(blob)
   reader.onloadend = function () {
     // Remove trailing url header
-    let base64String = reader.result.replace(/.*,/, '')
+    let base64String = reader.result.replace(/[^,]*,/, '')
     window.SomenergiaPlatform.saveBase64(filename, base64String, mimetype)
   }
   return true
