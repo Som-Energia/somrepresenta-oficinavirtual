@@ -82,10 +82,13 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
             contractData.foreseen_kwh[j],
             contractData.measure_kwh[j],
             contractData.maturity[j],
-            contractData.estimated[j] === true
-              ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
-              : t('PRODUCTION.CSV_VALUE_REAL'),
-        ]}),
+            contractData.estimated[j] === null
+              ? ''
+              : contractData.estimated[j] === true
+                ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
+                : t('PRODUCTION.CSV_VALUE_REAL'),
+          ]
+        }),
       ),
     )
     downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
