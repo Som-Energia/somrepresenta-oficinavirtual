@@ -64,7 +64,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
       currentTime,
     )
     const startIndex = Math.max(unadjustedStartIndex, 0)
-    const endIndex = Math.min(unadjustedEndIndex, contractData.measure_kwh.length-1)
+    const endIndex = Math.min(unadjustedEndIndex, contractData.measure_kwh.length - 1)
     const header = [
       [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
       //[t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
@@ -89,7 +89,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
             date.getTimezoneOffset() / 60,
             contractData.foreseen_kwh[j],
             contractData.measure_kwh[j],
-            format.enumeration(contractData.maturity[j], maturityOptions, ""),
+            format.enumeration(contractData.maturity[j], maturityOptions, ''),
             contractData.estimated[j] === null
               ? ''
               : contractData.estimated[j] === true
@@ -123,12 +123,12 @@ const ChartProductionData = () => {
   const [totalKwh, setTotalKwh] = useState(0)
   const [foreseenTotalKwh, setForeseenTotalKwh] = useState(0)
 
-  const years = 4
   const maxDate = new Date()
   maxDate.setHours(0)
   maxDate.setMinutes(0)
   maxDate.setSeconds(0)
   maxDate.setMilliseconds(0)
+  const years = 4
   const minDate = new Date(maxDate)
   minDate.setFullYear(minDate.getFullYear() - years)
 
@@ -151,6 +151,10 @@ const ChartProductionData = () => {
       },
     }
   }
+
+  const contractData = currentContractData(productionData, contract)
+  const firstDataDate = contractData?.first_timestamp_utc ?? minDate
+  const lastDataDate = contractData?.last_timestamp_utc ?? maxDate
 
   const getProductionData = () => {
     ovapi.productionData(minDate, maxDate).then((data) => {
@@ -213,12 +217,14 @@ const ChartProductionData = () => {
 
   function prevTimeWindow() {
     setCurrentTime(
-      dayjs.max(dayjs(minDate), currentTime.subtract(1, dayjsperiods[period])),
+      dayjs.max(dayjs(firstDataDate), currentTime.subtract(1, dayjsperiods[period])),
     )
   }
 
   function nextTimeWindow() {
-    setCurrentTime(dayjs.min(dayjs(maxDate), currentTime.add(1, dayjsperiods[period])))
+    setCurrentTime(
+      dayjs.min(dayjs(lastDataDate), currentTime.add(1, dayjsperiods[period])),
+    )
   }
 
   return (
@@ -271,8 +277,8 @@ const ChartProductionData = () => {
                   ? ['month', 'year']
                   : undefined
             }
-            minDate={dayjs(minDate)}
-            maxDate={dayjs(maxDate)}
+            minDate={dayjs(firstDataDate)}
+            maxDate={dayjs(lastDataDate)}
           />
           <Button onClick={nextTimeWindow}>
             <ArrowForwardIosOutlinedIcon />
