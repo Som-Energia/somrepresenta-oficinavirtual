@@ -225,6 +225,10 @@ PRODUCTION:
   CSV_COLUMN_ESTIMATED: Tipo de medida
   CSV_VALUE_ESTIMATED: Estimada
   CSV_VALUE_REAL: Real
+  MATURITY_H2: Inicial provisional
+  MATURITY_H3: Intermedia provisional
+  MATURITY_HP: Final provisional
+  MATURITY_HC: Final definitiva
 COOKIES_POLICY:
   TITLE: Política de cookies
   SUBTITLE: Quin ús fem dels tipus de cookies?
