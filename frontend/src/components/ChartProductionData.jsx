@@ -50,13 +50,21 @@ function currentContractData(productionData, contract) {
 
 const DownloadCsvButton = ({ productionData, contractName, period, currentTime }) => {
   const { t, i18n } = useTranslation()
+  const maturityOptions = {
+    H2: t('PRODUCTION.MATURITY_H2'),
+    H3: t('PRODUCTION.MATURITY_H3'),
+    HP: t('PRODUCTION.MATURITY_HP'),
+    HC: t('PRODUCTION.MATURITY_HC'),
+  }
   function handleClick() {
     const contractData = currentContractData(productionData, contractName)
-    const [startIndex, endIndex] = sliceIndexes(
+    const [unadjustedStartIndex, unadjustedEndIndex] = sliceIndexes(
       contractData.first_timestamp_utc,
       period,
       currentTime,
     )
+    const startIndex = Math.max(unadjustedStartIndex, 0)
+    const endIndex = Math.min(unadjustedEndIndex, contractData.measure_kwh.length-1)
     const header = [
       [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
       //[t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
@@ -81,7 +89,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
             date.getTimezoneOffset() / 60,
             contractData.foreseen_kwh[j],
             contractData.measure_kwh[j],
-            contractData.maturity[j],
+            format.enumeration(contractData.maturity[j], maturityOptions, ""),
             contractData.estimated[j] === null
               ? ''
               : contractData.estimated[j] === true
