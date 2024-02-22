@@ -295,7 +295,6 @@ function invoicesZip(invoiceNumbers) {
   
     const chunk = invoiceNumbers.slice(i, i + chunkSize)
     const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', { invoice_numbers: chunk})
-    console.log('context-----',context)
 
     const queryParams = '?invoice_numbers=' + chunk
 
