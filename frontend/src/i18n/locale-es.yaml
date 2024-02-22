@@ -126,6 +126,7 @@ OVAPI:
   CONTEXT_INVOICES: Error obteniendo la lista de facturas
   CONTEXT_SIGNING_DOCUMENT: Error aceptando condiciones
   CONTEXT_INVOICE_PDF_DOWNLOAD: Error descargando la factura {{invoice}}
+  CONTEXT_INVOICES_ZIP_DOWNLOAD: Error descargando el zip de las facturas {{invoice_numbers}}
   ERR_UNABLE_TO_SIGN_DOCUMENT: 'No fue posible firmar el documento'
   ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
   ERR_GATEWAY: El sistema no está disponible por mantenimiento. Prueba más tarde.

@@ -21,6 +21,7 @@ from ..models import (
     InstallationDetailsResult,
     Invoice,
     InvoicePdf,
+    InvoicesZip,
     CustomerProductionData,
 )
 from pydantic import AwareDatetime
@@ -65,6 +66,10 @@ def invoice_list(username: str) -> list[Invoice]:
 
 def invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     return backend().invoice_pdf(username, invoice_number)
+
+
+def invoices_zip(username: str, invoice_numbers: []) -> InvoicesZip:
+    return backend().invoices_zip(username, invoice_numbers)
 
 
 def production_data(

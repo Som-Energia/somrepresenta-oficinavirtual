@@ -20,6 +20,7 @@ import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
 import format from '../../services/format'
 import DownloadButton from './DownloadButton'
+import DownloadZipButton from './DownloadZipButton'
 
 
 function PaymentCell({payment_status}) {
@@ -141,6 +142,9 @@ export default function InvoicesPage() {
     {
       title: t('INVOICES.TOOLTIP_DOWNLOAD_ZIP'),
       icon: <DownloadIcon />,
+      view: (invoices) => (
+        <DownloadZipButton context={invoices} title={t('INVOICES.TOOLTIP_DOWNLOAD_ZIP')} />
+      ),
     },
   ]
   const itemActions = [

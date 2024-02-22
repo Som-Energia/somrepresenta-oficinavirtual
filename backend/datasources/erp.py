@@ -10,6 +10,7 @@ from ..models import (
     InstallationDetailsResult,
     Invoice,
     InvoicePdf,
+    InvoicesZip,
     CustomerProductionData,
 )
 from .. import erp
@@ -118,6 +119,12 @@ def erp_invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     with catch_validation_error():
         return InvoicePdf(**pdffile)
 
+def erp_invoices_zip(username: str, invoice_numbers: []) -> InvoicesZip:
+    e = erp.Erp()
+    zipfile = e.invoices_zip(username, invoice_numbers)
+    process_erp_errors(zipfile)
+    with catch_validation_error():
+        return InvoicesZip(**zipfile)
 
 def erp_production_data(
         username: str,
@@ -154,6 +161,9 @@ class ErpBackend:
 
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return erp_invoice_pdf(username, invoice_number)
+
+    def invoices_zip(self, username: str, invoice_numbers: []) -> InvoicesZip:
+        return erp_invoices_zip(username, invoice_numbers)
 
     def production_data(
         self,
