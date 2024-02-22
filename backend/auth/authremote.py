@@ -51,9 +51,14 @@ async def validated_staff(user: dict = Depends(validated_user)):
 
 def on_auth(auth, user):
     print("on_auth", auth, user)
-    info = user_info(user['username'])
+    username = user.get('username', user.get('email'))
+    if not username:
+        auth_error(f"Expected token keys not found in: {user}")
+    info = user_info(username)
     if not info:
         auth_error(f"Not such an user {user['username']}")
+    print("on auth returns", info)
+    return info
 
 def setup_auth(app):
     config = OAuth2Config(

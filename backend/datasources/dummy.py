@@ -152,8 +152,8 @@ def dummy_profile_info(user_info: dict) -> UserProfile:
     # TODO: Either query ERP or have a rich jwt and take data from it
     default = dict(
         avatar=user_info.get("avatar", user_info.get("picture", None)),
-        username="ES12345678X",
-        vat="ES12345678X",
+        username="ES12345678Z",
+        vat="ES12345678Z",
         address="Rue del Percebe, 13",
         city="Salt",
         zip="17234",
