@@ -63,7 +63,6 @@ def setup_business(app):
         response_class=PdfStreamingResponse,
     )
     def api_invoice_pdf(invoice_number: str, user: dict = Depends(validated_user)):
-        print('INVOICE_NUMBER ............',invoice_number)
         from yamlns import ns
         result: InvoicePdf = invoice_pdf(user['username'], invoice_number)
 

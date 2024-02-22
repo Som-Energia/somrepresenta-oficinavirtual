@@ -22,7 +22,6 @@ export default function DownloadButton({ context, title }) {
     setState(inprogress)
     setError(undefined)
     try {
-      console.log('INVOICE_NUMBER ',context)
       await ovapi.invoicePdf(context.invoice_number)
       setState(done)
     } catch (error) {
