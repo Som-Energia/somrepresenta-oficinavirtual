@@ -344,7 +344,7 @@ def zip_content(invoice_numbers):
     return base64.b64encode(zipfile_io.getvalue())
 
 
-def dummy_invoices_zip(username: str, invoice_numbers: []):
+def dummy_invoices_zip(username: str, invoice_numbers: list[str]):
     for invoice_number in invoice_numbers:
         if invoice_number in invoices_zip_exceptions:
             raise invoices_zip_exceptions[invoice_number](
@@ -414,7 +414,7 @@ class DummyBackend:
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return dummy_invoice_pdf(username, invoice_number)
 
-    def invoices_zip(self, username: str, invoice_numbers: []) -> InvoicesZip:
+    def invoices_zip(self, username: str, invoice_numbers: list[str]) -> InvoicesZip:
         return dummy_invoices_zip(username, invoice_numbers)
 
     def production_data(

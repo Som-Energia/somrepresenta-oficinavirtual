@@ -1,1 +1,48 @@
-{}
+APP_FRAME:
+  PAGE_INSTALLATIONS: Instalacións
+  PAGE_INVOICES: Facturas
+  PAGE_PRODUCTION_DATA: Produción
+INSTALLATIONS:
+  INSTALLATIONS_TITLE: Instalacións
+  TABLE_TITLE: '{{n}} instalacións'
+  COLUMN_CONTRACT_NUMBER: N.º de contrato
+  COLUMN_INSTALLATION_NAME: Nome da instalación
+  BUTTON_DETAILS: Detalles
+  TOOLTIP_DETAILS: Detalles
+INSTALLATION_DETAIL:
+  DETAILS_TITLE: Detalles
+  INSTALLATION_DETAILS_TITLE: Detalle da instalación
+  CONTRACT_DETAILS_TITLE: Detalle do contrato
+  ADDRESS: Enderezo
+  CITY: Concello
+  CONTRACT_NUMBER: N.º de contrato
+  COORDINATES: Coordenadas
+  MINISTRY_CODE: Código do Ministerio
+  NAME: Nome da instalación
+  POSTAL_CODE: Código postal
+  PROVINCE: Provincia
+  RATED_POWER: Potencia nominal
+  TECHNOLOGY: Tecnoloxía
+  CIL: CIL
+CONTRACT_DETAIL:
+  CONTRACT_DETAILS_TITLE: Detalle do contrato
+  BILLING_MODE: Modo de facturación
+  COST_DEVIATION: Custo dos desvíos
+  DISCHARGE_DATE: Data da alta
+  IBAN: IBAN
+  PROXY_FEE: Retribución polo servizo de representación
+  REPRESENTATION_TYPE: Tipo de representación
+  STATUS: Estado do contrato
+INVOICES:
+  INVOICES_TITLE: Facturas
+  TABLE_TITLE: '{{n}} facturas'
+  COLUMN_PERIOD: Período
+  COLUMN_AMOUNT: Importe
+  COLUMN_LIQUIDATION: Liquidación
+  CONCEPT_OPTION_MARKET: Mercado
+  CONCEPT_OPTION_SPECIFIC_RETRIBUTION: Retribución específica
+  CONCEPT_OPTION_SERVICES: Servizos
+PRODUCTION:
+  PRODUCTION_TITLE: Produción
+  LEGEND_PRODUCTION: Produción (kWh)
+  LEGEND_FORESEEN: Previsión (kWh)

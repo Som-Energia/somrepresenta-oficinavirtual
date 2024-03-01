@@ -312,7 +312,7 @@ function invoicesZip(invoiceNumbers) {
         const filename =
           result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
           `facturas-from${chunk[0]}.zip`
-        downloadZipFile(filename, result.data, 'application/zip')
+          downloadBlob(filename, result.data, 'application/zip')
       })
   }
 }

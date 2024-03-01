@@ -119,7 +119,7 @@ def erp_invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     with catch_validation_error():
         return InvoicePdf(**pdffile)
 
-def erp_invoices_zip(username: str, invoice_numbers: []) -> InvoicesZip:
+def erp_invoices_zip(username: str, invoice_numbers: list[str]) -> InvoicesZip:
     e = erp.Erp()
     zipfile = e.invoices_zip(username, invoice_numbers)
     process_erp_errors(zipfile)
@@ -162,7 +162,7 @@ class ErpBackend:
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return erp_invoice_pdf(username, invoice_number)
 
-    def invoices_zip(self, username: str, invoice_numbers: []) -> InvoicesZip:
+    def invoices_zip(self, username: str, invoice_numbers: list[str]) -> InvoicesZip:
         return erp_invoices_zip(username, invoice_numbers)
 
     def production_data(

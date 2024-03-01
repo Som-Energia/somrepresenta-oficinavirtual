@@ -133,7 +133,7 @@ class Erp:
             "som.ov.invoices", "download_invoice_pdf", username, invoice_number
         )
 
-    def invoices_zip(self, username: str, invoice_numbers: []) -> dict:
+    def invoices_zip(self, username: str, invoice_numbers: list[str]) -> dict:
         return self.object_execute(
             "som.ov.invoices", "download_invoices_zip", username, invoice_numbers
         )

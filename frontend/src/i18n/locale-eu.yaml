@@ -1,1 +1,48 @@
-{}
+APP_FRAME:
+  PAGE_INSTALLATIONS: Instalazioak
+  PAGE_INVOICES: Fakturak
+  PAGE_PRODUCTION_DATA: Ekoizpen
+INSTALLATIONS:
+  INSTALLATIONS_TITLE: Instalazioak
+  TABLE_TITLE: '{{n}} instalazioak'
+  COLUMN_CONTRACT_NUMBER: Kontratu-zenbakia
+  COLUMN_INSTALLATION_NAME: Instalazioaren izena
+  BUTTON_DETAILS: Xehetasunak
+  TOOLTIP_DETAILS: Xehetasunak
+INSTALLATION_DETAIL:
+  DETAILS_TITLE: Xehetasunak
+  INSTALLATION_DETAILS_TITLE: Instalazioaren gaineko informazioa
+  CONTRACT_DETAILS_TITLE: Kontratuaren gaineko informazioa
+  ADDRESS: Helbidea
+  CITY: Udalerria
+  CONTRACT_NUMBER: Kontratu-zenbakia
+  COORDINATES: Koordenatuak
+  MINISTRY_CODE: Ministerioaren kodea
+  NAME: Instalazioaren izena
+  POSTAL_CODE: Posta-kodea
+  PROVINCE: Probintzia
+  RATED_POWER: Potentzia nominala
+  TECHNOLOGY: Teknologia
+  CIL: CIL
+CONTRACT_DETAIL:
+  CONTRACT_DETAILS_TITLE: Kontratuaren gaineko informazioa
+  BILLING_MODE: Fakturazio-modua
+  COST_DEVIATION: Desbideraketen kostua
+  DISCHARGE_DATE: Alta-data
+  IBAN: IBAN
+  PROXY_FEE: Ordezkaritza-zerbitzuaren ordainsaria
+  REPRESENTATION_TYPE: Ordezkaritza-mota
+  STATUS: Kontratuaren egoera
+INVOICES:
+  INVOICES_TITLE: Fakturak
+  TABLE_TITLE: '{{n}} fakturak'
+  COLUMN_PERIOD: Denboraldia
+  COLUMN_AMOUNT: Zenbatekoa
+  COLUMN_LIQUIDATION: Likidazioa
+  CONCEPT_OPTION_MARKET: Merkatua
+  CONCEPT_OPTION_SPECIFIC_RETRIBUTION: Ordainsari espezifikoa
+  CONCEPT_OPTION_SERVICES: Zerbitzuak
+PRODUCTION:
+  PRODUCTION_TITLE: Ekoizpen
+  LEGEND_PRODUCTION: Ekoizpen (kWh)
+  LEGEND_FORESEEN: Aurreikuspena (kWh)

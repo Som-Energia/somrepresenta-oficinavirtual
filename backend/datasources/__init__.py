@@ -68,7 +68,7 @@ def invoice_pdf(username: str, invoice_number: str) -> InvoicePdf:
     return backend().invoice_pdf(username, invoice_number)
 
 
-def invoices_zip(username: str, invoice_numbers: []) -> InvoicesZip:
+def invoices_zip(username: str, invoice_numbers: list[str]) -> InvoicesZip:
     return backend().invoices_zip(username, invoice_numbers)
 
 
