@@ -79,26 +79,26 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
         t('PRODUCTION.CSV_COLUMN_ESTIMATED'),
       ],
     ]
-    const csvdata = Papa.unparse(
-      header.concat(
-        [...Array(endIndex - startIndex).keys()].map((_, i) => {
-          const j = i + startIndex
-          const date = index2time(contractData.first_timestamp_utc, j)
-          return [
-            format.localISODateTime(date),
-            date.getTimezoneOffset() / 60,
-            contractData.foreseen_kwh[j],
-            contractData.measure_kwh[j],
-            format.enumeration(contractData.maturity[j], maturityOptions, ''),
-            contractData.estimated[j] === null
-              ? ''
-              : contractData.estimated[j] === true
-                ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
-                : t('PRODUCTION.CSV_VALUE_REAL'),
-          ]
-        }),
-      ),
+    const content = header.concat(
+      [...Array(endIndex - startIndex).keys()].map((_, i) => {
+        const j = i + startIndex
+        const date = index2time(contractData.first_timestamp_utc, j)
+        return [
+          format.localISODateTime(date),
+          date.getTimezoneOffset() / 60,
+          contractData.foreseen_kwh[j],
+          contractData.measure_kwh[j],
+          format.enumeration(contractData.maturity[j], maturityOptions, ''),
+          contractData.estimated[j] === null
+            ? ''
+            : contractData.estimated[j] === true
+              ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
+              : t('PRODUCTION.CSV_VALUE_REAL'),
+        ]
+      }),
     )
+
+    const csvdata = Papa.unparse(content, { delimiter: ';' })
     downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
   }
   return (
