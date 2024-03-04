@@ -99,7 +99,7 @@ class TokenUser(BaseModel):
 class UserProfile(TokenUser):
     avatar: str | None = None
     address: str
-    city: str
+    city: str | None = None
     zip: str
     state: str
     phones: list[str]
@@ -115,7 +115,7 @@ class InstallationSummary(BaseModel):
 class InstallationDetails(BaseModel):
     address: str
     cil: str
-    city: str
+    city: str | None = None
     contract_number: str
     coordinates: str | None = None
     ministry_code: str
