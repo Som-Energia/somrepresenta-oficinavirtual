@@ -2,29 +2,28 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ToggleButton from '@mui/material/ToggleButton'
-import Chart from '@somenergia/somenergia-ui/Chart'
-import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
-import ovapi from '../services/ovapi'
 import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import QueryStatsIcon from '@mui/icons-material/QueryStats'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
-import { InstallationContext } from './InstallationProvider'
+import Papa from 'papaparse'
+import Chart from '@somenergia/somenergia-ui/Chart'
+import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
 import PageTitle from './PageTitle'
-import { time2index, timeInterval, timeSlice } from '../services/curves'
-import Checkbox from '@mui/material/Checkbox'
-import { FormControlLabel } from '@mui/material'
+import ContractSelector from './ContractSelector'
+import ovapi from '../services/ovapi'
+import format from '../services/format'
+import { index2time, timeSlice, sliceIndexes } from '../services/curves'
+import { downloadTextFile } from '../services/download'
 
 dayjs.extend(minMax)
 
@@ -36,56 +35,78 @@ const YEARLY = 'YEARLY'
 const LINE = 'LINE'
 const BAR = 'BAR'
 
-const ContractSelector = ({ setContract, contract }) => {
-  const {
-    installations,
-    loading: listLoading,
-    error: listError,
-  } = React.useContext(InstallationContext)
-  const { t, i18n } = useTranslation()
-
-  React.useEffect(() => {
-    if (installations === null) return
-    setContract(installations[0].contract_number)
-  }, [installations])
-
-  return (
-    installations && (
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <FormControl size="small">
-          <InputLabel id="contract-select-label">
-            {t('PRODUCTION.LABEL_CONTRACT')}
-          </InputLabel>
-          <Select
-            labelId="contract-select-label"
-            id="contract-select"
-            value={contract || installations[0].contract_number}
-            label={t('PRODUCTION.LABEL_CONTRACT')}
-            onChange={(ev) => setContract(ev.target.value)}
-          >
-            {installations &&
-              installations.map(({ contract_number, installation_name }) => {
-                return (
-                  <MenuItem key={contract_number} value={contract_number}>
-                    {`${installation_name} [${contract_number}]`}
-                  </MenuItem>
-                )
-              })}
-          </Select>
-        </FormControl>
-      </Box>
-    )
-  )
-}
-
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
+
+function currentContractData(productionData, contract) {
+  const data = productionData
+  if (!data) return undefined
+  for (const contractData of data.data) {
+    if (contractData.contract_name !== contract) continue
+    return contractData
+  }
+  return undefined
+}
+
+const DownloadCsvButton = ({ productionData, contractName, period, currentTime }) => {
+  const { t, i18n } = useTranslation()
+  const maturityOptions = {
+    H2: t('PRODUCTION.MATURITY_H2'),
+    H3: t('PRODUCTION.MATURITY_H3'),
+    HP: t('PRODUCTION.MATURITY_HP'),
+    HC: t('PRODUCTION.MATURITY_HC'),
+  }
+  function handleClick() {
+    const contractData = currentContractData(productionData, contractName)
+    const [unadjustedStartIndex, unadjustedEndIndex] = sliceIndexes(
+      contractData.first_timestamp_utc,
+      period,
+      currentTime,
+    )
+    const startIndex = Math.max(unadjustedStartIndex, 0)
+    const endIndex = Math.min(unadjustedEndIndex, contractData.measure_kwh.length - 1)
+    const header = [
+      [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
+      //[t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
+      //[t('PRODUCTION.CSV_COLUMN_INSTALL_NAME'), 'La meva insta·lació'],
+      [],
+      [
+        t('PRODUCTION.CSV_COLUMN_DATETIME'),
+        t('PRODUCTION.CSV_COLUMN_UTC_OFFSET'),
+        t('PRODUCTION.CSV_COLUMN_FORESEEN'),
+        t('PRODUCTION.CSV_COLUMN_MEASURE'),
+        t('PRODUCTION.CSV_COLUMN_MATURITY'),
+        t('PRODUCTION.CSV_COLUMN_ESTIMATED'),
+      ],
+    ]
+    const content = header.concat(
+      [...Array(endIndex - startIndex).keys()].map((_, i) => {
+        const j = i + startIndex
+        const date = index2time(contractData.first_timestamp_utc, j)
+        return [
+          format.localISODateTime(date),
+          date.getTimezoneOffset() / 60,
+          contractData.foreseen_kwh[j],
+          contractData.measure_kwh[j],
+          format.enumeration(contractData.maturity[j], maturityOptions, ''),
+          contractData.estimated[j] === null
+            ? ''
+            : contractData.estimated[j] === true
+              ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
+              : t('PRODUCTION.CSV_VALUE_REAL'),
+        ]
+      }),
+    )
+
+    const csvdata = Papa.unparse(content, { delimiter: ';' })
+    downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
+  }
+  return (
+    <Button disabled={productionData === undefined} color="primary" onClick={handleClick}>
+      <FileDownloadRoundedIcon />
+    </Button>
+  )
+}
 
 const ChartProductionData = () => {
   const [productionData, setProductionData] = useState(undefined)
@@ -102,12 +123,12 @@ const ChartProductionData = () => {
   const [totalKwh, setTotalKwh] = useState(0)
   const [foreseenTotalKwh, setForeseenTotalKwh] = useState(0)
 
-  const years = 4
   const maxDate = new Date()
   maxDate.setHours(0)
   maxDate.setMinutes(0)
   maxDate.setSeconds(0)
   maxDate.setMilliseconds(0)
+  const years = 4
   const minDate = new Date(maxDate)
   minDate.setFullYear(minDate.getFullYear() - years)
 
@@ -131,20 +152,14 @@ const ChartProductionData = () => {
     }
   }
 
+  const contractData = currentContractData(productionData, contract)
+  const firstDataDate = contractData?.first_timestamp_utc ?? minDate
+  const lastDataDate = contractData?.last_timestamp_utc ?? maxDate
+
   const getProductionData = () => {
     ovapi.productionData(minDate, maxDate).then((data) => {
       setProductionData(data)
     })
-  }
-
-  function currentContractData() {
-    const data = productionData
-    if (!data) return undefined
-    for (const contractData of data.data) {
-      if (contractData.contract_name !== contract) continue
-      return contractData
-    }
-    return undefined
   }
 
   function calculateTotalKwh(measured_data, foreseen_data) {
@@ -156,7 +171,7 @@ const ChartProductionData = () => {
   }
 
   React.useEffect(() => {
-    const contractData = currentContractData()
+    const contractData = currentContractData(productionData, contract)
     if (!contractData) {
       setProductionLineData([])
       setProductionBarData({})
@@ -164,9 +179,11 @@ const ChartProductionData = () => {
       return
     }
     const offsetDate = new Date(contractData.first_timestamp_utc)
-    var [startTime, endTime] = timeInterval(period, currentTime)
-    var startIndex = time2index(offsetDate, startTime)
-    var endIndex = time2index(offsetDate, endTime)
+    const [startIndex, endIndex] = sliceIndexes(
+      contractData.first_timestamp_utc,
+      period,
+      currentTime,
+    )
 
     var measured_data = timeSlice(
       offsetDate,
@@ -200,12 +217,14 @@ const ChartProductionData = () => {
 
   function prevTimeWindow() {
     setCurrentTime(
-      dayjs.max(dayjs(minDate), currentTime.subtract(1, dayjsperiods[period])),
+      dayjs.max(dayjs(firstDataDate), currentTime.subtract(1, dayjsperiods[period])),
     )
   }
 
   function nextTimeWindow() {
-    setCurrentTime(dayjs.min(dayjs(maxDate), currentTime.add(1, dayjsperiods[period])))
+    setCurrentTime(
+      dayjs.min(dayjs(lastDataDate), currentTime.add(1, dayjsperiods[period])),
+    )
   }
 
   return (
@@ -258,8 +277,8 @@ const ChartProductionData = () => {
                   ? ['month', 'year']
                   : undefined
             }
-            minDate={dayjs(minDate)}
-            maxDate={dayjs(maxDate)}
+            minDate={dayjs(firstDataDate)}
+            maxDate={dayjs(lastDataDate)}
           />
           <Button onClick={nextTimeWindow}>
             <ArrowForwardIosOutlinedIcon />
@@ -282,6 +301,12 @@ const ChartProductionData = () => {
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
+        <DownloadCsvButton
+          productionData={productionData}
+          contractName={contract}
+          period={period}
+          currentTime={currentTime}
+        />
       </Box>
 
       <Chart

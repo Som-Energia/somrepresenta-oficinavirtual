@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
-import { euros, units, percent, date, enumeration } from './format'
+import { euros, units, percent, date, enumeration, localISODateTime } from './format'
 import i18n from '../i18n/i18n'
 
 describe('euros formatting', () => {
@@ -201,5 +201,22 @@ describe('enum formatting', () => {
   })
   it('Undefined value', () => {
     expect(enumeration(undefined, enum_options)).toBe('-')
+  })
+})
+
+
+describe('localISODateTime', () => {
+  let previousLanguage
+  beforeEach(() => {
+    previousLanguage = i18n.language
+  })
+  afterEach(() => {
+    i18n.changeLanguage(previousLanguage)
+  })
+  it('Zulu time resolves to local time', () => {
+    expect(localISODateTime(new Date('2022-12-20 00:00:00Z'))).toBe('2022-12-20 01:00:00')
+  })
+  it('Local time resolves to same time', () => {
+    expect(localISODateTime(new Date('2022-12-20 00:00:00'))).toBe('2022-12-20 00:00:00')
   })
 })

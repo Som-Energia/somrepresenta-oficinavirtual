@@ -62,7 +62,7 @@ function timeInterval(scope, current_date) {
       break
     case "MONTHLY":
       end.setMonth(end.getMonth()+1)
-      break 
+      break
     case "YEARLY":
       end.setFullYear(end.getFullYear()+1)
       break
@@ -82,6 +82,14 @@ function timeSlice(timeOffset, values, indexStart, indexEnd) {
   return array2datapoints(newTimeOffset, values.slice(adjustedIndexStart, indexEnd))
 }
 
+function sliceIndexes(offsetDate, period, currentTime) {
+  var [startTime, endTime] = timeInterval(period, currentTime)
+  var startIndex = time2index(offsetDate, startTime)
+  var endIndex = time2index(offsetDate, endTime)
+  return [startIndex, endIndex]
+}
 
-export { time2index, index2time, array2datapoints, timeInterval, timeSlice }
-export default { time2index, index2time, array2datapoints, timeInterval, timeSlice }
+export { time2index, index2time, array2datapoints, timeInterval, timeSlice, sliceIndexes}
+export default { time2index, index2time, array2datapoints, timeInterval, timeSlice, sliceIndexes }
+
+

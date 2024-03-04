@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased
+
+- Production page: Added a button to download data as csv
+- Fix: Production data: Convert to string dates sent to erp
+
 ## 0.6.0 (2024-02-14)
 
 - Add production data page with foreseen and production measures
