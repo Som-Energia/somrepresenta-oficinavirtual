@@ -156,6 +156,11 @@ class InvoicePdf(BaseModel):
     content_type: str # TODO: content type check
     filename: str
 
+class InvoicesZip(BaseModel):
+    content: Base64Bytes
+    content_type: str # TODO: content type check
+    filename: str
+
 class ProductionData(BaseModel):
     data: str
     value: int

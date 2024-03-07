@@ -12,6 +12,7 @@ from ..models import (
     InstallationDetailsResult,
     Invoice,
     InvoicePdf,
+    InvoicesZip,
     ProductionData,
     CustomerProductionData,
     ContractProductionData,
@@ -257,6 +258,16 @@ invoice_pdf_exceptions = {
     ]
 }
 
+invoices_zip_exceptions = {
+    e.__name__: e
+    for e in [
+        UnauthorizedAccess,
+        NoSuchUser,
+        ErpValidationError,
+        # TODO: ErpConnectionError,
+        # TODO: ErpUnexpectedError,
+    ]
+}
 
 def dummy_invoices(username: str) -> list[Invoice]:
     return [
@@ -291,7 +302,7 @@ def pdf_content(invoice_number):
         return output.getvalue()
 
 
-def dummy_invoice_pdf(username: str, invoice_number: str):
+def dummy_invoice_pdf(username: str, invoice_number: []):
     if invoice_number in invoice_pdf_exceptions:
         raise invoice_pdf_exceptions[invoice_number](
             dict(
@@ -307,6 +318,47 @@ def dummy_invoice_pdf(username: str, invoice_number: str):
         content_type="application/pdf",
     )
 
+
+def zip_content(invoice_numbers):
+    import zipfile
+    from xhtml2pdf import pisa
+    import io
+
+    zipfile_io = io.BytesIO()
+    zipfile_ = zipfile.ZipFile(zipfile_io, "w")
+
+    for invoice_number in invoice_numbers:
+        html = f"""
+            <style>h1 {{font-size: 4rem}}</style>
+            <h1>Factura {invoice_number}</h1>
+        """
+        with io.BytesIO() as output:
+            pisa.CreatePDF(
+                src=html,
+                dest=output,
+            )
+            zipfile_.writestr(invoice_number, output.getvalue())
+
+    zipfile_.close()
+            
+    return base64.b64encode(zipfile_io.getvalue())
+
+
+def dummy_invoices_zip(username: str, invoice_numbers: list[str]):
+    for invoice_number in invoice_numbers:
+        if invoice_number in invoices_zip_exceptions:
+            raise invoices_zip_exceptions[invoice_number](
+                dict(
+                    code=invoice_number,
+                    error=f"{invoice_number} (Dummy error)",
+                )
+            )
+
+    return InvoicesZip(
+        content=zip_content(invoice_numbers),
+        filename=f"{username}_invoices_from_{invoice_numbers[0]}.zip",
+        content_type="application/zip",
+    )
 
 
 def dummy_production_data(
@@ -361,6 +413,9 @@ class DummyBackend:
 
     def invoice_pdf(self, username: str, invoice_number: str) -> InvoicePdf:
         return dummy_invoice_pdf(username, invoice_number)
+
+    def invoices_zip(self, username: str, invoice_numbers: list[str]) -> InvoicesZip:
+        return dummy_invoices_zip(username, invoice_numbers)
 
     def production_data(
         self,

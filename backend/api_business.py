@@ -1,5 +1,6 @@
-from fastapi import Request, Depends, status
+from fastapi import Request, Depends, status, Query
 from fastapi.responses import JSONResponse
+from typing import Annotated
 from pydantic import AwareDatetime
 from .models import (
     UserProfile,
@@ -8,6 +9,7 @@ from .models import (
     InstallationDetailsResult,
     Invoice,
     InvoicePdf,
+    InvoicesZip,
     CustomerProductionData,
 )
 from .datasources import (
@@ -17,11 +19,12 @@ from .datasources import (
     installation_details,
     invoice_list,
     invoice_pdf,
+    invoices_zip,
     production_data,
 )
 from .erp import ErpConnectionError
 from .auth import validated_user
-from .utils.responses import PdfStreamingResponse
+from .utils.responses import PdfStreamingResponse, ZipStreamingResponse
 from consolemsg import error
 
 def setup_business(app):
@@ -64,6 +67,19 @@ def setup_business(app):
         result: InvoicePdf = invoice_pdf(user['username'], invoice_number)
 
         return PdfStreamingResponse(
+            binary_data=result.content,
+            filename=result.filename,
+        )
+
+    @app.get(
+        '/api/invoices/zip',
+        response_class=ZipStreamingResponse,
+    )
+    def api_invoices_zip(invoice_numbers: Annotated[list[str], Query()] = None, user: dict = Depends(validated_user)):
+        from yamlns import ns
+        result: InvoicesZip = invoices_zip(user['username'], invoice_numbers[0].split(','))
+
+        return ZipStreamingResponse(
             binary_data=result.content,
             filename=result.filename,
         )

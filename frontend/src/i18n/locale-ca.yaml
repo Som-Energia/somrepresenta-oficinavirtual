@@ -103,7 +103,7 @@ CONTRACT_DETAIL:
   BILLING_MODE: Mode de facturació
   CONTRACT_DETAILS_TITLE: Detalls del contracte
   REPRESENTATION_TYPE: Tipus de representació
-  PROXY_FEE: Retribució per al servei de representació [€/MWh]
+  PROXY_FEE: Retribució per al servei de representació
   IBAN: IBAN
   STATUS: Estat del contracte
   REDUCTION_DEVIATION: Reducció dels desviaments per efecte de cartera
@@ -116,12 +116,12 @@ INSTALLATION_DETAIL:
   INSTALLATION_DETAILS_TITLE: Detalls de la instal·lació
   COORDINATES: Coordenades
   MINISTRY_CODE: Codi del Ministeri
-  NAME: Nom
+  NAME: Nom de la instal·lació
   POSTAL_CODE: Codi postal
   PROVINCE: Província
   CONTRACT_DETAILS_TITLE: Detalls del contracte
   CITY: Municipi
-  CONTRACT_NUMBER: Contracte
+  CONTRACT_NUMBER: Núm. de contracte
   ADDRESS: Adreça
   CIL: CIL
 INSTALLATIONS:
@@ -163,7 +163,7 @@ COOKIES_POLICY:
   SESSION_COOKIES: Cookies de sessió
   SESSION_COOKIES_DESCRIPTION: Les cookies de sessió són aquelles que duren el temps que la persona usuària està navegant per la pàgina web i s’esborren quan es tanca el navegador.
   PERSISTENT_COOKIES: Cookies persistents
-  PERSISTENT_COOKIES_DESCRIPTION: Les cookies de sessió són aquelles que duren el temps que la persona usuària està navegant per la pàgina web i s’esborren quan es tanca el navegador.
+  PERSISTENT_COOKIES_DESCRIPTION: Aquestes cookies queden emmagatzemades en el terminal de la usuària o usuari fins que són eliminades manualment o acabi el període de durada establert per a aquesta galeta.
   OWN_COOKIES: Cookies pròpies
   OWN_COOKIES_DESCRIPTION: Aquelles que s’envien a l’equip terminal de l’usuari o usuària des d’un equip o domini gestionat pel mateix editor o editora i des del qual es presta el servei sol·licitat per la persona usuària.
   THIRDPARTY_COOKIES: Cookies de tercers
@@ -173,7 +173,7 @@ COOKIES_POLICY:
   PERFORMANCE: RENDIMENT
   PERFORMANCE_DESCRIPTION: Cookies Tècniques pròpies i persistens. Cookies de Personalització pròpies o de tercers, de sessió o persistents.
   STATISTICS: ESTADÍSTICA
-  STATISTICS_DESCRIPTION: Cookies Analítiques i Pulicitàries persistents, pròpies i de tercers.
+  STATISTICS_DESCRIPTION: Cookies Analítiques i Publicitàries persistents, pròpies i de tercers.
   FUNCTIONALITY: FUNCIONALITAT
   FUNCTIONALITY_DESCRIPTION: Cookies Tècniques de tercers, de sessió o persistents.
   CHROME_DESACTIVATE_COOKIES: Configuració > Mostrar opcions avançades > Privacitat > Configuració de contingut.
