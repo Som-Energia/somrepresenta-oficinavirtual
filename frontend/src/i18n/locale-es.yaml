@@ -65,7 +65,7 @@ HIJACK:
   SUBMIT_BUTTON_HIJACK: Suplanta
   SUBMIT_BUTTON_PROCESSING: Suplantando…
   UNABLE_TO_HIJACK: No se ha podido suplantar
-  VALIDATION_ERROR: Usuaria inválida
+  VALIDATION_ERROR: Usuaria no válida
 CHANGE_PASSWORD:
   CHANGE_PASSWORD_DIALOG_TITLE: Cambiando la contraseña
   CURRENT_PASSWORD_LABEL: Contraseña actual
@@ -148,7 +148,7 @@ INSTALLATION_DETAIL:
   CIL: CIL
   TYPE: Código de instalación tipo
   BACK_TO_INSTALLATIONS: Volver a la lista de instalaciones
-  TECHNOLOGY_PHOTOVOLTAIC: Fotovoltáica
+  TECHNOLOGY_PHOTOVOLTAIC: Fotovoltaica
   TECHNOLOGY_HYDRO: Hidroeléctrica
   TECHNOLOGY_WIND: Eólica
 CONTRACT_DETAIL:
@@ -165,8 +165,8 @@ CONTRACT_DETAIL:
   BILLING_MODE_ATR: ATR
   COST_DEVIATION_INCLUDED: Incluido
   COST_DEVIATION_NOT_INCLUDED: No incluido
-  REPRESENTATION_TYPE_DIRECT: Indirecta a Mercado y Directa ante la CNMC
-  REPRESENTATION_TYPE_INDIRECT: Indirecta a Mercado y Indirecta ante la CNMC
+  REPRESENTATION_TYPE_DIRECT: Indirecta a mercado y directa ante la CNMC
+  REPRESENTATION_TYPE_INDIRECT: Indirecta a mercado e indirecta ante la CNMC
   CONTRACT_STATUS_DRAFT: Borrador
   CONTRACT_STATUS_VALIDATION: Validándose
   CONTRACT_STATUS_PENDING: Pendiente
@@ -184,7 +184,7 @@ INVOICES:
   COLUMN_INVOICE_NUMBER: Factura
   COLUMN_CONTRACT: Contrato
   COLUMN_EMITTED: Emitida
-  COLUMN_PERIOD: Período
+  COLUMN_PERIOD: Periodo
   COLUMN_AMOUNT: Importe
   COLUMN_CONCEPT: Concepto
   COLUMN_LIQUIDATION: Liquidación
@@ -193,7 +193,7 @@ INVOICES:
   CONCEPT_OPTION_SPECIFIC_RETRIBUTION: Retribución específica
   CONCEPT_OPTION_SERVICES: Servicios
   TOOLTIP_PDF: Descarga en PDF
-  TOOLTIP_DOWNLOAD_ZIP: Descarga PDF's seleccionados en un ZIP
+  TOOLTIP_DOWNLOAD_ZIP: Descarga PDF  seleccionados en un ZIP
   NO_INVOICES: No se han encontrado facturas
   RELOAD: Recarga
   DOWNLOAD_TOOLTIP_DOWNLOAD: Descarga
@@ -236,38 +236,79 @@ COOKIES_POLICY:
   PURPOSE: Según la finalidad
   TERM: Según su plazo
   OWNERSHIP: Según su titularidad
-  TABLE_DESCRIPTION: La siguiente tabla recoge la clasificación y descripción de las cookies utilizadas en la presente página web para que pueda identificarlas en su navegador
-  TABLE_COOKIES_CLASSIFICATION: Las cookies pueden clasificarse en diferentes parámetros, es decir, según su función, titularidad y plazos. Siguiendo esta clasificación, y para que la información proporcionada sea lo más transparente posible, SOM ENERGIA ha elaborado esta tabla que recoge toda la información y descripción de las cookies utilizadas de acuerdo con la siguiente clasificación
-  SOM_COOKIES: SOMOS ENERGÍA utiliza cookies técnicas, de personalización, análisis y publicitarias, propias y de terceros, que tratan datos de conexión y/o de dispositivo, así como hábitos de navegación para fines estadísticos y publicitarios.
-  SOM_COOKIES_EXPLANATION: Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de servicios de la sociedad de la información, hemos solicitado su consentimiento para su uso. El suministro de datos personales a través de nuestro portal y el consentimiento para el uso de cookies requiere una edad mínima de 18 años y aceptación expresa de nuestra política de privacidad.
-  DEACTIVATE_COOKIES_TABLE: De todas formas, le informamos que puede activar o desactivar las cookies siguiendo las instrucciones de su navegador de Internet
+  TABLE_DESCRIPTION: La siguiente tabla recoge la clasificación y descripción de las
+    cookies utilizadas en la presente página web para que pueda identificarlas en
+    su navegador
+  TABLE_COOKIES_CLASSIFICATION: Las cookies pueden clasificarse en diferentes parámetros,
+    es decir, según su función, titularidad y plazos. Siguiendo esta clasificación,
+    y para que la información proporcionada sea lo más transparente posible, SOM ENERGIA
+    ha elaborado esta tabla que recoge toda la información y descripción de las cookies
+    utilizadas de acuerdo con la siguiente clasificación
+  SOM_COOKIES: SOMOS ENERGÍA utiliza cookies técnicas, de personalización, análisis
+    y publicitarias, propias y de terceros, que tratan datos de conexión y/o de dispositivo,
+    así como hábitos de navegación para fines estadísticos y publicitarios.
+  SOM_COOKIES_EXPLANATION: Por ello, al acceder a nuestra web, en cumplimiento del
+    artículo 22 de la Ley de servicios de la sociedad de la información, hemos solicitado
+    su consentimiento para su uso. El suministro de datos personales a través de nuestro
+    portal y el consentimiento para el uso de cookies requiere una edad mínima de
+    18 años y aceptación expresa de nuestra política de privacidad.
+  DEACTIVATE_COOKIES_TABLE: De todas formas, le informamos que puede activar o desactivar
+    las cookies siguiendo las instrucciones de su navegador de Internet
   TECHNICAL_COOKIES: Cookies técnicas
-  TECHNICAL_COOKIES_DESCRIPTION: Las cookies técnicas son aquellas que facilitan la navegación de la persona usuaria y la utilización de las diferentes opciones o servicios que ofrece la web, como por ejemplo identificar la sesión, permitir el acceso a determinadas áreas, facilitar pedidos, compras, rellenar formularios, inscripciones , seguridad, facilitar funcionalidades (vídeos, redes sociales,...).
+  TECHNICAL_COOKIES_DESCRIPTION: Las cookies técnicas son aquellas que facilitan la
+    navegación de la persona usuaria y la utilización de las diferentes opciones o
+    servicios que ofrece la web, como por ejemplo identificar la sesión, permitir
+    el acceso a determinadas áreas, facilitar pedidos, compras, rellenar formularios,
+    inscripciones , seguridad, facilitar funcionalidades (vídeos, redes sociales,...).
   CUSTOMIZATION_COOKIES: Cookies de personalización
-  CUSTOMIZATION_COOKIES_DESCRIPTION: Las cookies de personalización permiten al usuario acceder a los servicios según sus preferencias (lengua, navegador, configuración,...).
+  CUSTOMIZATION_COOKIES_DESCRIPTION: Las cookies de personalización permiten al usuario
+    acceder a los servicios según sus preferencias (lengua, navegador, configuración,...).
   ANALYTICS_COOKIES: Cookies analíticas
-  ANALYTICS_COOKIES_DESCRIPTION: Las cookies de análisis son las utilizadas para llevar a cabo el análisis anónimo del comportamiento de las personas usuarias de la web y que permiten medir la actividad de la usuaria o usuario, y elaborar perfiles de navegación con el objetivo de mejorar los sitios web.
+  ANALYTICS_COOKIES_DESCRIPTION: Las cookies de análisis son las utilizadas para llevar
+    a cabo el análisis anónimo del comportamiento de las personas usuarias de la web
+    y que permiten medir la actividad de la usuaria o usuario, y elaborar perfiles
+    de navegación con el objetivo de mejorar los sitios web.
   ADVERTISING_COOKIES: Cookies publicitarias
-  ADVERTISING_COOKIES_DESCRIPTION: Las cookies publicitarias permiten la gestión de los espacios publicitarios de la web. Además, estas cookies pueden ser de publicidad personalizada y permitir así la gestión de los espacios publicitarios de la web en base al comportamiento y los hábitos de navegación de la usuaria o usuario, de donde se obtiene el perfil, y permiten personalizar la publicidad que se muestra en el navegador de la persona usuaria, u otros perfiles y redes sociales del usuario o usuaria.
+  ADVERTISING_COOKIES_DESCRIPTION: Las cookies publicitarias permiten la gestión de
+    los espacios publicitarios de la web. Además, estas cookies pueden ser de publicidad
+    personalizada y permitir así la gestión de los espacios publicitarios de la web
+    en base al comportamiento y los hábitos de navegación de la usuaria o usuario,
+    de donde se obtiene el perfil, y permiten personalizar la publicidad que se muestra
+    en el navegador de la persona usuaria, u otros perfiles y redes sociales del usuario
+    o usuaria.
   SESSION_COOKIES: Cookies de sesión
-  SESSION_COOKIES_DESCRIPTION: Las cookies de sesión son aquellas que duran el tiempo que la persona usuaria está navegando por la página web y se borran cuando se cierra el navegador.
+  SESSION_COOKIES_DESCRIPTION: Las cookies de sesión son aquellas que duran el tiempo
+    que la persona usuaria está navegando por la página web y se borran cuando se
+    cierra el navegador.
   PERSISTENT_COOKIES: Cookies persistentes
-  PERSISTENT_COOKIES_DESCRIPTION: Estas cookies quedan almacenadas en el terminal de la usuaria o usuario hasta que son eliminadas manualmente o termine el período de duración establecido para esta cookie.
+  PERSISTENT_COOKIES_DESCRIPTION: Estas cookies quedan almacenadas en el terminal
+    de la usuaria o usuario hasta que son eliminadas manualmente o termine el período
+    de duración establecido para esta cookie.
   OWN_COOKIES: Cookies propias
-  OWN_COOKIES_DESCRIPTION: Aquellas que se envíen al equipo terminal del usuario o usuaria desde un equipo o dominio gestionado por el propio editor o editora y desde el que se presta el servicio solicitado por el usuario.
+  OWN_COOKIES_DESCRIPTION: Aquellas que se envíen al equipo terminal del usuario o
+    usuaria desde un equipo o dominio gestionado por el propio editor o editora y
+    desde el que se presta el servicio solicitado por el usuario.
   THIRDPARTY_COOKIES: Cookies de terceros
-  THIRDPARTY_COOKIES_DESCRIPTION: Aquellas que se envíen al equipo terminal de la persona usuaria desde un equipo o dominio que no es gestionado por el editor o editora, sino por otra entidad que trata los datos obtenidos mediante las cookies.
+  THIRDPARTY_COOKIES_DESCRIPTION: Aquellas que se envíen al equipo terminal de la
+    persona usuaria desde un equipo o dominio que no es gestionado por el editor o
+    editora, sino por otra entidad que trata los datos obtenidos mediante las cookies.
   BASIC: BÁSICAS
   BASIC_DESCRIPTION: Cookies Técnicas propias y de sesión.
   PERFORMANCE: RENDIMIENTO
-  PERFORMANCE_DESCRIPTION: Cookies Técnicas propias y persistentes. Cookies de Personalización propias o de terceros, de sesión o persistentes.
+  PERFORMANCE_DESCRIPTION: Cookies Técnicas propias y persistentes. Cookies de Personalización
+    propias o de terceros, de sesión o persistentes.
   STATISTICS: ESTADÍSTICA
-  STATISTICS_DESCRIPTION: Cookies Analíticas y Publicitarias persistentes, propias y de terceros.
+  STATISTICS_DESCRIPTION: Cookies Analíticas y Publicitarias persistentes, propias
+    y de terceros.
   FUNCTIONALITY: FUNCIONALIDAD
   FUNCTIONALITY_DESCRIPTION: Cookies Técnicas de terceros, de sesión o persistentes.
-  CHROME_DESACTIVATE_COOKIES: Configuración > Mostrar opciones avanzades > Privacidad > Configuración de contenido
-  FIREFOX_DESACTIVATE_COOKIES: Herramientas > Opciones > Privacidad > Historial > Configuración personalizada.
-  EXPLORER_DESACTIVATE_COOKIES: Herramientas > Opciones de Internet > Privacidad > Configuración
+  CHROME_DESACTIVATE_COOKIES: Configuración > Mostrar opciones avanzades > Privacidad
+    > Configuración de contenido
+  FIREFOX_DESACTIVATE_COOKIES: Herramientas > Opciones > Privacidad > Historial >
+    Configuración personalizada.
+  EXPLORER_DESACTIVATE_COOKIES: Herramientas > Opciones de Internet > Privacidad >
+    Configuración
   OPERA_DESACTIVATE_COOKIES: Herramientas > Preferencias > Editar Preferencias > Cookies
   SAFARI_DESACTIVATE_COOKIES: Preferencias > Seguridad.
-  EDGE_DESACTIVATE_COOKIES: Configuración > Véase configuración avanzada > Privacidad y servicios > Cookies.
+  EDGE_DESACTIVATE_COOKIES: Configuración > Véase configuración avanzada > Privacidad
+    y servicios > Cookies.
