@@ -205,12 +205,12 @@ INVOICES:
 PRODUCTION:
   PRODUCTION_TITLE: Producción
   LABEL_CONTRACT: Contrato
-  LABEL_PERIOD: Intérvalo temporal
+  LABEL_PERIOD: Intervalo temporal
   PERIOD_DIARY: Diaria
   PERIOD_WEEKLY: Semanal
   PERIOD_MONTHLY: Mensual
   PERIOD_YEARLY: Anual
-  LABEL_PLOT_STYLE: Estilo de gráfica
+  LABEL_PLOT_STYLE: Estilo de gráfico
   STYLE_BAR: Barras
   STYLE_LINE: Linias
   LEGEND_PRODUCTION: Producción (kWh)
@@ -232,28 +232,28 @@ PRODUCTION:
   MATURITY_HC: Final definitiva (HC)
 COOKIES_POLICY:
   TITLE: Política de cookies
-  SUBTITLE: Qué uso hacemos de los tipos de cookies?
+  SUBTITLE: ¿Qué uso hacemos de las cookies?
   PURPOSE: Según la finalidad
   TERM: Según su plazo
   OWNERSHIP: Según su titularidad
   TABLE_DESCRIPTION: La siguiente tabla recoge la clasificación y descripción de las
-    cookies utilizadas en la presente página web para que pueda identificarlas en
-    su navegador
+    cookies utilizadas en la presente página web para que puedas identificarlas en
+    tu navegador
   TABLE_COOKIES_CLASSIFICATION: Las cookies pueden clasificarse en diferentes parámetros,
     es decir, según su función, titularidad y plazos. Siguiendo esta clasificación,
     y para que la información proporcionada sea lo más transparente posible, SOM ENERGIA
     ha elaborado esta tabla que recoge toda la información y descripción de las cookies
-    utilizadas de acuerdo con la siguiente clasificación
+    utilizadas de acuerdo con la siguiente clasificación.
   SOM_COOKIES: SOMOS ENERGÍA utiliza cookies técnicas, de personalización, análisis
     y publicitarias, propias y de terceros, que tratan datos de conexión y/o de dispositivo,
     así como hábitos de navegación para fines estadísticos y publicitarios.
   SOM_COOKIES_EXPLANATION: Por ello, al acceder a nuestra web, en cumplimiento del
-    artículo 22 de la Ley de servicios de la sociedad de la información, hemos solicitado
-    su consentimiento para su uso. El suministro de datos personales a través de nuestro
+    artículo 22 de la Ley de Servicios de la Sociedad de la Información, hemos solicitado
+    tu consentimiento para su uso. El suministro de datos personales a través de nuestro
     portal y el consentimiento para el uso de cookies requiere una edad mínima de
     18 años y aceptación expresa de nuestra política de privacidad.
-  DEACTIVATE_COOKIES_TABLE: De todas formas, le informamos que puede activar o desactivar
-    las cookies siguiendo las instrucciones de su navegador de Internet
+  DEACTIVATE_COOKIES_TABLE: De todas formas, te informamos que puedes activar o desactivar
+    las cookies siguiendo las instrucciones de tu navegador de Internet.
   TECHNICAL_COOKIES: Cookies técnicas
   TECHNICAL_COOKIES_DESCRIPTION: Las cookies técnicas son aquellas que facilitan la
     navegación de la persona usuaria y la utilización de las diferentes opciones o
