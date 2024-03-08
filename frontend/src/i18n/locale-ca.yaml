@@ -166,28 +166,28 @@ OVAPI:
   CONTEXT_INVOICES_ZIP_DOWNLOAD: Erro en descarregar el zip de les factures {{invoice_numbers}}
 COOKIES_POLICY:
   TITLE: Política de cookies
-  SUBTITLE: Quin ús fem dels tipus de cookies?
+  SUBTITLE: Quin ús fem de les cookies?
   PURPOSE: Segons la finalitat
   TERM: Segons el seu termini
   OWNERSHIP: Segons la seva titularitat
   TABLE_DESCRIPTION: La taula següent recull la classificació i descripció de les
-    galetes utilitzades en la present pàgina web perquè pugueu identificar-les en
-    el vostre navegador
+    galetes utilitzades en aquesta pàgina web perquè puguis identificar-les al teu
+    navegador
   TABLE_COOKIES_CLASSIFICATION: Les cookies es poden classificar en diferents paràmetres,
     és a dir, segons la seva funció, titularitat i terminis. Seguint aquesta classificació,
-    i per tal que la informació proporcionada sigui el més transparent possible, SOM
+    i per tal que la informació proporcionada sigui al més transparent possible, SOM
     ENERGIA ha elaborat aquesta taula que recull tota la informació i descripció de
-    les cookies utilitzades d’acord amb la següent classificació
-  SOM_COOKIES: SOM ENERGIA utilitza galetes tècniques, de personalització, anàlisi
+    les cookies utilitzades d’acord amb la classificació següent.
+  SOM_COOKIES: SOM ENERGIA utilitza cookies tècniques, de personalització, anàlisi
     i publicitàries, pròpies i de tercers, que tracten dades de connexió i/o de dispositiu,
     així com hàbits de navegació per a finalitats estadístiques i publicitàries.
   SOM_COOKIES_EXPLANATION: Per això, en accedir al nostre web, en compliment de l’article
-    22 de la Llei de serveis de la societat de la informació, hem sol·licitat el vostre
+    22 de la Llei de serveis de la societat de la informació, hem sol·licitat el teu
     consentiment per al seu ús. El subministrament de dades personals a través del
     nostre portal i el consentiment per a l’ús de galetes requereix una edat mínima
     de 18 anys i l’acceptació expressa de la nostra política de privacitat.
-  DEACTIVATE_COOKIES_TABLE: De tota manera, us informem que podeu activar o desactivar
-    les galetes seguint les instruccions del vostre navegador d’Internet
+  DEACTIVATE_COOKIES_TABLE: De tota manera, t'informem que pots activar o desactivar
+    les cookies seguint les instruccions del teu navegador d’Internet.
   TECHNICAL_COOKIES: Cookies tècniques
   TECHNICAL_COOKIES_DESCRIPTION: Les cookies tècniques són aquelles que faciliten
     la navegació de la persona usuària i la utilització de les diferents opcions o
@@ -263,6 +263,12 @@ INVOICES:
   COLUMN_AMOUNT: Import
   CONCEPT_OPTION_SPECIFIC_RETRIBUTION: Retribució específica
   CONCEPT_OPTION_SERVICES: Serveis
+  PAID_STATUS_OPTION_PAID: Sí
+  PAID_STATUS_OPTION_OPEN: En procés
+  PAID_STATUS_OPTION_UNPAID: No
+  DOWNLOAD_TOOLTIP_DOWNLOAD: Descàrrega
+  DOWNLOAD_TOOLTIP_SUCCESS: Descàrrega finalitzada
+  DOWNLOAD_TOOLTIP_ONGOING: En procés
 HIJACK:
   HIJACK_DIALOG_TITLE: Suplantant una altra usuària
   USERNAME_LABEL: Usuària a suplantar
@@ -271,3 +277,31 @@ HIJACK:
   SUBMIT_BUTTON_PROCESSING: Suplantant…
   UNABLE_TO_HIJACK: No s'ha pogut suplantar
   VALIDATION_ERROR: Usuària no vàlida
+PRODUCTION:
+  CSV_COLUMN_CONTRACT_NUMBER: Número de contracte
+  CSV_COLUMN_INSTALL_NAME: Nom de la instal·lació
+  CSV_COLUMN_CIL: CIL
+  CSV_COLUMN_UTC_OFFSET: Diferència UTC (h)
+  CSV_COLUMN_FORESEEN: Previsió (kWh)
+  CSV_COLUMN_DATETIME: Dia/hora
+  CSV_VALUE_ESTIMATED: Estimada
+  CSV_COLUMN_MATURITY: Maduresa
+  CSV_COLUMN_ESTIMATED: Tipus de mesura
+  CSV_VALUE_REAL: Real
+  MATURITY_HC: Final definitiva (HC)
+  MATURITY_H2: Inicial provisional (H2)
+  MATURITY_H3: Intermèdia provisional (H3)
+  MATURITY_HP: Final provisional (HP)
+  LEGEND_PRODUCTION: Producció (kWh)
+  LEGEND_FORESEEN: Previsió (kWh)
+  PRODUCTION_TITLE: Producció
+  LABEL_CONTRACT: Contracte
+  LABEL_PERIOD: Interval temporal
+  PERIOD_DIARY: Diària
+  PERIOD_WEEKLY: Setmanal
+  PERIOD_MONTHLY: Mensual
+  PERIOD_YEARLY: Anual
+  LABEL_PLOT_STYLE: Estil de gràfic
+  STYLE_BAR: Barres
+  STYLE_LINE: Línies
+  CSV_COLUMN_MEASURE: Producció (kWh)
