@@ -68,7 +68,7 @@ VERSION_CHECKER:
     \nEs recarregarà l'aplicació per evitar possibles problemes\n"
   NEW_VERSION_DETECTED_TITLE: Nova versió detectada
   RELOADING_IN: Recarregat en {{seconds}} segons
-  RELOADING: S'està recarregant...
+  RELOADING: S'està recarregant…
   RELOAD_NOW: Actualitza ara
 LOGIN:
   USERNAME_HELP: Utilitza el NIF o el correu electrònic
@@ -122,6 +122,7 @@ CONTRACT_DETAIL:
   REPRESENTATION_TYPE_DIRECT: Indirecta a mercat i directa davant la CNMC
   REPRESENTATION_TYPE_INDIRECT: Indirecta a mercat i indirecta davant la CNMC
   CONTRACT_STATUS_NEW_CONTRACT: Procés de nou contracte
+  COST_DEVIATION_INCLUDED: Inclòs
 INSTALLATION_DETAIL:
   TYPE: Codi d'instal·lació tipus
   TECHNOLOGY: Tecnologia
@@ -193,11 +194,11 @@ COOKIES_POLICY:
     la navegació de la persona usuària i la utilització de les diferents opcions o
     serveis que ofereix el web, com ara identificar la sessió, permetre l’accés a
     determinades àrees, facilitar comandes, compres, omplir formularis, inscripcions,
-    seguretat o facilitar funcionalitats (vídeos, xarxes socials...).
+    seguretat o facilitar funcionalitats (vídeos, xarxes socials…).
   CUSTOMIZATION_COOKIES: Cookies de personalització
   CUSTOMIZATION_COOKIES_DESCRIPTION: Les cookies de personalització permeten a la
     persona usuària accedir als serveis segons les seves preferències (llengua, navegador,
-    configuració...).
+    configuració…).
   ANALYTICS_COOKIES: Cookies analítiques
   ANALYTICS_COOKIES_DESCRIPTION: Les cookies d’anàlisi són les utilitzades per dur
     a terme l’anàlisi anònima del comportament de les persones usuàries del web i
@@ -205,46 +206,46 @@ COOKIES_POLICY:
     amb l’objectiu de millorar els llocs web.
   ADVERTISING_COOKIES: Cookies publicitàries
   ADVERTISING_COOKIES_DESCRIPTION: Les cookies publicitàries permeten la gestió dels
-    espais publicitaris del web. A més, aquestes cookies poden ser de publicitat personalitzada
-    i permetre així la gestió dels espais publicitaris del web basant-se en el comportament
-    i els hàbits de navegació de la usuària o usuari, d’on se n’obté el perfil, i
-    permeten personalitzar la publicitat que es mostra en el navegador de la persona
-    usuària, o bé altres perfils i xarxes socials de l’usuari o usuària.
+    espais publicitaris del web. A més, aquestes cookies poden ser de publicitat personalitzada,
+    de manera que permeten la gestió dels espais publicitaris del web a partir del
+    comportament i els hàbits de navegació de la usuària. D'aquí s’obté el perfil
+    i es permet personalitzar la publicitat que es mostra en el navegador, o bé altres
+    perfils i xarxes socials de la usuària.
   SESSION_COOKIES: Cookies de sessió
   SESSION_COOKIES_DESCRIPTION: Les cookies de sessió són aquelles que duren el temps
-    que la persona usuària està navegant per la pàgina web i s’esborren quan es tanca
-    el navegador.
+    que la persona usuària està navegant pel lloc web i s’esborren quan es tanca el
+    navegador.
   PERSISTENT_COOKIES: Cookies persistents
   PERSISTENT_COOKIES_DESCRIPTION: Aquestes cookies queden emmagatzemades en el terminal
-    de la usuària o usuari fins que són eliminades manualment o acabi el període de
-    durada establert per a aquesta galeta.
+    de la usuària fins que s'eliminen manualment o acaba el seu període de durada
+    establert.
   OWN_COOKIES: Cookies pròpies
-  OWN_COOKIES_DESCRIPTION: Aquelles que s’envien a l’equip terminal de l’usuari o
-    usuària des d’un equip o domini gestionat pel mateix editor o editora i des del
-    qual es presta el servei sol·licitat per la persona usuària.
+  OWN_COOKIES_DESCRIPTION: Aquelles que s’envien a l’equip terminal de la usuària
+    des d’un equip o domini gestionat per la mateixa persona editora i des del qual
+    es presta el servei sol·licitat per la usuària.
   THIRDPARTY_COOKIES: Cookies de tercers
-  THIRDPARTY_COOKIES_DESCRIPTION: Aquelles que s’envien a l’equip terminal de la persona
-    usuària des d’un equip o domini que no és gestionat per l’editor o editora, sinó
-    per una altra entitat que tracta les dades obtingudes mitjançant les cookies.
+  THIRDPARTY_COOKIES_DESCRIPTION: Aquelles que s’envien a l’equip terminal de la usuària
+    des d’un equip o domini que no és gestionat per la persona editora, sinó per una
+    altra entitat que tracta les dades obtingudes mitjançant les cookies.
   BASIC: BÀSIQUES
-  BASIC_DESCRIPTION: Cookies Tècniques pròpies i de sessió.
+  BASIC_DESCRIPTION: Cookies tècniques pròpies i de sessió.
   PERFORMANCE: RENDIMENT
-  PERFORMANCE_DESCRIPTION: Cookies Tècniques pròpies i persistens. Cookies de Personalització
+  PERFORMANCE_DESCRIPTION: Cookies tècniques pròpies i persistents. Cookies de personalització
     pròpies o de tercers, de sessió o persistents.
   STATISTICS: ESTADÍSTICA
-  STATISTICS_DESCRIPTION: Cookies Analítiques i Publicitàries persistents, pròpies
+  STATISTICS_DESCRIPTION: Cookies analítiques i publicitàries persistents, pròpies
     i de tercers.
   FUNCTIONALITY: FUNCIONALITAT
-  FUNCTIONALITY_DESCRIPTION: Cookies Tècniques de tercers, de sessió o persistents.
+  FUNCTIONALITY_DESCRIPTION: Cookies tècniques de tercers, de sessió o persistents.
   CHROME_DESACTIVATE_COOKIES: Configuració > Mostrar opcions avançades > Privacitat
-    > Configuració de contingut.
+    > Configuració de contingut
   FIREFOX_DESACTIVATE_COOKIES: Eines > Opcions > Privacitat > Historial > Configuració
-    personalitzada.
-  EXPLORER_DESACTIVATE_COOKIES: Eines > Opcions d’Internet > Privacitat > Configuració.
+    personalitzada
+  EXPLORER_DESACTIVATE_COOKIES: Eines > Opcions d’Internet > Privacitat > Configuració
   OPERA_DESACTIVATE_COOKIES: Eines > Preferències > Editar preferències > Cookies
-  SAFARI_DESACTIVATE_COOKIES: Preferències > Seguretat.
-  EDGE_DESACTIVATE_COOKIES: Configuració > Vegeu configuració avançada > Privacitat
-    i serveis > Cookies.
+  SAFARI_DESACTIVATE_COOKIES: Preferències > Seguretat
+  EDGE_DESACTIVATE_COOKIES: Configuració > Configuració avançada > Privacitat i serveis
+    > Cookies
 INVOICES:
   COLUMN_PAID_STATUS: Pagada
   COLUMN_CONCEPT: Concepte
