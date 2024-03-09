@@ -193,16 +193,16 @@ COOKIES_POLICY:
     la navegació de la persona usuària i la utilització de les diferents opcions o
     serveis que ofereix el web, com ara identificar la sessió, permetre l’accés a
     determinades àrees, facilitar comandes, compres, omplir formularis, inscripcions,
-    seguretat, facilitar funcionalitats (vídeos, xarxes socials,...).
+    seguretat o facilitar funcionalitats (vídeos, xarxes socials...).
   CUSTOMIZATION_COOKIES: Cookies de personalització
   CUSTOMIZATION_COOKIES_DESCRIPTION: Les cookies de personalització permeten a la
     persona usuària accedir als serveis segons les seves preferències (llengua, navegador,
-    configuració,...).
+    configuració...).
   ANALYTICS_COOKIES: Cookies analítiques
   ANALYTICS_COOKIES_DESCRIPTION: Les cookies d’anàlisi són les utilitzades per dur
     a terme l’anàlisi anònima del comportament de les persones usuàries del web i
-    que permeten mesurar l’activitat de la usuària o usuari, i elaborar perfils de
-    navegació amb l’objectiu de millorar els llocs web.
+    que permeten mesurar l’activitat de la usuària i elaborar perfils de navegació
+    amb l’objectiu de millorar els llocs web.
   ADVERTISING_COOKIES: Cookies publicitàries
   ADVERTISING_COOKIES_DESCRIPTION: Les cookies publicitàries permeten la gestió dels
     espais publicitaris del web. A més, aquestes cookies poden ser de publicitat personalitzada
