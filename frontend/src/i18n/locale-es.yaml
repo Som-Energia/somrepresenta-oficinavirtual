@@ -257,25 +257,24 @@ COOKIES_POLICY:
   TECHNICAL_COOKIES: Cookies técnicas
   TECHNICAL_COOKIES_DESCRIPTION: Las cookies técnicas son aquellas que facilitan la
     navegación de la persona usuaria y la utilización de las diferentes opciones o
-    servicios que ofrece la web, como por ejemplo identificar la sesión, permitir
-    el acceso a determinadas áreas, facilitar pedidos, compras, rellenar formularios,
-    inscripciones , seguridad, facilitar funcionalidades (vídeos, redes sociales,...).
+    servicios que ofrece la web, por ejemplo identificar la sesión, permitir el acceso
+    a determinadas áreas, facilitar pedidos, compras, rellenar formularios, inscripciones,
+    seguridad o facilitar funcionalidades (vídeos, redes sociales...).
   CUSTOMIZATION_COOKIES: Cookies de personalización
   CUSTOMIZATION_COOKIES_DESCRIPTION: Las cookies de personalización permiten al usuario
-    acceder a los servicios según sus preferencias (lengua, navegador, configuración,...).
+    acceder a los servicios según sus preferencias (lengua, navegador, configuración...).
   ANALYTICS_COOKIES: Cookies analíticas
   ANALYTICS_COOKIES_DESCRIPTION: Las cookies de análisis son las utilizadas para llevar
     a cabo el análisis anónimo del comportamiento de las personas usuarias de la web
-    y que permiten medir la actividad de la usuaria o usuario, y elaborar perfiles
-    de navegación con el objetivo de mejorar los sitios web.
+    y que permiten medir la actividad de la usuaria y elaborar perfiles de navegación
+    con el objetivo de mejorar los sitios web.
   ADVERTISING_COOKIES: Cookies publicitarias
   ADVERTISING_COOKIES_DESCRIPTION: Las cookies publicitarias permiten la gestión de
-    los espacios publicitarios de la web. Además, estas cookies pueden ser de publicidad
-    personalizada y permitir así la gestión de los espacios publicitarios de la web
-    en base al comportamiento y los hábitos de navegación de la usuaria o usuario,
-    de donde se obtiene el perfil, y permiten personalizar la publicidad que se muestra
-    en el navegador de la persona usuaria, u otros perfiles y redes sociales del usuario
-    o usuaria.
+    los espacios publicitarios del web. Además, estas cookies pueden ser de publicidad
+    personalizada, de manera que permiten la gestión de los espacios publicitarios
+    de la web a partir del comportamiento y los hábitos de navegación de la usuaria.
+    De ahí se obtiene el perfil y se permite personalizar la publicidad que se muestra
+    en el navegador, u otros perfiles y redes sociales de la usuaria.
   SESSION_COOKIES: Cookies de sesión
   SESSION_COOKIES_DESCRIPTION: Las cookies de sesión son aquellas que duran el tiempo
     que la persona usuaria está navegando por la página web y se borran cuando se
