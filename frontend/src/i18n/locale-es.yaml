@@ -107,7 +107,7 @@ VERSION_CHECKER:
     Se recargará la aplicación para evitar posibles problemas
 
   RELOADING_IN: Recargando en {{seconds}} segundos
-  RELOADING: Recargando...
+  RELOADING: Recargando…
   RELOAD_NOW: Recarga ya
 INSTALLATIONS:
   INSTALLATIONS_TITLE: Instalaciones
@@ -259,10 +259,10 @@ COOKIES_POLICY:
     navegación de la persona usuaria y la utilización de las diferentes opciones o
     servicios que ofrece la web, por ejemplo identificar la sesión, permitir el acceso
     a determinadas áreas, facilitar pedidos, compras, rellenar formularios, inscripciones,
-    seguridad o facilitar funcionalidades (vídeos, redes sociales...).
+    seguridad o facilitar funcionalidades (vídeos, redes sociales…).
   CUSTOMIZATION_COOKIES: Cookies de personalización
   CUSTOMIZATION_COOKIES_DESCRIPTION: Las cookies de personalización permiten al usuario
-    acceder a los servicios según sus preferencias (lengua, navegador, configuración...).
+    acceder a los servicios según sus preferencias (lengua, navegador, configuración…).
   ANALYTICS_COOKIES: Cookies analíticas
   ANALYTICS_COOKIES_DESCRIPTION: Las cookies de análisis son las utilizadas para llevar
     a cabo el análisis anónimo del comportamiento de las personas usuarias de la web
@@ -277,37 +277,37 @@ COOKIES_POLICY:
     en el navegador, u otros perfiles y redes sociales de la usuaria.
   SESSION_COOKIES: Cookies de sesión
   SESSION_COOKIES_DESCRIPTION: Las cookies de sesión son aquellas que duran el tiempo
-    que la persona usuaria está navegando por la página web y se borran cuando se
-    cierra el navegador.
+    que la persona usuaria está navegando por el sitio web y se borran cuando se cierra
+    el navegador.
   PERSISTENT_COOKIES: Cookies persistentes
   PERSISTENT_COOKIES_DESCRIPTION: Estas cookies quedan almacenadas en el terminal
-    de la usuaria o usuario hasta que son eliminadas manualmente o termine el período
-    de duración establecido para esta cookie.
+    de la usuaria hasta que se eliminan manualmente o termina su periodo de duración
+    establecido.
   OWN_COOKIES: Cookies propias
-  OWN_COOKIES_DESCRIPTION: Aquellas que se envíen al equipo terminal del usuario o
-    usuaria desde un equipo o dominio gestionado por el propio editor o editora y
-    desde el que se presta el servicio solicitado por el usuario.
+  OWN_COOKIES_DESCRIPTION: Aquellas que se envían al equipo terminal de la usuaria
+    desde un equipo o dominio gestionado por la misma persona editora y desde el que
+    se presta el servicio solicitado por la usuaria.
   THIRDPARTY_COOKIES: Cookies de terceros
-  THIRDPARTY_COOKIES_DESCRIPTION: Aquellas que se envíen al equipo terminal de la
-    persona usuaria desde un equipo o dominio que no es gestionado por el editor o
-    editora, sino por otra entidad que trata los datos obtenidos mediante las cookies.
+  THIRDPARTY_COOKIES_DESCRIPTION: Aquellas que se envían al equipo terminal de la
+    usuaria desde un equipo o dominio que no es gestionado por la persona editora,
+    sino por otra entidad que trata los datos obtenidos mediante las cookies.
   BASIC: BÁSICAS
-  BASIC_DESCRIPTION: Cookies Técnicas propias y de sesión.
+  BASIC_DESCRIPTION: Cookies técnicas propias y de sesión.
   PERFORMANCE: RENDIMIENTO
-  PERFORMANCE_DESCRIPTION: Cookies Técnicas propias y persistentes. Cookies de Personalización
+  PERFORMANCE_DESCRIPTION: Cookies técnicas propias y persistentes. Cookies de personalización
     propias o de terceros, de sesión o persistentes.
   STATISTICS: ESTADÍSTICA
-  STATISTICS_DESCRIPTION: Cookies Analíticas y Publicitarias persistentes, propias
+  STATISTICS_DESCRIPTION: Cookies analíticas y publicitarias persistentes, propias
     y de terceros.
   FUNCTIONALITY: FUNCIONALIDAD
-  FUNCTIONALITY_DESCRIPTION: Cookies Técnicas de terceros, de sesión o persistentes.
+  FUNCTIONALITY_DESCRIPTION: Cookies técnicas de terceros, de sesión o persistentes.
   CHROME_DESACTIVATE_COOKIES: Configuración > Mostrar opciones avanzades > Privacidad
     > Configuración de contenido
   FIREFOX_DESACTIVATE_COOKIES: Herramientas > Opciones > Privacidad > Historial >
-    Configuración personalizada.
+    Configuración personalizada
   EXPLORER_DESACTIVATE_COOKIES: Herramientas > Opciones de Internet > Privacidad >
     Configuración
   OPERA_DESACTIVATE_COOKIES: Herramientas > Preferencias > Editar Preferencias > Cookies
-  SAFARI_DESACTIVATE_COOKIES: Preferencias > Seguridad.
-  EDGE_DESACTIVATE_COOKIES: Configuración > Véase configuración avanzada > Privacidad
-    y servicios > Cookies.
+  SAFARI_DESACTIVATE_COOKIES: Preferencias > Seguridad
+  EDGE_DESACTIVATE_COOKIES: Configuración > Configuración avanzada > Privacidad y
+    servicios > Cookies
