@@ -56,7 +56,7 @@ describe('transformContractDetails', () => {
     }
     const result = transformContractDetails(contractData)
     expect(result['representation_type']).toEqual(
-      'Indirecta a Mercado y Directa ante la CNMC',
+      'Indirecta a mercado y directa ante la CNMC',
     )
   })
 
@@ -66,7 +66,7 @@ describe('transformContractDetails', () => {
     }
     const result = transformContractDetails(contractData)
     expect(result['representation_type']).toEqual(
-      'Indirecta a Mercado y Indirecta ante la CNMC',
+      'Indirecta a mercado e indirecta ante la CNMC',
     )
   })
 })
@@ -85,12 +85,12 @@ describe('transformInstallationDetails', () => {
     const result = transformInstallationDetails(contractData)
     expect(result['technology']).toEqual('-')
   })
-  it('technology, replace PV by Fotovoltáica', () => {
+  it('technology, replace PV by Fotovoltaica', () => {
     const contractData = {
       technology: 'b11',
     }
     const result = transformInstallationDetails(contractData)
-    expect(result['technology']).toEqual('Fotovoltáica')
+    expect(result['technology']).toEqual('Fotovoltaica')
   })
   it('technology, replace H by Hidroeléctrica', () => {
     const contractData = {
