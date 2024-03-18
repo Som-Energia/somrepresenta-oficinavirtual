@@ -13,7 +13,7 @@ const idle = 'idle'
 const done = 'done'
 const inprogress = 'inprogress'
 
-export default function DownloadButton({ context, title }) {
+export default function DownloadButton({ context, title, size='small' }) {
   const { t } = useTranslation()
   const [state, setState] = React.useState(idle)
   const [error, setError] = React.useState(undefined)
@@ -50,15 +50,15 @@ export default function DownloadButton({ context, title }) {
 
   return (
     <Tooltip title={tooltip} sx={{ backgroundColor: color }}>
-      <IconButton size="small" onClick={handleClick} {...{ color }}>
+      <IconButton size={size} onClick={handleClick} {...{ color }}>
         {state === idle ? (
-          <PictureAsPdfIcon />
+          <PictureAsPdfIcon fontSize="inherit"/>
         ) : state == inprogress ? (
-          <CircularProgress size={24} />
+          <CircularProgress size={size==='small'?18:24} />
         ) : error ? (
-          <ErrorIcon />
+          <ErrorIcon  fontSize="inherit"/>
         ) : (
-          <CheckIcon />
+          <CheckIcon fontSize="inherit" />
         )}
       </IconButton>
     </Tooltip>
