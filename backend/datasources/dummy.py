@@ -338,7 +338,7 @@ def zip_content(invoice_numbers):
                 src=html,
                 dest=output,
             )
-            zipfile_.writestr(invoice_number, output.getvalue())
+            zipfile_.writestr(f"{invoice_number}.pdf", output.getvalue())
 
     zipfile_.close()
             
