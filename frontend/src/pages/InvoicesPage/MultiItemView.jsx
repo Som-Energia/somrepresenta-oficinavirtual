@@ -5,11 +5,11 @@ import { useTheme } from '@mui/material/styles'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import TableEditor from '../../components/TableEditor'
-import ListEditor from './ListEditor'
+import ItemListView from './ItemListView'
 
 /**
 Provides responsive interaction with a list of objects.
-Uses a TableEditor for large screen formats and a ListEditor for smaller ones.
+Uses a TableEditor for large screen formats and a ItemListView for smaller ones.
 */
 export default function MultiDataEditor({
   title,
@@ -30,7 +30,7 @@ export default function MultiDataEditor({
   const useList = useMediaQuery(theme.breakpoints.down(tableBreakPoint))
   if (useList)
     return (
-      <ListEditor
+      <ItemListView
         title={title}
         rows={rows}
         columns={columns}

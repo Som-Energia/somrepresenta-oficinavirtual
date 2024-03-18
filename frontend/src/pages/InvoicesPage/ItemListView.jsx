@@ -10,14 +10,14 @@ import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
 
 /**
- Generic item editor using a list widget.
+ Generic multiple item view using a list widget.
 
  TODO: Achieve feature parity with TableEditor
  - noDataPlaceHolder
  - selectionActions
  - isLoading
 */
-export default function ListEditor({
+export default function ItemListView({
   title,
   rows,
   columns,

@@ -25,7 +25,7 @@ import ErrorSplash from '../../components/ErrorSplash'
 import { useAuth } from '../../components/AuthProvider'
 import DownloadButton from './DownloadButton'
 import DownloadZipButton from './DownloadZipButton'
-import MultiDataEditor from './MultiDataEditor'
+import MultiItemView from './MultiItemView'
 
 import ovapi from '../../services/ovapi'
 import format from '../../services/format'
@@ -253,7 +253,7 @@ export default function InvoicesPage() {
   return (
     <Container>
       <PageTitle Icon={DescriptionIcon}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
-      <MultiDataEditor
+      <MultiItemView
         title={t('INVOICES.TABLE_TITLE', { n: rows.length })}
         defaultPageSize={12}
         pageSizes={[]}
