@@ -24,7 +24,6 @@ import Loading from '../../components/Loading'
 import ErrorSplash from '../../components/ErrorSplash'
 import { useAuth } from '../../components/AuthProvider'
 import DownloadButton from './DownloadButton'
-import DownloadZipButton from './DownloadZipButton'
 import MultiItemView from './MultiItemView'
 
 import ovapi from '../../services/ovapi'
@@ -220,7 +219,13 @@ export default function InvoicesPage() {
       title: t('INVOICES.TOOLTIP_DOWNLOAD_ZIP'),
       icon: <DownloadIcon />,
       view: (invoices) => (
-        <DownloadZipButton context={invoices} title={t('INVOICES.TOOLTIP_DOWNLOAD_ZIP')} />
+        <DownloadButton
+          size={'large'}
+          context={invoices}
+          Icon={DownloadIcon}
+          title={t('INVOICES.TOOLTIP_DOWNLOAD_ZIP')}
+          action={(invoices) => ovapi.invoicesZip(invoices)}
+        />
       ),
     },
   ]
@@ -232,7 +237,9 @@ export default function InvoicesPage() {
         <DownloadButton
           size={useList ? 'large' : 'small'}
           context={invoice}
+          Icon={PictureAsPdfIcon}
           title={t('INVOICES.TOOLTIP_PDF')}
+          action={(invoice) => ovapi.invoicePdf(invoice.invoice_number)}
         />
       ),
     },
