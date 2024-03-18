@@ -6,6 +6,7 @@
 - New widget: ListEditor (mobile)
 - New widget: MultiDataEditor (responsive, choses between a TableEditor or a ListEditor)
 - Production page: Added a button to download data as csv
+- Invoice page: Downloading selected invoices as a zip of pdf's
 - Fix: Production data: Convert to string dates sent to erp
 
 ## 0.6.0 (2024-02-14)
