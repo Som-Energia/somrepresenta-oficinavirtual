@@ -31,32 +31,26 @@ import format from '../../services/format'
 import messages from '../../services/messages'
 //import dummyData from '../../data/dummyinvoices.yaml'
 
-const paymentColors = {
-  paid: 'success.main',
-  unpaid: 'error.main',
-  open: 'warning.main',
+function paymentColor(paymentStatus) {
+  return {
+    paid: 'success.main',
+    unpaid: 'error.main',
+    open: 'warning.main',
+  }[paymentStatus] || 'warning.main'
 }
 
-const paymentIcons = {
-  paid: DoneIcon,
-  unpaid: ClearIcon,
-  open: ScheduleIcon,
+function paymentIcon(paymentStatus) {
+  return {
+    paid: DoneIcon,
+    unpaid: ClearIcon,
+    open: ScheduleIcon,
+  }[paymentStatus] || ScheduleIcon
 }
 
-function PaymentStatus({ payment_status }) {
+function PaymentStatus({ paymentStatus }) {
   const { t } = useTranslation()
-  const color =
-    {
-      paid: 'success.main',
-      unpaid: 'error.main',
-      open: 'warning.main',
-    }[payment_status] || 'warning.main'
-  const Icon =
-    {
-      paid: DoneIcon,
-      unpaid: ClearIcon,
-      open: ScheduleIcon,
-    }[payment_status] || ScheduleIcon
+  const color = paymentColor(paymentStatus)
+  const Icon = paymentIcon(paymentStatus)
   const payment_status_options = {
     paid: t('INVOICES.PAID_STATUS_OPTION_PAID_VERBOSE'),
     unpaid: t('INVOICES.PAID_STATUS_OPTION_UNPAID_VERBOSE'),
@@ -65,12 +59,12 @@ function PaymentStatus({ payment_status }) {
   return (
     <>
       {
-        //format.enumeration(payment_status, payment_status_options)
+        //format.enumeration(paymentStatus, payment_status_options)
       }
       <Icon
         sx={{ color, verticalAlign: 'middle' }}
         {...{
-          'aria-description': format.enumeration(payment_status, payment_status_options),
+          'aria-description': format.enumeration(paymentStatus, payment_status_options),
         }}
       />
     </>
@@ -85,20 +79,10 @@ function ContentRow({ children, ...props }) {
   )
 }
 
-function PaymentStatusCell({ payment_status }) {
+function PaymentStatusCell({ paymentStatus }) {
   const { t } = useTranslation()
-  const color =
-    {
-      paid: 'success.main',
-      open: 'warning.main',
-      unpaid: 'error.main',
-    }[payment_status] || 'warning.main'
-  const Icon =
-    {
-      paid: DoneIcon,
-      open: RestartAltIcon,
-      unpaid: ClearIcon,
-    }[payment_status] || RestartAltIcon
+  const color = paymentColor(paymentStatus)
+  const Icon = paymentIcon(paymentStatus)
   const payment_status_options = {
     paid: t('INVOICES.PAID_STATUS_OPTION_PAID'),
     open: t('INVOICES.PAID_STATUS_OPTION_OPEN'),
@@ -107,13 +91,13 @@ function PaymentStatusCell({ payment_status }) {
   return (
     <>
       <Icon sx={{ color, verticalAlign: 'middle' }} />
-      {format.enumeration(payment_status, payment_status_options)}
+      {format.enumeration(paymentStatus, payment_status_options)}
     </>
   )
 }
 
 PaymentStatusCell.propTypes = {
-  payment_status: PropTypes.oneOf(['paid', 'open', 'unpaid']).isRequired,
+  paymentStatus: PropTypes.oneOf(['paid', 'open', 'unpaid']).isRequired,
 }
 
 export default function InvoicesPage() {
@@ -210,7 +194,7 @@ export default function InvoicesPage() {
       label: t('INVOICES.COLUMN_PAID_STATUS'),
       searchable: false,
       numeric: false,
-      view: (invoice) => <PaymentStatusCell payment_status={invoice.payment_status} />,
+      view: (invoice) => <PaymentStatusCell paymentStatus={invoice.payment_status} />,
     },
   ]
   const actions = []
@@ -275,14 +259,13 @@ export default function InvoicesPage() {
           const Icon = concept_icons[invoice.concept] || React.Fragment
           return <Icon />
         }}
-        itemHeader={(invoice) => [[
-          `Factura ${invoice.invoice_number}`,
-          `${format.euros(invoice.amount)}`,
-        ]]}
+        itemHeader={(invoice) => [
+          [`Factura ${invoice.invoice_number}`, `${format.euros(invoice.amount)}`],
+        ]}
         itemBody={(invoice) => [
           [
             `${format.date(invoice.emission_date)}`,
-            <PaymentStatus payment_status={invoice.payment_status} />,
+            <PaymentStatus paymentStatus={invoice.payment_status} />,
           ],
           `${t('INVOICES.COLUMN_CONTRACT')}: ${invoice.contract_number}`,
           `${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(invoice.concept, concept_options)}`,
