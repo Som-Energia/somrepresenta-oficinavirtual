@@ -62,6 +62,17 @@ jobs:
           parallel: true
           flag-name: Unit tests
 
+      - name: Google Chat Notification
+        uses: jchrist/google-chat-github-action@v1
+        if: failure()
+        with:
+          name: Build
+          url: ${{ secrets.WEBHOOK_ALERTES_WEBAPPS }}
+          status: ${{ job.status }}
+        # this allows the build to succeed even when the notification fails
+        # e.g. due to dependabot push, which may not have the secret
+        continue-on-error: true
+
   coveralls_finish:
     needs: build
     runs-on: ubuntu-latest
