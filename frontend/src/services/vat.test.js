@@ -18,4 +18,7 @@ describe('vat-nif conversion test', () => {
   it('if falsable return null', () => {
     expect(vat2nif(false)).toBe(null)
   })
+  it('REMOVEME ITS JUT FOR TESTING CI', () => {
+    expect(false).toBe(true)
+  })
 })
