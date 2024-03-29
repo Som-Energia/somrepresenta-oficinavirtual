@@ -13,6 +13,7 @@ import RoomServiceIcon from '@mui/icons-material/RoomService'
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
 import DownloadIcon from '@mui/icons-material/Download'
 import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import DoneIcon from '@mui/icons-material/Done'
@@ -226,6 +227,25 @@ export default function InvoicesPage() {
     },
   ]
   const itemActions = [
+    {
+      title: t('INVOICES.TOOLTIP_PAY_INVOICE'),
+      icon: <CreditCardIcon />,
+      view: (invoice) => (
+        <Tooltip title={t('INVOICES.TOOLTIP_PAY_INVOICE')}
+        >
+          <IconButton
+            disabled={!isPaymentEnabled || invoice.payment_status!=="open"}
+            onClick={(ev)=>{
+              messages.warn(t("INVOICES.PAYMENT_NOT_YET_AVAILABLE"))
+              ev.stopPropagation()
+            }}
+            size={isSm?"large":"small"}
+          >
+            <CreditCardIcon fontSize='inherit'/>
+          </IconButton>
+        </Tooltip>
+      ),
+    },
     {
       title: t('INVOICES.TOOLTIP_PDF'),
       icon: <PictureAsPdfIcon />,
