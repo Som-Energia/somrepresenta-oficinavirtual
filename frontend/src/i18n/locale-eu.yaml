@@ -234,7 +234,7 @@ COOKIES_POLICY:
     cookieen informazioa eta deskribapena jasotzen dituen taula hau prestatu du.
   SOM_COOKIES: SOM ENERGIAk konexioaren, gailuaren eta nabigazio-ohituren gaineko
     datuak tratatzen dituzten cookie teknikoak, pertsonalizazio-cookieak, analisi-cookieak
-    eta publizitate-cookieak, propioak eta besterenak, erabiltzen ditu estatistika-
+    eta publizitate-cookieak, propioak eta hirugarrenenak, erabiltzen ditu estatistika-
     eta publizitate-helburuetarako.
   SOM_COOKIES_EXPLANATION: Horregatik, gure webgunean sartzean, Gizarte Zerbitzuen
     Legearen 22. artikulua betez, cookieak erabiltzeko baimena eskatu dizugu. Gure
@@ -249,3 +249,56 @@ COOKIES_POLICY:
   DEACTIVATE_COOKIES_TABLE: Nolanahi ere, jakinarazten dizugu cookieak aktibatu edo
     desaktibatu ditzakezula zure Internet-nabigatzailearen jarraibideak betez.
   TECHNICAL_COOKIES: Cookie teknikoak
+  PERSISTENT_COOKIES: Cookie iraunkorrak
+  PERSISTENT_COOKIES_DESCRIPTION: Cookie hauek erabiltzailearen terminalean gordeta
+    gelditzen dira eskuz ezabatzen diren arte edo haien iraunaldia amaitzen den arte.
+  OWN_COOKIES: Cookie propioak
+  BASIC_DESCRIPTION: Cookie tekniko propioak eta saiokoak.
+  STATISTICS: ESTATISTIKA
+  STATISTICS_DESCRIPTION: Analisi- eta publizitate-cookie iraunkorrak, propioak eta
+    hirugarrenenak.
+  FUNCTIONALITY: FUNTZIONALITATEA
+  FIREFOX_DESACTIVATE_COOKIES: Tresnak > Aukerak > Pribatutasuna > Historia > Konfigurazio
+    pertsonalizatua
+  OPERA_DESACTIVATE_COOKIES: Tresnak > Lehenespenak > Editatu lehenespenak > Cookieak
+  SAFARI_DESACTIVATE_COOKIES: Lehenespenak > Segurtasuna
+  CUSTOMIZATION_COOKIES: Pertsonalizazio-cookieak
+  ANALYTICS_COOKIES: Analisi-cookieak
+  SESSION_COOKIES_DESCRIPTION: Saioko cookieek erabiltzailea webgunean nabigatzen
+    ari den bitartean irauten dute eta nabigatzailea ixten denean ezabatzen dira.
+  OWN_COOKIES_DESCRIPTION: Editoreak berak kudeatzen duen eta erabiltzaileak eskatutako
+    zerbitzua ematen duen ekipo edo domeinu batetik erabiltzailearen terminalera bidaltzen
+    diren cookieak dira.
+  THIRDPARTY_COOKIES_DESCRIPTION: Editoreak berak ez baina cookieen bidez lortutako
+    datuak tratatzen dituen beste erakunde batek kudeatzen duen ekipo edo domeinu
+    batetik erabiltzailearen terminalera bidaltzen diren cookieak dira.
+  PERFORMANCE_DESCRIPTION: Cookie tekniko propio eta iraunkorrak. Pertsonalizazio-cookie
+    propioak edo hirugarrenenak, saiokoak edo iraunkorrak.
+  FUNCTIONALITY_DESCRIPTION: Hirugarrenen cookie teknikoak, saiokoak edo iraunkorrak.
+  CHROME_DESACTIVATE_COOKIES: Konfigurazioa > Erakutsi ezarpen aurreratuak > Pribatutasuna
+    > Edukiaren konfigurazioa
+  EXPLORER_DESACTIVATE_COOKIES: Tresnak > Interneteko aukerak > Pribatutasuna > Konfigurazioa
+  EDGE_DESACTIVATE_COOKIES: Konfigurazioa > Konfigurazio aurreratua > Pribatutasuna
+    eta zerbitzuak > Cookieak
+  CUSTOMIZATION_COOKIES_DESCRIPTION: Pertsonalizazio-cookieek erabiltzaileari zerbitzuak
+    bere lehenespenen (hizkuntza, nabigatzailea, konfigurazioa eta abar) arabera atzitzeko
+    aukera ematen diote.
+  TECHNICAL_COOKIES_DESCRIPTION: Cookie teknikoek erabiltzailearen nabigazioa eta
+    webguneak eskaintzen dituen aukera edo zerbitzuen erabilera errazten dute, adibidez,
+    saioa identifikatzea, atal jakin batzuetan sartzea, eskaerak edo erosketak egitea,
+    formularioak betetzea, izena ematea, segurtasuna edo funtzionalitateak (bideoak,
+    sare sozialak eta abar) erraztea.
+  ANALYTICS_COOKIES_DESCRIPTION: Analisi-cookieak webguneko erabiltzaileen portaeraren
+    analisi anonimoa egiteko erabiltzen dira. Webguneak hobetzeko helburuaz, erabiltzaileen
+    jarduera neurtzeko eta nabigazio-profilak sortzeko balio dute.
+  ADVERTISING_COOKIES: Publizitate-cookieak
+  ADVERTISING_COOKIES_DESCRIPTION: Publizitate-cookieek webguneko publizitate-espazioen
+    kudeaketa ahalbidetzen dute. Gainera, publizitate pertsonalizatuko cookieak izan
+    daitezke, webguneko publizitate-espazioak erabailtzailearen portaeraren eta nabigazio-ohituren
+    arabera kudeatzeko moduan. Horren arabera profila sortzen da eta nabigatzailean,
+    beste profil batzuetan eta erabiltzailearen sare sozialetan agertzen den publizitatea
+    pertsonalizatu daiteke.
+  SESSION_COOKIES: Saioko cookieak
+  THIRDPARTY_COOKIES: Hirugarrenen cookieak
+  BASIC: BASIKOAK
+  PERFORMANCE: ERRENDIMENDUA
