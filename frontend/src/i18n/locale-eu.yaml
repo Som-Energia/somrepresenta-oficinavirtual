@@ -32,8 +32,8 @@ INSTALLATIONS:
   NO_INSTALLATIONS: Ez da aurkitu instalaziorik
 INSTALLATION_DETAIL:
   DETAILS_TITLE: Xehetasunak
-  INSTALLATION_DETAILS_TITLE: Instalazioaren gaineko informazioa
-  CONTRACT_DETAILS_TITLE: Kontratuaren gaineko informazioa
+  INSTALLATION_DETAILS_TITLE: Instalazioaren xehetasunak
+  CONTRACT_DETAILS_TITLE: Kontratuaren xehetasunak
   ADDRESS: Helbidea
   CITY: Udalerria
   CONTRACT_NUMBER: Kontratu-zenbakia
@@ -45,8 +45,13 @@ INSTALLATION_DETAIL:
   RATED_POWER: Potentzia nominala
   TECHNOLOGY: Teknologia
   CIL: CIL
+  TYPE: Instalazio-kode estandarra
+  BACK_TO_INSTALLATIONS: Itzuli instalazio-zerrendara
+  TECHNOLOGY_HYDRO: Hidroelektrikoa
+  TECHNOLOGY_WIND: Eolikoa
+  TECHNOLOGY_PHOTOVOLTAIC: Fotovoltaikoa
 CONTRACT_DETAIL:
-  CONTRACT_DETAILS_TITLE: Kontratuaren gaineko informazioa
+  CONTRACT_DETAILS_TITLE: Kontratuaren xehetasunak
   BILLING_MODE: Fakturazio-modua
   COST_DEVIATION: Desbideraketen kostua
   DISCHARGE_DATE: Alta-data
@@ -54,19 +59,79 @@ CONTRACT_DETAIL:
   PROXY_FEE: Ordezkaritza-zerbitzuaren ordainsaria
   REPRESENTATION_TYPE: Ordezkaritza-mota
   STATUS: Kontratuaren egoera
+  COST_DEVIATION_INCLUDED: Barne
+  BILLING_MODE_ATR: ATR
+  REPRESENTATION_TYPE_DIRECT: Zeharkakoa merkatuan eta zuzena CNMC batzordean
+  REDUCTION_DEVIATION: Desbideraketen murrizketa zorro-efektua dela eta
+  BILLING_MODE_INDEX: Indexatua
+  COST_DEVIATION_NOT_INCLUDED: Kanpo
+  REPRESENTATION_TYPE_INDIRECT: Zeharkakoa bai merkatuan bai CNMC batzordean
+  CONTRACT_STATUS_DRAFT: Zirriborroa
+  CONTRACT_STATUS_VALIDATION: Baliozkotzen
+  CONTRACT_STATUS_PENDING: Zain
+  CONTRACT_STATUS_ACTIVE: Aktibo
+  CONTRACT_STATUS_CANCELLED: Bertan behera
+  CONTRACT_STATUS_ACTIVATION: Aktibazio-prozesua
+  CONTRACT_STATUS_NEW_CONTRACT: Kontratu berria egiteko prozesua
+  CONTRACT_STATUS_MODIFICATION: Kontratu-aldaketa
+  CONTRACT_STATUS_UNPAID: Ez ordaintzea
+  CONTRACT_STATUS_CUT: Etena
+  CONTRACT_STATUS_ENDED: Baja
 INVOICES:
   INVOICES_TITLE: Fakturak
-  TABLE_TITLE: '{{n}} fakturak'
+  TABLE_TITLE: '{{n}} faktura'
   COLUMN_PERIOD: Denboraldia
   COLUMN_AMOUNT: Zenbatekoa
   COLUMN_LIQUIDATION: Likidazioa
   CONCEPT_OPTION_MARKET: Merkatua
   CONCEPT_OPTION_SPECIFIC_RETRIBUTION: Ordainsari espezifikoa
   CONCEPT_OPTION_SERVICES: Zerbitzuak
+  PAID_STATUS_OPTION_OPEN_VERBOSE: Aribidean
+  PAID_STATUS_OPTION_UNPAID_VERBOSE: Ez ordainduta
+  COLUMN_PAID_STATUS: Ordainduta
+  TOOLTIP_DOWNLOAD_ZIP: Deskargatu hautatutako PDFak ZIP batean
+  NO_INVOICES: Ez da aurkitu fakturarik
+  RELOAD: Berriz ere kargatzea
+  DOWNLOAD_TOOLTIP_DOWNLOAD: Deskargatzea
+  DOWNLOAD_TOOLTIP_ONGOING: Aribidean
+  PAID_STATUS_OPTION_PAID: Bai
+  PAID_STATUS_OPTION_OPEN: Aribidean
+  PAID_STATUS_OPTION_UNPAID: Ez
+  DOWNLOAD_TOOLTIP_SUCCESS: Deskarga amaitu da
+  COLUMN_CONCEPT: Kontzeptua
+  COLUMN_EMITTED: Igorrita
+  TOOLTIP_PDF: Deskargatu PDFn
+  PAID_STATUS_OPTION_PAID_VERBOSE: Ordainduta
+  COLUMN_INVOICE_NUMBER: Faktura
+  COLUMN_CONTRACT: Kontratua
 PRODUCTION:
-  PRODUCTION_TITLE: Ekoizpen
-  LEGEND_PRODUCTION: Ekoizpen (kWh)
+  PRODUCTION_TITLE: Ekoizpena
+  LEGEND_PRODUCTION: Ekoizpena (kWh)
   LEGEND_FORESEEN: Aurreikuspena (kWh)
+  PERIOD_MONTHLY: Hilekoa
+  PERIOD_YEARLY: Urtekoa
+  CSV_COLUMN_UTC_OFFSET: UTC (h) diferentzia
+  CSV_COLUMN_FORESEEN: Aurreikuspena (kWh)
+  CSV_COLUMN_MEASURE: Ekoizpena (kWh)
+  LABEL_PLOT_STYLE: Grafiko-estiloa
+  STYLE_BAR: Barrak
+  STYLE_LINE: Lerroak
+  MATURITY_HC: Amaierako behin betikoa (HC)
+  CSV_COLUMN_CONTRACT_NUMBER: Kontratu-zenbakia
+  CSV_COLUMN_CIL: CIL
+  CSV_COLUMN_INSTALL_NAME: Instalazioaren izena
+  CSV_COLUMN_DATETIME: Eguna/ordua
+  CSV_COLUMN_MATURITY: Heldutasuna
+  CSV_COLUMN_ESTIMATED: Neurketa-mota
+  CSV_VALUE_ESTIMATED: Gutxi gorabeherakoa
+  CSV_VALUE_REAL: Erreala
+  MATURITY_H2: Hasierako behin-behinekoa (H2)
+  MATURITY_H3: Erdiko behin-behinekoa (H3)
+  MATURITY_HP: Amaierako behin-behinekoa (HP)
+  LABEL_CONTRACT: Kontratua
+  LABEL_PERIOD: Denbora-tartea
+  PERIOD_DIARY: Egunekoa
+  PERIOD_WEEKLY: Astekoa
 LOGIN:
   UNABLE_TO_LOGIN: Ezin izan da baliozkotu
   USERNAME_LABEL: Erabiltzailea
@@ -150,3 +215,37 @@ OVAPI:
   CONTEXT_LOGIN: Errore bat gertatu da nortasuna baliozkotzean
   CONTEXT_HIJACK: Errore bat gertatu da erabiltzailea ordezkatzean
   CONTEXT_INSTALLATIONS: Errore bat gertatu da instalazio-zerrenda sortzean
+  CONTEXT_INVOICES: Errore bat gertatu da fakturen zerrenda sortzean
+  CONTEXT_INSTALLATION_DETAILS: Errore bat gertatu da instalazioaren xehetasunak zehaztean
+  CONTEXT_SIGNING_DOCUMENT: Errore bat gertatu da baldintzak onartzean
+  CONTEXT_INVOICE_PDF_DOWNLOAD: Errore bat gertatu da {{invoice}} faktura deskargatzean
+  ERR_UNABLE_TO_SIGN_DOCUMENT: Ezin izan da sinatu dokumentua
+  ERR_GATEWAY: Sistema ez dago erabilgarri mantentze-lanak direla eta. Saiatu geroago.
+  ERR_NETWORK: Ezin da aurkitu zerbitzaria. Sarera konektatuta zaude?
+  ERR_INTERNAL: 'Ustekabeko errore bat gertatu da zerbitzarian. Erreferentzia: {{reference}}.'
+  CONTEXT_INVOICES_ZIP_DOWNLOAD: Errore bat gertatu da {{invoice_numbers}} fakturen
+    zipa deskargatzean
+COOKIES_POLICY:
+  TITLE: Cookieen politika
+  SUBTITLE: Nola erabiltzen ditugu cookieak?
+  TABLE_COOKIES_CLASSIFICATION: Cookieak hainbat parametroren arabera sailkatu daitezke,
+    hots, funtzioa, titulartasuna eta epeak. Sailkapen horri jarraituz eta ahalik
+    eta informazio gardenena emateko, SOM ENERGIAk sailkapen horren arabera erabilitako
+    cookieen informazioa eta deskribapena jasotzen dituen taula hau prestatu du.
+  SOM_COOKIES: SOM ENERGIAk konexioaren, gailuaren eta nabigazio-ohituren gaineko
+    datuak tratatzen dituzten cookie teknikoak, pertsonalizazio-cookieak, analisi-cookieak
+    eta publizitate-cookieak, propioak eta besterenak, erabiltzen ditu estatistika-
+    eta publizitate-helburuetarako.
+  SOM_COOKIES_EXPLANATION: Horregatik, gure webgunean sartzean, Gizarte Zerbitzuen
+    Legearen 22. artikulua betez, cookieak erabiltzeko baimena eskatu dizugu. Gure
+    atariaren bidez datu pertsonalak emateko eta cookieen erabilera onartzeko, gutxienez,
+    18 urte izan behar dituzu eta gure Pribatutasun-politika berariaz onartu behar
+    duzu.
+  PURPOSE: Helburuaren arabera
+  TERM: Epearen arabera
+  OWNERSHIP: Titularraren arabera
+  TABLE_DESCRIPTION: Taula honetan webguneak erabiltzen dituen cookieak sailkatzen
+    eta deskribatzen dira, zure nabigatzailean erraz identifikatu ditzazun
+  DEACTIVATE_COOKIES_TABLE: Nolanahi ere, jakinarazten dizugu cookieak aktibatu edo
+    desaktibatu ditzakezula zure Internet-nabigatzailearen jarraibideak betez.
+  TECHNICAL_COOKIES: Cookie teknikoak
