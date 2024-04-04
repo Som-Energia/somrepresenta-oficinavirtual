@@ -9,14 +9,27 @@ APP_FRAME:
   APPLICATION_TITLE: Bulego Birtuala
   GO_HOME: Itzuli hasierara
   PAGE_COMPONENT_TEST: Testing
-  PAGE_NOT_FOUND: Ez da aurkitu orria
+  PAGE_NOT_FOUND: Ez da aurkitu orrialdea
+  CONTRIBUTE_TRANSLATIONS: Lagundu itzultzen
+  NOT_YET_IMPLEMENTED: Orrialde hau ez dago eskuragarri oraindik
+  PROFILE_TOOLTIP: Profila
+  MENU_CHANGE_PASSWORD: Aldatu pasahitza
+  MENU_PROFILE: Profila
+  MENU_LOGOUT: Irten
+  CHOOSE_USER: Aukeratu erabiltzaile bat
+  MENU_HIJACK: Ordeztu
+  CHOOSE_AUTH_PROVIDER: Aukeratu identifikazio-metodoa
+  LOGIN: Identifika zaitez
+  USER_REQUIRED: Erabiltzaile bat behar da
 INSTALLATIONS:
   INSTALLATIONS_TITLE: Instalazioak
-  TABLE_TITLE: '{{n}} instalazioak'
+  TABLE_TITLE: '{{n}} instalazio'
   COLUMN_CONTRACT_NUMBER: Kontratu-zenbakia
   COLUMN_INSTALLATION_NAME: Instalazioaren izena
   BUTTON_DETAILS: Xehetasunak
   TOOLTIP_DETAILS: Xehetasunak
+  RELOAD: Berriz ere kargatzea
+  NO_INSTALLATIONS: Ez da aurkitu instalaziorik
 INSTALLATION_DETAIL:
   DETAILS_TITLE: Xehetasunak
   INSTALLATION_DETAILS_TITLE: Instalazioaren gaineko informazioa
@@ -54,3 +67,86 @@ PRODUCTION:
   PRODUCTION_TITLE: Ekoizpen
   LEGEND_PRODUCTION: Ekoizpen (kWh)
   LEGEND_FORESEEN: Aurreikuspena (kWh)
+LOGIN:
+  UNABLE_TO_LOGIN: Ezin izan da baliozkotu
+  USERNAME_LABEL: Erabiltzailea
+  USERNAME_HELP: Erabili IFZ edo helbide elektronikoa
+  SUBMIT_BUTTON_LOGIN: Baliozkoa
+  SUBMIT_BUTTON_PROCESSING: Baliozkotzen…
+  PASSWORD_LABEL: Pasahitza
+  LOGIN_DIALOG_TITLE: Zure nortasuna egiaztatzen
+  VALIDATION_ERROR: Erabiltzailea edo pasahitza ez dira baliozkoak
+CHANGE_PASSWORD:
+  NEW_PASSWORD_MUST_CONTAIN_SYMBOLS: Sinboloak izan behar ditu
+  CURRENT_PASSWORD_MISSMATCH_ERROR: Oraingo pasahitza ez da zuzena
+  NEW_PASSWORD_LABEL: Pasahitz berria
+  CHECK_PASSWORD_LABEL: Errepikatu pasahitz berria
+  SUBMIT_BUTTON_CHANGE_PASSWORD: Aldatu
+  SUBMIT_BUTTON_CHANGED_PASSWORD: Pasahitza aldatu da!
+  SUBMIT_BUTTON_CHANGING_PASSWORD: Aldatzen…
+  NEW_PASSWORD_TOO_SHORT_ERROR: Laburregia da
+  NEW_PASSWORD_SAME_AS_CURRENT_ERROR: Pasahitza ezin da izan oraingoa
+  NEW_PASSWORD_MUST_CONTAIN_LOWERCASE: Minuskulak izan behar ditu
+  NEW_PASSWORD_MUST_CONTAIN_UPPERCASE: Maiuskulak izan behar ditu
+  NEW_PASSWORD_MUST_CONTAIN_DIGITS: Zenbakiak izan behar ditu
+  PASSWORD_CHANGE_SUCCESSFUL: Pasahitza aldatu da
+  NEW_PASSWORD_MISSMATCH_ERROR: Pasahitzak ez datoz bat
+  CHANGE_PASSWORD_DIALOG_TITLE: Pasahitza aldatzen
+  CURRENT_PASSWORD_LABEL: Oraingo pasahitza
+TERMS:
+  UNEXPECTED_ERROR: Ustekabeko errorea
+  RGPD_TITLE: Datuen babesari buruzko informazioa
+  RGPD_ACCEPT: Onartzen dut nire datuak tratatzea
+  RGPD_BODY_MARKDOWN: "**ARDURADUNA:** SOM ENERGIA, SCCL. (F55091367), Pic de Peguera,\
+    \ 11 17003 Girona ( GIRONA ),\nsomenergia@delegado-datos.com.\n\n**HELBURUA:**\
+    \ Zure eskaeraren tramitazioa kudeatzea.\n\n**LEGITIMAZIOA:** Kontratu-harremana\
+    \ edota interesdunaren adostasuna.\n\n**LAGAPENAK:** Ez da aurreikusten datuak\
+    \ hirugarrenei lagatzea, legeak hala agintzen ez badu.\n\n**KONTSERBAZIOA:** Zure\
+    \ eskaera ebatzi bitartean.\n\n**ESKUBIDEAK:** Adostasuna edozein unetan ezeztatu\
+    \ dezakezu, eta datuak atzitzeko, zuzentzeko, ezabatzeko, transferitzeko, mugatzeko\
+    \ eta aurka egiteko eskubidea egikaritzeko, jo arduradunarengana. Ados ez bazaude,\
+    \ erreklamazio bat aurkeztu dezakezu Datuak Babesteko Espainiako Agentzian (www.aepd.es).\n"
+FOOTER:
+  BLOG: Bloga
+  DISCLAIMER: Lege-oharra
+  PRIVACY_POLICY: Pribatutasun-politika
+  PRIVACY_POLICY_URL: https://www.somenergia.coop/eu/pribatutasun-politika/
+  WEB: Webgunea
+  HELP_CENTER: Laguntza Gunea
+  HELP_CENTER_URL: https://eu.support.somenergia.coop/
+  COOKIE_POLICY: Cookieak
+  DISCLAIMER_URL: https://www.somenergia.coop/eu/lege-oharra/
+  COOKIE_POLICY_URL: https://oficinavirtual.somenergia.coop/eu/cookies-policy/
+HIJACK:
+  HIJACK_DIALOG_TITLE: Beste erabiltzaile bat ordezten
+  USERNAME_LABEL: Ordezten den erabiltzailea
+  USERNAME_HELP: Erabili IFZ edo helbide elektronikoa
+  SUBMIT_BUTTON_HIJACK: Ordeztu
+  SUBMIT_BUTTON_PROCESSING: Ordezten…
+  UNABLE_TO_HIJACK: Ezin izan da ordeztu
+  VALIDATION_ERROR: Erabiltzailea ez da baliozkoa
+PROFILE:
+  PROFILE_TITLE: Erabiltzailearen profila
+  NAME: Izena
+  ROLES: Rolak
+  ADDRESS: Helbidea
+  CITY: Udalerria
+  ZIP: Posta-kodea
+  STATE: Probintzia
+  EMAIL: Helbide elektronikoa
+  PHONE: Telefonoa
+  PROXY_VAT: Ordezkariaren IFZ
+  VAT: IFZ
+  PROXY_NAME: Ordezkariaren izena
+VERSION_CHECKER:
+  RELOAD_NOW: Berriz ere kargatu
+  NEW_VERSION_DETECTED_MARKDOWN: "Aplikazioaren eguneraketa bat antzeman da {{title}}\n\
+    \n- Nabigatzaileko bertsioa: `{{uiVersion}}`\n- Zerbitzariko bertsioa: `{{apiVersion}}`\n\
+    \nAplikazioa berriz ere kargatuko da arazoak saihesteko\n"
+  RELOADING: Berriz ere kargatzen…
+  RELOADING_IN: Berriz ere kargatzen {{seconds}} segundo barru
+  NEW_VERSION_DETECTED_TITLE: Bertsio berri bat antzeman da
+OVAPI:
+  CONTEXT_LOGIN: Errore bat gertatu da nortasuna baliozkotzean
+  CONTEXT_HIJACK: Errore bat gertatu da erabiltzailea ordezkatzean
+  CONTEXT_INSTALLATIONS: Errore bat gertatu da instalazio-zerrenda sortzean
