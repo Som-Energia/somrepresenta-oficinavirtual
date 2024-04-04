@@ -1,7 +1,15 @@
 APP_FRAME:
   PAGE_INSTALLATIONS: Instalazioak
   PAGE_INVOICES: Fakturak
-  PAGE_PRODUCTION_DATA: Ekoizpen
+  PAGE_PRODUCTION_DATA: Ekoizpena
+  APPLICATION_SUBTITLE: Ordezkaritza
+  TOGGLE_COLOR_MODE: Aldatu kolore-gaia
+  CHANGE_LANGUAGE: Aldatu hizkuntza
+  PAGE_HOME: Hasiera
+  APPLICATION_TITLE: Bulego Birtuala
+  GO_HOME: Itzuli hasierara
+  PAGE_COMPONENT_TEST: Testing
+  PAGE_NOT_FOUND: Ez da aurkitu orria
 INSTALLATIONS:
   INSTALLATIONS_TITLE: Instalazioak
   TABLE_TITLE: '{{n}} instalazioak'
