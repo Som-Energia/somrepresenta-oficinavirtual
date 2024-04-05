@@ -2,6 +2,25 @@ APP_FRAME:
   PAGE_INSTALLATIONS: Instalacións
   PAGE_INVOICES: Facturas
   PAGE_PRODUCTION_DATA: Produción
+  LOGIN: Identifícate
+  APPLICATION_TITLE: Oficina Virtual
+  APPLICATION_SUBTITLE: Representación
+  TOGGLE_COLOR_MODE: Cambia o tema de cor
+  CHANGE_LANGUAGE: Cambia o idioma
+  GO_HOME: Volve ao inicio
+  PAGE_HOME: Inicio
+  MENU_CHANGE_PASSWORD: Modifica o contrasinal
+  CHOOSE_USER: Escolle usuaria
+  CHOOSE_AUTH_PROVIDER: Escolle como identificarte
+  USER_REQUIRED: Cómpre usuaria
+  PAGE_NOT_FOUND: Non se atopou a páxina
+  PAGE_COMPONENT_TEST: Comprobación
+  NOT_YET_IMPLEMENTED: Esta páxina aínda non está dispoñible
+  CONTRIBUTE_TRANSLATIONS: Axúdanos a traducir
+  PROFILE_TOOLTIP: Perfil
+  MENU_PROFILE: Perfil
+  MENU_HIJACK: Suplantar
+  MENU_LOGOUT: Saír
 INSTALLATIONS:
   INSTALLATIONS_TITLE: Instalacións
   TABLE_TITLE: '{{n}} instalacións'
@@ -9,6 +28,8 @@ INSTALLATIONS:
   COLUMN_INSTALLATION_NAME: Nome da instalación
   BUTTON_DETAILS: Detalles
   TOOLTIP_DETAILS: Detalles
+  NO_INSTALLATIONS: Non se atoparon instalacións
+  RELOAD: Carga de novo
 INSTALLATION_DETAIL:
   DETAILS_TITLE: Detalles
   INSTALLATION_DETAILS_TITLE: Detalle da instalación
@@ -24,6 +45,11 @@ INSTALLATION_DETAIL:
   RATED_POWER: Potencia nominal
   TECHNOLOGY: Tecnoloxía
   CIL: CIL
+  TYPE: Código da instalación tipo
+  BACK_TO_INSTALLATIONS: Volver á listaxe das instalacións
+  TECHNOLOGY_HYDRO: Hidroeléctrica
+  TECHNOLOGY_WIND: Eólica
+  TECHNOLOGY_PHOTOVOLTAIC: Fotovoltaica
 CONTRACT_DETAIL:
   CONTRACT_DETAILS_TITLE: Detalle do contrato
   BILLING_MODE: Modo de facturación
@@ -33,6 +59,12 @@ CONTRACT_DETAIL:
   PROXY_FEE: Retribución polo servizo de representación
   REPRESENTATION_TYPE: Tipo de representación
   STATUS: Estado do contrato
+  REDUCTION_DEVIATION: Redución dos desvíos por efecto de carteira
+  BILLING_MODE_INDEX: Indexada
+  BILLING_MODE_ATR: ATR
+  COST_DEVIATION_INCLUDED: Incluído
+  COST_DEVIATION_NOT_INCLUDED: Non-incluído
+  REPRESENTATION_TYPE_DIRECT: Indirecta a mercado e directa perante a CNMC
 INVOICES:
   INVOICES_TITLE: Facturas
   TABLE_TITLE: '{{n}} facturas'
@@ -46,3 +78,98 @@ PRODUCTION:
   PRODUCTION_TITLE: Produción
   LEGEND_PRODUCTION: Produción (kWh)
   LEGEND_FORESEEN: Previsión (kWh)
+LOGIN:
+  VALIDATION_ERROR: Usuaria ou contrasinal incorrectos
+  SUBMIT_BUTTON_LOGIN: Validar
+  SUBMIT_BUTTON_PROCESSING: A validar…
+  LOGIN_DIALOG_TITLE: A verificar a túa identidade
+  USERNAME_LABEL: Usuaria
+  USERNAME_HELP: Emprega o NIF ou o enderezo electrónico
+  PASSWORD_LABEL: Contrasinal
+  UNABLE_TO_LOGIN: Non se puido validar
+CHANGE_PASSWORD:
+  CHECK_PASSWORD_LABEL: Repite o contrasinal novo
+  CHANGE_PASSWORD_DIALOG_TITLE: A modificar o contrasinal
+  CURRENT_PASSWORD_LABEL: Contrasinal actual
+  NEW_PASSWORD_LABEL: Contrasinal novo
+  SUBMIT_BUTTON_CHANGE_PASSWORD: Modificar
+  SUBMIT_BUTTON_CHANGING_PASSWORD: A modificar…
+  PASSWORD_CHANGE_SUCCESSFUL: O contrasinal modificouse correctamente
+  SUBMIT_BUTTON_CHANGED_PASSWORD: Contrasinal modificado!
+  NEW_PASSWORD_TOO_SHORT_ERROR: Demasiado curto
+  NEW_PASSWORD_SAME_AS_CURRENT_ERROR: Non pode coincidir co actual
+  NEW_PASSWORD_MUST_CONTAIN_LOWERCASE: Debe ter minúsculas
+  NEW_PASSWORD_MUST_CONTAIN_UPPERCASE: Debe ter maiúsculas
+  NEW_PASSWORD_MUST_CONTAIN_DIGITS: Debe ter números
+  NEW_PASSWORD_MUST_CONTAIN_SYMBOLS: Debe ter símbolos
+  CURRENT_PASSWORD_MISSMATCH_ERROR: O contrasinal actual non é o correcto
+  NEW_PASSWORD_MISSMATCH_ERROR: Os contrasinais non coinciden
+PROFILE:
+  PROXY_NAME: Nome da representante
+  PROXY_VAT: NIF da representante
+  NAME: Nome
+  VAT: NIF
+  ROLES: Roles
+  ADDRESS: Enderezo
+  CITY: Concello
+  ZIP: Código postal
+  STATE: Provincia
+  EMAIL: Correo-e
+  PHONE: Teléfono
+  PROFILE_TITLE: Perfil da usuaria
+TERMS:
+  RGPD_ACCEPT: Acepto o tratamento dos meus datos
+  UNEXPECTED_ERROR: Erro inesperado
+  RGPD_TITLE: Información sobre a protección de datos
+  RGPD_BODY_MARKDOWN: "**RESPONSABLE:** SOM ENERGIA, SCCL. (F55091367), Pic de Peguera,\
+    \ 11 17003 Girona ( GIRONA ),\nsomenergia@delegado-datos.com.\n\n**FINALIDADE:**\
+    \ Xestionar a tramitación da túa solicitude.\n\n**LEXITIMACIÓN:** Relación contractual\
+    \ e/ou consentimento da persoa interesada.\n\n**CESIÓNS:** Non está prevista a\
+    \ cesión de datos a terceiros, agás por obriga legal.\n\n**CONSERVACIÓN:** Até\
+    \ que quede resolta a túa solicitude.\n\n**DEREITOS:** Podes retirar o teu consentimento\
+    \ en calquera momento, así como exercer o teu dereito de acceso, rectificación,\
+    \ supresión, portabilidade, limitación ou oposición dirixíndote aos datos da responsable.\
+    \ Caso de existiren diverxencias, podes presentar unha reclamación perante a Axencia\
+    \ de Protección de Datos (www.aepd.es).\n"
+FOOTER:
+  WEB: Web
+  BLOG: Blog
+  DISCLAIMER: Aviso legal
+  DISCLAIMER_URL: https://www.somenergia.coop/gl/aviso-legal/
+  PRIVACY_POLICY: Política de privacidade
+  PRIVACY_POLICY_URL: https://www.somenergia.coop/gl/politica-de-privacidade/
+  HELP_CENTER: Centro de axuda
+  HELP_CENTER_URL: https://gl.support.somenergia.coop
+  COOKIE_POLICY: Cookies
+  COOKIE_POLICY_URL: https://oficinavirtual.somenergia.coop/gl/cookies-policy/
+HIJACK:
+  HIJACK_DIALOG_TITLE: A suplantar outra usuaria
+  USERNAME_LABEL: Usuaria que se suplanta
+  USERNAME_HELP: Emprega o NIF ou o enderezo electrónico
+  SUBMIT_BUTTON_HIJACK: Suplantar
+  SUBMIT_BUTTON_PROCESSING: A suplantar…
+  UNABLE_TO_HIJACK: Non se puido suplantar
+  VALIDATION_ERROR: Usuaria incorrecta
+VERSION_CHECKER:
+  RELOADING: A cargar de novo…
+  RELOADING_IN: A cargar de novo en {{seconds}} segundos
+  RELOAD_NOW: Carga de novo xa
+  NEW_VERSION_DETECTED_TITLE: Detectouse unha versión nova
+  NEW_VERSION_DETECTED_MARKDOWN: "Detectouse unha actualización da aplicación {{title}}\n\
+    \n- Versión do teu navegador: `{{uiVersion}}`\n- Versión do servidor: `{{apiVersion}}`\n\
+    \nA aplicación cargarase de novo para evitar posibles problemas.\n"
+OVAPI:
+  CONTEXT_LOGIN: Erro ao validar a identidade
+  CONTEXT_HIJACK: Erro ao suplantar a usuaria
+  CONTEXT_INSTALLATIONS: Erro ao obter a listaxe das instalacións
+  CONTEXT_INSTALLATION_DETAILS: Erro ao obter os detalles da instalación
+  CONTEXT_SIGNING_DOCUMENT: Erro ao aceptar as condicións
+  CONTEXT_INVOICE_PDF_DOWNLOAD: Erro ao descargar a factura {{invoice}}
+  CONTEXT_INVOICES: Erro ao obter a listaxe das facturas
+  CONTEXT_INVOICES_ZIP_DOWNLOAD: Erro ao descargar o arquivo comprimido coas facturas
+    {{invoice_numbers}}
+  ERR_UNABLE_TO_SIGN_DOCUMENT: Non se puido asinar o contrato
+  ERR_NETWORK: Non se atopa o servidor. Tes conexión á rede?
+  ERR_GATEWAY: O sistema non está dispoñible por razóns de mantemento. Volve probar
+    máis tarde.
+  ERR_INTERNAL: Produciuse un erro inesperado no servidor. Referencia {{reference}}.
