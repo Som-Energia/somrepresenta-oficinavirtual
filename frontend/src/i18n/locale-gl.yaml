@@ -24,7 +24,7 @@ APP_FRAME:
 INSTALLATIONS:
   INSTALLATIONS_TITLE: Instalacións
   TABLE_TITLE: '{{n}} instalacións'
-  COLUMN_CONTRACT_NUMBER: N.º de contrato
+  COLUMN_CONTRACT_NUMBER: Número do contrato
   COLUMN_INSTALLATION_NAME: Nome da instalación
   BUTTON_DETAILS: Detalles
   TOOLTIP_DETAILS: Detalles
@@ -131,6 +131,7 @@ PRODUCTION:
   CSV_COLUMN_DATETIME: Día/hora
   CSV_COLUMN_INSTALL_NAME: Nome da instalación
   CSV_COLUMN_UTC_OFFSET: Diferenza UTC (h)
+  CSV_COLUMN_MATURITY: Madureza
 LOGIN:
   VALIDATION_ERROR: Usuaria ou contrasinal incorrectos
   SUBMIT_BUTTON_LOGIN: Validar
@@ -250,3 +251,61 @@ COOKIES_POLICY:
     información facilitada sexa o máis transparente posible, SOM ENERGIA elaborou
     esta táboa que recolle toda a información e descrición das cookies empregadas
     de acordo coa clasificación seguinte.'
+  CUSTOMIZATION_COOKIES: Cookies de personalización
+  THIRDPARTY_COOKIES: Cookies de terceiros
+  ADVERTISING_COOKIES: Cookies publicitarias
+  PERSISTENT_COOKIES_DESCRIPTION: As cookies persistentes quedan almacenadas no equipo
+    terminal da persoa usuaria até que se eliminan manualmente ou remata o período
+    de duración establecido.
+  OWN_COOKIES: Cookies propias
+  OWN_COOKIES_DESCRIPTION: As cookies propias son aquelas que se envían ao equipo
+    terminal da persoa usuaria desde un equipo ou dominio xestionado pola mesma persoa
+    editora e desde o que se presta o servizo solicitado pola usuaria.
+  FUNCTIONALITY: FUNCIONALIDADE
+  TECHNICAL_COOKIES_DESCRIPTION: As cookies técnicas son aquelas que facilitan a navegación
+    da persoa usuaria e o emprego das diferentes opcións ou servizos que ofrece o
+    sitio web, por exemplo, identificación da sesión, concesión de acceso a determinadas
+    áreas, facilitación de pedidos, compras, formularios, inscricións, seguridade
+    ou acceso a funcionalidades (vídeos, redes sociais…).
+  CUSTOMIZATION_COOKIES_DESCRIPTION: As cookies de personalización permítenlle á persoa
+    usuaria acceder aos servizos segundo as súas preferencias (lingua, navegador,
+    configuración…).
+  SESSION_COOKIES: Cookies de sesión
+  ANALYTICS_COOKIES: Cookies analíticas
+  ANALYTICS_COOKIES_DESCRIPTION: As cookies analíticas son as empregadas para levar
+    a cabo a análise anónima do comportamento das persoas usuarias do sitio web e
+    permiten medir a actividade da usuaria e elaborar perfís de navegación co obxectivo
+    de mellorar os sitios web.
+  ADVERTISING_COOKIES_DESCRIPTION: As cookies publicitarias permiten xestionar os
+    espazos publicitarios do sitio web. Ademais, poden ser de publicidade personalizada,
+    de xeito que permiten a xestión a partir do comportamento e dos hábitos de navegación
+    da persoa usuaria. De aí obtense o perfil e é posible personalizar a publicidade
+    que se amosa no navegador ou outros perfís e redes sociais da usuaria.
+  SESSION_COOKIES_DESCRIPTION: As cookies de sesión son aquelas que duran o tempo
+    que a persoa usuaria está a navegar polo sitio web e bórranse cando se pecha o
+    navegador.
+  PERSISTENT_COOKIES: Cookies persistentes
+  THIRDPARTY_COOKIES_DESCRIPTION: As cookies de terceiros son aquelas que se envían
+    ao equipo terminal da persoa usuaria desde un equipo ou dominio que non é xestionado
+    pola persoa editora, senón por outra entidade que trata os datos obtidos mediante
+    as cookies.
+  BASIC: BÁSICAS
+  FUNCTIONALITY_DESCRIPTION: Cookies técnicas de terceiros, de sesión ou persistentes.
+  CHROME_DESACTIVATE_COOKIES: Configuración > Amosar opcións avanzadas > Privacidade
+    > Configuración do contido
+  FIREFOX_DESACTIVATE_COOKIES: Ferramentas > Opcións > Privacidade > Historial > Configuración
+    personalizada
+  BASIC_DESCRIPTION: Cookies técnicas propias e de sesión.
+  PERFORMANCE: RENDEMENTO
+  PERFORMANCE_DESCRIPTION: Cookies técnicas propias e persistentes. Cookies de personalización
+    propias ou de terceiros, de sesión ou persistentes.
+  STATISTICS: ESTATÍSTICA
+  STATISTICS_DESCRIPTION: Cookies analíticas e publicitarias persistentes, propias
+    e de terceiros.
+  SAFARI_DESACTIVATE_COOKIES: Preferencias > Seguranza
+  EXPLORER_DESACTIVATE_COOKIES: Ferramentas > Opcións de Internet > Privacidade >
+    Configuración
+  OPERA_DESACTIVATE_COOKIES: Ferramentas > Preferencias > Editar as preferencias >
+    Cookies
+  EDGE_DESACTIVATE_COOKIES: Configuración > Configuración avanzada > Privacidade e
+    servizos > Cookies
