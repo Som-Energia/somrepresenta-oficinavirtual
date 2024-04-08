@@ -103,10 +103,34 @@ INVOICES:
   PAID_STATUS_OPTION_PAID: Si
   PAID_STATUS_OPTION_OPEN: En proceso
   PAID_STATUS_OPTION_UNPAID: Non
+  PAID_STATUS_OPTION_UNPAID_VERBOSE: Impaga
 PRODUCTION:
   PRODUCTION_TITLE: Produción
   LEGEND_PRODUCTION: Produción (kWh)
   LEGEND_FORESEEN: Previsión (kWh)
+  LABEL_CONTRACT: Contrato
+  LABEL_PERIOD: Período
+  PERIOD_DIARY: Diaria
+  PERIOD_WEEKLY: Semanal
+  PERIOD_MONTHLY: Mensual
+  PERIOD_YEARLY: Anual
+  LABEL_PLOT_STYLE: Estilo do gráfico
+  STYLE_BAR: Barras
+  STYLE_LINE: Liñas
+  CSV_COLUMN_CONTRACT_NUMBER: Número do contrato
+  CSV_COLUMN_CIL: CIL
+  CSV_COLUMN_FORESEEN: Previsión (kWh)
+  CSV_COLUMN_MEASURE: Produción (kWh)
+  CSV_COLUMN_ESTIMATED: Tipo de medida
+  CSV_VALUE_REAL: Real
+  MATURITY_H3: Intermedia provisional (H3)
+  CSV_VALUE_ESTIMATED: Estimada
+  MATURITY_H2: Inicial provisional (H2)
+  MATURITY_HP: Final provisional (HP)
+  MATURITY_HC: Final definitiva (HC)
+  CSV_COLUMN_DATETIME: Día/hora
+  CSV_COLUMN_INSTALL_NAME: Nome da instalación
+  CSV_COLUMN_UTC_OFFSET: Diferenza UTC (h)
 LOGIN:
   VALIDATION_ERROR: Usuaria ou contrasinal incorrectos
   SUBMIT_BUTTON_LOGIN: Validar
@@ -202,3 +226,27 @@ OVAPI:
   ERR_GATEWAY: O sistema non está dispoñible por razóns de mantemento. Volve probar
     máis tarde.
   ERR_INTERNAL: Produciuse un erro inesperado no servidor. Referencia {{reference}}.
+COOKIES_POLICY:
+  TITLE: Política de cookies
+  PURPOSE: Segundo a finalidade
+  TERM: Segundo o seu prazo
+  SUBTITLE: Como empregamos as cookies?
+  DEACTIVATE_COOKIES_TABLE: De todos os xeitos, informámoste de que podes activar
+    ou desactivar as cookies seguindo as instrucións do teu navegador de Internet.
+  SOM_COOKIES_EXPLANATION: Por iso, cando accederes ao noso sitio web, en cumprimento
+    do artigo 22 da Lei de servizos da sociedade da información, solicitámosche o
+    teu consentimento para o seu emprego. A facilitación de datos persoais a través
+    do noso portal e o consentimento para o emprego das cookies require ter como mínimo
+    18 anos de idade e aceptar de forma expresa a nosa política de privacidade.
+  TECHNICAL_COOKIES: Cookies técnicas
+  SOM_COOKIES: SOM ENERGIA emprega cookies técnicas, de personalización, de análise
+    e publicitarias, propias e de terceiros, que tratan datos de conexión ou de dispositivo,
+    así como hábitos de navegación para fins estatísticos e publicitarios.
+  OWNERSHIP: Segundo a súa titularidade
+  TABLE_DESCRIPTION: Na táboa seguinte recóllese a clasificación e descrición das
+    cookies empregadas neste sitio web para que poidas identificalas no teu navegador.
+  TABLE_COOKIES_CLASSIFICATION: 'As cookies clasifícanse conforme diferentes parámetros:
+    función, titularidade e prazos. Consonte esta clasificación, e a fin de que a
+    información facilitada sexa o máis transparente posible, SOM ENERGIA elaborou
+    esta táboa que recolle toda a información e descrición das cookies empregadas
+    de acordo coa clasificación seguinte.'
