@@ -29,14 +29,14 @@ INSTALLATIONS:
   BUTTON_DETAILS: Detalles
   TOOLTIP_DETAILS: Detalles
   NO_INSTALLATIONS: Non se atoparon instalacións
-  RELOAD: Carga de novo
+  RELOAD: Cargar de novo
 INSTALLATION_DETAIL:
   DETAILS_TITLE: Detalles
   INSTALLATION_DETAILS_TITLE: Detalle da instalación
   CONTRACT_DETAILS_TITLE: Detalle do contrato
   ADDRESS: Enderezo
   CITY: Concello
-  CONTRACT_NUMBER: N.º de contrato
+  CONTRACT_NUMBER: N.º do contrato
   COORDINATES: Coordenadas
   MINISTRY_CODE: Código do Ministerio
   NAME: Nome da instalación
@@ -207,7 +207,7 @@ HIJACK:
 VERSION_CHECKER:
   RELOADING: A cargar de novo…
   RELOADING_IN: A cargar de novo en {{seconds}} segundos
-  RELOAD_NOW: Carga de novo xa
+  RELOAD_NOW: Cargar de novo xa
   NEW_VERSION_DETECTED_TITLE: Detectouse unha versión nova
   NEW_VERSION_DETECTED_MARKDOWN: "Detectouse unha actualización da aplicación {{title}}\n\
     \n- Versión do teu navegador: `{{uiVersion}}`\n- Versión do servidor: `{{apiVersion}}`\n\
