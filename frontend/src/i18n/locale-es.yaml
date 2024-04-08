@@ -199,7 +199,7 @@ INVOICES:
   DOWNLOAD_TOOLTIP_DOWNLOAD: Descarga
   DOWNLOAD_TOOLTIP_SUCCESS: Descarga finalizada
   DOWNLOAD_TOOLTIP_ONGOING: En proceso
-  PAID_STATUS_OPTION_PAID: Si
+  PAID_STATUS_OPTION_PAID: Sí
   PAID_STATUS_OPTION_OPEN: En proceso
   PAID_STATUS_OPTION_UNPAID: No
   PAID_STATUS_OPTION_PAID_VERBOSE: Pagada
@@ -215,7 +215,7 @@ PRODUCTION:
   PERIOD_YEARLY: Anual
   LABEL_PLOT_STYLE: Estilo de gráfico
   STYLE_BAR: Barras
-  STYLE_LINE: Linias
+  STYLE_LINE: Líneas
   LEGEND_PRODUCTION: Producción (kWh)
   LEGEND_FORESEEN: Previsión (kWh)
   CSV_COLUMN_CONTRACT_NUMBER: Número de contrato
@@ -225,7 +225,7 @@ PRODUCTION:
   CSV_COLUMN_UTC_OFFSET: Diferencia UTC (h)
   CSV_COLUMN_FORESEEN: Previsión (kWh)
   CSV_COLUMN_MEASURE: Producción (kWh)
-  CSV_COLUMN_MATURITY: Madureza
+  CSV_COLUMN_MATURITY: Madurez
   CSV_COLUMN_ESTIMATED: Tipo de medida
   CSV_VALUE_ESTIMATED: Estimada
   CSV_VALUE_REAL: Real
@@ -247,7 +247,7 @@ COOKIES_POLICY:
     y para que la información proporcionada sea lo más transparente posible, SOM ENERGIA
     ha elaborado esta tabla que recoge toda la información y descripción de las cookies
     utilizadas de acuerdo con la siguiente clasificación.
-  SOM_COOKIES: SOMOS ENERGÍA utiliza cookies técnicas, de personalización, análisis
+  SOM_COOKIES: SOMOS ENERGIA utiliza cookies técnicas, de personalización, análisis
     y publicitarias, propias y de terceros, que tratan datos de conexión y/o de dispositivo,
     así como hábitos de navegación para fines estadísticos y publicitarios.
   SOM_COOKIES_EXPLANATION: Por ello, al acceder a nuestra web, en cumplimiento del
@@ -304,7 +304,7 @@ COOKIES_POLICY:
     y de terceros.
   FUNCTIONALITY: FUNCIONALIDAD
   FUNCTIONALITY_DESCRIPTION: Cookies técnicas de terceros, de sesión o persistentes.
-  CHROME_DESACTIVATE_COOKIES: Configuración > Mostrar opciones avanzades > Privacidad
+  CHROME_DESACTIVATE_COOKIES: Configuración > Mostrar opciones avanzadas > Privacidad
     > Configuración de contenido
   FIREFOX_DESACTIVATE_COOKIES: Herramientas > Opciones > Privacidad > Historial >
     Configuración personalizada
