@@ -175,12 +175,12 @@ export default function InvoicesPage() {
       numeric: false,
       view: (invoice) => format.enumeration(invoice.concept, concept_options),
     },
-    // {
-    //   id: 'liquidation',
-    //   label: t('INVOICES.COLUMN_LIQUIDATION'),
-    //   searchable: true,
-    //   numeric: false,
-    // },
+    {
+      id: 'liquidation',
+      label: t('INVOICES.COLUMN_LIQUIDATION'),
+      searchable: true,
+      numeric: false,
+    },
     {
       id: 'emission_date',
       label: t('INVOICES.COLUMN_EMITTED'),
