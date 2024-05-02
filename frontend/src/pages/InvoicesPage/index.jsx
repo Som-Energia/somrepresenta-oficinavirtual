@@ -103,7 +103,7 @@ function PaymentStatusCell({ paymentStatus }) {
 function LiquidationCell({ liquidation }) {
   const { t } = useTranslation()
   if (liquidation === 'COMPLEMENTARY')
-    return t(INVOICES.COMPLEMENTARY_LIQUIDATION)
+    return t('INVOICES.COMPLEMENTARY_LIQUIDATION')
   return liquidation
 }
 
