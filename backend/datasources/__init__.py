@@ -24,6 +24,7 @@ from ..models import (
     InvoicesZip,
     CustomerProductionData,
 )
+from typing import Optional
 from pydantic import AwareDatetime
 
 def backend():
@@ -76,6 +77,12 @@ def production_data(
     username: str,
     first_timestamp_utc: AwareDatetime,
     last_timestamp_utc: AwareDatetime,
+    contract_number: Optional[str] = None
 ) -> CustomerProductionData:
-    return backend().production_data(username, first_timestamp_utc, last_timestamp_utc)
+    return backend().production_data(
+        username,
+        first_timestamp_utc,
+        last_timestamp_utc,
+        contract_number
+    )
 
