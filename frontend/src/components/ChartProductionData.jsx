@@ -177,10 +177,6 @@ const ChartProductionData = () => {
 
     if (existingContractData) {
       // Contract data already exists in productionData state, no need to fetch again
-      setProductionData((prevData) => {
-        // Return the existing data
-        return prevData
-      })
       return
     }
 
