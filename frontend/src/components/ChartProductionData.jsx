@@ -24,6 +24,8 @@ import ovapi from '../services/ovapi'
 import format from '../services/format'
 import { index2time, timeSlice, sliceIndexes } from '../services/curves'
 import { downloadTextFile } from '../services/download'
+import { InstallationContext } from './InstallationProvider';
+
 
 dayjs.extend(minMax)
 
@@ -109,12 +111,22 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
 }
 
 const ChartProductionData = () => {
+  // Installations to retrieve contract number
+  const {
+    installations,
+    loading: listLoading,
+    error: listError,
+  } = React.useContext(InstallationContext);
+
+  // Initial contract number from installations (if available)
+  const initialContractNumber = installations && installations[0]?.contract_number
+
   const [productionData, setProductionData] = useState(undefined)
   const [productionLineData, setProductionLineData] = useState([])
   const [productionBarData, setProductionBarData] = useState({})
   const [compareData, setCompareData] = useState([])
   const [line, setLine] = useState(true)
-  const [contract, setContract] = useState(null)
+  const [contract, setContract] = useState(initialContractNumber)
   const [period, setPeriod] = useState(DAILY)
   const [currentTime, setCurrentTime] = useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
@@ -156,11 +168,13 @@ const ChartProductionData = () => {
   const firstDataDate = contractData?.first_timestamp_utc ?? minDate
   const lastDataDate = contractData?.last_timestamp_utc ?? maxDate
 
-  const getProductionData = () => {
-    ovapi.productionData(minDate, maxDate).then((data) => {
-      setProductionData(data)
-    })
-  }
+  // Fetch production data for the given contract number
+  const getProductionData = (contractNumber) => {
+    if (!contractNumber) return; // If no contract number, do not proceed
+    ovapi.productionData(minDate, maxDate, contractNumber).then((data) => {
+      setProductionData(data);
+    });
+  };
 
   function calculateTotalKwh(measured_data, foreseen_data) {
     const initValue = 0
@@ -204,9 +218,19 @@ const ChartProductionData = () => {
     calculateTotalKwh(measured_data, foreseen_data)
   }, [productionData, period, currentTime, contract])
 
+  // Effect to fetch initial production data on mount
   useEffect(() => {
-    getProductionData()
-  }, [])
+    if (initialContractNumber) {
+      getProductionData(initialContractNumber);
+    }
+  }, [initialContractNumber]); // Only run when initialContractNumber changes
+
+  // Effect to fetch new production data when contract changes
+  useEffect(() => {
+    if (contract && contract !== initialContractNumber) {
+      getProductionData(contract);
+    }
+  }, [contract]); // Run when contract changes
 
   const dayjsperiods = {
     DAILY: 'd',
