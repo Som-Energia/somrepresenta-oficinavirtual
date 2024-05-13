@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from yamlns import ns
 from consolemsg import error, success
+from typing import Optional
 from pydantic import ValidationError, AwareDatetime
 from ..models import (
     TokenUser,
@@ -130,9 +131,15 @@ def erp_production_data(
         username: str,
         first_timestamp_utc: AwareDatetime,
         last_timestamp_utc: AwareDatetime,
+        contractNumber: str = None,
     ) -> CustomerProductionData:
     e = erp.Erp()
-    production_data = e.production_data(username, first_timestamp_utc, last_timestamp_utc)
+    production_data = e.production_data(
+        username,
+        first_timestamp_utc,
+        last_timestamp_utc,
+        contractNumber
+    )
     process_erp_errors(production_data)
     with catch_validation_error():
         return CustomerProductionData(**production_data)
@@ -170,5 +177,11 @@ class ErpBackend:
         username: str,
         first_timestamp_utc: AwareDatetime,
         last_timestamp_utc: AwareDatetime,
+        contract_number: Optional[str] = None
     ) -> CustomerProductionData:
-        return erp_production_data(username, first_timestamp_utc, last_timestamp_utc)
+        return erp_production_data(
+            username,
+            first_timestamp_utc,
+            last_timestamp_utc,
+            contract_number
+        )

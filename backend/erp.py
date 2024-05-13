@@ -2,6 +2,7 @@ import httpx
 import dotenv
 import os
 from decorator import decorator
+from typing import Dict, Any, Optional
 from pydantic import AwareDatetime
 
 # TODO: Please do not let this evolve without major refactor!
@@ -138,11 +139,18 @@ class Erp:
             "som.ov.invoices", "download_invoices_zip", username, invoice_numbers
         )
 
-    def production_data(self, username: str, first_timestamp_utc: AwareDatetime, last_timestamp_utc: AwareDatetime):
+    def production_data(
+        self,
+        username: str,
+        first_timestamp_utc: AwareDatetime,
+        last_timestamp_utc: AwareDatetime,
+        contract_number: Optional[str] = None
+    ) -> Dict[str, Any]:
         data = self.object_execute(
             "som.ov.production.data",
-            "measures",
+            "measures_single_installation",
             username,
+            str(contract_number),
             str(first_timestamp_utc),
             str(last_timestamp_utc),
         )
