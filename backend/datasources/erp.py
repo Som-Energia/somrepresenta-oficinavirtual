@@ -131,14 +131,14 @@ def erp_production_data(
         username: str,
         first_timestamp_utc: AwareDatetime,
         last_timestamp_utc: AwareDatetime,
-        contractNumber: str = None,
+        contract_number: Optional[str] = None
     ) -> CustomerProductionData:
     e = erp.Erp()
     production_data = e.production_data(
         username,
         first_timestamp_utc,
         last_timestamp_utc,
-        contractNumber
+        contract_number
     )
     process_erp_errors(production_data)
     with catch_validation_error():
