@@ -171,7 +171,7 @@ const ChartProductionData = () => {
     if (!contractNumber) return // If no contract number, do not proceed
 
     // Check if productionData already contains data for the selected contract
-    const existingContractData = productionData?.data.find(
+    const existingContractData = productionData?.data.some(
       (data) => data.contract_name === contractNumber,
     )
 
