@@ -177,7 +177,7 @@ class ErpBackend:
         username: str,
         first_timestamp_utc: AwareDatetime,
         last_timestamp_utc: AwareDatetime,
-        contract_number: Optional[str] = None
+        contract_number: Optional[str] = None,
     ) -> CustomerProductionData:
         return erp_production_data(
             username,

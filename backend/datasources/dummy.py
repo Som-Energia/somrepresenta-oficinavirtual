@@ -2,6 +2,7 @@ from yamlns import ns
 from pathlib import Path
 import datetime
 import base64
+from typing import Optional
 from pydantic import ValidationError, AwareDatetime
 from ..utils.gravatar import gravatar
 from ..models import (
@@ -366,6 +367,7 @@ def dummy_production_data(
     username: str,
     first_timestamp_utc: AwareDatetime,
     last_timestamp_utc: AwareDatetime,
+    contract_number: Optional[str] = None,
 ) -> CustomerProductionData:
 
     nhours = round(
@@ -387,6 +389,7 @@ def dummy_production_data(
                 ],
             )
             for j, contract in enumerate(dummy_installation_list(username))
+            if not contract_number or contract_number == contract.contract_number
         ],
     )
 
@@ -423,5 +426,11 @@ class DummyBackend:
         username: str,
         first_timestamp_utc: AwareDatetime,
         last_timestamp_utc: AwareDatetime,
+        contract_number: Optional[str] = None,
     ) -> CustomerProductionData:
-        return dummy_production_data(username, first_timestamp_utc, last_timestamp_utc)
+        return dummy_production_data(
+            username,
+            first_timestamp_utc,
+            last_timestamp_utc,
+            contract_number,
+        )
