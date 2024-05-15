@@ -20,6 +20,7 @@ import Chart from '@somenergia/somenergia-ui/Chart'
 import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
 import PageTitle from './PageTitle'
 import ContractSelector from './ContractSelector'
+import Loading from './Loading'
 import ovapi from '../services/ovapi'
 import format from '../services/format'
 import { index2time, timeSlice, sliceIndexes } from '../services/curves'
@@ -353,14 +354,21 @@ const ChartProductionData = () => {
         />
       </Box>
 
-      <Chart
-        period={period}
-        data={line ? (showProduction ? productionLineData : []) : productionBarData}
-        legend={true}
-        type={line ? LINE : BAR}
-        lang={i18n?.language}
-        compareData={showForeseen ? compareData : []}
-      />
+      <Box sx={{ position: 'relative' }}>
+        {productionLineData.length === 0 ? (
+          <Box sx={{ position: 'absolute', inset: '0' }}>
+            <Loading />
+          </Box>
+        ) : null}
+        <Chart
+          period={period}
+          data={line ? (showProduction ? productionLineData : []) : productionBarData}
+          legend={true}
+          type={line ? LINE : BAR}
+          lang={i18n?.language}
+          compareData={showForeseen ? compareData : []}
+        />
+      </Box>
       <Box
         sx={{
           width: '100%',
