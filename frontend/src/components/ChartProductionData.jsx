@@ -120,19 +120,19 @@ const ChartProductionData = () => {
   // Initial contract number from installations (if available)
   const initialContractNumber = installations && installations[0]?.contract_number
 
-  const [productionData, setProductionData] = useState(undefined)
-  const [productionLineData, setProductionLineData] = useState([])
-  const [productionBarData, setProductionBarData] = useState({})
-  const [compareData, setCompareData] = useState([])
-  const [line, setLine] = useState(true)
-  const [contract, setContract] = useState(initialContractNumber)
-  const [period, setPeriod] = useState(DAILY)
-  const [currentTime, setCurrentTime] = useState(dayjs(yesterday))
+  const [productionData, setProductionData] = React.useState(undefined)
+  const [productionLineData, setProductionLineData] = React.useState([])
+  const [productionBarData, setProductionBarData] = React.useState({})
+  const [compareData, setCompareData] = React.useState([])
+  const [line, setLine] = React.useState(true)
+  const [contract, setContract] = React.useState(initialContractNumber)
+  const [period, setPeriod] = React.useState(DAILY)
+  const [currentTime, setCurrentTime] = React.useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
-  const [showProduction, setShowProduction] = useState(true)
-  const [showForeseen, setShowForeseen] = useState(true)
-  const [totalKwh, setTotalKwh] = useState(0)
-  const [foreseenTotalKwh, setForeseenTotalKwh] = useState(0)
+  const [showProduction, setShowProduction] = React.useState(true)
+  const [showForeseen, setShowForeseen] = React.useState(true)
+  const [totalKwh, setTotalKwh] = React.useState(0)
+  const [foreseenTotalKwh, setForeseenTotalKwh] = React.useState(0)
 
   const maxDate = new Date()
   maxDate.setHours(0)
@@ -238,14 +238,14 @@ const ChartProductionData = () => {
   }, [productionData, period, currentTime, contract])
 
   // Effect to fetch initial production data on mount
-  useEffect(() => {
+  React.useEffect(() => {
     if (initialContractNumber) {
       getProductionData(initialContractNumber)
     }
   }, [initialContractNumber]) // Only run when initialContractNumber changes
 
   // Effect to fetch new production data when contract changes
-  useEffect(() => {
+  React.useEffect(() => {
     if (contract && contract !== initialContractNumber) {
       getProductionData(contract)
     }
