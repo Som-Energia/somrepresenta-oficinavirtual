@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ToggleButton from '@mui/material/ToggleButton'
@@ -202,8 +202,7 @@ const ChartProductionData = () => {
     setTotalKwh(measuredSum)
     setForeseenTotalKwh(foreseenSum)
   }
-
-  React.useEffect(() => {
+  function sliceGraphData() {
     const contractData = currentContractData(productionData, contract)
     if (!contractData) {
       setProductionLineData([])
@@ -235,20 +234,22 @@ const ChartProductionData = () => {
     setProductionBarData(transdormedData)
     setCompareData(foreseen_data)
     calculateTotalKwh(measured_data, foreseen_data)
+  }
+
+  React.useEffect(() => {
+    sliceGraphData()
   }, [productionData, period, currentTime, contract])
 
   // Effect to fetch initial production data on mount
   React.useEffect(() => {
-    if (initialContractNumber) {
-      getProductionData(initialContractNumber)
-    }
+    setContract(initialContractNumber)
+    getProductionData(initialContractNumber)
   }, [initialContractNumber]) // Only run when initialContractNumber changes
 
   // Effect to fetch new production data when contract changes
   React.useEffect(() => {
-    if (contract && contract !== initialContractNumber) {
-      getProductionData(contract)
-    }
+    if (contract === initialContractNumber) return // Done in previous useEffect
+    getProductionData(contract)
   }, [contract]) // Run when contract changes
 
   const dayjsperiods = {
