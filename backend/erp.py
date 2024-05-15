@@ -38,7 +38,8 @@ class Erp:
         self.user = os.environ["ERP_USERNAME"]
         self.password = os.environ["ERP_PASSWORD"]
         self._token = None
-        self.debug = os.environ.get("ERP_DEBUG", False)
+        self.debug = os.environ.get("ERP_DEBUG", 'False').lower() in ('true', '1', 't')
+
 
     def _post(self, endpoint, *args):
         if self.debug: print(">>", endpoint, args)
