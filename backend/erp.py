@@ -44,7 +44,7 @@ class Erp:
     def _post(self, endpoint, *args):
         if self.debug: print(">>", endpoint, args)
         try:
-            r = httpx.post(self.baseurl + endpoint, json=list(args))
+            r = httpx.post(self.baseurl + endpoint, json=list(args), timeout=10)
         except httpx.ConnectError as e:
             raise ErpConnectionError(str(e))
         r.raise_for_status()
