@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 0.7.0 (2024-05-15)
 
 - Responsive invoice page
 - New widget: ListEditor (mobile)
@@ -8,6 +8,7 @@
 - Production page: Added a button to download data as csv
 - Invoice page: Downloading selected invoices as a zip of pdf's
 - Fix: Production data: Convert to string dates sent to erp
+- Fix: Production data: Retrieves measures for a single installation
 - Ugprade Notes:
     - env `ERP_DEBUG` to activate ERP call logging
 
