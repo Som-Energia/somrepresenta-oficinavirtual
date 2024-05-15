@@ -38,16 +38,17 @@ class Erp:
         self.user = os.environ["ERP_USERNAME"]
         self.password = os.environ["ERP_PASSWORD"]
         self._token = None
+        self.debug = os.environ.get("ERP_DEBUG", False)
 
     def _post(self, endpoint, *args):
-        print(">>", endpoint, args)
+        if self.debug: print(">>", endpoint, args)
         try:
             r = httpx.post(self.baseurl + endpoint, json=list(args))
         except httpx.ConnectError as e:
             raise ErpConnectionError(str(e))
         r.raise_for_status()
         result = r.json()
-        print("<<", r.status_code, endpoint, result)
+        if self.debug: print("<<", r.status_code, endpoint, result)
 
         # ERP error before getting in our ERP callback sandbox
         if r.status_code == 210:
