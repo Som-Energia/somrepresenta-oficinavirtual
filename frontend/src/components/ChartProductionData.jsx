@@ -118,14 +118,14 @@ const ChartProductionData = () => {
   } = React.useContext(InstallationContext)
 
   // Initial contract number from installations (if available)
-  const initialContractNumber = installations && installations[0]?.contract_number
+  const firstContractNumber = installations && installations[0]?.contract_number
 
   const [productionData, setProductionData] = React.useState(undefined)
   const [productionLineData, setProductionLineData] = React.useState([])
   const [productionBarData, setProductionBarData] = React.useState({})
   const [compareData, setCompareData] = React.useState([])
   const [line, setLine] = React.useState(true)
-  const [contract, setContract] = React.useState(initialContractNumber)
+  const [contract, setContract] = React.useState(firstContractNumber)
   const [period, setPeriod] = React.useState(DAILY)
   const [currentTime, setCurrentTime] = React.useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
@@ -242,13 +242,13 @@ const ChartProductionData = () => {
 
   // Effect to fetch initial production data on mount
   React.useEffect(() => {
-    setContract(initialContractNumber)
-    getProductionData(initialContractNumber)
-  }, [initialContractNumber]) // Only run when initialContractNumber changes
+    setContract(firstContractNumber)
+    getProductionData(firstContractNumber)
+  }, [firstContractNumber]) // Only run when firstContractNumber changes
 
   // Effect to fetch new production data when contract changes
   React.useEffect(() => {
-    if (contract === initialContractNumber) return // Done in previous useEffect
+    if (contract === firstContractNumber) return // Done in previous useEffect
     getProductionData(contract)
   }, [contract]) // Run when contract changes
 
