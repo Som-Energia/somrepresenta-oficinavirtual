@@ -16,7 +16,7 @@ export default function ContractSelector({ setContract, contract }) {
   React.useEffect(() => {
     if (installations === null)
       return;
-    setContract(installations[0].contract_number);
+    setContract(installations[0]?.contract_number);
   }, [installations]);
 
   return (
