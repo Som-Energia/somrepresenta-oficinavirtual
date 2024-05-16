@@ -351,7 +351,7 @@ const ChartProductionData = () => {
       </Box>
 
       <Box sx={{ position: 'relative' }}>
-        {productionLineData.length === 0 ? (
+        {listLoading || (installations.length>0 && productionLineData.length === 0) ? (
           <Box sx={{ position: 'absolute', inset: '0' }}>
             <Loading />
           </Box>

@@ -35,18 +35,20 @@ export default function ContractSelector({ setContract, contract }) {
           <Select
             labelId="contract-select-label"
             id="contract-select"
-            value={contract || installations[0].contract_number}
+            value={contract || ''}
             label={t('PRODUCTION.LABEL_CONTRACT')}
             onChange={(ev) => setContract(ev.target.value)}
+            sx={{minWidth: '12rem'}}
           >
-            {installations &&
+            {installations && installations.length > 0 ?
               installations.map(({ contract_number, installation_name }) => {
                 return (
                   <MenuItem key={contract_number} value={contract_number}>
                     {`${installation_name} [${contract_number}]`}
                   </MenuItem>
-                );
-              })}
+                )
+              }) : <MenuItem value=''>{t('PRODUCTION.PLACEHOLDER_NO_CONTRACTS')}</MenuItem>
+            }
           </Select>
         </FormControl>
       </Box>
