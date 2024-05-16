@@ -204,7 +204,6 @@ describe('enum formatting', () => {
   })
 })
 
-
 describe('localISODateTime', () => {
   let previousLanguage
   beforeEach(() => {

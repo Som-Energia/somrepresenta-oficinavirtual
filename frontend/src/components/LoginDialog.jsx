@@ -24,20 +24,19 @@ function LoginDialog(params) {
   async function handleSubmit(ev) {
     ev.preventDefault()
     beLoading(true)
-    ov.localLogin(username, password)
-      .then((response) => {
-        if (response.code === 'VALIDATION_ERROR') {
-          setError(t('LOGIN.VALIDATION_ERROR'))
-          beLoading(false)
-          return
-        }
-        if (response.error){
-          setError(t('LOGIN.UNABLE_TO_LOGIN'))
-          beLoading(false)
-          return
-        }
-        closeDialog()
-      })
+    ov.localLogin(username, password).then((response) => {
+      if (response.code === 'VALIDATION_ERROR') {
+        setError(t('LOGIN.VALIDATION_ERROR'))
+        beLoading(false)
+        return
+      }
+      if (response.error) {
+        setError(t('LOGIN.UNABLE_TO_LOGIN'))
+        beLoading(false)
+        return
+      }
+      closeDialog()
+    })
   }
   return (
     <>

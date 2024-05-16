@@ -43,37 +43,34 @@ function timeInterval(scope, current_date) {
   start.setMinutes(0)
   start.setSeconds(0)
   start.setMilliseconds(0)
-  if (scope === "MONTHLY") {
+  if (scope === 'MONTHLY') {
     start.setDate(1)
   }
-  if (scope === "YEARLY") {
+  if (scope === 'YEARLY') {
     start.setDate(1) // Month days are 1 based
     start.setMonth(0) // Month are 0 based
   }
-  if (scope === "WEEKLY") {
+  if (scope === 'WEEKLY') {
     var weekday_shift = (start.getDay() + 6) % 7
     start.setDate(start.getDate() - weekday_shift)
   }
 
   const end = new Date(start)
   switch (scope) {
-    case "DAILY":
-      end.setDate(end.getDate()+1)
+    case 'DAILY':
+      end.setDate(end.getDate() + 1)
       break
-    case "MONTHLY":
-      end.setMonth(end.getMonth()+1)
+    case 'MONTHLY':
+      end.setMonth(end.getMonth() + 1)
       break
-    case "YEARLY":
-      end.setFullYear(end.getFullYear()+1)
+    case 'YEARLY':
+      end.setFullYear(end.getFullYear() + 1)
       break
-    case "WEEKLY":
-      end.setDate(end.getDate()+7)
+    case 'WEEKLY':
+      end.setDate(end.getDate() + 7)
       break
   }
-  return [
-    start,
-    end,
-  ]
+  return [start, end]
 }
 
 function timeSlice(timeOffset, values, indexStart, indexEnd) {
@@ -89,7 +86,12 @@ function sliceIndexes(offsetDate, period, currentTime) {
   return [startIndex, endIndex]
 }
 
-export { time2index, index2time, array2datapoints, timeInterval, timeSlice, sliceIndexes}
-export default { time2index, index2time, array2datapoints, timeInterval, timeSlice, sliceIndexes }
-
-
+export { time2index, index2time, array2datapoints, timeInterval, timeSlice, sliceIndexes }
+export default {
+  time2index,
+  index2time,
+  array2datapoints,
+  timeInterval,
+  timeSlice,
+  sliceIndexes,
+}

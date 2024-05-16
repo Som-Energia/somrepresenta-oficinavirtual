@@ -1,7 +1,7 @@
 import axios from 'axios'
 import messages from './messages'
 import i18n from '../i18n/i18n'
-import {downloadBlob} from './download'
+import { downloadBlob } from './download'
 
 /**
 Returns a catch callback that takes common non manageable
@@ -291,10 +291,11 @@ function invoicePdf(invoiceNumber) {
 
 function invoicesZip(invoiceNumbers) {
   const chunkSize = 12 //creates zip of 12 invoices (1 year)
-  for (let i = 0; i < invoiceNumbers.length; i += chunkSize){
-  
+  for (let i = 0; i < invoiceNumbers.length; i += chunkSize) {
     const chunk = invoiceNumbers.slice(i, i + chunkSize)
-    const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', { invoice_numbers: chunk})
+    const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', {
+      invoice_numbers: chunk,
+    })
 
     const queryParams = '?invoice_numbers=' + chunk
 
@@ -312,7 +313,7 @@ function invoicesZip(invoiceNumbers) {
         const filename =
           result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
           `facturas-from${chunk[0]}.zip`
-          downloadBlob(filename, result.data, 'application/zip')
+        downloadBlob(filename, result.data, 'application/zip')
       })
   }
 }
@@ -320,9 +321,13 @@ function invoicesZip(invoiceNumbers) {
 async function productionData(first_timestamp_utc, last_timestamp_utc, contract_number) {
   const context = i18n.t('OVAPI.CONTEXT_PRODUCTION_DATA')
   return axios
-    .get('/api/production_data', {params: {
-      first_timestamp_utc, last_timestamp_utc, contract_number
-    }})
+    .get('/api/production_data', {
+      params: {
+        first_timestamp_utc,
+        last_timestamp_utc,
+        contract_number,
+      },
+    })
     .catch(handleCommonErrors(context))
     .catch(handleRemainingErrors(context))
     .then((result) => {

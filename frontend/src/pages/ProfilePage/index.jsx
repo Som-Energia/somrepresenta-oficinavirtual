@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../components/AuthProvider'
 import { vat2nif } from '../../services/vat'
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import PageTitle from '../../components/PageTitle'
 
 const hideRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == false
@@ -76,9 +76,7 @@ export default function ProfilePage(params) {
 
   return (
     <Container>
-      <PageTitle Icon={AccountBoxIcon}>
-        {t('PROFILE.PROFILE_TITLE')}
-      </PageTitle>
+      <PageTitle Icon={AccountBoxIcon}>{t('PROFILE.PROFILE_TITLE')}</PageTitle>
       <Box
         style={{
           display: 'grid',

@@ -10,7 +10,7 @@ export default function CookiesBanner() {
     script.async = true
     document.body.appendChild(script)
 
-  return () => {
+    return () => {
       document.body.removeChild(script)
     }
   }, [])

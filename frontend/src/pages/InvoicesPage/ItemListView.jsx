@@ -46,15 +46,14 @@ export default function ItemListView({
 
   return (
     <List>
-      {(title ||
-        actions ) && (
-          <ListSubheader>
-            {stacked([
-              title,
-              actions && <Box>{actions.map((action, i) => action(items))}</Box>,
-            ])}
-          </ListSubheader>
-        )}
+      {(title || actions) && (
+        <ListSubheader>
+          {stacked([
+            title,
+            actions && <Box>{actions.map((action, i) => action(items))}</Box>,
+          ])}
+        </ListSubheader>
+      )}
       {rows.map((row) => {
         const labelId = `list-item-${row[idField]}2`
         return (

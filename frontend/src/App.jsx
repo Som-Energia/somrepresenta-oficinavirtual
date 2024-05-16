@@ -41,7 +41,10 @@ const routes = [
         <DialogProvider>
           <VersionCheck />
           <CookiesProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18n.language}>
+            <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              adapterLocale={i18n.language}
+            >
               <AuthProvider>
                 <ScrollRestoration /> {/* Scroll up on page switch */}
                 <BreakPointIndicator />

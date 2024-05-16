@@ -30,7 +30,11 @@ export default function ErrorSplash({ title, message, backlink, backtext, backac
         </Typography>
       )}
       <Box sx={{ display: 'flex', gap: 3 }}>
-        <Button variant="contained" color="primary" onClick={backaction || (() => navigate(backlink))}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={backaction || (() => navigate(backlink))}
+        >
           {backtext}
         </Button>
       </Box>

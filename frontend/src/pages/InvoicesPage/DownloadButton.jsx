@@ -14,7 +14,13 @@ const idle = 'idle'
 const done = 'done'
 const inprogress = 'inprogress'
 
-export default function DownloadButton({ context, title, action, size='small', Icon=DownloadIcon }) {
+export default function DownloadButton({
+  context,
+  title,
+  action,
+  size = 'small',
+  Icon = DownloadIcon,
+}) {
   const { t } = useTranslation()
   const [state, setState] = React.useState(idle)
   const [error, setError] = React.useState(undefined)
@@ -28,7 +34,7 @@ export default function DownloadButton({ context, title, action, size='small', I
     } catch (error) {
       setState(done)
       setError(error)
-      messages.error(error, {context: "Downloading"})
+      messages.error(error, { context: 'Downloading' })
     }
   }
   async function handleClick(ev) {
@@ -43,10 +49,10 @@ export default function DownloadButton({ context, title, action, size='small', I
     state === idle
       ? title ?? t('INVOICES.DOWNLOAD_TOOLTIP_DOWNLOAD')
       : state === inprogress
-        ? t('INVOICES.DOWNLOAD_TOOLTIP_ONGOING')
-        : error
-          ? error.error
-          : t('INVOICES.DOWNLOAD_TOOLTIP_SUCCESS')
+      ? t('INVOICES.DOWNLOAD_TOOLTIP_ONGOING')
+      : error
+      ? error.error
+      : t('INVOICES.DOWNLOAD_TOOLTIP_SUCCESS')
 
   const color = state !== done ? 'default' : error ? 'error' : 'success'
 
@@ -54,13 +60,13 @@ export default function DownloadButton({ context, title, action, size='small', I
     <Tooltip title={tooltip} sx={{ backgroundColor: color }}>
       <IconButton size={size} onClick={handleClick} {...{ color }}>
         {state === idle ? (
-          <Icon fontSize="inherit"/>
+          <Icon fontSize="inherit" />
         ) : state == inprogress ? (
-          <CircularProgress size={size==='small'?18:24} />
+          <CircularProgress size={size === 'small' ? 18 : 24} />
         ) : error ? (
-          <ErrorIcon fontSize="inherit"/>
+          <ErrorIcon fontSize="inherit" />
         ) : (
-          <CheckIcon fontSize="inherit"/>
+          <CheckIcon fontSize="inherit" />
         )}
       </IconButton>
     </Tooltip>

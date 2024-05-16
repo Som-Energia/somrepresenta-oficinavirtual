@@ -1,23 +1,24 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { InstallationContext } from './InstallationProvider';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import { InstallationContext } from './InstallationProvider'
 
 export default function ContractSelector({ setContract, contract }) {
   const {
-    installations, loading: listLoading, error: listError,
-  } = React.useContext(InstallationContext);
-  const { t, i18n } = useTranslation();
+    installations,
+    loading: listLoading,
+    error: listError,
+  } = React.useContext(InstallationContext)
+  const { t, i18n } = useTranslation()
 
   React.useEffect(() => {
-    if (installations === null)
-      return;
-    setContract(installations[0]?.contract_number);
-  }, [installations]);
+    if (installations === null) return
+    setContract(installations[0]?.contract_number)
+  }, [installations])
 
   return (
     installations && (
@@ -38,20 +39,22 @@ export default function ContractSelector({ setContract, contract }) {
             value={contract || ''}
             label={t('PRODUCTION.LABEL_CONTRACT')}
             onChange={(ev) => setContract(ev.target.value)}
-            sx={{minWidth: '12rem'}}
+            sx={{ minWidth: '12rem' }}
           >
-            {installations && installations.length > 0 ?
+            {installations && installations.length > 0 ? (
               installations.map(({ contract_number, installation_name }) => {
                 return (
                   <MenuItem key={contract_number} value={contract_number}>
                     {`${installation_name} [${contract_number}]`}
                   </MenuItem>
                 )
-              }) : <MenuItem value=''>{t('PRODUCTION.PLACEHOLDER_NO_CONTRACTS')}</MenuItem>
-            }
+              })
+            ) : (
+              <MenuItem value="">{t('PRODUCTION.PLACEHOLDER_NO_CONTRACTS')}</MenuItem>
+            )}
           </Select>
         </FormControl>
       </Box>
     )
-  );
-};
+  )
+}

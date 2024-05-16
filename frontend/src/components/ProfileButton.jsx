@@ -18,7 +18,7 @@ import IconKey from '@mui/icons-material/Key'
 import IconLogout from '@mui/icons-material/Logout'
 import IconLogin from '@mui/icons-material/Login'
 import IconPerson from '@mui/icons-material/Person'
-import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
+import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
@@ -107,14 +107,14 @@ function ProfileButton(params) {
       text: t('APP_FRAME.MENU_HIJACK'),
       icon: <SensorOccupiedIcon />,
       onclick: hijack,
-      hidden: !currentUser?.roles.includes('staff')
+      hidden: !currentUser?.roles.includes('staff'),
     },
     {
       text: t('APP_FRAME.MENU_LOGOUT'),
       icon: <IconLogout />,
       onclick: logout,
     },
-      ]
+  ]
 
   const initials = (name) =>
     name

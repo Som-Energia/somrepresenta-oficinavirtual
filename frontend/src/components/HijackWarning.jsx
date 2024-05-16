@@ -32,16 +32,21 @@ function HijackWarning() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            size: 'large'
+            size: 'large',
           }}
         >
           Modo suplantación activado
-          <Button variant="contained" startIcon={<IconLogout />}
+          <Button
+            variant="contained"
+            startIcon={<IconLogout />}
             style={{
               backgroundColor: 'grey',
               marginTop: '8px',
             }}
-            onClick={handleClose}>Salir</Button>
+            onClick={handleClose}
+          >
+            Salir
+          </Button>
         </Box>
       </div>
     )

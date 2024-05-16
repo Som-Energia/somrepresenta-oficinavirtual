@@ -94,8 +94,8 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
           contractData.estimated[j] === null
             ? ''
             : contractData.estimated[j] === true
-              ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
-              : t('PRODUCTION.CSV_VALUE_REAL'),
+            ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
+            : t('PRODUCTION.CSV_VALUE_REAL'),
         ]
       }),
     )
@@ -315,8 +315,8 @@ const ChartProductionData = () => {
               period === YEARLY
                 ? ['year']
                 : period === MONTHLY
-                  ? ['month', 'year']
-                  : undefined
+                ? ['month', 'year']
+                : undefined
             }
             minDate={dayjs(firstDataDate)}
             maxDate={dayjs(lastDataDate)}
@@ -351,7 +351,7 @@ const ChartProductionData = () => {
       </Box>
 
       <Box sx={{ position: 'relative' }}>
-        {listLoading || (installations.length>0 && productionLineData.length === 0) ? (
+        {listLoading || (installations.length > 0 && productionLineData.length === 0) ? (
           <Box sx={{ position: 'absolute', inset: '0' }}>
             <Loading />
           </Box>

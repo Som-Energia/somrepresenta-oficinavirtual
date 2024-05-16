@@ -1,6 +1,12 @@
 import { beforeEach, afterEach, describe, expect, test, it } from 'vitest'
 
-import { array2datapoints, time2index, index2time, timeInterval, timeSlice } from './curves'
+import {
+  array2datapoints,
+  time2index,
+  index2time,
+  timeInterval,
+  timeSlice,
+} from './curves'
 
 const d_2020_02_02_Z = '2020-02-02T00:00:00Z'
 const d_2020_02_03_Z = '2020-02-03T00:00:00Z'
@@ -183,4 +189,3 @@ describe('timeSlice', () => {
     ])
   })
 })
-

@@ -32,19 +32,23 @@ import messages from '../../services/messages'
 //import dummyData from '../../data/dummyinvoices.yaml'
 
 function paymentColor(paymentStatus) {
-  return {
-    paid: 'success.main',
-    unpaid: 'error.main',
-    open: 'warning.main',
-  }[paymentStatus] || 'warning.main'
+  return (
+    {
+      paid: 'success.main',
+      unpaid: 'error.main',
+      open: 'warning.main',
+    }[paymentStatus] || 'warning.main'
+  )
 }
 
 function paymentIcon(paymentStatus) {
-  return {
-    paid: DoneIcon,
-    unpaid: ClearIcon,
-    open: ScheduleIcon,
-  }[paymentStatus] || ScheduleIcon
+  return (
+    {
+      paid: DoneIcon,
+      unpaid: ClearIcon,
+      open: ScheduleIcon,
+    }[paymentStatus] || ScheduleIcon
+  )
 }
 
 function PaymentStatus({ paymentStatus }) {
@@ -268,7 +272,10 @@ export default function InvoicesPage() {
             <PaymentStatus paymentStatus={invoice.payment_status} />,
           ],
           `${t('INVOICES.COLUMN_CONTRACT')}: ${invoice.contract_number}`,
-          `${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(invoice.concept, concept_options)}`,
+          `${t('INVOICES.COLUMN_CONCEPT')}: ${format.enumeration(
+            invoice.concept,
+            concept_options,
+          )}`,
           <span sx={{ whiteSpace: 'nowrap' }}>
             {`${t('INVOICES.COLUMN_PERIOD')}: ${format.date(
               invoice.first_period_date,
