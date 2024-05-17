@@ -59,7 +59,7 @@ jobs:
 
       - name: Notify
         uses: Som-Energia/ghactions-notify@main
-        if: always()
+        if: !cancelled()
         with:
           webhook: ${{ secrets.WEBHOOK_ALERTES_WEBAPPS }}
 
