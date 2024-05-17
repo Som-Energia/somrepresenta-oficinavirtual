@@ -63,6 +63,8 @@ jobs:
         # this allows the build to succeed even when the notification fails
         # e.g. due to dependabot push, which may not have the secret
         continue-on-error: true
+        with:
+          webhook: ${{ secrets.WEBHOOK_ALERTES_WEBAPPS }}
 
       - name: Google Chat Notificationa
         uses: SimonScholz/google-chat-action@main
