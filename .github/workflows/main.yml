@@ -59,6 +59,10 @@ jobs:
 
       - name: Notify
         uses: Som-Energia/ghactions-notify@main
+        if: failure()
+        # this allows the build to succeed even when the notification fails
+        # e.g. due to dependabot push, which may not have the secret
+        continue-on-error: true
 
       - name: Google Chat Notificationa
         uses: SimonScholz/google-chat-action@main
