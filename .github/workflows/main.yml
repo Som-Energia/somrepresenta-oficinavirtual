@@ -57,6 +57,9 @@ jobs:
           parallel: true
           flag-name: Unit tests
 
+      - name: Notify
+        uses: Som-Energia/ghactions-notify@main
+
       - name: Google Chat Notificationa
         uses: SimonScholz/google-chat-action@main
         if: failure()
