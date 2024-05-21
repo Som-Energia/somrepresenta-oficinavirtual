@@ -308,37 +308,29 @@ function handleInvoiceZipDownloadTimeout(context) {
   }
 }
 function invoicesZip(invoiceNumbers) {
-  const chunkSize = 12 //creates zip of 12 invoices (1 year)
-  const promises = []
-  for (let i = 0; i < invoiceNumbers.length; i += chunkSize) {
-    const chunk = invoiceNumbers.slice(i, i + chunkSize)
-    const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', {
-      invoice_numbers: chunk,
+  const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', {
+    invoice_numbers: invoiceNumbers,
+  })
+
+  const queryParams = '?invoice_numbers=' + invoiceNumbers
+
+  return axios
+    .get(`/api/invoices/zip${queryParams}`, {
+      responseType: 'arraybuffer',
     })
+    .catch(handleCommonErrors(context))
+    .catch(handleInvoiceZipDownloadTimeout())
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
 
-    const queryParams = '?invoice_numbers=' + chunk
-
-    promises.push(
-      axios
-        .get(`/api/invoices/zip${queryParams}`, {
-          responseType: 'arraybuffer',
-        })
-        .catch(handleCommonErrors(context))
-        .catch(handleInvoiceZipDownloadTimeout())
-        .catch(handleRemainingErrors(context))
-        .then((result) => {
-          if (result.error !== undefined) {
-            throw result
-          }
-
-          const filename =
-            result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
-            `facturas-from${chunk[0]}.zip`
-          downloadBlob(filename, result.data, 'application/zip')
-        }),
-    )
-    return Promise.all(promises)
-  }
+      const filename =
+        result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
+        `facturas_from_${invoiceNumbers[0]}.zip`
+      downloadBlob(filename, result.data, 'application/zip')
+    })
 }
 
 async function productionData(first_timestamp_utc, last_timestamp_utc, contract_number) {
