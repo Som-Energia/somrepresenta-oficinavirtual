@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ToggleButton from '@mui/material/ToggleButton'
@@ -18,12 +18,14 @@ import minMax from 'dayjs/plugin/minMax'
 import Papa from 'papaparse'
 import Chart from '@somenergia/somenergia-ui/Chart'
 import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
-import PageTitle from './PageTitle'
-import ContractSelector from './ContractSelector'
-import ovapi from '../services/ovapi'
-import format from '../services/format'
-import { index2time, timeSlice, sliceIndexes } from '../services/curves'
-import { downloadTextFile } from '../services/download'
+import PageTitle from '../../components/PageTitle'
+import Loading from '../../components/Loading'
+import ContractSelector from '../../components/ContractSelector'
+import { InstallationContext } from '../../components/InstallationProvider'
+import ovapi from '../../services/ovapi'
+import format from '../../services/format'
+import { index2time, timeSlice, sliceIndexes } from '../../services/curves'
+import { downloadTextFile } from '../../services/download'
 
 dayjs.extend(minMax)
 
@@ -109,19 +111,29 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
 }
 
 const ChartProductionData = () => {
-  const [productionData, setProductionData] = useState(undefined)
-  const [productionLineData, setProductionLineData] = useState([])
-  const [productionBarData, setProductionBarData] = useState({})
-  const [compareData, setCompareData] = useState([])
-  const [line, setLine] = useState(true)
-  const [contract, setContract] = useState(null)
-  const [period, setPeriod] = useState(DAILY)
-  const [currentTime, setCurrentTime] = useState(dayjs(yesterday))
+  // Installations to retrieve contract number
+  const {
+    installations,
+    loading: listLoading,
+    error: listError,
+  } = React.useContext(InstallationContext)
+
+  // Initial contract number from installations (if available)
+  const firstContractNumber = installations && installations[0]?.contract_number
+
+  const [productionData, setProductionData] = React.useState(undefined)
+  const [productionLineData, setProductionLineData] = React.useState([])
+  const [productionBarData, setProductionBarData] = React.useState({})
+  const [compareData, setCompareData] = React.useState([])
+  const [line, setLine] = React.useState(true)
+  const [contract, setContract] = React.useState(firstContractNumber)
+  const [period, setPeriod] = React.useState(DAILY)
+  const [currentTime, setCurrentTime] = React.useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
-  const [showProduction, setShowProduction] = useState(true)
-  const [showForeseen, setShowForeseen] = useState(true)
-  const [totalKwh, setTotalKwh] = useState(0)
-  const [foreseenTotalKwh, setForeseenTotalKwh] = useState(0)
+  const [showProduction, setShowProduction] = React.useState(true)
+  const [showForeseen, setShowForeseen] = React.useState(true)
+  const [totalKwh, setTotalKwh] = React.useState(0)
+  const [foreseenTotalKwh, setForeseenTotalKwh] = React.useState(0)
 
   const maxDate = new Date()
   maxDate.setHours(0)
@@ -156,9 +168,27 @@ const ChartProductionData = () => {
   const firstDataDate = contractData?.first_timestamp_utc ?? minDate
   const lastDataDate = contractData?.last_timestamp_utc ?? maxDate
 
-  const getProductionData = () => {
-    ovapi.productionData(minDate, maxDate).then((data) => {
-      setProductionData(data)
+  const getProductionData = (contractNumber) => {
+    if (!contractNumber) return // If no contract number, do not proceed
+
+    // Check if productionData already contains data for the selected contract
+    const alreadyLoaded = productionData?.data.some(
+      (data) => data.contract_name === contractNumber,
+    )
+    if (alreadyLoaded) return
+
+    // Fetch production data for the given contract number
+    ovapi.productionData(minDate, maxDate, contractNumber).then((data) => {
+      setProductionData((prevData) => {
+        if (prevData === undefined) {
+          return data
+        }
+        const updatedData = {
+          ...prevData, // Preserve other properties of prevData
+          data: [...prevData.data, ...data.data], // Append the new contract data
+        }
+        return updatedData
+      })
     })
   }
 
@@ -169,8 +199,7 @@ const ChartProductionData = () => {
     setTotalKwh(measuredSum)
     setForeseenTotalKwh(foreseenSum)
   }
-
-  React.useEffect(() => {
+  function sliceGraphData() {
     const contractData = currentContractData(productionData, contract)
     if (!contractData) {
       setProductionLineData([])
@@ -202,11 +231,23 @@ const ChartProductionData = () => {
     setProductionBarData(transdormedData)
     setCompareData(foreseen_data)
     calculateTotalKwh(measured_data, foreseen_data)
+  }
+
+  React.useEffect(() => {
+    sliceGraphData()
   }, [productionData, period, currentTime, contract])
 
-  useEffect(() => {
-    getProductionData()
-  }, [])
+  // Effect to fetch initial production data on mount
+  React.useEffect(() => {
+    setContract(firstContractNumber)
+    getProductionData(firstContractNumber)
+  }, [firstContractNumber]) // Only run when firstContractNumber changes
+
+  // Effect to fetch new production data when contract changes
+  React.useEffect(() => {
+    if (contract === firstContractNumber) return // Done in previous useEffect
+    getProductionData(contract)
+  }, [contract]) // Run when contract changes
 
   const dayjsperiods = {
     DAILY: 'd',
@@ -309,14 +350,21 @@ const ChartProductionData = () => {
         />
       </Box>
 
-      <Chart
-        period={period}
-        data={line ? (showProduction ? productionLineData : []) : productionBarData}
-        legend={true}
-        type={line ? LINE : BAR}
-        lang={i18n?.language}
-        compareData={showForeseen ? compareData : []}
-      />
+      <Box sx={{ position: 'relative' }}>
+        {productionLineData.length === 0 ? (
+          <Box sx={{ position: 'absolute', inset: '0' }}>
+            <Loading />
+          </Box>
+        ) : null}
+        <Chart
+          period={period}
+          data={line ? (showProduction ? productionLineData : []) : productionBarData}
+          legend={true}
+          type={line ? LINE : BAR}
+          lang={i18n?.language}
+          compareData={showForeseen ? compareData : []}
+        />
+      </Box>
       <Box
         sx={{
           width: '100%',

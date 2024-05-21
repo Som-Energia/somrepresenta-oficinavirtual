@@ -1,6 +1,6 @@
 from fastapi import Request, Depends, status, Query
 from fastapi.responses import JSONResponse
-from typing import Annotated
+from typing import Annotated, Optional
 from pydantic import AwareDatetime
 from .models import (
     UserProfile,
@@ -88,6 +88,12 @@ def setup_business(app):
     def api_production_data(
         first_timestamp_utc: AwareDatetime,
         last_timestamp_utc: AwareDatetime,
+        contract_number: Optional[str] = None,
         user: dict = Depends(validated_user),
     ) -> CustomerProductionData:
-        return production_data(user['username'], first_timestamp_utc, last_timestamp_utc)
+        return production_data(
+            user['username'],
+            first_timestamp_utc,
+            last_timestamp_utc,
+            contract_number
+        )

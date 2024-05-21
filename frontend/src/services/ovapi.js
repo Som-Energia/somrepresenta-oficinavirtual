@@ -317,11 +317,11 @@ function invoicesZip(invoiceNumbers) {
   }
 }
 
-async function productionData(first_timestamp_utc, last_timestamp_utc) {
+async function productionData(first_timestamp_utc, last_timestamp_utc, contract_number) {
   const context = i18n.t('OVAPI.CONTEXT_PRODUCTION_DATA')
   return axios
     .get('/api/production_data', {params: {
-      first_timestamp_utc, last_timestamp_utc
+      first_timestamp_utc, last_timestamp_utc, contract_number
     }})
     .catch(handleCommonErrors(context))
     .catch(handleRemainingErrors(context))

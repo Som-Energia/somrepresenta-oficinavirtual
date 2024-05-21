@@ -2,6 +2,7 @@ import httpx
 import dotenv
 import os
 from decorator import decorator
+from typing import Dict, Any, Optional
 from pydantic import AwareDatetime
 
 # TODO: Please do not let this evolve without major refactor!
@@ -37,16 +38,18 @@ class Erp:
         self.user = os.environ["ERP_USERNAME"]
         self.password = os.environ["ERP_PASSWORD"]
         self._token = None
+        self.debug = os.environ.get("ERP_DEBUG", 'False').lower() in ('true', '1', 't')
+
 
     def _post(self, endpoint, *args):
-        print(">>", endpoint, args)
+        if self.debug: print(">>", endpoint, args)
         try:
             r = httpx.post(self.baseurl + endpoint, json=list(args))
         except httpx.ConnectError as e:
             raise ErpConnectionError(str(e))
         r.raise_for_status()
         result = r.json()
-        print("<<", r.status_code, endpoint, result)
+        if self.debug: print("<<", r.status_code, endpoint, result)
 
         # ERP error before getting in our ERP callback sandbox
         if r.status_code == 210:
@@ -138,11 +141,18 @@ class Erp:
             "som.ov.invoices", "download_invoices_zip", username, invoice_numbers
         )
 
-    def production_data(self, username: str, first_timestamp_utc: AwareDatetime, last_timestamp_utc: AwareDatetime):
+    def production_data(
+        self,
+        username: str,
+        first_timestamp_utc: AwareDatetime,
+        last_timestamp_utc: AwareDatetime,
+        contract_number: Optional[str] = None
+    ) -> Dict[str, Any]:
         data = self.object_execute(
             "som.ov.production.data",
-            "measures",
+            "measures_single_installation",
             username,
+            str(contract_number),
             str(first_timestamp_utc),
             str(last_timestamp_utc),
         )
