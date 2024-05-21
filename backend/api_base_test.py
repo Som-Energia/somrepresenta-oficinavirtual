@@ -67,7 +67,8 @@ class ApiBase_Test(unittest.TestCase):
               - parameter
               msg: Input should be a valid integer, unable to parse string as an integer
               type: int_parsing
-              url: https://errors.pydantic.dev/{pydantic_minor_version}/v/int_parsing
+              # TODO: At some dependency version this attribute disappeared, remove if not longer needed
+              #url: https://errors.pydantic.dev/{pydantic_minor_version}/v/int_parsing
         """, status. HTTP_422_UNPROCESSABLE_ENTITY)
 
     @unittest.skip("How to enable 500 handling when testing?")
