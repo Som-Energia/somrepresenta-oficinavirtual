@@ -34,7 +34,7 @@ export default function DownloadButton({
     } catch (error) {
       setState(done)
       setError(error)
-      messages.error(error, { context: 'Downloading' })
+      messages.error(error.error, { context: 'Downloading' })
     }
   }
   async function handleClick(ev) {
