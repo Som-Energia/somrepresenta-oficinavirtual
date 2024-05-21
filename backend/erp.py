@@ -10,6 +10,7 @@ from pydantic import AwareDatetime
 # TODO; Use erppeek, connection pool management, transactions...
 
 ERP_DEFAULT_TIMEOUT_SECONDS = 5
+ERP_INVOICE_ZIP_TIMEOUT_SECONDS = 30
 
 @decorator
 def requires_token(f, self, *args, **kwds):
@@ -146,7 +147,7 @@ class Erp:
     def invoices_zip(self, username: str, invoice_numbers: list[str]) -> dict:
         return self.object_execute(
             "som.ov.invoices", "download_invoices_zip", username, invoice_numbers,
-            timeout=10,
+            timeout=ERP_INVOICE_ZIP_TIMEOUT_SECONDS,
         )
 
     def production_data(
