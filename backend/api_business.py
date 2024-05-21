@@ -22,7 +22,7 @@ from .datasources import (
     invoices_zip,
     production_data,
 )
-from .erp import ErpConnectionError
+from .erp import ErpConnectionError, ErpTimeoutError
 from .auth import validated_user
 from .utils.responses import PdfStreamingResponse, ZipStreamingResponse
 from consolemsg import error
@@ -36,6 +36,15 @@ def setup_business(app):
         return JSONResponse(
             status_code=status.HTTP_502_BAD_GATEWAY,
             content={"details": "Unable to reach ERP"},
+        )
+
+    @app.exception_handler(ErpTimeoutError)
+    async def erp_timeout_error_handler(request: Request, exc: ErpTimeoutError):
+        # TODO: Log exception
+        error("ERP timeout")
+        return JSONResponse(
+            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+            content={"details": "ERP timeout"},
         )
 
     @app.get('/api/me')

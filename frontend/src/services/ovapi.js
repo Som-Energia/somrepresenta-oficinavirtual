@@ -15,6 +15,7 @@ function handleCommonErrors(context) {
     const t = i18n.t
 
     console.log(`Error ${error.code} ${context}\n${error.message}`)
+    // UI -> API network problem
     if (error.code === 'ERR_NETWORK') {
       messages.error(t('OVAPI.ERR_NETWORK'), { context })
       return {
@@ -289,6 +290,23 @@ function invoicePdf(invoiceNumber) {
     })
 }
 
+function handleInvoiceZipDownloadTimeout(context) {
+  const t = i18n.t
+
+  return (error) => {
+    if (error.response) {
+      // Gateway timeout (too many invoices)
+      if (error.response.status === 504) {
+        messages.error(t('OVAPI.ERR_TOO_MANY_INVOICES'), { context })
+        return {
+          error: t('OVAPI.ERR_TOO_MANY_INVOICES'),
+          context,
+        }
+      }
+    }
+    throw error
+  }
+}
 function invoicesZip(invoiceNumbers) {
   const chunkSize = 12 //creates zip of 12 invoices (1 year)
   const promises = []
@@ -306,6 +324,7 @@ function invoicesZip(invoiceNumbers) {
           responseType: 'arraybuffer',
         })
         .catch(handleCommonErrors(context))
+        .catch(handleInvoiceZipDownloadTimeout())
         .catch(handleRemainingErrors(context))
         .then((result) => {
           if (result.error !== undefined) {

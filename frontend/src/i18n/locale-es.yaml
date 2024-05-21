@@ -132,6 +132,7 @@ OVAPI:
   ERR_NETWORK: No se encuentra el servidor. ¿Tienes conexión a la red?
   ERR_GATEWAY: El sistema no está disponible por mantenimiento. Prueba más tarde.
   ERR_INTERNAL: 'Se ha producido un error inesperado en el servidor. Referencia {{reference}}.'
+  ERR_TOO_MANY_INVOICES: Petición demasiado grande, prueba con menos facturas.
 INSTALLATION_DETAIL:
   DETAILS_TITLE: Detalles
   INSTALLATION_DETAILS_TITLE: Detalles de la instalación

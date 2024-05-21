@@ -22,6 +22,10 @@ class ErpConnectionError(Exception):
     pass
 
 
+class ErpTimeoutError(Exception):
+    pass
+
+
 class ErpUnexpectedError(Exception):
     def __init__(self, remote_error, remote_traceback):
         self.remote_error = remote_error
@@ -46,6 +50,8 @@ class Erp:
         if self.debug: print(">>", endpoint, args)
         try:
             r = httpx.post(self.baseurl + endpoint, json=list(args), timeout=timeout)
+        except httpx.ReadTimeout as e:
+            raise ErpTimeoutError(str(e))
         except httpx.ConnectError as e:
             raise ErpConnectionError(str(e))
         r.raise_for_status()
