@@ -9,6 +9,8 @@ from pydantic import AwareDatetime
 # TODO: This is a quick proof of concept
 # TODO; Use erppeek, connection pool management, transactions...
 
+ERP_DEFAULT_TIMEOUT_SECONDS = 5
+ERP_INVOICE_ZIP_TIMEOUT_SECONDS = 30
 
 @decorator
 def requires_token(f, self, *args, **kwds):
@@ -18,6 +20,10 @@ def requires_token(f, self, *args, **kwds):
 
 
 class ErpConnectionError(Exception):
+    pass
+
+
+class ErpTimeoutError(Exception):
     pass
 
 
@@ -41,10 +47,12 @@ class Erp:
         self.debug = os.environ.get("ERP_DEBUG", 'False').lower() in ('true', '1', 't')
 
 
-    def _post(self, endpoint, *args):
+    def _post(self, endpoint, *args, timeout=ERP_DEFAULT_TIMEOUT_SECONDS):
         if self.debug: print(">>", endpoint, args)
         try:
-            r = httpx.post(self.baseurl + endpoint, json=list(args), timeout=10)
+            r = httpx.post(self.baseurl + endpoint, json=list(args), timeout=timeout)
+        except httpx.ReadTimeout as e:
+            raise ErpTimeoutError(str(e))
         except httpx.ConnectError as e:
             raise ErpConnectionError(str(e))
         r.raise_for_status()
@@ -63,8 +71,8 @@ class Erp:
         self._token = self._post("/common", "token", self.db, self.user, self.password)
 
     @requires_token
-    def object_execute(self, *args):
-        return self._post("/object", "execute", self.db, "token", self._token, *args)
+    def object_execute(self, *args, timeout=10):
+        return self._post("/object", "execute", self.db, "token", self._token, *args, timeout=timeout)
 
     def customer_list(self):
         ids = self.object_execute("res.partner", "search", [["vat", "<>", False]])
@@ -138,7 +146,8 @@ class Erp:
 
     def invoices_zip(self, username: str, invoice_numbers: list[str]) -> dict:
         return self.object_execute(
-            "som.ov.invoices", "download_invoices_zip", username, invoice_numbers
+            "som.ov.invoices", "download_invoices_zip", username, invoice_numbers,
+            timeout=ERP_INVOICE_ZIP_TIMEOUT_SECONDS,
         )
 
     def production_data(

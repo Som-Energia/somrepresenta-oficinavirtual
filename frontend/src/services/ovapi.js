@@ -15,6 +15,7 @@ function handleCommonErrors(context) {
     const t = i18n.t
 
     console.log(`Error ${error.code} ${context}\n${error.message}`)
+    // UI -> API network problem
     if (error.code === 'ERR_NETWORK') {
       messages.error(t('OVAPI.ERR_NETWORK'), { context })
       return {
@@ -289,33 +290,47 @@ function invoicePdf(invoiceNumber) {
     })
 }
 
-function invoicesZip(invoiceNumbers) {
-  const chunkSize = 12 //creates zip of 12 invoices (1 year)
-  for (let i = 0; i < invoiceNumbers.length; i += chunkSize) {
-    const chunk = invoiceNumbers.slice(i, i + chunkSize)
-    const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', {
-      invoice_numbers: chunk,
-    })
+function handleInvoiceZipDownloadTimeout(context) {
+  const t = i18n.t
 
-    const queryParams = '?invoice_numbers=' + chunk
-
-    axios
-      .get(`/api/invoices/zip${queryParams}`, {
-        responseType: 'arraybuffer',
-      })
-      .catch(handleCommonErrors(context))
-      .catch(handleRemainingErrors(context))
-      .then((result) => {
-        if (result.error !== undefined) {
-          throw result
+  return (error) => {
+    if (error.response) {
+      // Gateway timeout (too many invoices)
+      if (error.response.status === 504) {
+        messages.error(t('OVAPI.ERR_TOO_MANY_INVOICES'), { context })
+        return {
+          error: t('OVAPI.ERR_TOO_MANY_INVOICES'),
+          context,
         }
-
-        const filename =
-          result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
-          `facturas-from${chunk[0]}.zip`
-        downloadBlob(filename, result.data, 'application/zip')
-      })
+      }
+    }
+    throw error
   }
+}
+function invoicesZip(invoiceNumbers) {
+  const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', {
+    invoice_numbers: invoiceNumbers,
+  })
+
+  const queryParams = '?invoice_numbers=' + invoiceNumbers
+
+  return axios
+    .get(`/api/invoices/zip${queryParams}`, {
+      responseType: 'arraybuffer',
+    })
+    .catch(handleCommonErrors(context))
+    .catch(handleInvoiceZipDownloadTimeout())
+    .catch(handleRemainingErrors(context))
+    .then((result) => {
+      if (result.error !== undefined) {
+        throw result
+      }
+
+      const filename =
+        result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
+        `facturas_from_${invoiceNumbers[0]}.zip`
+      downloadBlob(filename, result.data, 'application/zip')
+    })
 }
 
 async function productionData(first_timestamp_utc, last_timestamp_utc, contract_number) {
