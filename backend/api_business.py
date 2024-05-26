@@ -70,6 +70,7 @@ def setup_business(app):
     @app.get(
         '/api/invoice/{invoice_number}/pdf',
         response_class=PdfStreamingResponse,
+        status_code=200,
     )
     def api_invoice_pdf(invoice_number: str, user: dict = Depends(validated_user)):
         from yamlns import ns
@@ -83,6 +84,7 @@ def setup_business(app):
     @app.get(
         '/api/invoices/zip',
         response_class=ZipStreamingResponse,
+        status_code=200,
     )
     def api_invoices_zip(invoice_numbers: Annotated[list[str], Query()] = None, user: dict = Depends(validated_user)):
         from yamlns import ns
