@@ -100,6 +100,13 @@ function PaymentStatusCell({ paymentStatus }) {
   )
 }
 
+function LiquidationCell({ liquidation }) {
+  const { t } = useTranslation()
+  if (liquidation === 'COMPLEMENTARY')
+    return t('INVOICES.COMPLEMENTARY_LIQUIDATION')
+  return liquidation
+}
+
 PaymentStatusCell.propTypes = {
   paymentStatus: PropTypes.oneOf(['paid', 'open', 'unpaid']).isRequired,
 }
@@ -167,6 +174,7 @@ export default function InvoicesPage() {
       label: t('INVOICES.COLUMN_LIQUIDATION'),
       searchable: true,
       numeric: false,
+      view: (invoice) => <LiquidationCell liquidation={invoice.liquidation} />
     },
     {
       id: 'emission_date',
