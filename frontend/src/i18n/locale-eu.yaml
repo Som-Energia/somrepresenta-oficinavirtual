@@ -132,6 +132,7 @@ PRODUCTION:
   LABEL_PERIOD: Denbora-tartea
   PERIOD_DIARY: Egunekoa
   PERIOD_WEEKLY: Astekoa
+  PLACEHOLDER_NO_CONTRACTS: Ez da kontraturik aurkitu
 LOGIN:
   UNABLE_TO_LOGIN: Ezin izan da baliozkotu
   USERNAME_LABEL: Erabiltzailea
@@ -225,6 +226,9 @@ OVAPI:
   ERR_INTERNAL: 'Ustekabeko errore bat gertatu da zerbitzarian. Erreferentzia: {{reference}}.'
   CONTEXT_INVOICES_ZIP_DOWNLOAD: Errore bat gertatu da {{invoice_numbers}} fakturen
     zipa deskargatzean
+  ERR_TOO_MANY_INVOICES: Eskaera handiegia da, faktura gutxiagorekin egin daiteke
+    proba.
+  CONTEXT_PRODUCTION_DATA: Errore bat gertatu da ekoizpen-datuak deskargatzean
 COOKIES_POLICY:
   TITLE: Cookieen politika
   SUBTITLE: Nola erabiltzen ditugu cookieak?
