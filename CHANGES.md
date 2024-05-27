@@ -6,6 +6,7 @@
     - Custom timeout for some ERP queries
     - Report invoice zip timeout
     - Single zip for many invoices
+    - Special value for complementary liquidations
 
 ## 0.7.0 (2024-05-15)
 
