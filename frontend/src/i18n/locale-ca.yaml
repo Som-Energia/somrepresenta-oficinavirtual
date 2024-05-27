@@ -165,6 +165,8 @@ OVAPI:
   CONTEXT_HIJACK: Error suplantant la usuària
   CONTEXT_INVOICE_PDF_DOWNLOAD: Error en descarregar la factura {{invoice}}
   CONTEXT_INVOICES_ZIP_DOWNLOAD: Erro en descarregar el zip de les factures {{invoice_numbers}}
+  ERR_TOO_MANY_INVOICES: Petició massa gran, prova amb menys factures.
+  CONTEXT_PRODUCTION_DATA: Error descarregant dades de producció
 COOKIES_POLICY:
   TITLE: Política de cookies
   SUBTITLE: Quin ús fem de les cookies?
@@ -309,3 +311,4 @@ PRODUCTION:
   STYLE_BAR: Barres
   STYLE_LINE: Línies
   CSV_COLUMN_MEASURE: Producció (kWh)
+  PLACEHOLDER_NO_CONTRACTS: No s'han trobat contractes
