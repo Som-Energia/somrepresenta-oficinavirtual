@@ -132,6 +132,7 @@ PRODUCTION:
   CSV_COLUMN_INSTALL_NAME: Nome da instalación
   CSV_COLUMN_UTC_OFFSET: Diferenza UTC (h)
   CSV_COLUMN_MATURITY: Madureza
+  PLACEHOLDER_NO_CONTRACTS: Non se atoparon contratos
 LOGIN:
   VALIDATION_ERROR: Usuaria ou contrasinal incorrectos
   SUBMIT_BUTTON_LOGIN: Validar
@@ -227,6 +228,8 @@ OVAPI:
   ERR_GATEWAY: O sistema non está dispoñible por razóns de mantemento. Volve probar
     máis tarde.
   ERR_INTERNAL: Produciuse un erro inesperado no servidor. Referencia {{reference}}.
+  ERR_TOO_MANY_INVOICES: Solicitude demasiado grande, proba con menos facturas.
+  CONTEXT_PRODUCTION_DATA: Produciuse un erro ao descargar os datos de produción
 COOKIES_POLICY:
   TITLE: Política de cookies
   PURPOSE: Segundo a finalidade
