@@ -23,7 +23,7 @@ from .datasources import (
     production_data,
 )
 from .erp import ErpConnectionError, ErpTimeoutError
-from .auth import validated_user
+from .authremote import validated_user
 from .utils.responses import PdfStreamingResponse, ZipStreamingResponse
 from consolemsg import error
 

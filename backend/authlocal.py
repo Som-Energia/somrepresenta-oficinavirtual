@@ -8,7 +8,7 @@ from jose import JWTError, jwt
 from consolemsg import error, success
 import os
 from yamlns import ns
-from .auth import auth_error, validated_user, validated_staff, JWT_ALGORITHM
+from .authremote import auth_error, validated_user, validated_staff, JWT_ALGORITHM
 from .models import TokenUser
 from .datasources import user_info
 
