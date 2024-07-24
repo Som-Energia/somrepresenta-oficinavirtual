@@ -22,7 +22,7 @@ class NewUser(BaseModel):
     type: str
 
 
-class UserProvision:
+class UserProvision_Old:
 
     def _api(self, url, payload=None, method=None):
         BASE_URL=os.environ.get("AUTHENTIK_API_URL")

@@ -1,5 +1,5 @@
 import unittest
-from .user_provision import UserProvision, NewUser
+from .user_provision import UserProvision_Old, NewUser
 from dotenv import load_dotenv
 import os
 import datetime
@@ -15,17 +15,17 @@ class UserProvision_Test(unittest.TestCase):
         self.group = os.environ.get("AUTHENTIK_GROUP_ID")
 
     def test__version__returns_current(self):
-        api = UserProvision()
+        api = UserProvision_Old()
         result = api.version()
         self.assertIn('version_current', result)
         
     def test__retrieve__non_existing__returns_none(self):
-        api = UserProvision()
+        api = UserProvision_Old()
         result = api.retrieve(self.non_existing_id)
         self.assertIsNone(result)
         
     def test__create_and_delete(self):
-        api = UserProvision()
+        api = UserProvision_Old()
 
         new_user = api.create(NewUser(
             username="non-existing-user",
