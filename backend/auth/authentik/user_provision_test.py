@@ -24,8 +24,8 @@ class UserProvision_Test(unittest.TestCase):
         result = self.api.version()
         self.assertIn('version_current', result)
         
-    def test__retrieve__non_existing__returns_none(self):
-        result = self.api.retrieve(self.non_existing_id)
+    def test__get_by_username__non_existing__returns_none(self):
+        result = self.api.get_by_username(self.non_existing_id)
         self.assertIsNone(result)
         
     def test__create_and_delete(self):
@@ -42,11 +42,11 @@ class UserProvision_Test(unittest.TestCase):
             type="internal",
         ))
         id = new_user['pk']
-        result = self.api.retrieve(self.username)
+        result = self.api.get_by_username(self.username)
         self.assertIsNotNone(result)
         self.assertEqual(result.get('name'), "Non Existing User")
         self.api.remove(id)
-        result = self.api.retrieve(self.username)
+        result = self.api.get_by_username(self.username)
         self.assertIsNone(result)
 
 

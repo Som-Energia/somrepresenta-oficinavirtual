@@ -47,7 +47,7 @@ class UserProvision:
         return self._api("admin/version/")
 
 
-    def retrieve(self, username):
+    def get_by_username(self, username):
         user_id = self.get_id_by_username(username)
         try:
             return self._api(f"core/users/{user_id}/", payload={}, method="GET")
