@@ -89,7 +89,7 @@ class UserProvision_Test(unittest.TestCase):
             email: a@a.net
         """)
 
-    def _test__provision_user__when_all_ok__sets_attributes_and_password(self):
+    def test__provision_user__when_all_ok__sets_attributes_and_password(self):
         existing_user = self.api.create(NewUser(
             username=self.username,
             name=self.fullname,
@@ -115,7 +115,7 @@ class UserProvision_Test(unittest.TestCase):
             email: b@b.net
         """)
 
-
     def test__provision_user__when_not_in_group__adds_to_group(self): ""
     def test__provision_user__when_not_active__activates(self): ""
+    def test__provision_user__sets_password(self): ""
 

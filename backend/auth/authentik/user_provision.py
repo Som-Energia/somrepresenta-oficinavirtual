@@ -91,6 +91,15 @@ class UserProvision:
         return result['results'][0]['pk']
 
     def provision_user(self, username, name, email, password):
+        id = self.get_id_by_username(username)
+        if id:
+            self.update(
+                username=username,
+                name=name,
+                email=email,
+            )
+            return
+
         self.create(NewUser(
             username=username,
             name=name,
