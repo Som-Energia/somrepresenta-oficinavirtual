@@ -98,6 +98,10 @@ class UserProvision:
         if not result.get('results'): return None
         return result['results'][0]['pk']
 
+    def set_password(self, user_id, password):
+        self._api(f"core/users/{user_id}/set_password/", json={'password': password}, method="POST")
+
+
     def provision_user(self, username, name, email, password):
         id = self.get_id_by_username(username)
         if id:

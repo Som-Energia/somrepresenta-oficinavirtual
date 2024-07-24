@@ -100,6 +100,22 @@ class UserProvision_Test(unittest.TestCase):
             - {group_id}
         """)
 
+    def test__set_password__insecure(self):
+        new_user = self.api.create(NewUser(
+            username=self.username,
+            name=self.fullname,
+            is_active=True,
+            last_login=datetime.datetime.now(datetime.timezone.utc) ,
+            groups=[self.group],
+            email="a@a.net",
+            attributes={},
+            path="algo",
+            type="internal",
+        ))
+        self.api.set_password(new_user['pk'], 'a')
+
+
+
     ################## High level interface
 
     def test__provision_user__when_new_user__creates(self):
