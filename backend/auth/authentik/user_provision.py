@@ -48,13 +48,14 @@ class UserProvision:
 
 
     def get_by_username(self, username):
-        user_id = self.get_id_by_username(username)
         try:
-            return self._api(f"core/users/{user_id}/", payload={}, method="GET")
+            result = self._api(f"core/users/", params={'username':username}, method="GET")
         except httpx.HTTPError as e:
             if e.response.status_code == 404:
                 return None
             raise
+        if not result.get('results'): return None
+        return result['results'][0]
 
     def create(self, user: NewUser):
         try:
