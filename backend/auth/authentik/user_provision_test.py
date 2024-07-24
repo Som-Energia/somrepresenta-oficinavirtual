@@ -10,6 +10,7 @@ class UserProvision_Test(unittest.TestCase):
     non_existing_id = 'should_not_exist_from_somrepre'
     username = 'my_temporary_test_from_somrepre'
     fullname = "SomRepre Test User"
+    other_group = "temporary_test_group_somrepre"
 
     def setUp(self):
         # TODO: restore environment after tests
@@ -20,6 +21,11 @@ class UserProvision_Test(unittest.TestCase):
     def tearDown(self):
         id = self.api.get_id_by_username(self.username)
         if id: self.api.remove(id)
+
+    def addGroup(self):
+        group_id = self.api.add_group(self.other_group)
+        self.addCleanup(lambda: self.api.remove_group(group_id))
+        return group_id
 
     def test__version__returns_current(self):
         result = self.api.version()
@@ -51,7 +57,6 @@ class UserProvision_Test(unittest.TestCase):
         self.assertIsNone(result)
 
     def test__update_user(self):
-
         new_user = self.api.create(NewUser(
             username=self.username,
             name=self.fullname,
@@ -74,6 +79,29 @@ class UserProvision_Test(unittest.TestCase):
             email: b@b.net
         """)
 
+    def test__add_user_to_group(self):
+        group_id = self.addGroup()
+        new_user = self.api.create(NewUser(
+            username=self.username,
+            name=self.fullname,
+            is_active=True,
+            last_login=datetime.datetime.now(datetime.timezone.utc) ,
+            groups=[self.group],
+            email="a@a.net",
+            attributes={},
+            path="algo",
+            type="internal",
+        ))
+        self.api.add_user_to_group(new_user['pk'],group_id)
+        result = self.api.get_by_username(self.username)
+        self.assertNsContains(result, f"""
+            groups:
+            - {self.group}
+            - {group_id}
+        """)
+
+    ################## High level interface
+
     def test__provision_user__when_new_user__creates(self):
         self.api.provision_user(
             username=self.username,
@@ -86,6 +114,7 @@ class UserProvision_Test(unittest.TestCase):
         self.assertNsContains(retrieved, f"""
             username: {self.username}
             name: {self.fullname}
+            groups: [{self.group}]
             email: a@a.net
         """)
 

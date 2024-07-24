@@ -1,6 +1,7 @@
 import httpx
 from yamlns import ns
 import os
+import datetime
 from pydantic import (
     BaseModel,
     AwareDatetime,
@@ -32,20 +33,27 @@ class UserProvision:
             'Accept': 'application/json',
             'Authorization': f"Bearer {TOKEN}"
         }
-        method = method if method is not None else "POST" if payload else "GET"
-        debug and print(f"{method} {full_url}\n{payload}")
+        method = method if method is not None else "POST" if payload or json else "GET"
+        debug and print(f"{method} {full_url}\n{payload or json}")
 
         response = httpx.request(method, full_url, json=json, params=params, headers=headers, data=payload)
-
+        print('RESPONSE:', response.status_code, response.text)
         response.raise_for_status()
 
-        print('RESPONSE:',response.text)
         return response.json() if response.text else None
 
 
     def version(self):
         return self._api("admin/version/")
 
+    def add_group(self, name):
+        return self._api("core/groups/", json={'name': name}, method="POST")['pk']
+
+    def remove_group(self, group_id):
+        self._api(f"core/groups/{group_id}/", payload={}, method="DELETE")
+
+    def add_user_to_group(self, user_id, group_id):
+        self._api(f"core/groups/{group_id}/add_user/", json={'pk': user_id}, method="POST")
 
     def get_by_username(self, username):
         try:
@@ -97,6 +105,7 @@ class UserProvision:
                 username=username,
                 name=name,
                 email=email,
+                groups=[os.environ.get("AUTHENTIK_GROUP_ID")],
             )
             return
 
