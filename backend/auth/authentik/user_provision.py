@@ -105,8 +105,8 @@ class UserProvision:
                 username=username,
                 name=name,
                 email=email,
-                groups=[os.environ.get("AUTHENTIK_GROUP_ID")],
             )
+            self.add_user_to_group(id, os.environ.get("AUTHENTIK_GROUP_ID"))
             return
 
         self.create(NewUser(

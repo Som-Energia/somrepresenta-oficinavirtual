@@ -142,9 +142,38 @@ class UserProvision_Test(unittest.TestCase):
             username: {self.username}
             name: Changed name
             email: b@b.net
+            groups:
+            - {self.group}
         """)
 
-    def test__provision_user__when_not_in_group__adds_to_group(self): ""
+    def test__provision_user__when_not_in_group__adds_to_existing_groups(self):
+        group_id = self.api.add_group(self.other_group)
+        existing_user = self.api.create(NewUser(
+            username=self.username,
+            name=self.fullname,
+            is_active=True,
+            last_login=datetime.datetime.now(datetime.timezone.utc),
+            groups=[group_id],  # THIS CHANGES
+            email="a@a.net",
+            attributes={},
+            path="algo",
+            type="internal",
+        ))
+
+        self.api.provision_user(
+            username=self.username,
+            name="Changed name", # This changes
+            email="b@b.net", # This changes
+            password="muyimportante",
+        )
+
+        retrieved = self.api.get_by_username(self.username)
+        self.assertNsContains(retrieved, f"""
+            groups:
+            - {self.group}
+            - {group_id}
+        """)
+
     def test__provision_user__when_not_active__activates(self): ""
     def test__provision_user__sets_password(self): ""
 
