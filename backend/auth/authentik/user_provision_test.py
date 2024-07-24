@@ -5,10 +5,11 @@ import os
 import datetime
 
 class UserProvision_Test(unittest.TestCase):
-    from yamlns.testutils import assertNsEqual
+    from yamlns.testutils import assertNsEqual, assertNsContains
 
     non_existing_id = 'should_not_exist_from_somrepre'
     username = 'my_temporary_test_from_somrepre'
+    fullname = "SomRepre Test User"
 
     def setUp(self):
         # TODO: restore environment after tests
@@ -32,7 +33,7 @@ class UserProvision_Test(unittest.TestCase):
 
         new_user = self.api.create(NewUser(
             username=self.username,
-            name="Non Existing User",
+            name=self.fullname,
             is_active=True,
             last_login=datetime.datetime.now(datetime.timezone.utc) ,
             groups=[self.group],
@@ -44,11 +45,77 @@ class UserProvision_Test(unittest.TestCase):
         id = new_user['pk']
         result = self.api.get_by_username(self.username)
         self.assertIsNotNone(result)
-        self.assertEqual(result.get('name'), "Non Existing User")
+        self.assertEqual(result.get('name'), self.fullname)
         self.api.remove(id)
         result = self.api.get_by_username(self.username)
         self.assertIsNone(result)
 
+    def test__update_user(self):
+
+        new_user = self.api.create(NewUser(
+            username=self.username,
+            name=self.fullname,
+            is_active=True,
+            last_login=datetime.datetime.now(datetime.timezone.utc) ,
+            groups=[self.group],
+            email="a@a.net",
+            attributes={},
+            path="algo",
+            type="internal",
+        ))
+        self.api.update(self.username, 
+            name="Changed full name",
+            email="b@b.net",
+        )
+        result = self.api.get_by_username(self.username)
+        self.assertNsContains(result, f"""
+            username: {self.username}
+            name: Changed full name
+            email: b@b.net
+        """)
+
+    def test__provision_user__when_new_user__creates(self):
+        self.api.provision_user(
+            username=self.username,
+            name=self.fullname,
+            email="a@a.net",
+            password="muyimportante",
+        )
+        retrieved = self.api.get_by_username(self.username)
+        self.assertIsNotNone(retrieved)
+        self.assertNsContains(retrieved, f"""
+            username: {self.username}
+            name: {self.fullname}
+            email: a@a.net
+        """)
+
+    def _test__provision_user__when_all_ok__sets_attributes_and_password(self):
+        existing_user = self.api.create(NewUser(
+            username=self.username,
+            name=self.fullname,
+            is_active=True,
+            last_login=datetime.datetime.now(datetime.timezone.utc),
+            groups=[self.group],
+            email="a@a.net",
+            attributes={},
+            path="algo",
+            type="internal",
+        ))
+
+        self.api.provision_user(
+            username=self.username,
+            name="Changed name", # This changes
+            email="b@b.net", # This changes
+            password="muyimportante",
+        )
+        retrieved = self.api.get_by_username(self.username)
+        self.assertNsContains(retrieved, f"""
+            username: {self.username}
+            name: Changed name
+            email: b@b.net
+        """)
 
 
+    def test__provision_user__when_not_in_group__adds_to_group(self): ""
+    def test__provision_user__when_not_active__activates(self): ""
 

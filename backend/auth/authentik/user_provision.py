@@ -23,7 +23,7 @@ class NewUser(BaseModel):
 
 class UserProvision:
 
-    def _api(self, url, payload=None, params=None, method=None):
+    def _api(self, url, payload=None, params=None, json=None, method=None):
         BASE_URL=os.environ.get("AUTHENTIK_API_URL")
         TOKEN=os.environ.get("AUTHENTIK_TOKEN")
         full_url = f"{BASE_URL}/api/v3/{url}"
@@ -33,9 +33,9 @@ class UserProvision:
             'Authorization': f"Bearer {TOKEN}"
         }
         method = method if method is not None else "POST" if payload else "GET"
-        #debug and print(f"{method} {full_url}\n{payload and ns(payload).dump()}")
+        debug and print(f"{method} {full_url}\n{payload}")
 
-        response = httpx.request(method, full_url, params=params, headers=headers, data=payload)
+        response = httpx.request(method, full_url, json=json, params=params, headers=headers, data=payload)
 
         response.raise_for_status()
 
@@ -64,6 +64,14 @@ class UserProvision:
             print(e.response.status_code, e.response.text)
             raise
 
+    def update(self, username, **kwds):
+        user_id = self.get_id_by_username(username)
+        try:
+            return self._api(f"core/users/{user_id}/", json=kwds, method="PATCH")
+        except httpx.HTTPError as e:
+            print(e.response.status_code, e.response.text)
+            raise
+
     def remove(self, user_id):
         try:
             return self._api(f"core/users/{user_id}/", payload={}, method="DELETE")
@@ -82,6 +90,18 @@ class UserProvision:
         if not result.get('results'): return None
         return result['results'][0]['pk']
 
+    def provision_user(self, username, name, email, password):
+        self.create(NewUser(
+            username=username,
+            name=name,
+            email=email,
+            groups=[os.environ.get("AUTHENTIK_GROUP_ID")],
+            is_active=True,
+            type="internal",
+            last_login=datetime.datetime.now(datetime.timezone.utc),
+            path="REVIEWME",
+            attributes={},
+        ))
 
 # This implementation uses the official authentik python client
 # But importing the library slows down feedback loop for tests a lot!!!.
