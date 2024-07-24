@@ -8,27 +8,30 @@ class UserProvision_Test(unittest.TestCase):
     from yamlns.testutils import assertNsEqual
 
     non_existing_id = 88888888
+    username = 'my_test_user'
 
     def setUp(self):
         # TODO: restore environment after tests
         load_dotenv()
         self.group = os.environ.get("AUTHENTIK_GROUP_ID")
+        self.api = UserProvision_Old()
+
+    def tearDown(self):
+        id = self.api.get_id_by_username(self.username)
+        if id: self.api.remove(id)
 
     def test__version__returns_current(self):
-        api = UserProvision_Old()
-        result = api.version()
+        result = self.api.version()
         self.assertIn('version_current', result)
         
     def test__retrieve__non_existing__returns_none(self):
-        api = UserProvision_Old()
-        result = api.retrieve(self.non_existing_id)
+        result = self.api.retrieve(self.non_existing_id)
         self.assertIsNone(result)
         
     def test__create_and_delete(self):
-        api = UserProvision_Old()
 
-        new_user = api.create(NewUser(
-            username="non-existing-user",
+        new_user = self.api.create(NewUser(
+            username=self.username,
             name="Non Existing User",
             is_active=True,
             last_login=datetime.datetime.now(datetime.timezone.utc) ,
@@ -39,10 +42,12 @@ class UserProvision_Test(unittest.TestCase):
             type="internal",
         ))
         id = new_user['pk']
-        result = api.retrieve(id)
+        print(id)
+        result = self.api.retrieve(id)
+        self.assertIsNotNone(result)
         self.assertEqual(result.get('name'), "Non Existing User")
-        api.remove(id)
-        result = api.retrieve(id)
+        self.api.remove(id)
+        result = self.api.retrieve(id)
         self.assertIsNone(result)
 
 
