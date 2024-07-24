@@ -1,5 +1,5 @@
 import unittest
-from .user_provision import UserProvision_Old, NewUser
+from .user_provision import UserProvision, NewUser
 from dotenv import load_dotenv
 import os
 import datetime
@@ -7,14 +7,14 @@ import datetime
 class UserProvision_Test(unittest.TestCase):
     from yamlns.testutils import assertNsEqual
 
-    non_existing_id = 88888888
-    username = 'my_test_user'
+    non_existing_id = 'should_not_exist_from_somrepre'
+    username = 'my_temporary_test_from_somrepre'
 
     def setUp(self):
         # TODO: restore environment after tests
         load_dotenv()
         self.group = os.environ.get("AUTHENTIK_GROUP_ID")
-        self.api = UserProvision_Old()
+        self.api = UserProvision()
 
     def tearDown(self):
         id = self.api.get_id_by_username(self.username)
@@ -42,12 +42,11 @@ class UserProvision_Test(unittest.TestCase):
             type="internal",
         ))
         id = new_user['pk']
-        print(id)
-        result = self.api.retrieve(id)
+        result = self.api.retrieve(self.username)
         self.assertIsNotNone(result)
         self.assertEqual(result.get('name'), "Non Existing User")
         self.api.remove(id)
-        result = self.api.retrieve(id)
+        result = self.api.retrieve(self.username)
         self.assertIsNone(result)
 
 
