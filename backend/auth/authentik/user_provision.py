@@ -67,7 +67,7 @@ class UserProvision:
 
     def create(self, user: NewUser):
         try:
-            return self._api(f"core/users/", payload=user.model_dump_json(), method="POST")
+            return self._api(f"core/users/", json=user.model_dump(mode="json"), method="POST")
         except httpx.HTTPError as e:
             print(e.response.status_code, e.response.text)
             raise
@@ -111,9 +111,10 @@ class UserProvision:
                 email=email,
             )
             self.add_user_to_group(id, os.environ.get("AUTHENTIK_GROUP_ID"))
+            self.set_password(id, password)
             return
 
-        self.create(NewUser(
+        created = self.create(NewUser(
             username=username,
             name=name,
             email=email,
@@ -124,6 +125,7 @@ class UserProvision:
             path="REVIEWME",
             attributes={},
         ))
+        self.set_password(created['pk'], password)
 
 # This implementation uses the official authentik python client
 # But importing the library slows down feedback loop for tests a lot!!!.
@@ -149,7 +151,7 @@ class UserProvision_Lib:
             api_instance = CoreApi(api_client)
 
             try:
-                return api_instance.core_users_retrieve(id=user_id).model_dump()
+                return api_instance.core_users_retrieve(id=user_id).model_dump(mode="json")
                 print("The response of AdminApi->admin_apps_list:\n")
                 pprint(api_response)
             except ApiException as e:
