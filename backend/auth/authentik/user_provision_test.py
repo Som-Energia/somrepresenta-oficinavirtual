@@ -3,7 +3,10 @@ from .user_provision import UserProvision, NewUser
 from dotenv import load_dotenv
 import os
 import datetime
+from ...utils.testutils import skipIfEnv
 
+
+@skipIfEnv("SOMREPRE_SKIP_AUTHENTIK_TESTS")
 class UserProvision_Test(unittest.TestCase):
     from yamlns.testutils import assertNsEqual, assertNsContains
 

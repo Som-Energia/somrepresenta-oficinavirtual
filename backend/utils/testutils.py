@@ -3,6 +3,8 @@ from contextlib import contextmanager
 from yamlns.testutils import assertNsEqual
 from yamlns import ns
 from pydantic import __version__ as pydantic_version
+import unittest
+from dotenv import load_dotenv
 
 pydantic_minor_version = '.'.join(pydantic_version.split('.')[:2])
 
@@ -57,6 +59,10 @@ def environ(var, value):
     finally:
         set(oldvalue)
 
+def skipIfEnv(var):
+    load_dotenv()
+    value = os.environ.get(var)
+    return unittest.skipIf(value, f"Environment {var} defined")
 
 def assertResponseEqual(self, response, expected, status=200, content_type='application/json'):
     if type(expected) == str:
