@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TRAVIS: 'true' # Skip tests requiring data
+      SOMREPRE_SKIP_AUTHENTIK_TESTS: 'true'
     strategy:
       matrix:
         python-version:
