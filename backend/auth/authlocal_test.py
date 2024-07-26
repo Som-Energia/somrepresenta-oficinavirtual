@@ -6,10 +6,10 @@ from yamlns import ns
 from consolemsg import error
 from somutils.testutils import sandbox_dir
 import unittest.mock
-from .authlocal import setup_authlocal
-from .authremote import validated_user
 from ..utils.testutils import environ, safe_response_get, pydantic_minor_version
 from ..api_business import setup_business
+from .authlocal import setup_authlocal
+from .common import validated_user
 
 class AuthLocal_Test(unittest.TestCase):
 

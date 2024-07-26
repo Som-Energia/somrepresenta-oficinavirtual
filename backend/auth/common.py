@@ -1,7 +1,10 @@
 import os
 from fastapi.security import APIKeyHeader
 from fastapi import Depends, HTTPException, status
+from fastapi_oauth2.security import OAuth2
 from consolemsg import error
+
+JWT_ALGORITHM = "HS256"
 
 def auth_error(message):
     error(message)
@@ -10,6 +13,38 @@ def auth_error(message):
         detail=message,
         headers={"WWW-Authenticate": "Bearer"},
     )
+
+def forbidden_error(message):
+    error(message)
+    return HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail=message,
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+oauth2 = OAuth2()
+
+async def validated_user(authorization: str = Depends(oauth2)):
+    schema, token = get_authorization_scheme_param(authorization)
+    if not authorization or schema.lower() != "bearer":
+        if not oauth2.auto_error:
+            return None
+        raise auth_error("Not authenticated")
+    try:
+        payload = jwt.decode(
+            token=token,
+            key=os.getenv("JWT_SECRET"),
+            algorithms=JWT_ALGORITHM,
+        )
+    except JWTError as e:
+        raise auth_error(f"Token decoding failed: {e}")
+    return payload
+
+
+async def validated_staff(user: dict = Depends(validated_user)):
+    if "staff" not in user.get("roles", []):
+        raise forbidden_error(r"{user['username']} is not staff")
+    return user
 
 apikey_on_header = APIKeyHeader(name="x-api-key")
 def provisioning_apikey(key: str = Depends(apikey_on_header)):

@@ -9,10 +9,15 @@ from jose import JWTError, jwt
 from consolemsg import error, success
 import os
 from yamlns import ns
-from .authremote import validated_user, validated_staff, JWT_ALGORITHM
-from .common import auth_error, provisioning_apikey
 from ..models import TokenUser
 from ..datasources import user_info
+from .common import (
+    JWT_ALGORITHM,
+    validated_user,
+    validated_staff,
+    auth_error,
+    provisioning_apikey,
+)
 
 passwords_file = Path('passwords.yaml')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")

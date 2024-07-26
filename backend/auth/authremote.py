@@ -6,7 +6,6 @@ from fastapi_oauth2.router import router as oauth2_router
 from fastapi_oauth2.claims import Claims
 from fastapi_oauth2.client import OAuth2Client
 from fastapi_oauth2.config import OAuth2Config
-from fastapi_oauth2.security import OAuth2
 from fastapi.security.utils import get_authorization_scheme_param
 from pydantic import EmailStr
 from social_core.backends.google import GoogleOAuth2
@@ -19,41 +18,6 @@ from .common import auth_error, provisioning_apikey
 
 # import os
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-
-JWT_ALGORITHM = "HS256"
-
-oauth2 = OAuth2()
-
-def forbidden_error(message):
-    error(message)
-    return HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail=message,
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-async def validated_user(authorization: str = Depends(oauth2)):
-    schema, token = get_authorization_scheme_param(authorization)
-    if not authorization or schema.lower() != "bearer":
-        if not oauth2.auto_error:
-            return None
-        raise auth_error("Not authenticated")
-    try:
-        payload = jwt.decode(
-            token=token,
-            key=os.getenv("JWT_SECRET"),
-            algorithms=JWT_ALGORITHM,
-        )
-    except JWTError as e:
-        raise auth_error(f"Token decoding failed: {e}")
-    return payload
-
-
-async def validated_staff(user: dict = Depends(validated_user)):
-    if "staff" not in user.get("roles", []):
-        raise forbidden_error(r"{user['username']} is not staff")
-    return user
-
 
 def on_auth(auth, user):
     print("on_auth", auth, user)
