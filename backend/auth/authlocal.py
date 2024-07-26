@@ -5,18 +5,17 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from fastapi import Depends, Body, Form
 from pydantic import EmailStr
-from jose import JWTError, jwt
 from consolemsg import error, success
 import os
 from yamlns import ns
 from ..models import TokenUser
 from ..datasources import user_info
 from .common import (
-    JWT_ALGORITHM,
     validated_user,
     validated_staff,
     auth_error,
     provisioning_apikey,
+    create_access_token,
 )
 
 passwords_file = Path('passwords.yaml')
@@ -54,18 +53,6 @@ def authenticate_user(login: str, password: str) -> bool:
         return False
     success(f"Correct password validation for {login} ok")
     return True
-
-def create_access_token(data: dict):
-    import datetime
-    expires_seconds = int(os.getenv("JWT_EXPIRES"))
-    expires_delta = datetime.timedelta(seconds=expires_seconds)
-    expire = datetime.datetime.utcnow() + expires_delta
-    encoded_jwt = jwt.encode(
-        dict(data, exp=expire),
-        os.getenv("JWT_SECRET"),
-        algorithm=JWT_ALGORITHM,
-    )
-    return encoded_jwt
 
 def setup_authlocal(app):
     'Setups the local auth in the application'

@@ -2,6 +2,8 @@ import os
 from fastapi.security import APIKeyHeader
 from fastapi import Depends, HTTPException, status
 from fastapi_oauth2.security import OAuth2
+from fastapi.security.utils import get_authorization_scheme_param
+from jose import JWTError, jwt
 from consolemsg import error
 
 JWT_ALGORITHM = "HS256"
@@ -21,6 +23,18 @@ def forbidden_error(message):
         detail=message,
         headers={"WWW-Authenticate": "Bearer"},
     )
+
+def create_access_token(data: dict):
+    import datetime
+    expires_seconds = int(os.getenv("JWT_EXPIRES"))
+    expires_delta = datetime.timedelta(seconds=expires_seconds)
+    expire = datetime.datetime.utcnow() + expires_delta
+    encoded_jwt = jwt.encode(
+        dict(data, exp=expire),
+        os.getenv("JWT_SECRET"),
+        algorithm=JWT_ALGORITHM,
+    )
+    return encoded_jwt
 
 oauth2 = OAuth2()
 

@@ -6,15 +6,14 @@ from fastapi_oauth2.router import router as oauth2_router
 from fastapi_oauth2.claims import Claims
 from fastapi_oauth2.client import OAuth2Client
 from fastapi_oauth2.config import OAuth2Config
-from fastapi.security.utils import get_authorization_scheme_param
 from pydantic import EmailStr
 from social_core.backends.google import GoogleOAuth2
 from social_core.backends.oauth import BaseOAuth2
-from jose import JWTError, jwt
+from jose import JWTError
 from consolemsg import error
 from ..datasources import user_info
 from .authentik.user_provision import UserProvision
-from .common import auth_error, provisioning_apikey
+from .common import JWT_ALGORITHM, auth_error, provisioning_apikey
 
 # import os
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
