@@ -12,9 +12,9 @@ from social_core.backends.google import GoogleOAuth2
 from pydantic import EmailStr
 from jose import JWTError, jwt
 from consolemsg import error
-from .datasources import user_info
-from .auth.authentik.user_provision import UserProvision
-from .auth.common import auth_error, provisioning_apikey
+from ..datasources import user_info
+from .authentik.user_provision import UserProvision
+from .common import auth_error, provisioning_apikey
 
 JWT_ALGORITHM = 'HS256'
 
