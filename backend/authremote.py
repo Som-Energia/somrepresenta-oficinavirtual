@@ -62,7 +62,7 @@ def setup_auth(app):
         allow_http=False,
         #enable_ssr=False,
         jwt_secret=os.getenv("JWT_SECRET"),
-        jwt_expires=os.getenv("JWT_EXPIRES"),
+        jwt_expires=os.getenv("JWT_EXPIRES", 300),
         jwt_algorithm=JWT_ALGORITHM, # Force
         clients=[
             OAuth2Client(
