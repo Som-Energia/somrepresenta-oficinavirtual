@@ -1,12 +1,14 @@
 # Change log
 
-## Unreleased
+## 1.0.0 (2024-07-26)
 
 - Invoices
     - Custom timeout for some ERP queries
     - Report invoice zip timeout
     - Single zip for many invoices
     - Special value for complementary liquidations
+- Fix: Accept Profiles without city
+- Chat notification of failures
 
 ## 0.7.0 (2024-05-15)
 
