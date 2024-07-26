@@ -33,9 +33,6 @@ def forbidden_error(message):
     )
 
 async def validated_user(authorization: str = Depends(oauth2)):
-    import pdb
-
-    pdb.set_trace()
     schema, token = get_authorization_scheme_param(authorization)
     if not authorization or schema.lower() != "bearer":
         if not oauth2.auto_error:
@@ -65,25 +62,29 @@ def on_auth(auth, user):
         auth_error(f"Expected token keys not found in: {user}")
     info = user_info(username)
     if not info:
-        auth_error(f"Not such an user {user['username']}")
+        auth_error(f"Not such an user {username}")
     print("on auth returns", info)
     return info
 
+def authentik_api_url():
+    from dotenv import load_dotenv
+    load_dotenv()
+    return os.environ.get("AUTHENTIK_API_URL")
 
-# class AuthentikOauth2(KeycloakOAuth2):
 class AuthentikOauth2(BaseOAuth2):
     name = "authentik"
-    AUTHORIZATION_URL = "http://localhost:80/application/o/authorize/"
-    ACCESS_TOKEN_URL = "http://localhost:80/application/o/token/"
+    AUTHENTIK_API_URL=authentik_api_url()
+    AUTHORIZATION_URL = f"{AUTHENTIK_API_URL}/application/o/authorize/"
+    ACCESS_TOKEN_URL = f"{AUTHENTIK_API_URL}/application/o/token/"
     ACCESS_TOKEN_METHOD = "POST"
-    REVOKE_TOKEN_URL = "http://localhost:80/application/o/revoke"
+    REVOKE_TOKEN_URL = f"{AUTHENTIK_API_URL}/application/o/revoke"
     REVOKE_TOKEN_METHOD = "GET"
     DEFAULT_SCOPE = ["test"]
     REDIRECT_STATE = False
     # EXTRA_DATA = [("expires_in", "expires"), ("refresh_token", "refresh_token")]
 
 
-def OurClaims(Claims):
+class OurClaims(Claims):
 
     def __init__(self, seq=None, **kwargs) -> None:
         super().__init__(seq or {}, **kwargs)
@@ -122,7 +123,7 @@ def setup_auth(app):
                 client_id=os.getenv("OAUTH2_AUTHENTIK_CLIENT_ID"),
                 client_secret=os.getenv("OAUTH2_AUTHENTIK_CLIENT_SECRET"),
                 # scope=["test", "openid", "profile", "email"],
-                scope=["test"],
+                scope=["openid", "profile", "email"],
                 # TODO: This is required to work with proxy and not always work
                 # redirect_uri='/',
                 redirect_uri="http://localhost:5173/",

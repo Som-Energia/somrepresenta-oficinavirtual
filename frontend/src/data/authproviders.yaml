@@ -1,9 +1,6 @@
-- id: somenergia
+- id: authentik
   name: Som Energia
   logo: /logo.svg
-- id: google-oauth2
-  name: Google
-  logo: /google-oauth2.svg
-- id: authentik
-  name: Authentik
-  logo: /panda.jpg
+#- id: google-oauth2
+#  name: Google
+#  logo: /google-oauth2.svg
