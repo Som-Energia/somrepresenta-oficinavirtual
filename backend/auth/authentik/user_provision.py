@@ -12,7 +12,7 @@ from pydantic import (
 debug = True
 
 class NewUser(BaseModel):
-    username: str
+    username: str # TODO: validate as VAT
     name: str
     is_active: bool
     last_login: AwareDatetime

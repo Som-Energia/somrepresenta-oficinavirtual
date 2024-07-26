@@ -1,5 +1,6 @@
 import os
-from fastapi import Depends, HTTPException, status
+from typing import Annotated
+from fastapi import Depends, HTTPException, status, Body
 from fastapi_oauth2.middleware import OAuth2Middleware
 from fastapi_oauth2.router import router as oauth2_router
 from fastapi_oauth2.claims import Claims
@@ -8,21 +9,16 @@ from fastapi_oauth2.config import OAuth2Config
 from fastapi_oauth2.security import OAuth2
 from fastapi.security.utils import get_authorization_scheme_param
 from social_core.backends.google import GoogleOAuth2
+from pydantic import EmailStr
 from jose import JWTError, jwt
 from consolemsg import error
 from .datasources import user_info
+from .auth.authentik.user_provision import UserProvision
+from .auth.common import auth_error, provisioning_apikey
 
 JWT_ALGORITHM = 'HS256'
 
 oauth2 = OAuth2()
-
-def auth_error(message):
-    error(message)
-    return HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail=message,
-        headers={"WWW-Authenticate": "Bearer"},
-    )
 
 def forbidden_error(message):
     error(message)
@@ -31,8 +27,6 @@ def forbidden_error(message):
         detail=message,
         headers={"WWW-Authenticate": "Bearer"},
     )
-
-
 
 async def validated_user(authorization: str = Depends(oauth2)):
     schema, token = get_authorization_scheme_param(authorization)
@@ -85,6 +79,26 @@ def setup_auth(app):
             ),
         ]
     )
+    @app.post('/api/auth/somenergia/provisioning')
+    def somenergia_auth_provision_user(
+        name: Annotated[str, Body()],
+        username: Annotated[str, Body()], # TODO: Validate as vat
+        password: Annotated[str, Body()],
+        email: Annotated[EmailStr, Body()],
+        key: str = Depends(provisioning_apikey)
+    ):
+        """Administrative password set for the Local Authentication"""
+        UserProvision().provision_user(
+            username=username,
+            name=name,
+            email=email,
+            password=password,
+	)
+        return dict(
+            result = 'ok',
+        )
+
+        
 
     app.include_router(oauth2_router)
     app.add_middleware(

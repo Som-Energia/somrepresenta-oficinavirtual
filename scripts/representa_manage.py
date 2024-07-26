@@ -40,6 +40,9 @@ def server_version():
 def reset_password(
     username: str,
     password: str,
+    name: str="Sense nom",
+    email: str="noname@nowhere.org",
+    remote: bool=False,
     apikey: Optional[str] = None,
 ):
     """
@@ -48,14 +51,17 @@ def reset_password(
     Requires ERP_PROVISIONING_APIKEY to be in the environment.
     """
     apikey = apikey or os.environ['ERP_PROVISIONING_APIKEY']
+    remote_part = 'somenergia/' if remote else ''
     r = httpx.post(
-        url=apiurl+'/api/auth/provisioning',
+        url=apiurl+f'/api/auth/{remote_part}provisioning',
         headers={
             'x-api-key': apikey,
         },
         json=dict(
             username=username,
             password=password,
+            name=name,
+            email=email,
         ),
     )
     r.raise_for_status()

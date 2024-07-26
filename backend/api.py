@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import sentry_sdk
 from .api_base import setup_base, setup_statics
 from .authlocal import setup_authlocal
-#from .authremote import setup_auth
+from .authremote import setup_auth
 from .api_business import setup_business
 
 def setup():
@@ -17,7 +17,7 @@ def setup():
         )
     app = FastAPI()
     setup_base(app)
-    #setup_auth(app)
+    setup_auth(app)
     setup_authlocal(app)
     setup_business(app)
 
