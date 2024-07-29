@@ -11,6 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton'
 import { useTranslation } from 'react-i18next'
 import useLocalStorage from '../hooks/LocalStorage'
 import { useDialog } from './DialogProvider'
+import HijackDialog from './HijackDialog'
 import ov from '../services/ovapi'
 import authProviders from '../data/authproviders.yaml'
 
@@ -19,6 +20,7 @@ const noFunction = () => undefined
 const AuthContext = React.createContext({
   login: noFunction,
   logout: noFunction,
+  hijack: noFunction,
   reloadUser: noFunction,
   currentUser: null,
 })
@@ -78,6 +80,19 @@ function AuthProvider({ children }) {
     ov.logout()
   }, [])
 
+  const hijack = React.useCallback(() => {
+    openDialog({
+      children: (
+        <HijackDialog
+          closeDialog={() => {
+            closeDialog()
+            reloadUser()
+          }}
+        />
+      ),
+    })
+  }, [])
+
   function error(message) {
     console.error('Auth Error:', message)
     return null
@@ -96,6 +111,7 @@ function AuthProvider({ children }) {
       value={{
         login,
         logout,
+        hijack,
         currentUser,
         reloadUser,
       }}

@@ -1,6 +1,6 @@
 import os
 from typing import Annotated
-from fastapi import Depends, HTTPException, status, Body
+from fastapi import Depends, Body, Form
 from fastapi_oauth2.middleware import OAuth2Middleware
 from fastapi_oauth2.router import router as oauth2_router
 from fastapi_oauth2.claims import Claims
@@ -8,13 +8,19 @@ from fastapi_oauth2.client import OAuth2Client
 from fastapi_oauth2.config import OAuth2Config
 from pydantic import EmailStr
 from social_core.backends.google import GoogleOAuth2
-from social_core.backends.oauth import BaseOAuth2
 from social_core.backends.open_id_connect import OpenIdConnectAuth
-from jose import JWTError
 from consolemsg import error
 from ..datasources import user_info
 from .authentik.user_provision import UserProvision
-from .common import JWT_ALGORITHM, auth_error, provisioning_apikey
+from .common import (
+    JWT_ALGORITHM, 
+    auth_error,
+    forbidden_error,
+    validated_staff,
+    provisioning_apikey,
+    create_access_token,
+    authenticated_token_response,
+)
 
 def on_auth(auth, user):
     return
@@ -53,7 +59,11 @@ class AuthentikOauth2(OpenIdConnectAuth):
 
     def user_data(self, token):
         user = super().user_data(token)
-        user['username'] = user['sub']
+        username = user['sub']
+        # TODO: Handle NoSuchUser
+        erp_user = user_info(username)
+        user['username'] = username
+        user['roles'] = erp_user.roles
         return user
 
 
@@ -130,7 +140,24 @@ def setup_auth(app):
             result = 'ok',
         )
 
-        
+    @app.post("/api/auth/somenergia/hijack", response_model=dict)
+    async def login_hijack(
+        username: str = Form(),
+        staff_user: dict = Depends(validated_staff)
+    ):
+        try:
+            hijacked = user_info(username)
+            if not hijacked:
+                raise auth_error("Incorrect username")
+
+            if 'staff' in hijacked.roles:
+                raise forbidden_error(f"Staff {hijacked.username} is not hijackable")
+
+            access_token = create_access_token(hijacked.data())
+            return authenticated_token_response(access_token)
+        except Exception as e:
+            error(f"While hijacking: {type(e)} {e}")
+            raise   
 
     app.include_router(oauth2_router)
     app.add_middleware(

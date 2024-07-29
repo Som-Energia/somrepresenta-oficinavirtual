@@ -14,8 +14,10 @@ from .common import (
     validated_user,
     validated_staff,
     auth_error,
+    forbidden_error,
     provisioning_apikey,
     create_access_token,
+    authenticated_token_response,
 )
 
 passwords_file = Path('passwords.yaml')
@@ -78,24 +80,10 @@ def setup_authlocal(app):
             if not auth_ok:
                 raise auth_error("Incorrect password")
             access_token = create_access_token(user.data())
-
-            response = JSONResponse(dict(
-                access_token= access_token,
-                token_type= "bearer",
-            ))
-            expires_seconds = int(os.getenv("JWT_EXPIRES"))
-            response.set_cookie(
-                "Authorization",
-                value=f"Bearer {access_token}",
-                max_age=expires_seconds,
-                expires=expires_seconds,
-                #secure=True, # TODO: just if https in request
-                httponly=True,
-            )
+            return authenticated_token_response(access_token)
         except Exception as e:
             error(f"While autenticating: {type(e)} {e}")
             raise
-        return response
 
     @app.post("/api/auth/hijack", response_model=dict)
     async def login_hijack(
@@ -111,24 +99,10 @@ def setup_authlocal(app):
                 raise forbidden_error(f"Staff {hijacked.username} is not hijackable")
 
             access_token = create_access_token(hijacked.data())
-
-            response = JSONResponse(dict(
-                access_token= access_token,
-                token_type= "bearer",
-            ))
-            expires_seconds = int(os.getenv("JWT_EXPIRES"))
-            response.set_cookie(
-                "Authorization",
-                value=f"Bearer {access_token}",
-                max_age=expires_seconds,
-                expires=expires_seconds,
-                secure=True, # TODO: just if https in request
-                httponly=True,
-            )
+            return authenticated_token_response(access_token)
         except Exception as e:
-            error(f"While autenticating: {type(e)} {e}")
+            error(f"While hijacking: {type(e)} {e}")
             raise
-        return response
 
     @app.post('/api/auth/change_password')
     def local_auth_change_password(
