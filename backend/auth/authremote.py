@@ -9,20 +9,20 @@ from fastapi_oauth2.config import OAuth2Config
 from pydantic import EmailStr
 from social_core.backends.google import GoogleOAuth2
 from social_core.backends.oauth import BaseOAuth2
+from social_core.backends.open_id_connect import OpenIdConnectAuth
 from jose import JWTError
 from consolemsg import error
 from ..datasources import user_info
 from .authentik.user_provision import UserProvision
 from .common import JWT_ALGORITHM, auth_error, provisioning_apikey
 
-# import os
-# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-
 def on_auth(auth, user):
-    print("on_auth", auth, user)
+    return
+    # TODO: Extra check: check that the user is in the database and has access
     username = user.get("username", user.get("email"))
     if not username:
         auth_error(f"Expected token keys not found in: {user}")
+    # TODO: Not found is an exception, not None
     info = user_info(username)
     if not info:
         auth_error(f"Not such an user {username}")
@@ -34,17 +34,27 @@ def authentik_api_url():
     load_dotenv()
     return os.environ.get("AUTHENTIK_API_URL")
 
-class AuthentikOauth2(BaseOAuth2):
+class AuthentikOauth2(OpenIdConnectAuth):
     name = "authentik"
     AUTHENTIK_API_URL=authentik_api_url()
+    OIDC_ENDPOINT = f"{AUTHENTIK_API_URL}/application/o/ov-representa/"
     AUTHORIZATION_URL = f"{AUTHENTIK_API_URL}/application/o/authorize/"
     ACCESS_TOKEN_URL = f"{AUTHENTIK_API_URL}/application/o/token/"
     ACCESS_TOKEN_METHOD = "POST"
     REVOKE_TOKEN_URL = f"{AUTHENTIK_API_URL}/application/o/revoke"
     REVOKE_TOKEN_METHOD = "GET"
-    DEFAULT_SCOPE = ["test"]
+    DEFAULT_SCOPE=["openid", "profile", "email"],
     REDIRECT_STATE = False
     # EXTRA_DATA = [("expires_in", "expires"), ("refresh_token", "refresh_token")]
+
+    # Super class ignores it in favor of settigns witch are wrong
+    def oidc_endpoint(self):
+        return self.OIDC_ENDPOINT
+
+    def user_data(self, token):
+        user = super().user_data(token)
+        user['username'] = user['sub']
+        return user
 
 
 class OurClaims(Claims):
@@ -76,7 +86,8 @@ def setup_auth(app):
                 scope=["openid", "profile", "email"],
                 # TODO: This is required to work with proxy and not always work
                 # redirect_uri='/',
-                redirect_uri="http://localhost:5173/",
+                #redirect_uri="http://localhost:5173/",
+                redirect_uri="http://localhost:5500/",
                 claims=Claims(
                     identity=lambda user: f"{user.provider}:{user.sub}",
                 ),
@@ -89,7 +100,8 @@ def setup_auth(app):
                 scope=["openid", "profile", "email"],
                 # TODO: This is required to work with proxy and not always work
                 # redirect_uri='/',
-                redirect_uri="http://localhost:5173/",
+                #redirect_uri="http://localhost:5173/",
+                redirect_uri="http://localhost:5500/",
                 claims=Claims(
                     identity=lambda user: f"{user.provider}:{user.sub}",
                     email=lambda user: f"{user.email}",
