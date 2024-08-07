@@ -5,14 +5,19 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from fastapi import Depends, Body, Form
 from pydantic import EmailStr
-from jose import JWTError, jwt
 from consolemsg import error, success
-import os
 from yamlns import ns
-from .authremote import validated_user, validated_staff, JWT_ALGORITHM
-from .auth.common import auth_error, provisioning_apikey
-from .models import TokenUser
-from .datasources import user_info
+from ..models import TokenUser
+from ..datasources import user_info
+from .common import (
+    validated_user,
+    validated_staff,
+    auth_error,
+    forbidden_error,
+    provisioning_apikey,
+    create_access_token,
+    authenticated_token_response,
+)
 
 passwords_file = Path('passwords.yaml')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -50,18 +55,6 @@ def authenticate_user(login: str, password: str) -> bool:
     success(f"Correct password validation for {login} ok")
     return True
 
-def create_access_token(data: dict):
-    import datetime
-    expires_seconds = int(os.getenv("JWT_EXPIRES"))
-    expires_delta = datetime.timedelta(seconds=expires_seconds)
-    expire = datetime.datetime.utcnow() + expires_delta
-    encoded_jwt = jwt.encode(
-        dict(data, exp=expire),
-        os.getenv("JWT_SECRET"),
-        algorithm=JWT_ALGORITHM,
-    )
-    return encoded_jwt
-
 def setup_authlocal(app):
     'Setups the local auth in the application'
 
@@ -86,24 +79,10 @@ def setup_authlocal(app):
             if not auth_ok:
                 raise auth_error("Incorrect password")
             access_token = create_access_token(user.data())
-
-            response = JSONResponse(dict(
-                access_token= access_token,
-                token_type= "bearer",
-            ))
-            expires_seconds = int(os.getenv("JWT_EXPIRES"))
-            response.set_cookie(
-                "Authorization",
-                value=f"Bearer {access_token}",
-                max_age=expires_seconds,
-                expires=expires_seconds,
-                #secure=True, # TODO: just if https in request
-                httponly=True,
-            )
+            return authenticated_token_response(access_token)
         except Exception as e:
             error(f"While autenticating: {type(e)} {e}")
             raise
-        return response
 
     @app.post("/api/auth/hijack", response_model=dict)
     async def login_hijack(
@@ -119,24 +98,10 @@ def setup_authlocal(app):
                 raise forbidden_error(f"Staff {hijacked.username} is not hijackable")
 
             access_token = create_access_token(hijacked.data())
-
-            response = JSONResponse(dict(
-                access_token= access_token,
-                token_type= "bearer",
-            ))
-            expires_seconds = int(os.getenv("JWT_EXPIRES"))
-            response.set_cookie(
-                "Authorization",
-                value=f"Bearer {access_token}",
-                max_age=expires_seconds,
-                expires=expires_seconds,
-                secure=True, # TODO: just if https in request
-                httponly=True,
-            )
+            return authenticated_token_response(access_token)
         except Exception as e:
-            error(f"While autenticating: {type(e)} {e}")
+            error(f"While hijacking: {type(e)} {e}")
             raise
-        return response
 
     @app.post('/api/auth/change_password')
     def local_auth_change_password(
@@ -167,6 +132,3 @@ def setup_authlocal(app):
         return dict(
             result = 'ok',
         )
-
-
-

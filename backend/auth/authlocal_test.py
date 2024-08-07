@@ -1,4 +1,3 @@
-import os
 import unittest
 from fastapi import FastAPI, Depends, status
 from fastapi.testclient import TestClient
@@ -6,16 +5,16 @@ from yamlns import ns
 from consolemsg import error
 from somutils.testutils import sandbox_dir
 import unittest.mock
+from ..utils.testutils import environ, safe_response_get, pydantic_minor_version
+from ..api_business import setup_business
 from .authlocal import setup_authlocal
-from .utils.testutils import environ, safe_response_get, pydantic_minor_version
-from .api_business import setup_business
-from .authremote import validated_user
+from .common import validated_user
 
 class AuthLocal_Test(unittest.TestCase):
 
     from yamlns.testutils import assertNsEqual
     from somutils.testutils import enterContext
-    from .utils.testutils import assertResponseEqual
+    from ..utils.testutils import assertResponseEqual
 
     username = 'ES12345678Z'
     password = 'mypassword'
@@ -189,7 +188,7 @@ class AuthLocal_Test(unittest.TestCase):
         )
 
     def test_login__userNotFound(self):
-        with unittest.mock.patch('backend.authlocal.user_info') as mock:
+        with unittest.mock.patch('backend.auth.authlocal.user_info') as mock:
             mock.return_value = None
 
             r = self.login_query()

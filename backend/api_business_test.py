@@ -5,7 +5,7 @@ from yamlns import ns
 from consolemsg import error
 from somutils.testutils import sandbox_dir
 import unittest.mock
-from .authlocal import setup_authlocal
+from .auth.authlocal import setup_authlocal
 from .api_business import setup_business
 from .utils.testutils import environ, safe_response_get
 

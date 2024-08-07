@@ -3,8 +3,8 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 import sentry_sdk
 from .api_base import setup_base, setup_statics
-from .authlocal import setup_authlocal
-from .authremote import setup_auth
+from .auth.authlocal import setup_authlocal
+from .auth.authremote import setup_auth
 from .api_business import setup_business
 
 def setup():

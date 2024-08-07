@@ -1,13 +1,19 @@
 # Change log
 
 ## Unrelease
-
-- Authentik user provisioning
-- Upgrade notes:
-    - New backend environment vars (see .env-example):
-        - AUTHENTIK_API_URL
-	- AUTHENTIK_TOKEN
-	- AUTHENTIK_GROUP_ID
+- Add application auth remote authentication to work with Authentik
+  - Authentik user provisioning
+  - Upgrade notes:
+      - New backend environment vars (see .env-example):
+          - env AUTHENTIK_API_URL
+          - env AUTHENTIK_TOKEN
+          - env AUTHENTIK_GROUP_ID
+          - env OAUTH2_AUTHENTIK_REDIRECT_URI
+          - env OAUTH2_AUTHENTIK_CLIENT_ID
+          - env OAUTH2_AUTHENTIK_CLIENT_SECRET
+      - Set `frontend/.env` variable:
+          - env `VITE_AUTH_BACKEND` to `Oauth2`
+            to enable remote authentication with Authentik
 
 ## 1.0.0 (2024-07-26)
 
