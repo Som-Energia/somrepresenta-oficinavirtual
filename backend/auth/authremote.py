@@ -109,9 +109,7 @@ def setup_auth(app):
                 # scope=["test", "openid", "profile", "email"],
                 scope=["openid", "profile", "email"],
                 # TODO: This is required to work with proxy and not always work
-                # redirect_uri='/',
-                #redirect_uri="http://localhost:5173/",
-                redirect_uri="http://localhost:5500/",
+                redirect_uri=os.getenv("OAUTH2_AUTHENTIK_REDIRECT_URI"),
                 claims=Claims(
                     identity=lambda user: f"{user.provider}:{user.sub}",
                     email=lambda user: f"{user.email}",
