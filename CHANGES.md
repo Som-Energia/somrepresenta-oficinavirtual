@@ -5,9 +5,12 @@
   - Authentik user provisioning
   - Upgrade notes:
       - New backend environment vars (see .env-example):
-          - AUTHENTIK_API_URL
-    - AUTHENTIK_TOKEN
-    - AUTHENTIK_GROUP_ID
+          - env AUTHENTIK_API_URL
+          - env AUTHENTIK_TOKEN
+          - env AUTHENTIK_GROUP_ID
+          - env OAUTH2_AUTHENTIK_REDIRECT_URI
+          - env OAUTH2_AUTHENTIK_CLIENT_ID
+          - env OAUTH2_AUTHENTIK_CLIENT_SECRET
 
 ## 1.0.0 (2024-07-26)
 
