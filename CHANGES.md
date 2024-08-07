@@ -1,8 +1,8 @@
 # Change log
 
-## Unrelease
+## 1.1.0 (2024-08-07)
 - Add application auth remote authentication to work with Authentik
-  - Authentik user provisioning
+  - Authentik user login and provisioning
   - Upgrade notes:
       - New backend environment vars (see .env-example):
           - env AUTHENTIK_API_URL
