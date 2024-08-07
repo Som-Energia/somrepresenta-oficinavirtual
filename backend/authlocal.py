@@ -1,14 +1,16 @@
 from pathlib import Path
 from typing import Annotated
 from passlib.context import CryptContext
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, APIKeyHeader
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from fastapi import Depends, Body, Form
+from pydantic import EmailStr
 from jose import JWTError, jwt
 from consolemsg import error, success
 import os
 from yamlns import ns
-from .auth import auth_error, validated_user, validated_staff, JWT_ALGORITHM
+from .authremote import validated_user, validated_staff, JWT_ALGORITHM
+from .auth.common import auth_error, provisioning_apikey
 from .models import TokenUser
 from .datasources import user_info
 
@@ -152,18 +154,12 @@ def setup_authlocal(app):
             result = 'ok',
         )
 
-    apikey_on_header = APIKeyHeader(name="x-api-key")
-    def provisioning_apikey(key: str = Depends(apikey_on_header)):
-        """Ensures that the query comes from ERP"""
-        expected = os.environ.get('ERP_PROVISIONING_APIKEY')
-        if not expected: raise auth_error("Disabled key")
-        if key != expected: raise auth_error("Invalid key")
-
-
     @app.post('/api/auth/provisioning')
     def local_auth_provision_user(
-        username: Annotated[str, Body()],
+        username: Annotated[str, Body()], # TODO: Validate as vat
         password: Annotated[str, Body()],
+        name: Annotated[str|None, Body()]=None, # TODO: Remove conditional when erp adapted
+        email: Annotated[EmailStr|None, Body()]=None, # TODO: Remove conditional when erp adapted
         key: str = Depends(provisioning_apikey)
     ):
         """Administrative password set for the Local Authentication"""

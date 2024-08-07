@@ -9,7 +9,7 @@ import unittest.mock
 from .authlocal import setup_authlocal
 from .utils.testutils import environ, safe_response_get, pydantic_minor_version
 from .api_business import setup_business
-from .auth import validated_user
+from .authremote import validated_user
 
 class AuthLocal_Test(unittest.TestCase):
 
