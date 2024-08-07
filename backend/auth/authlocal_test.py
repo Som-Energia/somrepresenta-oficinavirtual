@@ -1,4 +1,3 @@
-import os
 import unittest
 from fastapi import FastAPI, Depends, status
 from fastapi.testclient import TestClient

@@ -6,7 +6,6 @@ from fastapi.responses import JSONResponse
 from fastapi import Depends, Body, Form
 from pydantic import EmailStr
 from consolemsg import error, success
-import os
 from yamlns import ns
 from ..models import TokenUser
 from ..datasources import user_info
@@ -133,6 +132,3 @@ def setup_authlocal(app):
         return dict(
             result = 'ok',
         )
-
-
-

@@ -13,7 +13,7 @@ from consolemsg import error
 from ..datasources import user_info
 from .authentik.user_provision import UserProvision
 from .common import (
-    JWT_ALGORITHM, 
+    JWT_ALGORITHM,
     auth_error,
     forbidden_error,
     validated_staff,
@@ -95,8 +95,6 @@ def setup_auth(app):
                 client_secret=os.getenv("OAUTH2_GOOGLE_CLIENT_SECRET"),
                 scope=["openid", "profile", "email"],
                 # TODO: This is required to work with proxy and not always work
-                # redirect_uri='/',
-                #redirect_uri="http://localhost:5173/",
                 redirect_uri="http://localhost:5500/",
                 claims=Claims(
                     identity=lambda user: f"{user.provider}:{user.sub}",
@@ -106,7 +104,6 @@ def setup_auth(app):
                 backend=AuthentikOauth2,
                 client_id=os.getenv("OAUTH2_AUTHENTIK_CLIENT_ID"),
                 client_secret=os.getenv("OAUTH2_AUTHENTIK_CLIENT_SECRET"),
-                # scope=["test", "openid", "profile", "email"],
                 scope=["openid", "profile", "email"],
                 # TODO: This is required to work with proxy and not always work
                 redirect_uri=os.getenv("OAUTH2_AUTHENTIK_REDIRECT_URI"),
@@ -155,7 +152,7 @@ def setup_auth(app):
             return authenticated_token_response(access_token)
         except Exception as e:
             error(f"While hijacking: {type(e)} {e}")
-            raise   
+            raise
 
     app.include_router(oauth2_router)
     app.add_middleware(
