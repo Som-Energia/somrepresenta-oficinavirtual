@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix script cookies (new url and key)
+
 ## 1.1.0 (2024-08-07)
 - Add application auth remote authentication to work with Authentik
   - Authentik user login and provisioning
