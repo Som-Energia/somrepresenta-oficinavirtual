@@ -6,7 +6,7 @@ export default function CookiesBanner() {
   useEffect(() => {
     const script = document.createElement('script')
 
-    script.src = `//cookie-script.com/s/${cookieScriptId}.js`
+    script.src = `//cdn.cookie-script.com/s/${cookieScriptId}.js`
     script.async = true
     document.body.appendChild(script)
 
