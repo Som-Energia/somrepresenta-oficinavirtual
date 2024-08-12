@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 1.1.1 (2024-08-12)
 - Fix script cookies (new url and key)
 
 ## 1.1.0 (2024-08-07)
