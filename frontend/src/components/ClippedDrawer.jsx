@@ -11,8 +11,8 @@ import Divider from '@mui/material/Divider'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate, useLocation } from 'react-router-dom'
+import ColorModeButton from '@somenergia/somenergia-ui/ColorModeButton'
 import LanguageMenu from './LanguageMenu'
-import ColorModeButton from './ColorModeButton'
 import ProfileButton from './ProfileButton'
 
 const drawerWidth = 240
