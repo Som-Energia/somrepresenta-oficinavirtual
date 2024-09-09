@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import SomEnergiaTheme from './SomEnergiaTheme'
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles'
 import React from 'react'
-import useLocalStorage from '../hooks/LocalStorage'
+import useLocalStorage from '@somenergia/somenergia-ui/hooks/LocalStorage'
 
 const ColorModeContext = React.createContext({
   current: null,

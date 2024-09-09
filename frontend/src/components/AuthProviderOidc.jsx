@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useLocalStorage from '../hooks/LocalStorage'
+import useLocalStorage from '@somenergia/somenergia-ui/hooks/LocalStorage'
 import { useAuth as useAuthOidc } from 'react-oidc-context'
 import ov from '../services/ovapi'
 // import { useCookies } from 'react-cookie'

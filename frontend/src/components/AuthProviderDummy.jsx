@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemButton from '@mui/material/ListItemButton'
 import { useTranslation } from 'react-i18next'
-import useLocalStorage from '../hooks/LocalStorage'
+import useLocalStorage from '@somenergia/somenergia-ui/hooks/LocalStorage'
 import { useDialog } from './DialogProvider'
 import users from '../data/dummyusers.yaml'
 
