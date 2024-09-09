@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next'
 import { useCookies } from 'react-cookie'
 import ov from '../services/ovapi'
 import wait from '../services/wait'
-import useLocalStorage from '../hooks/LocalStorage'
 
 // TODO: Let the user inject the specific function
 // to actually perform the action and thus removing the
