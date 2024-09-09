@@ -2,7 +2,7 @@ import LightModeIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined'
 import AutoModeIcon from '@mui/icons-material/Brightness4'
 import IconButton from '@mui/material/IconButton'
-import { ColorModeContext } from './GlobalTheme'
+import { ColorModeContext } from '@somenergia/somenergia-ui/GlobalTheming'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 

@@ -9,7 +9,7 @@ import './App.css'
 import i18n from './i18n/i18n'
 import { useTranslation } from 'react-i18next'
 import { CookiesProvider } from 'react-cookie'
-import GlobalTheme from './components/GlobalTheme'
+import GlobalTheming from '@somenergia/somenergia-ui/GlobalTheming'
 import TestPage from './components/TestPage'
 import HomePage from './pages/HomePage'
 import NotFoundPage from './NotFoundPage'
@@ -36,7 +36,7 @@ import CookiesPolicyPage from './pages/CookiesPolicyPage'
 const routes = [
   {
     element: (
-      <GlobalTheme>
+      <GlobalTheming>
         <CookiesBanner />
         <DialogProvider>
           <VersionCheck />
@@ -58,7 +58,7 @@ const routes = [
             </LocalizationProvider>
           </CookiesProvider>
         </DialogProvider>
-      </GlobalTheme>
+      </GlobalTheming>
     ),
     children: [
       {
