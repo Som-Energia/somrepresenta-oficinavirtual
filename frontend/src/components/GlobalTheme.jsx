@@ -1,11 +1,11 @@
 // This module controls the global theme and its light
 // and dark modes.
 
+import React from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import CssBaseline from '@mui/material/CssBaseline'
-import SomEnergiaTheme from './SomEnergiaTheme'
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles'
-import React from 'react'
+import SomEnergiaTheme from '@somenergia/somenergia-ui/SomEnergiaTheme'
 import useLocalStorage from '@somenergia/somenergia-ui/hooks/LocalStorage'
 
 const ColorModeContext = React.createContext({
