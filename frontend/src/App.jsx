@@ -18,6 +18,7 @@ import AuthProvider from './components/AuthProvider'
 import PageGuard from './components/PageGuard'
 import TermsCheck from './components/TermsCheck'
 import VersionCheck from './components/VersionCheck'
+import SomRepresentaTheme from './components/SomRepresentaTheme'
 import AppFrame from './components/AppFrame'
 import BreakPointIndicator from './components/BreakPointIndicator'
 import SnackbarMessages from './components/SnackbarMessages'
@@ -36,7 +37,7 @@ import CookiesPolicyPage from './pages/CookiesPolicyPage'
 const routes = [
   {
     element: (
-      <GlobalTheming>
+      <GlobalTheming theme={SomRepresentaTheme}>
         <CookiesBanner />
         <DialogProvider>
           <VersionCheck />
