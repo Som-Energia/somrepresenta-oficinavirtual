@@ -79,6 +79,8 @@ Some of them are:
 
 See the command help for more information.
 
+WARNING! The directoy backend/dist should exist in order to run the scripts (if it does not, create it :D )
+
 ### Deploy upgrades
 
 - `git fetch` to get the latest updates
