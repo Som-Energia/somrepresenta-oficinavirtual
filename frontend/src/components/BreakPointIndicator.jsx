@@ -2,9 +2,8 @@ import Box from '@mui/material/Box'
 
 export default function BreakPointIndicator() {
   // This component only shows on dev mode or by enabling it in config
-  const enabledByConfig = import.meta.env.VITE_ENABLE_BREAKPOINT_INDICATOR == false // intended ==
-  if (!import.meta.env.DEV && enabledByConfig) return null
-
+  const enabledByConfig = import.meta.env.VITE_ENABLE_BREAKPOINT_INDICATOR == true // intended ==
+  if (!enabledByConfig) return null
   return (
     <Box
       className="breakpoint-debug"
