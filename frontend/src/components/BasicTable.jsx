@@ -5,7 +5,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import SomEnergiaTheme from './SomEnergiaTheme'
 
 const BasicTable = ({ row }) => {
   const { t } = useTranslation()
