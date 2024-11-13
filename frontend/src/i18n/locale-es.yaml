@@ -236,6 +236,7 @@ PRODUCTION:
   MATURITY_H3: Intermedia provisional (H3)
   MATURITY_HP: Final provisional (HP)
   MATURITY_HC: Final definitiva (HC)
+  MATURITY_HD: Cierre diario (HD)
   PLACEHOLDER_NO_CONTRACTS: No se han encontrado contratos
 COOKIES_POLICY:
   TITLE: Política de cookies

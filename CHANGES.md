@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Add HD maturity
+
 ## 1.1.1 (2024-08-12)
 - Fix script cookies (new url and key)
 

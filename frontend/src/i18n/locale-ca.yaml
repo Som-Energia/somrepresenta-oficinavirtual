@@ -299,6 +299,7 @@ PRODUCTION:
   MATURITY_H2: Inicial provisional (H2)
   MATURITY_H3: Intermèdia provisional (H3)
   MATURITY_HP: Final provisional (HP)
+  MATURITY_HD: Tancament diari (HD)
   LEGEND_PRODUCTION: Producció (kWh)
   LEGEND_FORESEEN: Previsió (kWh)
   PRODUCTION_TITLE: Producció

@@ -129,6 +129,7 @@ PRODUCTION:
   MATURITY_H2: Inicial provisional (H2)
   MATURITY_HP: Final provisional (HP)
   MATURITY_HC: Final definitiva (HC)
+  MATURITY_HD: Cierre diario (HD)
   CSV_COLUMN_DATETIME: Día/hora
   CSV_COLUMN_INSTALL_NAME: Nome da instalación
   CSV_COLUMN_UTC_OFFSET: Diferenza UTC (h)

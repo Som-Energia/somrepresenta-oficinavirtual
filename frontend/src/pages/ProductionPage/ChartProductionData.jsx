@@ -57,6 +57,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
     H3: t('PRODUCTION.MATURITY_H3'),
     HP: t('PRODUCTION.MATURITY_HP'),
     HC: t('PRODUCTION.MATURITY_HC'),
+    HD: t('PRODUCTION.MATURITY_HD'),
   }
   function handleClick() {
     const contractData = currentContractData(productionData, contractName)

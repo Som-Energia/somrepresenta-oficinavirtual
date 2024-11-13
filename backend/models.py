@@ -170,6 +170,7 @@ DataMaturity = Literal[
     'H3',
     'HP',
     'HC',
+    'HD',
 ]
 
 class ContractProductionData(BaseModel):
