@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 1.2.0 (2024-11-13)
 - Add HD maturity
 
 ## 1.1.1 (2024-08-12)
