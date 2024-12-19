@@ -39,10 +39,11 @@ function array2datapoints(first_timestamp, values, step_ms = 60 * 60 * 1000) {
 
 function timeInterval(scope, current_date) {
   const start = new Date(current_date)
-  start.setHours(0)
+  start.setHours(1)
   start.setMinutes(0)
   start.setSeconds(0)
   start.setMilliseconds(0)
+
   if (scope === 'MONTHLY') {
     start.setDate(1)
   }

@@ -333,8 +333,16 @@ function invoicesZip(invoiceNumbers) {
     })
 }
 
+export function setTimeInterval(first_timestamp_utc, last_timestamp_utc) {
+  let hourToAdd = 60 *60 *1000
+  first_timestamp_utc.setTime(first_timestamp_utc.getTime() + hourToAdd)
+  last_timestamp_utc.setDate(last_timestamp_utc.getDate() + 1)
+  last_timestamp_utc.setTime(last_timestamp_utc.getTime() + hourToAdd)
+}
+
 async function productionData(first_timestamp_utc, last_timestamp_utc, contract_number) {
   const context = i18n.t('OVAPI.CONTEXT_PRODUCTION_DATA')
+  setTimeInterval(first_timestamp_utc, last_timestamp_utc)
   return axios
     .get('/api/production_data', {
       params: {
