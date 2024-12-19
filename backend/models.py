@@ -165,14 +165,6 @@ class ProductionData(BaseModel):
     data: str
     value: int
 
-DataMaturity = Literal[
-    'H2',
-    'H3',
-    'HP',
-    'HC',
-    'HD',
-]
-
 class ContractProductionData(BaseModel):
     contract_name: str
     first_timestamp_utc: AwareDatetime
@@ -180,7 +172,7 @@ class ContractProductionData(BaseModel):
     foreseen_kwh: list[float | None]
     measure_kwh: list[float | None]
     estimated: list [bool | None]
-    maturity: list[DataMaturity | None]
+    maturity: list[str | None]
 
 class CustomerProductionData(BaseModel):
     data: list[ContractProductionData]
