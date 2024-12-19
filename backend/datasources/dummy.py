@@ -373,7 +373,7 @@ def dummy_production_data(
     nhours = round(
         (last_timestamp_utc - first_timestamp_utc) / datetime.timedelta(hours=1)
     )
-    maturity_options = ["H2", "H3", "HP", "HC", None]
+    maturity_options = ["H2", "H3", "HP", "HC", "HD", None]
 
     return CustomerProductionData(
         data=[
