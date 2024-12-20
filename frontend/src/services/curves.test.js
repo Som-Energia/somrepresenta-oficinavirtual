@@ -84,63 +84,63 @@ describe('index2time', () => {
 
 describe('timeInterval', () => {
   it('Day time interval, current start of day', () => {
-    expect(timeInterval('DAILY', new Date('2020-03-02T00:00:00'))).toStrictEqual([
-      new Date('2020-03-02T00:00:00'),
-      new Date('2020-03-03T00:00:00'),
+    expect(timeInterval('DAILY', new Date('2020-03-02T01:00:00'))).toStrictEqual([
+      new Date('2020-03-02T01:00:00'),
+      new Date('2020-03-03T01:00:00'),
     ])
   })
   it('Day time interval, within day', () => {
     expect(timeInterval('DAILY', new Date('2020-03-02T09:00:00'))).toStrictEqual([
-      new Date('2020-03-02T00:00:00'),
-      new Date('2020-03-03T00:00:00'),
+      new Date('2020-03-02T01:00:00'),
+      new Date('2020-03-03T01:00:00'),
     ])
   })
   it('Day time interval, within day in UTC offset affects', () => {
     expect(timeInterval('DAILY', new Date('2020-03-01T23:10:00Z'))).toStrictEqual([
-      new Date('2020-03-02T00:00:00'),
-      new Date('2020-03-03T00:00:00'),
+      new Date('2020-03-02T01:00:00'),
+      new Date('2020-03-03T01:00:00'),
     ])
   })
   it('Day time interval, within day in UTC offset does not affect', () => {
     expect(timeInterval('DAILY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
-      new Date('2020-03-02T00:00:00'),
-      new Date('2020-03-03T00:00:00'),
+      new Date('2020-03-02T01:00:00'),
+      new Date('2020-03-03T01:00:00'),
     ])
   })
   it('Month time interval, within month', () => {
     expect(timeInterval('MONTHLY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
-      new Date('2020-03-01T00:00:00'),
-      new Date('2020-04-01T00:00:00'),
+      new Date('2020-03-01T01:00:00'),
+      new Date('2020-04-01T01:00:00'),
     ])
   })
   it('Year time interval, within year', () => {
     expect(timeInterval('YEARLY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
-      new Date('2020-01-01T00:00:00'),
-      new Date('2021-01-01T00:00:00'),
+      new Date('2020-01-01T01:00:00'),
+      new Date('2021-01-01T01:00:00'),
     ])
   })
   it('Week time interval, monday', () => {
     expect(timeInterval('WEEKLY', new Date('2020-03-02T22:10:00Z'))).toStrictEqual([
-      new Date('2020-03-02T00:00:00'),
-      new Date('2020-03-09T00:00:00'),
+      new Date('2020-03-02T01:00:00'),
+      new Date('2020-03-09T01:00:00'),
     ])
   })
   it('Week time interval, tuesday', () => {
     expect(timeInterval('WEEKLY', new Date('2020-03-03T22:10:00Z'))).toStrictEqual([
-      new Date('2020-03-02T00:00:00'),
-      new Date('2020-03-09T00:00:00'),
+      new Date('2020-03-02T01:00:00'),
+      new Date('2020-03-09T01:00:00'),
     ])
   })
   it('Week time interval, sunday', () => {
     expect(timeInterval('WEEKLY', new Date('2020-03-08T22:10:00Z'))).toStrictEqual([
-      new Date('2020-03-02T00:00:00'),
-      new Date('2020-03-09T00:00:00'),
+      new Date('2020-03-02T01:00:00'),
+      new Date('2020-03-09T01:00:00'),
     ])
   })
   it('Week time interval, sunday, crossing months', () => {
     expect(timeInterval('WEEKLY', new Date('2020-03-01T22:10:00Z'))).toStrictEqual([
-      new Date('2020-02-24T00:00:00'),
-      new Date('2020-03-02T00:00:00'),
+      new Date('2020-02-24T01:00:00'),
+      new Date('2020-03-02T01:00:00'),
     ])
   })
 })
