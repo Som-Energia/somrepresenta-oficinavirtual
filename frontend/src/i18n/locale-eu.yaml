@@ -118,7 +118,7 @@ PRODUCTION:
   STYLE_BAR: Barrak
   STYLE_LINE: Lerroak
   MATURITY_HC: Amaierako behin betikoa (HC)
-  MATURITY_HD: Cierre diario (HD)
+  MATURITY_HD: Eguneroko itxiera (HD)
   CSV_COLUMN_CONTRACT_NUMBER: Kontratu-zenbakia
   CSV_COLUMN_CIL: CIL
   CSV_COLUMN_INSTALL_NAME: Instalazioaren izena
