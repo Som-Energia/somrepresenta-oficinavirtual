@@ -1,8 +1,8 @@
 # Change log
 
-## Unreleased
+## 1.2.1 (2025-01-13)
 - Avoid errors when a new maturity is added
-- Ungrade somenergia-ui to 0.5.1 that fixes curve labels
+- Upgrade somenergia-ui to 0.5.1 that fixes curve labels
 
 ## 1.2.0 (2024-11-13)
 - Add HD maturity
