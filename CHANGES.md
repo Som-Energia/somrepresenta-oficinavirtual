@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix displaced 1 hour in curves chart
+
 ## 1.2.1 (2025-01-13)
 - Avoid errors when a new maturity is added
 - Upgrade somenergia-ui to 0.5.1 that fixes curve labels
