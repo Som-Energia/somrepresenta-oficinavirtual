@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## 1.2.2 (2025-01-16)
 - Fix displaced 1 hour in curves chart
 
 ## 1.2.1 (2025-01-13)
