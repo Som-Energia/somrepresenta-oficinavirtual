@@ -363,6 +363,7 @@ const ChartProductionData = () => {
           legend={true}
           type={line ? LINE : BAR}
           lang={i18n?.language}
+          displaced={true}
           compareData={showForeseen ? compareData : []}
         />
       </Box>

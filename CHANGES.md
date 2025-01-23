@@ -1,5 +1,8 @@
 # Change log
 
+## unreleased
+- Add Displaced paramter to curves chart
+
 ## 1.2.2 (2025-01-16)
 - Fix displaced 1 hour in curves chart
 
