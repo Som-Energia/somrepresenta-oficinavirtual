@@ -1,6 +1,6 @@
 # Change log
 
-## unreleased
+## 1.2.3 (2025-01-23)
 - Add Displaced paramter to curves chart
 
 ## 1.2.2 (2025-01-16)
