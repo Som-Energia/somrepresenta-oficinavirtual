@@ -124,7 +124,7 @@ class InstallationDetails(BaseModel):
     province: str
     rated_power: int
     technology: ProductionTechnology | bool | None # TODO: restrict to enum # TODO: Remove bool when fixed in ERP
-    type: str # TODO: Rename to installaton_type_code
+    type: str | bool | None # TODO: Rename to installaton_type_code
 
 class ContractDetails(BaseModel):
     billing_mode: BillingMode
