@@ -75,8 +75,8 @@ class Erp:
         return self._post("/object", "execute", self.db, "token", self._token, *args, timeout=timeout)
 
     def customer_list(self):
-        ids = self.object_execute("res.partner", "search", [["vat", "<>", False]])
-        return self.object_execute("res.partner", "read", ids, ["name", "vat"])
+        ids = self.object_execute("somre.ov.users", "search", [["vat", "<>", False]])
+        return self.object_execute("somre.ov.users", "read", ids, ["name", "vat"])
 
     def staff_list(self):
         ids = self.object_execute("res.users", "search", [["id", "<>", False]])
@@ -87,13 +87,13 @@ class Erp:
         )  # ['login', 'name'])
 
     def identify(self, login):
-        return self.object_execute("som.ov.users", "identify_login", login)
+        return self.object_execute("somre.ov.users", "identify_login", login)
 
     def profile(self, username):
-        return self.object_execute("som.ov.users", "get_profile", username)
+        return self.object_execute("somre.ov.users", "get_profile", username)
 
     def sign_document(self, username, document):
-        return self.object_execute("som.ov.users", "sign_document", username, document)
+        return self.object_execute("somre.ov.users", "sign_document", username, document)
 
     def list_signatures(self, username, document=None):
         """Only for debug purposes"""
@@ -101,11 +101,11 @@ class Erp:
             [["document_version.type.code", "=", document]] if document else []
         )
         ids = self.object_execute(
-            "som.ov.signed.document",
+            "somre.ov.signed.document",
             "search",
             [["signer.vat", "=", username]] + document_query,
         )
-        signatures = self.object_execute("som.ov.signed.document", "read", ids)
+        signatures = self.object_execute("somre.ov.signed.document", "read", ids)
         return signatures
 
     def clear_signatures(self, username, document=None):
@@ -114,22 +114,22 @@ class Erp:
             [["document_version.type.code", "=", document]] if document else []
         )
         ids = self.object_execute(
-            "som.ov.signed.document",
+            "somre.ov.signed.document",
             "search",
             [["signer.vat", "=", username]] + document_query,
         )
-        deleted = self.object_execute("som.ov.signed.document", "read", ids)
-        self.object_execute("som.ov.signed.document", "unlink", ids)
+        deleted = self.object_execute("somre.ov.signed.document", "read", ids)
+        self.object_execute("somre.ov.signed.document", "unlink", ids)
         return deleted
 
     def list_installations(self, username):
         return self.object_execute(
-            "som.ov.installations", "get_installations", username
+            "somre.ov.installations", "get_installations", username
         )
 
     def installation_details(self, username, contract_number):
         details = self.object_execute(
-            "som.ov.installations",
+            "somre.ov.installations",
             "get_installation_details",
             username,
             contract_number,
@@ -137,16 +137,16 @@ class Erp:
         return details
 
     def list_invoices(self, username: str) -> dict:
-        return self.object_execute("som.ov.invoices", "get_invoices", username)
+        return self.object_execute("somre.ov.invoices", "get_invoices", username)
 
     def invoice_pdf(self, username: str, invoice_number: str) -> dict:
         return self.object_execute(
-            "som.ov.invoices", "download_invoice_pdf", username, invoice_number
+            "somre.ov.invoices", "download_invoice_pdf", username, invoice_number
         )
 
     def invoices_zip(self, username: str, invoice_numbers: list[str]) -> dict:
         return self.object_execute(
-            "som.ov.invoices", "download_invoices_zip", username, invoice_numbers,
+            "somre.ov.invoices", "download_invoices_zip", username, invoice_numbers,
             timeout=ERP_INVOICE_ZIP_TIMEOUT_SECONDS,
         )
 
@@ -158,7 +158,7 @@ class Erp:
         contract_number: Optional[str] = None
     ) -> Dict[str, Any]:
         data = self.object_execute(
-            "som.ov.production.data",
+            "somre.ov.production.data",
             "measures_single_installation",
             username,
             str(contract_number),
