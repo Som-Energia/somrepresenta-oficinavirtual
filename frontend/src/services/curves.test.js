@@ -158,6 +158,17 @@ describe('timeSlice', () => {
       { value: 6, date: base + 5 * 3600000 },
     ])
   })
+  it('quartihoraies', () => {
+    const baseDate = new Date(d_2020_08_02_M)
+    const base = 1596319200000 // baseDate.getTime()
+    console.log('quartihoraries')
+    expect(timeSlice(baseDate, [1, 2, 3, 4], 0, 4, 15)).toStrictEqual([
+      { value: 1, date: base + 0 * 900000 },
+      { value: 2, date: base + 1 * 900000 },
+      { value: 3, date: base + 2 * 900000 },
+      { value: 4, date: base + 3 * 900000 },
+    ])
+  })
   it('offsets inside array', () => {
     const baseDate = new Date(d_2020_08_02_M)
     const base = 1596319200000 // baseDate.getTime()
