@@ -3,8 +3,8 @@
  *
  * Usefull to obtain the index in an array of continuous time series values.
  */
-function time2index(referenceTimestamp, timestamp) {
-  return (new Date(timestamp) - new Date(referenceTimestamp)) / 60 / 60 / 1000
+function time2index(referenceTimestamp, timestamp, step_mm = 60) {
+  return (new Date(timestamp) - new Date(referenceTimestamp)) / step_mm / 60 / 1000
 }
 
 /**
@@ -13,8 +13,8 @@ function time2index(referenceTimestamp, timestamp) {
  * Useful to get timestamp of the nth value in an array of continuous time series
  * values.
  */
-function index2time(referenceTimestamp, index) {
-  return new Date(new Date(referenceTimestamp).getTime() + index * 60 * 60 * 1000)
+function index2time(referenceTimestamp, index, step_mm = 60) {
+  return new Date(new Date(referenceTimestamp).getTime() + index * step_mm * 60 * 1000)
 }
 
 /**
@@ -27,11 +27,11 @@ function index2time(referenceTimestamp, index) {
  * This representation is used for compatibility with legacy widgets.
  * For more performance, use indexes with time2index and index2time.
  */
-function array2datapoints(first_timestamp, values, step_ms = 60 * 60 * 1000) {
+function array2datapoints(first_timestamp, values, step_mm = 60) {
   const base = first_timestamp.getTime()
   return values.map((value, i) => {
     return {
-      date: base + i * step_ms,
+      date: base + i * step_mm * 60 * 1000,
       value,
     }
   })
@@ -74,16 +74,17 @@ function timeInterval(scope, current_date) {
   return [start, end]
 }
 
-function timeSlice(timeOffset, values, indexStart, indexEnd) {
+function timeSlice(timeOffset, values, indexStart, indexEnd, step_mm = 60) {
   var adjustedIndexStart = Math.max(0, indexStart)
-  const newTimeOffset = index2time(timeOffset, adjustedIndexStart)
-  return array2datapoints(newTimeOffset, values.slice(adjustedIndexStart, indexEnd))
+  const newTimeOffset = index2time(timeOffset, adjustedIndexStart, step_mm)
+  console.log('timeSlice step_ms',step_mm)
+  return array2datapoints(newTimeOffset, values.slice(adjustedIndexStart, indexEnd), step_mm)
 }
 
-function sliceIndexes(offsetDate, period, currentTime) {
+function sliceIndexes(offsetDate, period, currentTime, step_mm = 60) {
   var [startTime, endTime] = timeInterval(period, currentTime)
-  var startIndex = time2index(offsetDate, startTime)
-  var endIndex = time2index(offsetDate, endTime)
+  var startIndex = time2index(offsetDate, startTime, step_mm)
+  var endIndex = time2index(offsetDate, endTime, step_mm)
   return [startIndex, endIndex]
 }
 

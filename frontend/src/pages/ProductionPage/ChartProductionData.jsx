@@ -66,6 +66,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
       contractData.first_timestamp_utc,
       period,
       currentTime,
+      step_mm
     )
     const startIndex = Math.max(unadjustedStartIndex, 0)
     const endIndex = Math.min(unadjustedEndIndex, contractData.measure_kwh.length - 1)
@@ -86,7 +87,7 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
     const content = header.concat(
       [...Array(endIndex - startIndex).keys()].map((_, i) => {
         const j = i + startIndex
-        const date = index2time(contractData.first_timestamp_utc, j)
+        const date = index2time(contractData.first_timestamp_utc, j, step_mm)
         return [
           format.localISODateTime(date),
           date.getTimezoneOffset() / 60,
@@ -147,6 +148,7 @@ const ChartProductionData = () => {
   const minDate = new Date(maxDate)
   minDate.setFullYear(minDate.getFullYear() - years)
   maxDate.setDate(maxDate.getDate() + 5)
+  const step_mm = 15
 
   const transformBarChartData = (data) => {
     return {
@@ -216,6 +218,7 @@ const ChartProductionData = () => {
       contractData.first_timestamp_utc,
       period,
       currentTime,
+      step_mm
     )
 
     var measured_data = timeSlice(
@@ -223,13 +226,17 @@ const ChartProductionData = () => {
       contractData.measure_kwh,
       startIndex,
       endIndex,
+      step_mm
     )
+
     var foreseen_data = timeSlice(
       offsetDate,
       contractData.foreseen_kwh,
       startIndex,
       endIndex,
+      step_mm
     )
+
     setProductionLineData(measured_data)
     let transdormedData = transformBarChartData(measured_data)
     setProductionBarData(transdormedData)
@@ -369,6 +376,7 @@ const ChartProductionData = () => {
           type={line ? LINE : BAR}
           lang={i18n?.language}
           displaced={true}
+          step_mm={step_mm}
           compareData={showForeseen ? compareData : []}
         />
       </Box>
