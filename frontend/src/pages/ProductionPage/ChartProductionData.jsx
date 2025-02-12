@@ -26,6 +26,8 @@ import ovapi from '../../services/ovapi'
 import format from '../../services/format'
 import { index2time, timeSlice, sliceIndexes } from '../../services/curves'
 import { downloadTextFile } from '../../services/download'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 dayjs.extend(minMax)
 
@@ -136,6 +138,7 @@ const ChartProductionData = () => {
   const [totalKwh, setTotalKwh] = React.useState(0)
   const [foreseenTotalKwh, setForeseenTotalKwh] = React.useState(0)
 
+  const language = i18n.language
   const maxDate = new Date()
   maxDate.setHours(0)
   maxDate.setMinutes(0)
@@ -309,19 +312,24 @@ const ChartProductionData = () => {
           <Button onClick={prevTimeWindow}>
             <ArrowBackIosOutlinedIcon />
           </Button>
-          <DatePicker
-            value={currentTime}
-            onChange={setCurrentTime}
-            views={
-              period === YEARLY
-                ? ['year']
-                : period === MONTHLY
-                ? ['month', 'year']
-                : undefined
-            }
-            minDate={dayjs(firstDataDate)}
-            maxDate={dayjs(lastDataDate)}
-          />
+          <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              adapterLocale={language}
+          >
+            <DatePicker
+              value={currentTime}
+              onChange={setCurrentTime}
+              views={
+                period === YEARLY
+                  ? ['year']
+                  : period === MONTHLY
+                  ? ['month', 'year']
+                  : undefined
+              }
+              minDate={dayjs(firstDataDate)}
+              maxDate={dayjs(lastDataDate)}
+            />
+          </LocalizationProvider>
           <Button onClick={nextTimeWindow}>
             <ArrowForwardIosOutlinedIcon />
           </Button>

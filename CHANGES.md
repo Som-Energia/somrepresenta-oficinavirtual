@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix DatePicker translations
+
 ## 1.2.3 (2025-01-23)
 - Add Displaced paramter to curves chart
 
