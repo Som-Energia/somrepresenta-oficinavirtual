@@ -1,7 +1,8 @@
 # Change log
 
-## unreleased
+## 1.2.5 (2025-02-26)
 - Change referencies to new erp module
+- Fix type installations can be None
 
 ## 1.2.4 (2025-02-12)
 - Fix DatePicker translations
