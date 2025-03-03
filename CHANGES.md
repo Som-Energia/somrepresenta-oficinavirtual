@@ -1,6 +1,6 @@
 # Change log
 
-## unreleased
+## 1.3.1 (2025-03-03)
 - Fix rated_power from int to float
 
 ## 1.3.0 (2025-02-26)
