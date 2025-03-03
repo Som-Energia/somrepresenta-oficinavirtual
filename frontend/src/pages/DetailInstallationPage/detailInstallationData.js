@@ -37,7 +37,7 @@ export function transformInstallationDetails(data) {
   }
   return {
     ...data,
-    rated_power: format.units(data.rated_power, 'kW', 0),
+    rated_power: format.units(data.rated_power, 'kW', 2),
     technology: format.enumeration(data.technology, productionTecnologyOptions),
   }
 }

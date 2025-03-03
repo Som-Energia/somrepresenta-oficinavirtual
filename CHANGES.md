@@ -1,6 +1,9 @@
 # Change log
 
-## 1.2.5 (2025-02-26)
+## unreleased
+- Fix rated_power from int to float
+
+## 1.3.0 (2025-02-26)
 - Change referencies to new erp module
 - Fix type installations can be None
 
