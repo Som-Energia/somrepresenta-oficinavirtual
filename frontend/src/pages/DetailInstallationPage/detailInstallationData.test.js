@@ -123,21 +123,21 @@ describe('transformInstallationDetails', () => {
       rated_power: 100,
     }
     const result = transformInstallationDetails(contractData)
-    expect(result['rated_power']).toEqual('100 kW')
+    expect(result['rated_power']).toEqual('100,00 kW')
   })
   it('rated_power, thousand separator', () => {
     const contractData = {
       rated_power: 1000,
     }
     const result = transformInstallationDetails(contractData)
-    expect(result['rated_power']).toEqual('1.000 kW')
+    expect(result['rated_power']).toEqual('1.000,00 kW')
   })
   it('rated_power, decimals', () => {
     const contractData = {
       rated_power: 10.55,
     }
     const result = transformInstallationDetails(contractData)
-    expect(result['rated_power']).toEqual('11 kW')
+    expect(result['rated_power']).toEqual('10,55 kW')
   })
 })
 

@@ -122,7 +122,7 @@ class InstallationDetails(BaseModel):
     name: str
     postal_code: str
     province: str
-    rated_power: int
+    rated_power: float
     technology: ProductionTechnology | bool | None # TODO: restrict to enum # TODO: Remove bool when fixed in ERP
     type: str | bool | None # TODO: Rename to installaton_type_code
 
