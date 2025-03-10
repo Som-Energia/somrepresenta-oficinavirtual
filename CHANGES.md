@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix zip from several invoices
+
 ## 1.3.1 (2025-03-03)
 - Fix rated_power from int to float
 

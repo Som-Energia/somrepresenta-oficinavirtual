@@ -312,7 +312,7 @@ function invoicesZip(invoiceNumbers) {
     invoice_numbers: invoiceNumbers,
   })
 
-  const queryParams = '?invoice_numbers=' + invoiceNumbers
+  const queryParams = '?invoice_numbers=' + Array.from(invoiceNumbers)
 
   return axios
     .get(`/api/invoices/zip${queryParams}`, {
