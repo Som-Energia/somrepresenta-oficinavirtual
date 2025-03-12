@@ -59,19 +59,6 @@ export default function LanguageMenu() {
             {language.text}
           </MenuItem>
         ))}
-        {languages.translateUrl && (
-          <MenuItem
-            onClick={() => {
-              window.open(languages.translateUrl, '_blank')
-              closeMenu()
-            }}
-          >
-            <ListItemIcon>
-              <TranslateIcon />
-            </ListItemIcon>
-            {t('APP_FRAME.CONTRIBUTE_TRANSLATIONS')}
-          </MenuItem>
-        )}
       </Menu>
     </>
   )
