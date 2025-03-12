@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Remove external translations possibility
+
 ## 1.3.2 (2025-03-10)
 - Fix zip from several invoices
 
