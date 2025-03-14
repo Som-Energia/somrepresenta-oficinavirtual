@@ -1,5 +1,9 @@
 # Change log
 
+## unreleased
+- Remove english translation
+- Upgrade somenergi-ui: fix TableEditor second click error
+
 ## 1.3.3 (2025-03-12)
 - Remove external translations possibility
 
