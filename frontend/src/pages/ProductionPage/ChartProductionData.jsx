@@ -147,6 +147,7 @@ const ChartProductionData = () => {
   const years = 4
   const minDate = new Date(maxDate)
   minDate.setFullYear(minDate.getFullYear() - years)
+  maxDate.setDate(maxDate.getDate() + 5)
 
   const transformBarChartData = (data) => {
     return {
