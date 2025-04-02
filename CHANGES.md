@@ -1,6 +1,6 @@
 # Change log
 
-## unreleased
+## 1.3.5
 - Add 5 days to maxDate
 
 ## 1.3.4 (2025-03-17)
