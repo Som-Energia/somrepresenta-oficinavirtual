@@ -74,6 +74,11 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
                   onClose()
                 }}
                 selected={page.path === currentLocation.pathname}
+                sx={{
+                  "&.Mui-selected": {
+                      backgroundColor: "#E2E8DE"
+                  }
+                }}
               >
                 <ListItemIcon>
                   <Icon />

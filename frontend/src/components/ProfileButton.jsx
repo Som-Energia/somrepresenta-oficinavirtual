@@ -140,6 +140,10 @@ function ProfileButton(params) {
             sx={{
               color: 'primary.contrastText',
               bgcolor: 'primary.light',
+              borderRadius: '10px',
+              "&:hover": {
+                backgroundColor: "#E2E8DE"
+              }
             }}
             onClick={login}
           >
@@ -202,7 +206,7 @@ function ProfileButton(params) {
               src={currentUser.avatar}
               sx={{
                 bgcolor: 'primary.contrastText',
-                color: 'primary.main',
+                color: 'primary.light',
               }}
             >
               {currentUser.initials}

@@ -31,6 +31,7 @@ const SimpleTable = ({
         <Item
           sx={{
             backgroundColor: 'table.titleColor',
+            color: 'white',
             width: '100%',
             marginBottom: '1rem',
           }}
