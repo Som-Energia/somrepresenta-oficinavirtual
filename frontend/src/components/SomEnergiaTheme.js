@@ -51,8 +51,8 @@ export default function SomEnergiaTheme(isDarkMode) {
       },
       primary: {
         //main: '#96D600', //'hsl(78, 100%, 42%)', // from style guide
-        main: '#FFFFFF',
-        contrastText: '#0B2E34',
+        main: '#0B2E34',
+        contrastText: '#E2E8DE',
         light: '#CDFF80'
       },
       secondary: {
@@ -74,6 +74,10 @@ export default function SomEnergiaTheme(isDarkMode) {
         production: '#96b633',
         foreseen: '#f2970f',
       },
+      bar: {
+        background: '#FFFFFFFF',
+        color: '#0B2E34',
+      }
     },
   })
   return responsiveFontSizes(theme, {

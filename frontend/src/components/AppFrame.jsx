@@ -28,7 +28,13 @@ export default function AppFrame(props) {
     <>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, borderRadius:'8px', margin: '0.5rem' }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          borderRadius:'8px',
+          margin: '0.5rem',
+          backgroundColor: 'bar.background',
+          color: 'bar.color',
+        }}
         enableColorOnDark
       >
         <Toolbar>

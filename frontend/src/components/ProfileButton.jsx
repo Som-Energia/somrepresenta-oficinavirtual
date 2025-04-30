@@ -138,7 +138,7 @@ function ProfileButton(params) {
           <Button
             endIcon={<IconLogin />}
             sx={{
-              color: 'primary.contrastText',
+              color: 'primary.main',
               bgcolor: 'primary.light',
               borderRadius: '10px',
               "&:hover": {
@@ -197,7 +197,7 @@ function ProfileButton(params) {
             sx={{
               p: 0,
               pr: 1,
-              color: 'primary.contrastText',
+              color: 'primary.main',
               bgcolor: 'primary.light',
             }}
           >
@@ -205,7 +205,7 @@ function ProfileButton(params) {
               alt={initials(currentUser.name)}
               src={currentUser.avatar}
               sx={{
-                bgcolor: 'primary.contrastText',
+                bgcolor: 'primary.main',
                 color: 'primary.light',
               }}
             >
