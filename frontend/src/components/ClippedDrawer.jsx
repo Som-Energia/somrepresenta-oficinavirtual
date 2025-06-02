@@ -57,7 +57,6 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
                 }}
               >
                 <ProfileButton onMenuClose={onClose} />
-                <ColorModeButton />
                 <LanguageMenu />
               </ListItem>
               <Divider />

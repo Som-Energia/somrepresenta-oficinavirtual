@@ -207,6 +207,7 @@ function ProfileButton(params) {
               sx={{
                 bgcolor: 'primary.main',
                 color: 'primary.light',
+                margin: '5px',
               }}
             >
               {currentUser.initials}
