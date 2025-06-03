@@ -36,7 +36,9 @@ export default function PageButton(params) {
           <Icon
             sx={{
               fontSize: 'clamp(150px, 15vw, 200px)',
-              padding: '15%',
+              '&:hover': {
+                fill: '#B5EA62',
+              },
             }}
           />
         </Link>

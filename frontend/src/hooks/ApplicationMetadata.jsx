@@ -1,8 +1,9 @@
-import React from 'react'
 import HomeIcon from '@mui/icons-material/Home'
-import SolarPowerIcon from '@mui/icons-material/SolarPower'
-import QueryStatsIcon from '@mui/icons-material/QueryStats'
-import DescriptionIcon from '@mui/icons-material/Description'
+import {
+  SolarPowerIcon,
+  QueryStatsIcon,
+  DescriptionIcon
+} from '../assets/Icons'
 import ScienceIcon from '@mui/icons-material/Science'
 import { useTranslation } from 'react-i18next'
 import appData from '../data/appdata.yaml'

@@ -12,7 +12,6 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate, useLocation } from 'react-router-dom'
 import LanguageMenu from './LanguageMenu'
-import ColorModeButton from './ColorModeButton'
 import ProfileButton from './ProfileButton'
 
 const drawerWidth = 240
@@ -80,7 +79,13 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
                 }}
               >
                 <ListItemIcon>
-                  <Icon />
+                  <Icon
+                    sx={{
+                      '&:hover': {
+                        fill: '#B5EA62',
+                      },
+                    }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary={page.text} />
               </ListItemButton>
