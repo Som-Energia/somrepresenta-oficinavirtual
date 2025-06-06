@@ -81,6 +81,7 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
                 <ListItemIcon>
                   <Icon
                     sx={{
+                      margin: '5px',
                       '&:hover': {
                         fill: '#B5EA62',
                       },

@@ -10,16 +10,14 @@ export default function PageButton(params) {
     <Box sx={{ display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
       <Box
         sx={{
-          backgroundColor: 'primary.main',
           color: 'primary.contrastText',
-          borderRadius: '50%',
+          borderRadius: '60%',
           marginTop: '1.5rem',
           marginBottom: '1.5rem',
           height: 'clamp(150px,  15vw, 200px)',
           width: 'clamp(150px, 15vw, 200px)',
           transition: '.2s',
           '&:hover': {
-            backgroundColor: 'secondary.main',
             color: 'primary.main',
             transform: 'translateY(-0.4rem)',
             transition: '.2s',
@@ -35,6 +33,7 @@ export default function PageButton(params) {
         >
           <Icon
             sx={{
+              margin: '5px',
               fontSize: 'clamp(150px, 15vw, 200px)',
               '&:hover': {
                 fill: '#B5EA62',
