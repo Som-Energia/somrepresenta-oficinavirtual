@@ -139,6 +139,7 @@ function ProfileButton(params) {
             endIcon={<IconLogin />}
             sx={{
               color: 'primary.main',
+              border: '2px solid',
               bgcolor: 'primary.light',
               borderRadius: '10px',
               "&:hover": {
