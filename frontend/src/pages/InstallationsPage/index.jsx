@@ -82,8 +82,6 @@ export default function InstallationsPage(params) {
           noDataPlaceHolder={
             <Typography variant="h4">
               {t('INSTALLATIONS.NO_INSTALLATIONS')}
-              <br />
-              🤷‍♀️
             </Typography>
           }
         />
