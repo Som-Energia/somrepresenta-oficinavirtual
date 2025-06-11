@@ -63,3 +63,75 @@ export const QueryStatsIcon = (props) => {
     </SvgIcon>
   )
 }
+
+export const HomeIconMenu = (props) => {
+  const { sx } = props
+  return (
+  <SvgIcon sx={ sx }>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="31.4019" height="31.4019"/>
+    <path d="M1 28.187H29.8684" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18.9452 28.187V20.3848H11.9232V28.187" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M26.7475 14.9231V28.1869" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.12088 28.1869V14.9231" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1.78021 17.2638L14.6911 4.30906C14.7886 4.21108 14.9045 4.13336 15.032 4.08033C15.1595 4.0273 15.2961 4 15.4342 4C15.5722 4 15.7089 4.0273 15.8364 4.08033C15.9639 4.13336 16.0797 4.21108 16.1773 4.30906L29.0881 17.2638" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  </SvgIcon>
+)
+}
+
+export const SolarPowerIconMenu = (props) => {
+  const { sx } = props
+  return (
+  <SvgIcon sx={ sx }>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="31.4019" height="31.4019" transform="translate(0 0.532715)"/>
+    <path d="M3.20615 15.0813H5.41228" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M6.7594 6.50073L8.32024 8.06157" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M15.3398 2.94751V5.15364" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M23.9204 6.50073L22.3595 8.06157" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M27.4736 15.0813H25.2674" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9.82452 15.0812C9.82452 13.6185 10.4056 12.2156 11.4399 11.1813C12.4742 10.147 13.8771 9.56592 15.3398 9.56592C16.8026 9.56592 18.2054 10.147 19.2398 11.1813C20.2741 12.2156 20.8552 13.6185 20.8552 15.0812" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1 29.1137L6.61184 19.1862H24.0678L29.6797 29.1137H1Z" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.11752 23.5984H26.5621" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18.6973 19.1862L20.8552 29.1137" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9.82452 29.1137L11.9824 19.1862" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  </SvgIcon>
+)
+}
+
+export const DescriptionIconMenu = (props) => {
+  const { sx } = props
+  return (
+  <SvgIcon sx={ sx }>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="31.4019" height="31.4019" transform="translate(0 0.0654297)"/>
+    <path d="M4.28564 4.28279C4.10275 4.46385 4 4.70943 4 4.9655V23.6976V26.8208L7.901 24.8899L11.802 26.8208L15.703 24.8899L19.604 26.8208L23.505 24.8899L27.406 26.8208V22.6992V20.9693V4.9655C27.406 4.70943 27.3032 4.46385 27.1204 4.28279C26.9375 4.10172 26.6894 4 26.4307 4H4.97525C4.7166 4 4.46854 4.10172 4.28564 4.28279Z" stroke="#0C4C27" stroke-width="1.17757" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.5677 10.1134H14.2271C13.6364 10.1134 13.07 10.348 12.6523 10.7657C12.2347 11.1834 12 11.7498 12 12.3405C12 12.9311 12.2347 13.4976 12.6523 13.9152C13.07 14.3329 13.6364 14.5675 14.2271 14.5675H16.4542C17.0448 14.5675 17.6113 14.8022 18.0289 15.2198C18.4466 15.6375 18.6812 16.2039 18.6812 16.7946C18.6812 17.3853 18.4466 17.9517 18.0289 18.3694C17.6113 18.787 17.0448 19.0217 16.4542 19.0217H12.5568" stroke="#0C4C27" stroke-width="1.18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M15.3407 9V10.1135" stroke="#0C4C27" stroke-width="1.18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M15.3407 19.0217V20.1353" stroke="#0C4C27" stroke-width="1.18" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  </SvgIcon>
+)
+}
+
+export const QueryStatsIconMenu = (props) => {
+  const { sx } = props
+  return (
+  <SvgIcon sx={ sx }>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="31.4019" height="31.4019" transform="translate(0 0.598145)"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.96636 8.89689H25.4441C25.7815 8.89689 26.0553 8.62306 26.0553 8.28567C26.0553 7.94827 25.7815 7.67444 25.4441 7.67444H4.96636C4.62896 7.67444 4.35513 7.94827 4.35513 8.28567C4.35513 8.62306 4.62896 8.89689 4.96636 8.89689Z" fill="#0C4C27"/>
+    <rect x="28.1028" y="2.757" width="17.6279" height="25.514" rx="1.76636" transform="rotate(90 28.1028 2.757)" stroke="#0C4C27" stroke-width="1.17757"/>
+    <line x1="28.085" y1="8.21671" x2="2" y2="8.21671" stroke="#0C4C27" stroke-width="1.17757"/>
+    <line x1="28.085" y1="14.2829" x2="2" y2="14.2829" stroke="#0C4C27" stroke-width="1.17757"/>
+    <line x1="19.6457" y1="2.77478" x2="19.6457" y2="20.0458" stroke="#0C4C27" stroke-width="1.17757"/>
+    <line x1="11.0102" y1="2.77478" x2="11.0102" y2="20.0458" stroke="#0C4C27" stroke-width="1.17757"/>
+    <line x1="7.8865" y1="20.5693" x2="14.9519" y2="26.8497" stroke="#0C4C27" stroke-width="1.17757"/>
+    <path d="M16.6737 25.9141C16.4438 26.1441 16.4438 26.5169 16.6737 26.7468C16.9036 26.9767 17.2764 26.9767 17.5064 26.7468L16.6737 25.9141ZM23.1963 20.2242L22.7799 19.8079L16.6737 25.9141L17.09 26.3305L17.5064 26.7468L23.6126 20.6406L23.1963 20.2242Z" fill="#0C4C27"/>
+    <path d="M14.5608 31.2149C14.5608 31.5401 14.8244 31.8037 15.1495 31.8037C15.4747 31.8037 15.7383 31.5401 15.7383 31.2149L14.5608 31.2149ZM15.1495 20.2242L14.5608 20.2242L14.5608 31.2149L15.1495 31.2149L15.7383 31.2149L15.7383 20.2242L15.1495 20.2242Z" fill="#0C4C27"/>
+  </svg>
+  </SvgIcon>
+)
+}
