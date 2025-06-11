@@ -55,6 +55,11 @@ export default function SomEnergiaTheme(isDarkMode) {
         contrastText: '#E2E8DE',
         light: '#CDFF80'
       },
+      primary2: {
+        main: '#ff632b',
+        light: '#ffcdb5',
+        alt: '#afb5e8'
+      },
       secondary: {
         //main: '#E0E723', //'hsl(62, 80%, 52%)', // from style guide
         // main: '#a1a1a1', // from webforms-ui
