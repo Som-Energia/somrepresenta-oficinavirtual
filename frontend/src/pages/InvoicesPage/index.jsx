@@ -8,7 +8,7 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 
-import DescriptionIcon from '@mui/icons-material/Description'
+import { DescriptionIconMenu } from '../../assets/Icons'
 import RoomServiceIcon from '@mui/icons-material/RoomService'
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote'
 import StorefrontIcon from '@mui/icons-material/Storefront'
@@ -244,7 +244,7 @@ export default function InvoicesPage() {
   if (error)
     return (
       <Container>
-        <PageTitle Icon={DescriptionIcon}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
+        <PageTitle Icon={DescriptionIconMenu}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
         <ErrorSplash
           title={error.context}
           message={error.error}
@@ -255,7 +255,7 @@ export default function InvoicesPage() {
     )
   return (
     <Container>
-      <PageTitle Icon={DescriptionIcon}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
+      <PageTitle Icon={DescriptionIconMenu}>{t('INVOICES.INVOICES_TITLE')}</PageTitle>
       <MultiItemView
         title={t('INVOICES.TABLE_TITLE', { n: rows.length })}
         defaultPageSize={12}
@@ -293,8 +293,6 @@ export default function InvoicesPage() {
         noDataPlaceHolder={
           <Typography variant="h4">
             {t('INVOICES.NO_INVOICES')}
-            <br />
-            🤷‍♀️
           </Typography>
         }
       />

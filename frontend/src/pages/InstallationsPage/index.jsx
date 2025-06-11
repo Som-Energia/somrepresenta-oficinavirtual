@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import SolarPowerIcon from '@mui/icons-material/SolarPower'
+import { SolarPowerIconMenu } from '../../assets/Icons'
 import { Link } from 'react-router-dom'
 import TableEditor from '../../components/TableEditor'
 import PageTitle from '../../components/PageTitle'
@@ -57,7 +57,7 @@ export default function InstallationsPage(params) {
     <Loading />
   ) : (
     <Container>
-      <PageTitle Icon={SolarPowerIcon}>
+      <PageTitle Icon={SolarPowerIconMenu}>
         {t('INSTALLATIONS.INSTALLATIONS_TITLE')}
       </PageTitle>
       {error ? (
