@@ -1,5 +1,8 @@
 # Change log
 
+## 1.3.6 (2025-07-09)
+- new styles
+
 ## 1.3.5
 - Add 5 days to maxDate
 
