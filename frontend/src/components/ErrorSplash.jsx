@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import koFirefly from '../assets/cuca-marejada.svg'
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from 'react-router-dom'
 
 export default function ErrorSplash({ title, message, backlink, backtext, backaction }) {
@@ -17,11 +17,13 @@ export default function ErrorSplash({ title, message, backlink, backtext, backac
       }}
     >
       <Typography variant="h4">{title || message}</Typography>
-      <img
-        src={koFirefly}
-        style={{
+      <CancelIcon
+        data-cy='error-icon'
+        fontSize="large"
+        sx={{
           maxHeight: '10rem',
           marginBlock: '2rem',
+          color: 'primary2.main'
         }}
       />
       {title && message && (

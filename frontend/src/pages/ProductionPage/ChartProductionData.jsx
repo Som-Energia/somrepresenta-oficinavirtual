@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import QueryStatsIcon from '@mui/icons-material/QueryStats'
+import { QueryStatsIconMenu } from '../../assets/Icons'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
@@ -275,7 +275,7 @@ const ChartProductionData = () => {
 
   return (
     <>
-      <PageTitle Icon={QueryStatsIcon}>
+      <PageTitle Icon={QueryStatsIconMenu}>
         {t('PRODUCTION.PRODUCTION_TITLE')}
         <ContractSelector {...{ setContract, contract }} />
       </PageTitle>

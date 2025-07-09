@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
 
 :root {
-  font-family: Montserrat, system-ui, Helvetica, Arial, sans-serif;
+  font-family: Outfit, system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 700;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #0B2E34;
+  background-color: #E2E8DE;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,21 +21,22 @@ body {
   display: flex;
   place-items: center;
   min-height: 100vh;
+  background-color: #F0F3EC;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #0B2E34;
     background-color: #ffffff;
   }
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #aaa;
-    background-color: #111;
+    color: #F0F3EC;
+    background-color: #0B2E34;
   }
 }
 
 #cookiescript_injected a {
-  color: #96b633;
+  color: #0c4c27;
 }

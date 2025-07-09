@@ -12,7 +12,6 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useNavigate, useLocation } from 'react-router-dom'
 import LanguageMenu from './LanguageMenu'
-import ColorModeButton from './ColorModeButton'
 import ProfileButton from './ProfileButton'
 
 const drawerWidth = 240
@@ -57,7 +56,6 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
                 }}
               >
                 <ProfileButton onMenuClose={onClose} />
-                <ColorModeButton />
                 <LanguageMenu />
               </ListItem>
               <Divider />
@@ -65,7 +63,7 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
           ) : null}
           {items.map((page, i) => {
             if (page.dev && import.meta.env.MODE !== 'development') return
-            const Icon = page.icon
+            const Icon = page.icon_menu
             return (
               <ListItemButton
                 key={i + ''}
@@ -74,9 +72,21 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
                   onClose()
                 }}
                 selected={page.path === currentLocation.pathname}
+                sx={{
+                  "&.Mui-selected": {
+                      backgroundColor: "#E2E8DE"
+                  }
+                }}
               >
                 <ListItemIcon>
-                  <Icon />
+                  <Icon
+                    sx={{
+                      margin: '5px',
+                      '&:hover': {
+                        fill: '#B5EA62',
+                      },
+                    }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary={page.text} />
               </ListItemButton>

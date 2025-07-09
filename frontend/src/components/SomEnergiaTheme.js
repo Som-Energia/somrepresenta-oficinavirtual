@@ -22,7 +22,7 @@ const customTypographies = ['pagetitle', 'pagesubtitle', 'homeButtons']
 export default function SomEnergiaTheme(isDarkMode) {
   const theme = createTheme({
     typography: {
-      fontFamily: '"Montserrat", "Helvetica", "Arial", sans-serif',
+      fontFamily: '"Outfit", "Helvetica", "Arial", sans-serif',
       // Custom variant for home page paragraphs
       homeButtons: {
         fontSize: 22,
@@ -47,24 +47,30 @@ export default function SomEnergiaTheme(isDarkMode) {
       contrastThreshold: 4.5, // Recommended by WCAG 2.1 Rule 1.4.3
       tonalOffset: 0.2,
       text: {
-        primary: isDarkMode ? '#bdbdbd' : '#4d4d4d',
+        primary: isDarkMode ? '#bdbdbd' : '#0B2E34',
       },
       primary: {
         //main: '#96D600', //'hsl(78, 100%, 42%)', // from style guide
-        main: '#96b633', // from webforms-ui
-        contrastText: 'white',
+        main: '#0B2E34',
+        contrastText: '#E2E8DE',
+        light: '#CDFF80'
+      },
+      primary2: {
+        main: '#ff632b',
+        light: '#ffcdb5',
+        alt: '#afb5e8'
       },
       secondary: {
         //main: '#E0E723', //'hsl(62, 80%, 52%)', // from style guide
         // main: '#a1a1a1', // from webforms-ui
         // main: '#e6cc00', // Original design
-        main: '#e2e2e2', // From mentxu design 2023-10-26
+        main: '#E2E8DE', // From mentxu design 2023-10-26
       },
       pagetitle: {
-        main: '#4d4d4d',
+        main: '#0B2E34',
       },
       table: {
-        titleColor: 'rgb(150,182,51,0.7)',
+        titleColor: '#0c4c27',
         contentLight: 'rgba(0, 0, 0, 0.03)',
         contentDark: '#1A2027',
         line: '#8080804a',
@@ -73,6 +79,10 @@ export default function SomEnergiaTheme(isDarkMode) {
         production: '#96b633',
         foreseen: '#f2970f',
       },
+      bar: {
+        background: '#FFFFFFFF',
+        color: '#0B2E34',
+      }
     },
   })
   return responsiveFontSizes(theme, {

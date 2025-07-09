@@ -5,20 +5,25 @@ menuPages:
   - path: /
     text: APP_FRAME.PAGE_HOME
     icon: Home
+    icon_menu: HomeMenu
 
   - path: /installation
     text: APP_FRAME.PAGE_INSTALLATIONS
     icon: SolarPower
+    icon_menu: SolarPowerMenu
 
   - path: /invoices
     text: APP_FRAME.PAGE_INVOICES
     icon: Description
+    icon_menu: DescriptionMenu
 
   - path: /production
     text: APP_FRAME.PAGE_PRODUCTION_DATA
     icon: QueryStats
+    icon_menu: QueryStatsMenu
 
   - path: /test
     text: APP_FRAME.PAGE_COMPONENT_TEST
     icon: Science
+    icon_menu: ScienceMenu
     dev: true

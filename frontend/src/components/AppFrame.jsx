@@ -28,7 +28,15 @@ export default function AppFrame(props) {
     <>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          borderRadius:'8px',
+          margin: '0.5rem',
+          boxShadow: 'None',
+          backgroundColor: 'bar.background',
+          color: 'bar.color',
+          border: '1px solid rgba(0, 0, 0, 0.12)'
+        }}
         enableColorOnDark
       >
         <Toolbar>
@@ -50,7 +58,7 @@ export default function AppFrame(props) {
             <MenuIcon />
           </IconButton>
           {/* Logo */}
-          <img src={logo} width="32px" style={{ marginInline: '.5rem' }} />
+          <img src={logo} width="64px" style={{ marginInline: '1rem' }} />
 
           {/* App name */}
           <Box sx={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1, gap: '0 0.4rem' }}>
@@ -58,7 +66,6 @@ export default function AppFrame(props) {
               variant="pagetitle"
               component="div"
               sx={{
-                textTransform: 'uppercase',
                 color: 'pagetitle.main',
               }}
             >
@@ -68,7 +75,6 @@ export default function AppFrame(props) {
               variant="pagesubtitle"
               component="div"
               sx={{
-                textTransform: 'uppercase',
                 color: 'pagetitle.main',
               }}
             >
@@ -80,7 +86,6 @@ export default function AppFrame(props) {
           {isXs ? null : (
             <>
               <ProfileButton sx={{ flexGrow: 1 }} />
-              <ColorModeButton />
               <LanguageMenu />
             </>
           )}

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Container from '@mui/material/Container'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
-import SolarPowerIcon from '@mui/icons-material/SolarPower'
+import { SolarPowerIconMenu } from '../../assets/Icons'
 import ovapi from '../../services/ovapi'
 import Loading from '../../components/Loading'
 import PageTitle from '../../components/PageTitle'
@@ -23,7 +23,7 @@ function PageWrapper({ navigationNextUrl, navigationBeforeUrl, children }) {
   const { t } = useTranslation()
   return (
     <Container>
-      <PageTitle Icon={SolarPowerIcon}>
+      <PageTitle Icon={SolarPowerIconMenu}>
         {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
         <NavigationButtons
           toBefore={navigationBeforeUrl}
