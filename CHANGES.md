@@ -1,5 +1,8 @@
 # Change log
 
+## unreleased
+- FIX: change SOM address
+
 ## 1.3.6 (2025-07-09)
 - new styles
 
