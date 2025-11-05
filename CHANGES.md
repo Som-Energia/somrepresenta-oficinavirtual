@@ -1,6 +1,6 @@
 # Change log
 
-## unreleased
+## 1.3.7 (2025-11-05)
 - FIX: change SOM address
 
 ## 1.3.6 (2025-07-09)
