@@ -1,2 +1,2 @@
-import Loading from '@somenergia/somenergia-ui/Loading'
+import { Loading } from '@somenergia/somenergia-ui'
 export default Loading

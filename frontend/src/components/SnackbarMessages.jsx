@@ -1,3 +1,3 @@
-import SnackbarMessages from '@somenergia/somenergia-ui/SnackbarMessages'
+import { SnackbarMessages } from '@somenergia/somenergia-ui'
 
 export default SnackbarMessages

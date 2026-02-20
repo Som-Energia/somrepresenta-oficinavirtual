@@ -16,8 +16,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
 import Papa from 'papaparse'
-import Chart from '@somenergia/somenergia-ui/Chart'
-import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
+import { CurveChart } from '@somenergia/somenergia-ui'
+import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { ConsumptionDisplay } from '@somenergia/somenergia-ui'
 import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
 import ContractSelector from '../../components/ContractSelector'
@@ -366,7 +367,7 @@ const ChartProductionData = () => {
             <Loading />
           </Box>
         ) : null}
-        <Chart
+        <CurveChart
           period={period}
           data={line ? (showProduction ? productionLineData : []) : productionBarData}
           legend={true}
@@ -423,7 +424,7 @@ const ChartProductionData = () => {
             label={t('PRODUCTION.LEGEND_FORESEEN')}
           />
         </Box>
-        <SumDisplay
+        <ConsumptionDisplay
           period={period}
           currentDate={showProduction ? currentTime : false}
           totalKwh={totalKwh}
