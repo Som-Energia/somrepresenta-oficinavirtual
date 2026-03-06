@@ -33,6 +33,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { InstallationContextProvider } from './components/InstallationProvider'
 import CookiesPolicyPage from './pages/CookiesPolicyPage'
 
+import 'dayjs/locale/ca'
+import 'dayjs/locale/es'
+import 'dayjs/locale/eu'
+import 'dayjs/locale/gl'
+
 const routes = [
   {
     element: (
