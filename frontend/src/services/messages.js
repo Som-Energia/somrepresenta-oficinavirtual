@@ -1,4 +1,4 @@
-import messages from '@somenergia/somenergia-ui/services/messages'
+import { messages } from '@somenergia/somenergia-ui'
 
 const { error, warn, success, info, log, subscribe, disableConsoleMessages } = messages
 

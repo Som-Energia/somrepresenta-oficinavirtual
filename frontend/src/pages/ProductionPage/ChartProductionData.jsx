@@ -9,15 +9,14 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import { QueryStatsIconMenu } from '../../assets/Icons'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import TimelineIcon from '@mui/icons-material/Timeline'
-import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined'
-import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined'
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { SomDatePicker } from '@somenergia/somenergia-ui'
 import dayjs from 'dayjs'
 import minMax from 'dayjs/plugin/minMax'
 import Papa from 'papaparse'
-import Chart from '@somenergia/somenergia-ui/Chart'
-import SumDisplay from '@somenergia/somenergia-ui/SumDisplay'
+import { CurveChart } from '@somenergia/somenergia-ui'
+import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
+import { ConsumptionDisplay } from '@somenergia/somenergia-ui'
 import PageTitle from '../../components/PageTitle'
 import Loading from '../../components/Loading'
 import ContractSelector from '../../components/ContractSelector'
@@ -310,30 +309,27 @@ const ChartProductionData = () => {
             display: 'flex',
           }}
         >
-          <Button onClick={prevTimeWindow}>
-            <ArrowBackIosOutlinedIcon />
-          </Button>
           <LocalizationProvider
               dateAdapter={AdapterDayjs}
               adapterLocale={language}
           >
-            <DatePicker
-              value={currentTime}
-              onChange={setCurrentTime}
-              views={
-                period === YEARLY
-                  ? ['year']
-                  : period === MONTHLY
-                  ? ['month', 'year']
-                  : undefined
-              }
-              minDate={dayjs(firstDataDate)}
-              maxDate={dayjs(lastDataDate)}
+            <SomDatePicker
+              currentTime={currentTime}
+              setCurrentTime={setCurrentTime}
+              period={period}
+              styles={{
+                datePicker: {
+                  borderColor: 'primary.main',
+                  '& .MuiOutlinedInput-root': { borderRadius: '8px' },
+                  input: {
+                    textAlign: 'center',
+                  },
+                }
+              }}
+              firstDate={dayjs(firstDataDate)}
+              lastDate={dayjs(lastDataDate)}
             />
           </LocalizationProvider>
-          <Button onClick={nextTimeWindow}>
-            <ArrowForwardIosOutlinedIcon />
-          </Button>
         </Box>
 
         <ToggleButtonGroup
@@ -366,7 +362,7 @@ const ChartProductionData = () => {
             <Loading />
           </Box>
         ) : null}
-        <Chart
+        <CurveChart
           period={period}
           data={line ? (showProduction ? productionLineData : []) : productionBarData}
           legend={true}
@@ -423,7 +419,7 @@ const ChartProductionData = () => {
             label={t('PRODUCTION.LEGEND_FORESEEN')}
           />
         </Box>
-        <SumDisplay
+        <ConsumptionDisplay
           period={period}
           currentDate={showProduction ? currentTime : false}
           totalKwh={totalKwh}

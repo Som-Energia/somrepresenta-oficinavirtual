@@ -1,4 +1,3 @@
-import * as React from 'react'
-import TableEditor from '@somenergia/somenergia-ui/TableEditor'
+import { TableEditor } from '@somenergia/somenergia-ui'
 
 export default TableEditor
