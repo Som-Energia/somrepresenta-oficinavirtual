@@ -1,6 +1,6 @@
 # Change log
 
-## unreleased
+## 1.4.0 (2026-03-09)
 
 - IMP: adapt to breaking changes in somenergis-ui
 
