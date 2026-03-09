@@ -22,7 +22,7 @@
     "@mui/material": "^6.5.0",
     "@mui/x-date-pickers": "^7.0.0",
     "@prettier/plugin-xml": "^3.2.2",
-    "@somenergia/somenergia-ui": "^1.0.0-alpha.14",
+    "@somenergia/somenergia-ui": "^1.0.0",
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "i18next": "^23.4.5",
