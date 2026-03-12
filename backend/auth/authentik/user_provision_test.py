@@ -1,5 +1,5 @@
 import unittest
-from .user_provision import UserProvision, NewUser
+from .user_provision import UserProvision, UserProvisionAuthentikClient, NewUser
 from dotenv import load_dotenv
 import os
 import datetime
@@ -195,4 +195,14 @@ class UserProvision_Test(unittest.TestCase):
 
     def test__provision_user__when_not_active__activates(self): ""
 
+@skipIfEnv("SOMREPRE_SKIP_AUTHENTIK_TESTS")
+class UserProvisionAuthentikClient_Test(unittest.TestCase):
+    from yamlns.testutils import assertNsEqual, assertNsContains
+
+    def setUp(self):
+        self.api = UserProvisionAuthentikClient()
+
+    def test__get_api_instance__ok(self):
+        result = self.api.get_api_instance()
+        self.assertIsNotNone(result)
 

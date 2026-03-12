@@ -157,3 +157,28 @@ class UserProvision_Lib:
             except ApiException as e:
                 print("Exception when calling AdminApi->admin_apps_list: %s\n" % e)
 """
+
+import authentik_client
+from authentik_client.rest import ApiException
+from pprint import pprint
+
+class UserProvisionAuthentikClient:
+    def __init__(self):
+        BASE_URL=os.environ.get("AUTHENTIK_API_URL")
+        TOKEN=os.environ.get("AUTHENTIK_TOKEN")
+
+        self.configuration = authentik_client.Configuration(
+            host = f"{BASE_URL}/api/v3",
+            access_token = TOKEN
+        )
+
+    def get_api_instance(self):
+        with authentik_client.ApiClient(self.configuration) as api_client:
+            api_instance = authentik_client.AdminApi(api_client)
+
+            try:
+                api_response = api_instance.admin_apps_list()
+                print("The response of AdminApi->admin_apps_list:\n")
+                return api_response
+            except ApiException as e:
+                print("Exception when calling AdminApi->admin_apps_list: %s\n" % e)
