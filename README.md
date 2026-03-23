@@ -48,10 +48,9 @@ make api-test
 
 ### Configuration
 
-Backend Config. Copy `.env-example` as `.env` and edit.
+Create softlink a it-docs/conf/somrepresenta-oficinavirtual/.env (`ln -s ../it-docs/conf/somrepresenta-oficinavirtual/.env .env`)
 
-Frontend Config: Defaults in `frontend/.env` can be overriden
-by copying `frontend/.env.local-example` as `frontend/.env.local` and editing it.
+Create softlink a it-docs/conf/somrepresenta-oficinavirtual/frontend/.env (`ln -s ../../it-docs/conf/somrepresenta-oficinavirtual/frontend/.env frontend/.env`)
 
 ### Application startup
 
