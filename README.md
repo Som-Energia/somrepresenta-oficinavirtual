@@ -48,9 +48,9 @@ make api-test
 
 ### Configuration
 
-Create softlink a it-docs/conf/somrepresenta-oficinavirtual/.env (`ln -s ../it-docs/conf/somrepresenta-oficinavirtual/.env .env`)
+Create softlink a deployment-configurations/somrepresenta-oficinavirtual/.env (`ln -s ../deployment-configurations/somrepresenta-oficinavirtual/.env .env`)
 
-Create softlink a it-docs/conf/somrepresenta-oficinavirtual/frontend/.env (`ln -s ../../it-docs/conf/somrepresenta-oficinavirtual/frontend/.env frontend/.env`)
+Create softlink a deployment-configurations/somrepresenta-oficinavirtual/frontend/.env (`ln -s ../../deployment-configurations/somrepresenta-oficinavirtual/frontend/.env frontend/.env`)
 
 ### Application startup
 
