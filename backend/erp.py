@@ -9,7 +9,7 @@ from pydantic import AwareDatetime
 # TODO: This is a quick proof of concept
 # TODO; Use erppeek, connection pool management, transactions...
 
-ERP_DEFAULT_TIMEOUT_SECONDS = 5
+ERP_DEFAULT_TIMEOUT_SECONDS = 30
 ERP_INVOICE_ZIP_TIMEOUT_SECONDS = 30
 
 @decorator
