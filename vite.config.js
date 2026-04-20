@@ -48,7 +48,19 @@ export default createAppConfig(() => {
       },
     },
     test: {
+      exclude: ['**/node_modules/**'],
       testMatch: ['./src/**/*.test.jsx'],
+      server: {
+        deps: {
+          // Pre-bundle MUI and somenergia-ui to avoid ES module directory import errors
+          inline: [
+            /@mui\/material/,
+            /@mui\/icons-material/,
+            '@mui/x-date-pickers',
+            /@somenergia\/somenergia-ui/,
+          ],
+        },
+      },
     },
   }
 })
