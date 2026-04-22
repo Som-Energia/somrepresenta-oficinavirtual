@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap");
 
 :root {
   font-family: Outfit, system-ui, Helvetica, Arial, sans-serif;
@@ -6,8 +6,8 @@
   font-weight: 700;
 
   color-scheme: light dark;
-  color: #0B2E34;
-  background-color: #E2E8DE;
+  color: #0b2e34;
+  background-color: #e2e8de;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,19 +21,19 @@ body {
   display: flex;
   place-items: center;
   min-height: 100vh;
-  background-color: #F0F3EC;
+  background-color: #f0f3ec;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #0B2E34;
+    color: #0b2e34;
     background-color: #ffffff;
   }
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #F0F3EC;
-    background-color: #0B2E34;
+    color: #f0f3ec;
+    background-color: #0b2e34;
   }
 }
 

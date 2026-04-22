@@ -11,7 +11,9 @@ function firstPendingDocument(requiredDocuments, signedDocuments) {
   requiredDocuments ??= []
 
   // build a hash for signed: document -> version
-  const signed = Object.fromEntries(signedDocuments.map((d) => [d.document, d.version]))
+  const signed = Object.fromEntries(
+    signedDocuments.map((d) => [d.document, d.version]),
+  )
 
   for (const required of requiredDocuments) {
     const signedVersion = signed[required.document]

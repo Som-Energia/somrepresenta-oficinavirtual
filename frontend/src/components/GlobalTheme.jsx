@@ -1,21 +1,23 @@
 // This module controls the global theme and its light
 // and dark modes.
 
-import useMediaQuery from '@mui/material/useMediaQuery'
-import CssBaseline from '@mui/material/CssBaseline'
-import SomEnergiaTheme from './SomEnergiaTheme'
-import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles'
-import React from 'react'
-import useLocalStorage from '../hooks/LocalStorage'
+import React from "react"
+
+import CssBaseline from "@mui/material/CssBaseline"
+import { ThemeProvider } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+
+import useLocalStorage from "../hooks/LocalStorage"
+import SomEnergiaTheme from "./SomEnergiaTheme"
 
 const ColorModeContext = React.createContext({
   current: null,
-  set: (value) => {},
+  set: (_value) => {},
   toggle: () => {},
 })
 
 function GlobalTheme({ children }) {
-  const [colorMode, setColorMode] = useLocalStorage('colorMode', null)
+  const [colorMode, setColorMode] = useLocalStorage("colorMode", null)
   const colorModeContext = React.useMemo(
     () => ({
       current: colorMode,
@@ -23,16 +25,17 @@ function GlobalTheme({ children }) {
         setColorMode(value)
       },
       toggle: () => {
-        if (colorMode === 'dark') return setColorMode('light')
-        if (colorMode === 'light') return setColorMode(null)
-        return setColorMode('dark')
+        if (colorMode === "dark") return setColorMode("light")
+        if (colorMode === "light") return setColorMode(null)
+        return setColorMode("dark")
       },
     }),
     [colorMode],
   )
 
-  const darkModeMediaQuery = useMediaQuery('(prefers-color-scheme: dark)')
-  const isDarkMode = colorMode === 'dark' || (colorMode === null && darkModeMediaQuery)
+  const darkModeMediaQuery = useMediaQuery("(prefers-color-scheme: dark)")
+  const isDarkMode =
+    colorMode === "dark" || (colorMode === null && darkModeMediaQuery)
   const theme = React.useMemo(() => SomEnergiaTheme(isDarkMode), [isDarkMode])
 
   return (

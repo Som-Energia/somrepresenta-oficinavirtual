@@ -1,12 +1,12 @@
-import i18n from '../i18n/i18n'
+import i18n from "../i18n/i18n"
 
 function euros(amount) {
   const asFloat = parseFloat(amount)
-  if (isNaN(asFloat)) return '-- €'
+  if (isNaN(asFloat)) return "-- €"
   const language = i18n.language
   const localized = asFloat.toLocaleString(language, {
-    style: 'currency',
-    currency: 'EUR',
+    style: "currency",
+    currency: "EUR",
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
     useGrouping: true,
@@ -18,22 +18,22 @@ function date(adate) {
   const language = i18n.language
   const formatter = new Intl.DateTimeFormat(language)
   if (!adate) {
-    return formatter.format(new Date('1111-11-11')).replace(/\d/g, '-')
+    return formatter.format(new Date("1111-11-11")).replace(/\d/g, "-")
   }
   return formatter.format(new Date(adate))
 }
 
 function enumeration(value, options, fallback) {
-  if (value === undefined) return '-'
+  if (value === undefined) return "-"
   return options[value] ?? fallback ?? value
 }
 
 function percent(amount, decimals) {
   const asFloat = parseFloat(amount)
-  if (isNaN(asFloat)) return '-- %'
+  if (isNaN(asFloat)) return "-- %"
   const language = i18n.language
   const localized = (asFloat / 100).toLocaleString(language, {
-    style: 'percent',
+    style: "percent",
     maximumFractionDigits: decimals ?? 2,
     minimumFractionDigits: decimals ?? 2,
     useGrouping: true,
@@ -43,19 +43,19 @@ function percent(amount, decimals) {
 
 function units(amount, unit, decimals) {
   const asFloat = parseFloat(amount)
-  if (isNaN(asFloat)) return `-- ${unit}`
+  if (isNaN(asFloat)) return `-- ${unit}`
   const language = i18n.language
   const localized = asFloat.toLocaleString(language, {
     maximumFractionDigits: decimals ?? 2,
     minimumFractionDigits: decimals ?? 2,
     useGrouping: true,
   })
-  return `${localized} ${unit}`
+  return `${localized} ${unit}`
 }
 
 function localISODateTime(date) {
   function zeropadding(n) {
-    return ('' + n).padStart(2, '0')
+    return ("" + n).padStart(2, "0")
   }
   return `${date.getFullYear()}-${zeropadding(date.getMonth() + 1)}-${zeropadding(
     date.getDate(),
@@ -64,5 +64,5 @@ function localISODateTime(date) {
   )}`
 }
 
-export { euros, units, percent, date, enumeration, localISODateTime }
+export { date, enumeration, euros, localISODateTime, percent, units }
 export default { euros, units, percent, date, enumeration, localISODateTime }

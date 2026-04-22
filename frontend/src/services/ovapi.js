@@ -1,7 +1,8 @@
-import axios from 'axios'
-import messages from './messages'
-import i18n from '../i18n/i18n'
-import { downloadBlob } from './download'
+import axios from "axios"
+
+import i18n from "../i18n/i18n"
+import { downloadBlob } from "./download"
+import messages from "./messages"
 
 /**
 Returns a catch callback that takes common non manageable
@@ -16,10 +17,10 @@ function handleCommonErrors(context) {
 
     console.log(`Error ${error.code} ${context}\n${error.message}`)
     // UI -> API network problem
-    if (error.code === 'ERR_NETWORK') {
-      messages.error(t('OVAPI.ERR_NETWORK'), { context })
+    if (error.code === "ERR_NETWORK") {
+      messages.error(t("OVAPI.ERR_NETWORK"), { context })
       return {
-        error: t('OVAPI.ERR_NETWORK'),
+        error: t("OVAPI.ERR_NETWORK"),
         context,
       }
     }
@@ -27,21 +28,21 @@ function handleCommonErrors(context) {
     if (error.response) {
       // Gateway error (ERP down)
       if (error.response.status === 502) {
-        messages.error(t('OVAPI.ERR_GATEWAY'), { context })
+        messages.error(t("OVAPI.ERR_GATEWAY"), { context })
         return {
-          error: t('OVAPI.ERR_GATEWAY'),
+          error: t("OVAPI.ERR_GATEWAY"),
           context,
         }
       }
       // API unexpected error
       if (error.response.status === 500) {
-        const unreference = '42-666-137' // A 'random' number when no reference
+        const unreference = "42-666-137" // A 'random' number when no reference
         const reference = error.response.data.reference ?? unreference
-        messages.error(t('OVAPI.ERR_INTERNAL', { reference }), {
+        messages.error(t("OVAPI.ERR_INTERNAL", { reference }), {
           context,
         })
         return {
-          error: t('OVAPI.ERR_INTERNAL', { reference }),
+          error: t("OVAPI.ERR_INTERNAL", { reference }),
           context,
           reference: reference,
         }
@@ -76,7 +77,7 @@ function handleRemainingErrors(context) {
     // TODO: Obtain better info from axios error
     messages.error(`${error.code}: ${error.message}`, { context })
     return {
-      error: 'Unexpected error',
+      error: "Unexpected error",
       exception: error,
     }
   }
@@ -84,7 +85,7 @@ function handleRemainingErrors(context) {
 
 async function version() {
   return axios
-    .get('/api/version')
+    .get("/api/version")
     .then((result) => result.data.version)
     .catch((error) => {
       throw error
@@ -92,10 +93,10 @@ async function version() {
 }
 
 async function currentUser() {
-  const response = await fetch('/api/me')
+  const response = await fetch("/api/me")
   if (response.ok === false) {
     const error = await response.json()
-    console.error('Login status:', error.detail)
+    console.error("Login status:", error.detail)
     return null
   }
   const user = await response.json()
@@ -103,22 +104,22 @@ async function currentUser() {
 }
 
 async function localLogin(username, password) {
-  const context = i18n.t('OVAPI.CONTEXT_LOGIN')
+  const context = i18n.t("OVAPI.CONTEXT_LOGIN")
   const formData = new FormData()
-  formData.append('username', username)
-  formData.append('password', password)
+  formData.append("username", username)
+  formData.append("password", password)
   return axios
-    .post('/api/auth/token', formData, {
+    .post("/api/auth/token", formData, {
       headers: {
-        Accept: 'application/json',
-        ContentType: 'multipart/form-data',
+        Accept: "application/json",
+        ContentType: "multipart/form-data",
       },
     })
     .catch(handleCommonErrors(context))
     .catch(
       handleHttpStatus(401, {
-        error: i18n.t('LOGIN.VALIDATION_ERROR'),
-        code: 'VALIDATION_ERROR',
+        error: i18n.t("LOGIN.VALIDATION_ERROR"),
+        code: "VALIDATION_ERROR",
       }),
     )
     .catch(handleRemainingErrors(context))
@@ -131,28 +132,32 @@ async function localLogin(username, password) {
 
 async function externalLogin(providerId) {
   window.location = `/oauth2/${providerId}/authorize`
-  return
+
   // TODO: use a popup, pending how to close it afterwards
-  var pop = window.open(
+
+  /*var pop = window.open(
     `/oauth2/${providerId}/authorize`,
     '_blank',
     'location=yes,height=570,width=520,scrollbars=yes,status=yes',
-  )
-  return
+  )*/
+
   // TODO: How to close it after login
-  setInterval(function () {
-    if (pop.location.href.indexOf('https://accounts.google.com/AddSession') === 0) {
+
+  /*setInterval(function () {
+    if (
+      pop.location.href.indexOf('https://accounts.google.com/AddSession') === 0
+    ) {
       pop.close()
     }
-  }, 1)
+  }, 1)*/
 }
 
 async function logout() {
   axios
-    .get('/api/auth/logout', {
+    .get("/api/auth/logout", {
       headers: {
-        Accept: 'application/json',
-        ContentType: 'multipart/form-data',
+        Accept: "application/json",
+        ContentType: "multipart/form-data",
       },
     })
     .then((response) => {
@@ -163,15 +168,15 @@ async function logout() {
 async function localChangePassword(currentPassword, newPassword) {
   return axios
     .post(
-      '/api/auth/change_password',
+      "/api/auth/change_password",
       {
         current_password: currentPassword,
         new_password: newPassword,
       },
       {
         headers: {
-          Accept: 'application/json',
-          ContentType: 'application/json',
+          Accept: "application/json",
+          ContentType: "application/json",
         },
       },
     )
@@ -180,27 +185,27 @@ async function localChangePassword(currentPassword, newPassword) {
       return response
     })
     .catch((error) => {
-      console.log('Error received', error.response.data)
-      throw 'Unable to change the password'
+      console.log("Error received", error.response.data)
+      throw "Unable to change the password"
     })
 }
 
 async function hijack(username) {
-  const context = i18n.t('OVAPI.CONTEXT_HIJACK')
+  const context = i18n.t("OVAPI.CONTEXT_HIJACK")
   const formData = new FormData()
-  formData.append('username', username)
+  formData.append("username", username)
   return axios
-    .post('/api/auth/hijack', formData, {
+    .post("/api/auth/hijack", formData, {
       headers: {
-        Accept: 'application/json',
-        ContentType: 'multipart/form-data',
+        Accept: "application/json",
+        ContentType: "multipart/form-data",
       },
     })
     .catch(handleCommonErrors(context))
     .catch(
       handleHttpStatus(401, {
-        error: i18n.t('HIJACK.VALIDATION_ERROR'),
-        code: 'VALIDATION_ERROR',
+        error: i18n.t("HIJACK.VALIDATION_ERROR"),
+        code: "VALIDATION_ERROR",
       }),
     )
     .catch(handleRemainingErrors(context))
@@ -212,7 +217,7 @@ async function hijack(username) {
 }
 
 function signDocument(documentName) {
-  const context = i18n.t('OVAPI.CONTEXT_SIGNING_DOCUMENT')
+  const context = i18n.t("OVAPI.CONTEXT_SIGNING_DOCUMENT")
   const encodedDocument = encodeURIComponent(documentName)
   return axios
     .post(`/api/sign_document/${encodedDocument}`)
@@ -221,7 +226,7 @@ function signDocument(documentName) {
     .then((response) => {
       if (response.error) {
         throw {
-          error: i18n.t('OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT'),
+          error: i18n.t("OVAPI.ERR_UNABLE_TO_SIGN_DOCUMENT"),
         }
       }
       return response.data
@@ -229,9 +234,9 @@ function signDocument(documentName) {
 }
 
 async function installations() {
-  const context = i18n.t('OVAPI.CONTEXT_INSTALLATIONS')
+  const context = i18n.t("OVAPI.CONTEXT_INSTALLATIONS")
   return axios
-    .get('/api/installations')
+    .get("/api/installations")
     .catch(handleCommonErrors(context))
     .catch(handleRemainingErrors(context))
     .then((result) => {
@@ -243,7 +248,7 @@ async function installations() {
 }
 
 async function installationDetails(contract_number) {
-  const context = i18n.t('OVAPI.CONTEXT_INSTALLATION_DETAILS')
+  const context = i18n.t("OVAPI.CONTEXT_INSTALLATION_DETAILS")
   return axios
     .get(`/api/installation_details/${contract_number}`)
     .catch(handleCommonErrors(context))
@@ -257,9 +262,9 @@ async function installationDetails(contract_number) {
 }
 
 async function invoices() {
-  const context = i18n.t('OVAPI.CONTEXT_INVOICES')
+  const context = i18n.t("OVAPI.CONTEXT_INVOICES")
   return axios
-    .get('/api/invoices')
+    .get("/api/invoices")
     .catch(handleCommonErrors(context))
     .catch(handleRemainingErrors(context))
     .then((result) => {
@@ -271,10 +276,12 @@ async function invoices() {
 }
 
 function invoicePdf(invoiceNumber) {
-  const context = i18n.t('OVAPI.CONTEXT_INVOICE_PDF_DOWNLOAD', { invoice: invoiceNumber })
+  const context = i18n.t("OVAPI.CONTEXT_INVOICE_PDF_DOWNLOAD", {
+    invoice: invoiceNumber,
+  })
   return axios
     .get(`/api/invoice/${invoiceNumber}/pdf`, {
-      responseType: 'blob',
+      responseType: "blob",
     })
     .catch(handleCommonErrors(context))
     .catch(handleRemainingErrors(context))
@@ -283,9 +290,9 @@ function invoicePdf(invoiceNumber) {
         throw result
       }
       const filename =
-        result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
+        result.headers["content-disposition"]?.match(/filename="([^"]+)"/)[1] ??
         `factura-${invoiceNumber}.pdf`
-      downloadBlob(filename, result.data, 'application/pdf')
+      downloadBlob(filename, result.data, "application/pdf")
       return result
     })
 }
@@ -297,9 +304,9 @@ function handleInvoiceZipDownloadTimeout(context) {
     if (error.response) {
       // Gateway timeout (too many invoices)
       if (error.response.status === 504) {
-        messages.error(t('OVAPI.ERR_TOO_MANY_INVOICES'), { context })
+        messages.error(t("OVAPI.ERR_TOO_MANY_INVOICES"), { context })
         return {
-          error: t('OVAPI.ERR_TOO_MANY_INVOICES'),
+          error: t("OVAPI.ERR_TOO_MANY_INVOICES"),
           context,
         }
       }
@@ -308,15 +315,15 @@ function handleInvoiceZipDownloadTimeout(context) {
   }
 }
 function invoicesZip(invoiceNumbers) {
-  const context = i18n.t('OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD', {
+  const context = i18n.t("OVAPI.CONTEXT_INVOICES_ZIP_DOWNLOAD", {
     invoice_numbers: invoiceNumbers,
   })
 
-  const queryParams = '?invoice_numbers=' + Array.from(invoiceNumbers)
+  const queryParams = "?invoice_numbers=" + Array.from(invoiceNumbers)
 
   return axios
     .get(`/api/invoices/zip${queryParams}`, {
-      responseType: 'arraybuffer',
+      responseType: "arraybuffer",
     })
     .catch(handleCommonErrors(context))
     .catch(handleInvoiceZipDownloadTimeout())
@@ -327,24 +334,28 @@ function invoicesZip(invoiceNumbers) {
       }
 
       const filename =
-        result.headers['content-disposition']?.match(/filename="([^"]+)"/)[1] ??
+        result.headers["content-disposition"]?.match(/filename="([^"]+)"/)[1] ??
         `facturas_from_${invoiceNumbers[0]}.zip`
-      downloadBlob(filename, result.data, 'application/zip')
+      downloadBlob(filename, result.data, "application/zip")
     })
 }
 
 export function setTimeInterval(first_timestamp_utc, last_timestamp_utc) {
-  let hourToAdd = 60 *60 *1000
+  let hourToAdd = 60 * 60 * 1000
   first_timestamp_utc.setTime(first_timestamp_utc.getTime() + hourToAdd)
   last_timestamp_utc.setDate(last_timestamp_utc.getDate() + 1)
   last_timestamp_utc.setTime(last_timestamp_utc.getTime() + hourToAdd)
 }
 
-async function productionData(first_timestamp_utc, last_timestamp_utc, contract_number) {
-  const context = i18n.t('OVAPI.CONTEXT_PRODUCTION_DATA')
+async function productionData(
+  first_timestamp_utc,
+  last_timestamp_utc,
+  contract_number,
+) {
+  const context = i18n.t("OVAPI.CONTEXT_PRODUCTION_DATA")
   setTimeInterval(first_timestamp_utc, last_timestamp_utc)
   return axios
-    .get('/api/production_data', {
+    .get("/api/production_data", {
       params: {
         first_timestamp_utc,
         last_timestamp_utc,

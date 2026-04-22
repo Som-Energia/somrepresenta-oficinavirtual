@@ -1,30 +1,32 @@
-import React, { useEffect, useState, useContext, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import Container from '@mui/material/Container'
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
-import { SolarPowerIconMenu } from '../../assets/Icons'
-import ovapi from '../../services/ovapi'
-import Loading from '../../components/Loading'
-import PageTitle from '../../components/PageTitle'
-import SimpleTable from '../../components/SimpleTable'
-import ErrorSplash from '../../components/ErrorSplash'
-import NavigationButtons from '../../components/NavigationButtons'
-import { contractFields } from './detailInstallationData'
-import { installationFields } from './detailInstallationData'
+import React, { useContext, useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted"
+import Container from "@mui/material/Container"
+
+import { SolarPowerIconMenu } from "../../assets/Icons"
+import ErrorSplash from "../../components/ErrorSplash"
+import { InstallationContext } from "../../components/InstallationProvider"
+import Loading from "../../components/Loading"
+import NavigationButtons from "../../components/NavigationButtons"
+import PageTitle from "../../components/PageTitle"
+import SimpleTable from "../../components/SimpleTable"
+import ovapi from "../../services/ovapi"
+import { contractFields } from "./detailInstallationData"
+import { installationFields } from "./detailInstallationData"
 import {
+  computeNavigationInfo,
   transformContractDetails,
   transformInstallationDetails,
-  computeNavigationInfo,
-} from './detailInstallationData'
-import { InstallationContext } from '../../components/InstallationProvider'
+} from "./detailInstallationData"
 
 function PageWrapper({ navigationNextUrl, navigationBeforeUrl, children }) {
   const { t } = useTranslation()
   return (
     <Container>
       <PageTitle Icon={SolarPowerIconMenu}>
-        {t('INSTALLATION_DETAIL.DETAILS_TITLE')}
+        {t("INSTALLATION_DETAIL.DETAILS_TITLE")}
         <NavigationButtons
           toBefore={navigationBeforeUrl}
           toNext={navigationNextUrl}
@@ -74,7 +76,7 @@ export default function DetailInstallationPage() {
       setLoading(true)
       setDetails(undefined)
       try {
-        console.log('Getting Details', contract_number)
+        console.log("Getting Details", contract_number)
         const result = await ovapi.installationDetails(contract_number)
         if (!result) {
           setError(true)
@@ -94,13 +96,12 @@ export default function DetailInstallationPage() {
     return (
       <PageWrapper
         navigationBeforeUrl={navigationBeforeUrl}
-        navigationNextUrl={navigationNextUrl}
-      >
+        navigationNextUrl={navigationNextUrl}>
         <ErrorSplash
           title={listError.context}
           message={listError.error}
           backlink="/installation"
-          backtext={t('INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS')}
+          backtext={t("INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS")}
         />
       </PageWrapper>
     )
@@ -109,13 +110,12 @@ export default function DetailInstallationPage() {
     return (
       <PageWrapper
         navigationBeforeUrl={navigationBeforeUrl}
-        navigationNextUrl={navigationNextUrl}
-      >
+        navigationNextUrl={navigationNextUrl}>
         <ErrorSplash
           title={error.context}
           message={error.error}
           backlink="/installation"
-          backtext={t('INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS')}
+          backtext={t("INSTALLATION_DETAIL.BACK_TO_INSTALLATIONS")}
         />
       </PageWrapper>
     )
@@ -126,19 +126,18 @@ export default function DetailInstallationPage() {
   return (
     <PageWrapper
       navigationBeforeUrl={navigationBeforeUrl}
-      navigationNextUrl={navigationNextUrl}
-    >
+      navigationNextUrl={navigationNextUrl}>
       <SimpleTable
         fields={installationDetails}
         fieldsOrder={installationFields}
         translationsPrefix="INSTALLATION_DETAIL"
-        title={t('INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE')}
+        title={t("INSTALLATION_DETAIL.INSTALLATION_DETAILS_TITLE")}
       />
       <SimpleTable
         fields={contractDetails}
         fieldsOrder={contractFields}
         translationsPrefix="CONTRACT_DETAIL"
-        title={t('CONTRACT_DETAIL.CONTRACT_DETAILS_TITLE')}
+        title={t("CONTRACT_DETAIL.CONTRACT_DETAILS_TITLE")}
       />
     </PageWrapper>
   )

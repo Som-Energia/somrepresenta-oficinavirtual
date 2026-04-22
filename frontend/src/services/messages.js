@@ -1,6 +1,7 @@
-import { messages } from '@somenergia/somenergia-ui'
+import { messages } from "@somenergia/somenergia-ui"
 
-const { error, warn, success, info, log, subscribe, disableConsoleMessages } = messages
+const { error, warn, success, info, log, subscribe, disableConsoleMessages } =
+  messages
 
-export { error, warn, success, info, log, subscribe, disableConsoleMessages }
+export { disableConsoleMessages, error, info, log, subscribe, success, warn }
 export default messages

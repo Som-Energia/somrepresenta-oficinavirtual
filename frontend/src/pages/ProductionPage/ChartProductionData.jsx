@@ -1,42 +1,45 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-import ToggleButton from '@mui/material/ToggleButton'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import { QueryStatsIconMenu } from '../../assets/Icons'
-import BarChartIcon from '@mui/icons-material/BarChart'
-import TimelineIcon from '@mui/icons-material/Timeline'
-import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded'
-import { SomDatePicker } from '@somenergia/somenergia-ui'
-import dayjs from 'dayjs'
-import minMax from 'dayjs/plugin/minMax'
-import Papa from 'papaparse'
-import { CurveChart } from '@somenergia/somenergia-ui'
-import { SummaryPeriodChart } from '@somenergia/somenergia-ui'
-import { ConsumptionDisplay } from '@somenergia/somenergia-ui'
-import PageTitle from '../../components/PageTitle'
-import Loading from '../../components/Loading'
-import ContractSelector from '../../components/ContractSelector'
-import { InstallationContext } from '../../components/InstallationProvider'
-import ovapi from '../../services/ovapi'
-import format from '../../services/format'
-import { index2time, timeSlice, sliceIndexes } from '../../services/curves'
-import { downloadTextFile } from '../../services/download'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import React from "react"
+import { useTranslation } from "react-i18next"
+
+import BarChartIcon from "@mui/icons-material/BarChart"
+import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded"
+import TimelineIcon from "@mui/icons-material/Timeline"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Checkbox from "@mui/material/Checkbox"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import ToggleButton from "@mui/material/ToggleButton"
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+
+import { SomDatePicker } from "@somenergia/somenergia-ui"
+import { CurveChart } from "@somenergia/somenergia-ui"
+import { ConsumptionDisplay } from "@somenergia/somenergia-ui"
+
+import dayjs from "dayjs"
+import minMax from "dayjs/plugin/minMax"
+import Papa from "papaparse"
+
+import { QueryStatsIconMenu } from "../../assets/Icons"
+import ContractSelector from "../../components/ContractSelector"
+import { InstallationContext } from "../../components/InstallationProvider"
+import Loading from "../../components/Loading"
+import PageTitle from "../../components/PageTitle"
+import { index2time, sliceIndexes, timeSlice } from "../../services/curves"
+import { downloadTextFile } from "../../services/download"
+import format from "../../services/format"
+import ovapi from "../../services/ovapi"
 
 dayjs.extend(minMax)
 
-const DAILY = 'DAILY'
-const WEEKLY = 'WEEKLY'
-const MONTHLY = 'MONTHLY'
-const YEARLY = 'YEARLY'
+const DAILY = "DAILY"
+const WEEKLY = "WEEKLY"
+const MONTHLY = "MONTHLY"
+const YEARLY = "YEARLY"
 
-const LINE = 'LINE'
-const BAR = 'BAR'
+const LINE = "LINE"
+const BAR = "BAR"
 
 const yesterday = new Date()
 yesterday.setDate(yesterday.getDate() - 1)
@@ -51,14 +54,20 @@ function currentContractData(productionData, contract) {
   return undefined
 }
 
-const DownloadCsvButton = ({ productionData, contractName, period, currentTime }) => {
-  const { t, i18n } = useTranslation()
+const DownloadCsvButton = ({
+  productionData,
+  contractName,
+  period,
+  currentTime,
+}) => {
+  const { t } = useTranslation()
+
   const maturityOptions = {
-    H2: t('PRODUCTION.MATURITY_H2'),
-    H3: t('PRODUCTION.MATURITY_H3'),
-    HP: t('PRODUCTION.MATURITY_HP'),
-    HC: t('PRODUCTION.MATURITY_HC'),
-    HD: t('PRODUCTION.MATURITY_HD'),
+    H2: t("PRODUCTION.MATURITY_H2"),
+    H3: t("PRODUCTION.MATURITY_H3"),
+    HP: t("PRODUCTION.MATURITY_HP"),
+    HC: t("PRODUCTION.MATURITY_HC"),
+    HD: t("PRODUCTION.MATURITY_HD"),
   }
   function handleClick() {
     const contractData = currentContractData(productionData, contractName)
@@ -68,19 +77,22 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
       currentTime,
     )
     const startIndex = Math.max(unadjustedStartIndex, 0)
-    const endIndex = Math.min(unadjustedEndIndex, contractData.measure_kwh.length - 1)
+    const endIndex = Math.min(
+      unadjustedEndIndex,
+      contractData.measure_kwh.length - 1,
+    )
     const header = [
-      [t('PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER'), contractName],
+      [t("PRODUCTION.CSV_COLUMN_CONTRACT_NUMBER"), contractName],
       //[t('PRODUCTION.CSV_COLUMN_CIL'), 'ES123412341234123412341234A00'],
       //[t('PRODUCTION.CSV_COLUMN_INSTALL_NAME'), 'La meva insta·lació'],
       [],
       [
-        t('PRODUCTION.CSV_COLUMN_DATETIME'),
-        t('PRODUCTION.CSV_COLUMN_UTC_OFFSET'),
-        t('PRODUCTION.CSV_COLUMN_FORESEEN'),
-        t('PRODUCTION.CSV_COLUMN_MEASURE'),
-        t('PRODUCTION.CSV_COLUMN_MATURITY'),
-        t('PRODUCTION.CSV_COLUMN_ESTIMATED'),
+        t("PRODUCTION.CSV_COLUMN_DATETIME"),
+        t("PRODUCTION.CSV_COLUMN_UTC_OFFSET"),
+        t("PRODUCTION.CSV_COLUMN_FORESEEN"),
+        t("PRODUCTION.CSV_COLUMN_MEASURE"),
+        t("PRODUCTION.CSV_COLUMN_MATURITY"),
+        t("PRODUCTION.CSV_COLUMN_ESTIMATED"),
       ],
     ]
     const content = header.concat(
@@ -92,21 +104,24 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
           date.getTimezoneOffset() / 60,
           contractData.foreseen_kwh[j],
           contractData.measure_kwh[j],
-          format.enumeration(contractData.maturity[j], maturityOptions, ''),
+          format.enumeration(contractData.maturity[j], maturityOptions, ""),
           contractData.estimated[j] === null
-            ? ''
+            ? ""
             : contractData.estimated[j] === true
-            ? t('PRODUCTION.CSV_VALUE_ESTIMATED')
-            : t('PRODUCTION.CSV_VALUE_REAL'),
+              ? t("PRODUCTION.CSV_VALUE_ESTIMATED")
+              : t("PRODUCTION.CSV_VALUE_REAL"),
         ]
       }),
     )
 
-    const csvdata = Papa.unparse(content, { delimiter: ';' })
-    downloadTextFile(`production-${contractName}.csv`, csvdata, 'text/csv')
+    const csvdata = Papa.unparse(content, { delimiter: ";" })
+    downloadTextFile(`production-${contractName}.csv`, csvdata, "text/csv")
   }
   return (
-    <Button disabled={productionData === undefined} color="primary" onClick={handleClick}>
+    <Button
+      disabled={productionData === undefined}
+      color="primary"
+      onClick={handleClick}>
       <FileDownloadRoundedIcon />
     </Button>
   )
@@ -114,11 +129,8 @@ const DownloadCsvButton = ({ productionData, contractName, period, currentTime }
 
 const ChartProductionData = () => {
   // Installations to retrieve contract number
-  const {
-    installations,
-    loading: listLoading,
-    error: listError,
-  } = React.useContext(InstallationContext)
+  const { installations, loading: listLoading } =
+    React.useContext(InstallationContext)
 
   // Initial contract number from installations (if available)
   const firstContractNumber = installations && installations[0]?.contract_number
@@ -148,7 +160,7 @@ const ChartProductionData = () => {
   minDate.setFullYear(minDate.getFullYear() - years)
   maxDate.setDate(maxDate.getDate() + 5)
 
-  const transformBarChartData = (data) => {
+  const transformBarChartData = () => {
     return {
       periods: [
         {
@@ -159,11 +171,11 @@ const ChartProductionData = () => {
           P3: 50,
         },
       ],
-      keys: ['P1', 'P2', 'P3'],
+      keys: ["P1", "P2", "P3"],
       fills: {
-        P1: '#FFC300',
-        P2: '#900C3F',
-        P3: '#581845',
+        P1: "#FFC300",
+        P2: "#900C3F",
+        P3: "#581845",
       },
     }
   }
@@ -198,8 +210,14 @@ const ChartProductionData = () => {
 
   function calculateTotalKwh(measured_data, foreseen_data) {
     const initValue = 0
-    const measuredSum = measured_data.reduce((n, { value }) => n + value, initValue)
-    const foreseenSum = foreseen_data.reduce((n, { value }) => n + value, initValue)
+    const measuredSum = measured_data.reduce(
+      (n, { value }) => n + value,
+      initValue,
+    )
+    const foreseenSum = foreseen_data.reduce(
+      (n, { value }) => n + value,
+      initValue,
+    )
     setTotalKwh(measuredSum)
     setForeseenTotalKwh(foreseenSum)
   }
@@ -253,42 +271,22 @@ const ChartProductionData = () => {
     getProductionData(contract)
   }, [contract]) // Run when contract changes
 
-  const dayjsperiods = {
-    DAILY: 'd',
-    WEEKLY: 'w',
-    MONTHLY: 'M',
-    YEARLY: 'y',
-  }
-
-  function prevTimeWindow() {
-    setCurrentTime(
-      dayjs.max(dayjs(firstDataDate), currentTime.subtract(1, dayjsperiods[period])),
-    )
-  }
-
-  function nextTimeWindow() {
-    setCurrentTime(
-      dayjs.min(dayjs(lastDataDate), currentTime.add(1, dayjsperiods[period])),
-    )
-  }
-
   return (
     <>
       <PageTitle Icon={QueryStatsIconMenu}>
-        {t('PRODUCTION.PRODUCTION_TITLE')}
+        {t("PRODUCTION.PRODUCTION_TITLE")}
         <ContractSelector {...{ setContract, contract }} />
       </PageTitle>
 
       <Box
         sx={{
-          width: '100%',
-          display: 'flex',
-          flexFlow: 'wrap',
-          justifyContent: 'space-between',
-          marginBottom: '2rem',
-          gap: '1rem',
-        }}
-      >
+          width: "100%",
+          display: "flex",
+          flexFlow: "wrap",
+          justifyContent: "space-between",
+          marginBottom: "2rem",
+          gap: "1rem",
+        }}>
         <ToggleButtonGroup
           color="primary"
           value={period}
@@ -296,35 +294,40 @@ const ChartProductionData = () => {
           onChange={(event, value) => {
             setPeriod(value)
           }}
-          aria-label={t('PRODUCTION.LABEL_PERIOD')}
-        >
-          <ToggleButton value={DAILY}>{t('PRODUCTION.PERIOD_DIARY')}</ToggleButton>
-          <ToggleButton value={WEEKLY}>{t('PRODUCTION.PERIOD_WEEKLY')}</ToggleButton>
-          <ToggleButton value={MONTHLY}>{t('PRODUCTION.PERIOD_MONTHLY')}</ToggleButton>
-          <ToggleButton value={YEARLY}>{t('PRODUCTION.PERIOD_YEARLY')}</ToggleButton>
+          aria-label={t("PRODUCTION.LABEL_PERIOD")}>
+          <ToggleButton value={DAILY}>
+            {t("PRODUCTION.PERIOD_DIARY")}
+          </ToggleButton>
+          <ToggleButton value={WEEKLY}>
+            {t("PRODUCTION.PERIOD_WEEKLY")}
+          </ToggleButton>
+          <ToggleButton value={MONTHLY}>
+            {t("PRODUCTION.PERIOD_MONTHLY")}
+          </ToggleButton>
+          <ToggleButton value={YEARLY}>
+            {t("PRODUCTION.PERIOD_YEARLY")}
+          </ToggleButton>
         </ToggleButtonGroup>
 
         <Box
           sx={{
-            display: 'flex',
-          }}
-        >
+            display: "flex",
+          }}>
           <LocalizationProvider
-              dateAdapter={AdapterDayjs}
-              adapterLocale={language}
-          >
+            dateAdapter={AdapterDayjs}
+            adapterLocale={language}>
             <SomDatePicker
               currentTime={currentTime}
               setCurrentTime={setCurrentTime}
               period={period}
               styles={{
                 datePicker: {
-                  borderColor: 'primary.main',
-                  '& .MuiOutlinedInput-root': { borderRadius: '8px' },
+                  borderColor: "primary.main",
+                  "& .MuiOutlinedInput-root": { borderRadius: "8px" },
                   input: {
-                    textAlign: 'center',
+                    textAlign: "center",
                   },
-                }
+                },
               }}
               firstDate={dayjs(firstDataDate)}
               lastDate={dayjs(lastDataDate)}
@@ -336,15 +339,17 @@ const ChartProductionData = () => {
           color="primary"
           value={line ? 1 : 0}
           exclusive
-          onChange={(event, value) => {
+          onChange={(_event, value) => {
             value !== null && setLine(!!value)
           }}
-          aria-label={t('PRODUCTION.LABEL_PLOT_STYLE')}
-        >
-          <ToggleButton disabled value={0} aria-label={t('PRODUCTION.STYLE_BAR')}>
+          aria-label={t("PRODUCTION.LABEL_PLOT_STYLE")}>
+          <ToggleButton
+            disabled
+            value={0}
+            aria-label={t("PRODUCTION.STYLE_BAR")}>
             <BarChartIcon />
           </ToggleButton>
-          <ToggleButton value={1} aria-label={t('PRODUCTION.STYLE_LINE')}>
+          <ToggleButton value={1} aria-label={t("PRODUCTION.STYLE_LINE")}>
             <TimelineIcon />
           </ToggleButton>
         </ToggleButtonGroup>
@@ -356,15 +361,22 @@ const ChartProductionData = () => {
         />
       </Box>
 
-      <Box sx={{ position: 'relative' }}>
-        {listLoading || (installations.length > 0 && productionLineData.length === 0) ? (
-          <Box sx={{ position: 'absolute', inset: '0' }}>
+      <Box sx={{ position: "relative" }}>
+        {listLoading ||
+        (installations.length > 0 && productionLineData.length === 0) ? (
+          <Box sx={{ position: "absolute", inset: "0" }}>
             <Loading />
           </Box>
         ) : null}
         <CurveChart
           period={period}
-          data={line ? (showProduction ? productionLineData : []) : productionBarData}
+          data={
+            line
+              ? showProduction
+                ? productionLineData
+                : []
+              : productionBarData
+          }
           legend={true}
           type={line ? LINE : BAR}
           lang={i18n?.language}
@@ -374,34 +386,32 @@ const ChartProductionData = () => {
       </Box>
       <Box
         sx={{
-          width: '100%',
-          display: 'flex',
-          flexFlow: 'wrap',
-          justifyContent: 'space-between',
-          margin: '1rem',
-          gap: '1rem',
-        }}
-      >
+          width: "100%",
+          display: "flex",
+          flexFlow: "wrap",
+          justifyContent: "space-between",
+          margin: "1rem",
+          gap: "1rem",
+        }}>
         <Box
           sx={{
-            display: 'flex',
-            gap: '1rem',
-          }}
-        >
+            display: "flex",
+            gap: "1rem",
+          }}>
           <FormControlLabel
             control={
               <Checkbox
                 checked={showProduction}
                 onChange={(event) => setShowProduction(event.target.checked)}
                 sx={{
-                  color: 'chartlines.production',
-                  '&.Mui-checked': {
-                    color: 'chartlines.production',
+                  color: "chartlines.production",
+                  "&.Mui-checked": {
+                    color: "chartlines.production",
                   },
                 }}
               />
             }
-            label={t('PRODUCTION.LEGEND_PRODUCTION')}
+            label={t("PRODUCTION.LEGEND_PRODUCTION")}
           />
           <FormControlLabel
             control={
@@ -409,14 +419,14 @@ const ChartProductionData = () => {
                 checked={showForeseen}
                 onChange={(event) => setShowForeseen(event.target.checked)}
                 sx={{
-                  color: 'chartlines.foreseen',
-                  '&.Mui-checked': {
-                    color: 'chartlines.foreseen',
+                  color: "chartlines.foreseen",
+                  "&.Mui-checked": {
+                    color: "chartlines.foreseen",
                   },
                 }}
               />
             }
-            label={t('PRODUCTION.LEGEND_FORESEEN')}
+            label={t("PRODUCTION.LEGEND_FORESEEN")}
           />
         </Box>
         <ConsumptionDisplay
