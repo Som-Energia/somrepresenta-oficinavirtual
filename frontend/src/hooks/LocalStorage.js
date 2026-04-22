@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 /**
 Hook to store a persistent state in local storage.
@@ -47,9 +47,9 @@ export default function useLocalStorage(key, initialValue) {
         setState(decode(e.newValue))
       }
     }
-    window.addEventListener('storage', listener)
+    window.addEventListener("storage", listener)
     return () => {
-      window.removeEventListener('storage', listener)
+      window.removeEventListener("storage", listener)
     }
   }, [])
   // Offer a setter that updates the storage

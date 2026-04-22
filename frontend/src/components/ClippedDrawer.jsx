@@ -1,18 +1,20 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import Drawer from '@mui/material/Drawer'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Divider from '@mui/material/Divider'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useNavigate, useLocation } from 'react-router-dom'
-import LanguageMenu from './LanguageMenu'
-import ProfileButton from './ProfileButton'
+import * as React from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+
+import Box from "@mui/material/Box"
+import Divider from "@mui/material/Divider"
+import Drawer from "@mui/material/Drawer"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import { useTheme } from "@mui/material/styles"
+import Toolbar from "@mui/material/Toolbar"
+import useMediaQuery from "@mui/material/useMediaQuery"
+
+import LanguageMenu from "./LanguageMenu"
+import ProfileButton from "./ProfileButton"
 
 const drawerWidth = 240
 
@@ -20,7 +22,7 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
   const navigate = useNavigate()
   const currentLocation = useLocation()
   const theme = useTheme()
-  const isXs = useMediaQuery(theme.breakpoints.down('sm'))
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"))
 
   // Whenever we exit xs breakpoint, close temporary drawer
   React.useEffect(() => {
@@ -32,29 +34,27 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
   return (
     <Drawer
       id="drawer"
-      variant={isXs ? 'temporary' : 'permanent'}
+      variant={isXs ? "temporary" : "permanent"}
       sx={{
         ...sx,
         width: drawerWidth,
         flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: "border-box" },
       }}
       anchor="left"
       open={open}
-      onClose={onClose}
-    >
+      onClose={onClose}>
       <Toolbar />
-      <Box sx={{ overflow: 'auto' }}>
+      <Box sx={{ overflow: "auto" }}>
         <List>
           {isXs ? (
             <>
               <ListItem
                 sx={{
-                  display: 'flex wrap',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                }}
-              >
+                  display: "flex wrap",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}>
                 <ProfileButton onMenuClose={onClose} />
                 <LanguageMenu />
               </ListItem>
@@ -62,11 +62,11 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
             </>
           ) : null}
           {items.map((page, i) => {
-            if (page.dev && import.meta.env.MODE !== 'development') return
+            if (page.dev && import.meta.env.MODE !== "development") return
             const Icon = page.icon_menu
             return (
               <ListItemButton
-                key={i + ''}
+                key={i + ""}
                 onClick={() => {
                   navigate(page.path)
                   onClose()
@@ -74,16 +74,15 @@ export default function ClippedDrawer({ sx, open, onClose, items }) {
                 selected={page.path === currentLocation.pathname}
                 sx={{
                   "&.Mui-selected": {
-                      backgroundColor: "#E2E8DE"
-                  }
-                }}
-              >
+                    backgroundColor: "#E2E8DE",
+                  },
+                }}>
                 <ListItemIcon>
                   <Icon
                     sx={{
-                      margin: '5px',
-                      '&:hover': {
-                        fill: '#B5EA62',
+                      margin: "5px",
+                      "&:hover": {
+                        fill: "#B5EA62",
                       },
                     }}
                   />

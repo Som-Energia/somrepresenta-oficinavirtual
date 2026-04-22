@@ -1,50 +1,48 @@
-import React, { useState, useEffect } from 'react'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import IconLogout from '@mui/icons-material/Logout'
-import { useTranslation } from 'react-i18next'
-import { useCookies } from 'react-cookie'
-import { useAuth } from './AuthProvider'
+import { useEffect, useState } from "react"
+import { useCookies } from "react-cookie"
+
+import IconLogout from "@mui/icons-material/Logout"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+
+import { useAuth } from "./AuthProvider"
 
 function HijackWarning() {
-  const { t, i18n } = useTranslation()
   const { logout } = useAuth()
   const [open, setOpen] = useState(true)
-  const [cookies, setCookie, removeCookie] = useCookies(['Hijacked'])
+  const [cookies, setCookie] = useCookies(["Hijacked"])
 
   useEffect(() => {
-    setOpen(cookies['Hijacked'])
+    setOpen(cookies["Hijacked"])
   }, [cookies])
 
   function handleClose() {
-    setCookie('Hijacked', false)
+    setCookie("Hijacked", false)
     logout()
   }
 
   return (
     open && (
-      <div style={{ position: 'fixed', bottom: '30px', right: '20px' }}>
+      <div style={{ position: "fixed", bottom: "30px", right: "20px" }}>
         <Box
           component="section"
           sx={{
             p: 2,
-            backgroundColor: 'lightgrey',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            size: 'large',
-          }}
-        >
+            backgroundColor: "lightgrey",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            size: "large",
+          }}>
           Modo suplantación activado
           <Button
             variant="contained"
             startIcon={<IconLogout />}
             style={{
-              backgroundColor: 'grey',
-              marginTop: '8px',
+              backgroundColor: "grey",
+              marginTop: "8px",
             }}
-            onClick={handleClose}
-          >
+            onClick={handleClose}>
             Salir
           </Button>
         </Box>

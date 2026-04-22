@@ -1,19 +1,17 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import { InstallationContext } from './InstallationProvider'
+import React from "react"
+import { useTranslation } from "react-i18next"
+
+import Box from "@mui/material/Box"
+import FormControl from "@mui/material/FormControl"
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import Select from "@mui/material/Select"
+
+import { InstallationContext } from "./InstallationProvider"
 
 export default function ContractSelector({ setContract, contract }) {
-  const {
-    installations,
-    loading: listLoading,
-    error: listError,
-  } = React.useContext(InstallationContext)
-  const { t, i18n } = useTranslation()
+  const { installations } = React.useContext(InstallationContext)
+  const { t } = useTranslation()
 
   React.useEffect(() => {
     if (installations === null) return
@@ -24,23 +22,21 @@ export default function ContractSelector({ setContract, contract }) {
     installations && (
       <Box
         sx={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'flex-end',
-        }}
-      >
+          display: "flex",
+          width: "100%",
+          justifyContent: "flex-end",
+        }}>
         <FormControl size="small">
           <InputLabel id="contract-select-label">
-            {t('PRODUCTION.LABEL_CONTRACT')}
+            {t("PRODUCTION.LABEL_CONTRACT")}
           </InputLabel>
           <Select
             labelId="contract-select-label"
             id="contract-select"
-            value={contract || ''}
-            label={t('PRODUCTION.LABEL_CONTRACT')}
+            value={contract || ""}
+            label={t("PRODUCTION.LABEL_CONTRACT")}
             onChange={(ev) => setContract(ev.target.value)}
-            sx={{ minWidth: '12rem' }}
-          >
+            sx={{ minWidth: "12rem" }}>
             {installations && installations.length > 0 ? (
               installations.map(({ contract_number, installation_name }) => {
                 return (
@@ -50,7 +46,9 @@ export default function ContractSelector({ setContract, contract }) {
                 )
               })
             ) : (
-              <MenuItem value="">{t('PRODUCTION.PLACEHOLDER_NO_CONTRACTS')}</MenuItem>
+              <MenuItem value="">
+                {t("PRODUCTION.PLACEHOLDER_NO_CONTRACTS")}
+              </MenuItem>
             )}
           </Select>
         </FormControl>

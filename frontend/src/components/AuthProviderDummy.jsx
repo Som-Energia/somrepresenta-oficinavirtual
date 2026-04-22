@@ -1,16 +1,18 @@
-import React from 'react'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import Avatar from '@mui/material/Avatar'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
-import ListItemButton from '@mui/material/ListItemButton'
-import { useTranslation } from 'react-i18next'
-import useLocalStorage from '../hooks/LocalStorage'
-import { useDialog } from './DialogProvider'
-import users from '../data/dummyusers.yaml'
+import React from "react"
+import { useTranslation } from "react-i18next"
+
+import Avatar from "@mui/material/Avatar"
+import DialogContent from "@mui/material/DialogContent"
+import DialogTitle from "@mui/material/DialogTitle"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemAvatar from "@mui/material/ListItemAvatar"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemText from "@mui/material/ListItemText"
+
+import users from "../data/dummyusers.yaml"
+import useLocalStorage from "../hooks/LocalStorage"
+import { useDialog } from "./DialogProvider"
 
 const noFunction = () => undefined
 
@@ -23,11 +25,11 @@ const AuthContext = React.createContext({
 
 function DummyAuthDialog(params) {
   const { onUserSelected } = params
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   return (
     <>
       <DialogContent>
-        <DialogTitle>{t('APP_FRAME.CHOOSE_USER')}</DialogTitle>
+        <DialogTitle>{t("APP_FRAME.CHOOSE_USER")}</DialogTitle>
         <List>
           {users.map((user) => (
             <ListItem key={user.id}>
@@ -37,7 +39,9 @@ function DummyAuthDialog(params) {
                     {user.avatar ? null : user.initials}
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={user.name} secondary={user.email}></ListItemText>
+                <ListItemText
+                  primary={user.name}
+                  secondary={user.email}></ListItemText>
               </ListItemButton>
             </ListItem>
           ))}
@@ -48,7 +52,7 @@ function DummyAuthDialog(params) {
 }
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useLocalStorage('user', null)
+  const [user, setUser] = useLocalStorage("user", null)
   const [openDialog, closeDialog] = useDialog()
 
   const login = React.useCallback(() => {
@@ -71,8 +75,8 @@ function AuthProvider({ children }) {
   var currentUser = null
   try {
     currentUser = JSON.parse(user)
-  } catch (e) {
-    console.error('Invalid user info content')
+  } catch {
+    console.error("Invalid user info content")
     setUser(null)
   }
 
@@ -83,8 +87,7 @@ function AuthProvider({ children }) {
         logout,
         reloadUser: noFunction,
         currentUser,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   )
