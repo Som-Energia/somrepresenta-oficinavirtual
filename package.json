@@ -6,8 +6,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "vite build --emptyOutDir",
+    "build": "npm run lint:todos; vite build --emptyOutDir",
     "lint": "eslint frontend/ --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint ./frontend --fix",
+    "lint:todos": "./scripts/todos.sh frontend/",
+    "format": "prettier --write ./frontend",
+    "format:check": "prettier --check ./frontend",
     "test": "TZ=Europe/Madrid vitest",
     "test:once": "TZ=Europe/Madrid vitest run",
     "preview": "vite preview"
