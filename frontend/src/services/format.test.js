@@ -1,6 +1,14 @@
-import { beforeEach, afterEach, describe, expect, it } from 'vitest'
-import { euros, units, percent, date, enumeration, localISODateTime } from './format'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+
 import i18n from '../i18n/i18n'
+import {
+  date,
+  enumeration,
+  euros,
+  localISODateTime,
+  percent,
+  units,
+} from './format'
 
 describe('euros formatting', () => {
   let previousLanguage
@@ -157,12 +165,12 @@ describe('dates formatting', () => {
   afterEach(() => {
     i18n.changeLanguage(previousLanguage)
   })
-  it('default language (english)', () => {
-    expect(date('2022-12-20')).toBe('12/20/2022')
-  })
-  it('spanish', () => {
-    i18n.changeLanguage('es')
+  it('default language (spanish)', () => {
     expect(date('2022-12-20')).toBe('20/12/2022')
+  })
+  it('english', () => {
+    i18n.changeLanguage('en')
+    expect(date('2022-12-20')).toBe('12/20/2022')
   })
   it('euskara', () => {
     i18n.changeLanguage('eu')
