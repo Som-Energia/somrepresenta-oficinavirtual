@@ -1,13 +1,12 @@
-import React from 'react'
-import List from '@mui/material/List'
-import Avatar from '@mui/material/Avatar'
-import ListItem from '@mui/material/ListItem'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListSubheader from '@mui/material/ListSubheader'
-import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
+import Avatar from "@mui/material/Avatar"
+import Box from "@mui/material/Box"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemAvatar from "@mui/material/ListItemAvatar"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import ListSubheader from "@mui/material/ListSubheader"
+import Stack from "@mui/material/Stack"
 
 /**
  Generic multiple item view using a list widget.
@@ -20,19 +19,22 @@ import Box from '@mui/material/Box'
 export default function ItemListView({
   title,
   rows,
-  columns,
   idField,
   itemHeader,
   itemBody,
   itemActions,
   itemAvatar,
-  actions,
+  actions = [],
 }) {
   function stacked(rows) {
     return (
       <>
         {rows.map((row, i) => (
-          <Stack direction="row" justifyContent="space-between" spacing={1} key={i}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            spacing={1}
+            key={i}>
             {row.map ? (
               row.map((item, j) => <span key={j}>{item}</span>)
             ) : (
@@ -46,11 +48,13 @@ export default function ItemListView({
 
   return (
     <List>
-      {(title || actions) && (
+      {(title || actions?.lengh) && (
         <ListSubheader>
           {stacked([
             title,
-            actions && <Box>{actions.map((action, i) => action(items))}</Box>,
+            actions.length && (
+              <Box>{actions.map((action) => action(rows))}</Box>
+            ),
           ])}
         </ListSubheader>
       )}
@@ -73,14 +77,13 @@ export default function ItemListView({
             <ListItemIcon
               sx={{
                 // Display icons in a column
-                flexFlow: 'column',
-                justifyContent: 'end',
-                alignSelf: 'end',
-              }}
-            >
-              {itemActions.map((action, i) => {
-                if (action.view) return action.view(row)
-              })}
+                flexFlow: "column",
+                justifyContent: "end",
+                alignSelf: "end",
+              }}>
+              {itemActions
+                .filter((action) => action.view)
+                .map((action) => action.view(row))}
             </ListItemIcon>
           </ListItem>
         )

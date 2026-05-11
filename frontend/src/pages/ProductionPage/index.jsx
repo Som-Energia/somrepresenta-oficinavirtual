@@ -1,11 +1,8 @@
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import Container from '@mui/material/Container'
-import ChartProductionData from './ChartProductionData'
+import Container from "@mui/material/Container"
 
-export default function ProductionPage(params) {
-  const { t } = useTranslation()
+import ChartProductionData from "./ChartProductionData"
 
+export default function ProductionPage() {
   return (
     <>
       <Container>

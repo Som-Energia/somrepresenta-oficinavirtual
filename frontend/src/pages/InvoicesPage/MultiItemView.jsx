@@ -1,11 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import TableEditor from '../../components/TableEditor'
-import ItemListView from './ItemListView'
+import React from "react"
+
+import { useTheme } from "@mui/material/styles"
+import TableCell from "@mui/material/TableCell"
+import TableRow from "@mui/material/TableRow"
+import useMediaQuery from "@mui/material/useMediaQuery"
+
+import TableEditor from "../../components/TableEditor"
+import ItemListView from "./ItemListView"
 
 /**
 Provides responsive interaction with a list of objects.
@@ -13,7 +14,7 @@ Uses a TableEditor for large screen formats and a ItemListView for smaller ones.
 */
 export default function MultiDataEditor({
   title,
-  tableBreakPoint = 'md',
+  tableBreakPoint = "md",
   rows,
   columns,
   idField,
@@ -33,7 +34,6 @@ export default function MultiDataEditor({
       <ItemListView
         title={title}
         rows={rows}
-        columns={columns}
         idField={idField}
         itemAvatar={itemAvatar}
         itemHeader={itemHeader}
@@ -57,11 +57,10 @@ export default function MultiDataEditor({
       noDataPlaceHolder={
         // TODO: Move row and cell inside component, 9 should be computed
         <TableRow>
-          <TableCell colSpan={9} sx={{ textAlign: 'center' }}>
+          <TableCell colSpan={9} sx={{ textAlign: "center" }}>
             {noDataPlaceHolder}
           </TableCell>
         </TableRow>
-      }
-    ></TableEditor>
+      }></TableEditor>
   )
 }

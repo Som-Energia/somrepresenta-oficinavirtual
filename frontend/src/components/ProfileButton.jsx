@@ -1,49 +1,49 @@
 // ProfileButton
 // The button in the toolbar that enables login when logged out
 // and access to profile options when logged in.
-import * as React from 'react'
+import * as React from "react"
+import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
-import Avatar from '@mui/material/Avatar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import IconSettings from '@mui/icons-material/Settings'
-import IconKey from '@mui/icons-material/Key'
-import IconLogout from '@mui/icons-material/Logout'
-import IconLogin from '@mui/icons-material/Login'
-import IconPerson from '@mui/icons-material/Person'
-import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from './AuthProvider'
+import IconKey from "@mui/icons-material/Key"
+import IconLogin from "@mui/icons-material/Login"
+import IconLogout from "@mui/icons-material/Logout"
+import IconPerson from "@mui/icons-material/Person"
+import SensorOccupiedIcon from "@mui/icons-material/SensorOccupied"
+import IconSettings from "@mui/icons-material/Settings"
+import Avatar from "@mui/material/Avatar"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Divider from "@mui/material/Divider"
+import IconButton from "@mui/material/IconButton"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
+import Tooltip from "@mui/material/Tooltip"
+import Typography from "@mui/material/Typography"
+
+import { useAuth } from "./AuthProvider"
 
 function ProfileMenu(params) {
   const { anchorEl, closeMenu, menuOptions, currentUser } = params
   return (
     <Menu
       sx={{
-        mt: '45px',
+        mt: "45px",
       }}
       id="menu-appbar"
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={Boolean(anchorEl)}
-      onClose={closeMenu}
-    >
+      onClose={closeMenu}>
       <MenuItem onClick={closeMenu}>
         <ListItemIcon>
           <Avatar
@@ -64,8 +64,7 @@ function ProfileMenu(params) {
               onClick={() => {
                 closeMenu()
                 option.onclick && option.onclick()
-              }}
-            >
+              }}>
               <ListItemIcon>{option.icon}</ListItemIcon>
               <Typography textAlign="center">{option.text}</Typography>
             </MenuItem>
@@ -77,7 +76,7 @@ function ProfileMenu(params) {
 
 function ProfileButton(params) {
   const { onMenuClose } = params
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { currentUser, login, logout, changePassword, hijack } = useAuth()
   const navigate = useNavigate()
 
@@ -91,26 +90,26 @@ function ProfileButton(params) {
   }
   const menuProfile = [
     {
-      text: t('APP_FRAME.MENU_PROFILE'),
+      text: t("APP_FRAME.MENU_PROFILE"),
       icon: <IconSettings />,
       onclick: () => {
-        navigate('/profile')
+        navigate("/profile")
       },
     },
     {
-      text: t('APP_FRAME.MENU_CHANGE_PASSWORD'),
+      text: t("APP_FRAME.MENU_CHANGE_PASSWORD"),
       icon: <IconKey />,
       onclick: changePassword,
       hidden: changePassword === undefined,
     },
     {
-      text: t('APP_FRAME.MENU_HIJACK'),
+      text: t("APP_FRAME.MENU_HIJACK"),
       icon: <SensorOccupiedIcon />,
       onclick: hijack,
-      hidden: !currentUser?.roles.includes('staff'),
+      hidden: !currentUser?.roles.includes("staff"),
     },
     {
-      text: t('APP_FRAME.MENU_LOGOUT'),
+      text: t("APP_FRAME.MENU_LOGOUT"),
       icon: <IconLogout />,
       onclick: logout,
     },
@@ -118,10 +117,10 @@ function ProfileButton(params) {
 
   const initials = (name) =>
     name
-      .split(' ')
+      .split(" ")
       .filter((l) => l.trim().toUpperCase() === l)
       .slice(0, 2)
-      .join('')
+      .join("")
 
   if (currentUser === null)
     return (
@@ -130,38 +129,35 @@ function ProfileButton(params) {
           sx={{
             flexGrow: 1,
             display: {
-              xs: 'none',
-              sm: 'inherit',
+              xs: "none",
+              sm: "inherit",
             },
-          }}
-        >
+          }}>
           <Button
             endIcon={<IconLogin />}
             sx={{
-              color: 'primary.main',
-              border: '2px solid',
-              bgcolor: 'primary.light',
-              borderRadius: '10px',
+              color: "primary.main",
+              border: "2px solid",
+              bgcolor: "primary.light",
+              borderRadius: "10px",
               "&:hover": {
-                backgroundColor: "#E2E8DE"
-              }
+                backgroundColor: "#E2E8DE",
+              },
             }}
-            onClick={login}
-          >
-            {t('APP_FRAME.LOGIN')}
+            onClick={login}>
+            {t("APP_FRAME.LOGIN")}
           </Button>
         </Box>
         <IconButton
-          color={'inherit'}
+          color={"inherit"}
           onClick={login}
           sx={{
             display: {
-              xs: 'inherit',
-              sm: 'none',
+              xs: "inherit",
+              sm: "none",
             },
           }}
-          title={t('APP_FRAME.LOGIN')}
-        >
+          title={t("APP_FRAME.LOGIN")}>
           <IconLogin />
         </IconButton>
       </>
@@ -171,61 +167,56 @@ function ProfileButton(params) {
   return (
     <>
       <IconButton
-        color={'inherit'}
+        color={"inherit"}
         onClick={openUserMenu}
         sx={{
           display: {
-            xs: 'inherit',
-            sm: 'none',
+            xs: "inherit",
+            sm: "none",
           },
         }}
-        title={t('APP_FRAME.PROFILE_TOOLTIP')}
-      >
+        title={t("APP_FRAME.PROFILE_TOOLTIP")}>
         <IconPerson />
       </IconButton>
       <Box
         sx={{
           flexGrow: 1,
           display: {
-            xs: 'none',
-            sm: 'inherit',
+            xs: "none",
+            sm: "inherit",
           },
-        }}
-      >
-        <Tooltip title={t('APP_FRAME.PROFILE_TOOLTIP')}>
+        }}>
+        <Tooltip title={t("APP_FRAME.PROFILE_TOOLTIP")}>
           <Button
             onClick={openUserMenu}
             sx={{
               p: 0,
               pr: 1,
-              color: 'primary.main',
-              bgcolor: 'primary.light',
-            }}
-          >
+              color: "primary.main",
+              bgcolor: "primary.light",
+            }}>
             <Avatar
               alt={initials(currentUser.name)}
               src={currentUser.avatar}
               sx={{
-                bgcolor: 'primary.main',
-                color: 'primary.light',
-                margin: '5px',
-              }}
-            >
+                bgcolor: "primary.main",
+                color: "primary.light",
+                margin: "5px",
+              }}>
               {currentUser.initials}
             </Avatar>
             <Box
               sx={{
                 marginInlineStart: 1,
-                maxWidth: '12rem',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+                maxWidth: "12rem",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
                 display: {
-                  xs: 'none',
-                  sm: 'block',
+                  xs: "none",
+                  sm: "block",
                 },
-              }}
-            >
+              }}>
               {currentUser.name}
             </Box>
           </Button>

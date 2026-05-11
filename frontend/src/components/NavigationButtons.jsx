@@ -1,19 +1,21 @@
-import { styled } from '@mui/material/styles'
-import { Link } from 'react-router-dom'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
-import NavigateNextIcon from '@mui/icons-material/NavigateNext'
+import { Link } from "react-router-dom"
+
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore"
+import NavigateNextIcon from "@mui/icons-material/NavigateNext"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import { styled } from "@mui/material/styles"
 
 const StyledButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.table.titleColor,
-  color: 'white',
-  borderColor: theme.palette.mode === 'dark' ? theme.palette.table.contentDark : 'white',
-  '&:hover': {
+  color: "white",
+  borderColor:
+    theme.palette.mode === "dark" ? theme.palette.table.contentDark : "white",
+  "&:hover": {
     backgroundColor: theme.palette.text.primary,
     borderColor:
-      theme.palette.mode === 'dark' ? theme.palette.table.contentDark : 'white',
+      theme.palette.mode === "dark" ? theme.palette.table.contentDark : "white",
   },
 }))
 
@@ -23,14 +25,13 @@ const NavigationButtons = (props) => {
   return (
     <Box
       sx={{
-        width: '100%',
-        ml: '.5rem',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        marginRight: '1rem',
-        marginTop: '1rem',
-      }}
-    >
+        width: "100%",
+        ml: ".5rem",
+        display: "flex",
+        justifyContent: "flex-end",
+        marginRight: "1rem",
+        marginTop: "1rem",
+      }}>
       <ButtonGroup size="small">
         {toBefore && (
           <StyledButton component={Link} to={toBefore}>
