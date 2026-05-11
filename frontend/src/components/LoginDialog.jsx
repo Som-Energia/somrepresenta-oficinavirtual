@@ -1,13 +1,15 @@
-import React from 'react'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogActions from '@mui/material/DialogActions'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
-import { useTranslation } from 'react-i18next'
-import ov from '../services/ovapi'
+import React from "react"
+import { useTranslation } from "react-i18next"
+
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogTitle from "@mui/material/DialogTitle"
+import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
+
+import ov from "../services/ovapi"
 
 // TODO: Let the user inject the specific function
 // to actually perform the login and thus removing the
@@ -15,23 +17,23 @@ import ov from '../services/ovapi'
 
 function LoginDialog(params) {
   const { closeDialog } = params
-  const [username, setUsername] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [username, setUsername] = React.useState("")
+  const [password, setPassword] = React.useState("")
   const [isLoading, beLoading] = React.useState(false)
   const [error, setError] = React.useState()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   async function handleSubmit(ev) {
     ev.preventDefault()
     beLoading(true)
     ov.localLogin(username, password).then((response) => {
-      if (response.code === 'VALIDATION_ERROR') {
-        setError(t('LOGIN.VALIDATION_ERROR'))
+      if (response.code === "VALIDATION_ERROR") {
+        setError(t("LOGIN.VALIDATION_ERROR"))
         beLoading(false)
         return
       }
       if (response.error) {
-        setError(t('LOGIN.UNABLE_TO_LOGIN'))
+        setError(t("LOGIN.UNABLE_TO_LOGIN"))
         beLoading(false)
         return
       }
@@ -40,20 +42,20 @@ function LoginDialog(params) {
   }
   return (
     <>
-      <DialogTitle>{t('LOGIN.LOGIN_DIALOG_TITLE')}</DialogTitle>
-      <DialogContent sx={{ minWidth: '20rem' }}>
+      <DialogTitle>{t("LOGIN.LOGIN_DIALOG_TITLE")}</DialogTitle>
+      <DialogContent sx={{ minWidth: "20rem" }}>
         <form onSubmit={handleSubmit} method="post">
           <Stack spacing={2} sx={{ pt: 1 }}>
             <TextField
               name="user"
-              label={t('LOGIN.USERNAME_LABEL')}
+              label={t("LOGIN.USERNAME_LABEL")}
               value={username}
               onChange={(ev) => setUsername(ev.target.value)}
-              helperText={t('LOGIN.USERNAME_HELP')}
+              helperText={t("LOGIN.USERNAME_HELP")}
             />
             <TextField
               name="password"
-              label={t('LOGIN.PASSWORD_LABEL')}
+              label={t("LOGIN.PASSWORD_LABEL")}
               type="password"
               value={password}
               onChange={(ev) => setPassword(ev.target.value)}
@@ -64,11 +66,10 @@ function LoginDialog(params) {
               <Button
                 type="submit"
                 variant="contained"
-                disabled={isLoading || !username || !password}
-              >
+                disabled={isLoading || !username || !password}>
                 {isLoading
-                  ? t('LOGIN.SUBMIT_BUTTON_PROCESSING')
-                  : t('LOGIN.SUBMIT_BUTTON_LOGIN')}
+                  ? t("LOGIN.SUBMIT_BUTTON_PROCESSING")
+                  : t("LOGIN.SUBMIT_BUTTON_LOGIN")}
               </Button>
             </DialogActions>
           </Stack>

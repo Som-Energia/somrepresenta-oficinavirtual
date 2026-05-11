@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import useLocalStorage from '../hooks/LocalStorage'
-import { useAuth as useAuthOidc } from 'react-oidc-context'
-import ov from '../services/ovapi'
+import React, { useState } from "react"
+import { useAuth as useAuthOidc } from "react-oidc-context"
+
+import useLocalStorage from "../hooks/LocalStorage"
+import ov from "../services/ovapi"
 // import { useCookies } from 'react-cookie'
 
 const noFunction = () => undefined
@@ -14,38 +15,40 @@ const AuthContext = React.createContext({
 })
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useLocalStorage('user', null)
+  const [user, setUser] = useLocalStorage("user", null)
   const auth = useAuthOidc()
   const [token, setToken] = useState(null)
-  console.log('AUTH en AuthProvider:', auth)
+  console.log("AUTH en AuthProvider:", auth)
 
   let currentUser = null
   try {
     currentUser = JSON.parse(user)
   } catch (e) {
-    console.error('Parsing user info', e)
+    console.error("Parsing user info", e)
   }
   const setCurrentUser = (user) => setUser(JSON.stringify(user))
 
   const login = React.useCallback(() => {
-    console.log('login!')
+    console.log("login!")
     auth.signinPopup()
     reloadUser()
   }, [])
 
   const logout = React.useCallback(() => {
-    console.log('logout')
+    console.log("logout")
     setCurrentUser(null)
     auth.signoutPopup()
   }, [])
 
+  /*
   function error(message) {
-    console.error('Auth Error:', message)
+    console.error("Auth Error:", message)
     return null
   }
+  */
 
   const reloadUser = React.useCallback(() => {
-    console.log('reload user')
+    console.log("reload user")
     ov.currentUser().then((user) => setCurrentUser(user))
   })
 
@@ -68,8 +71,7 @@ function AuthProvider({ children }) {
         logout,
         currentUser,
         reloadUser,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   )

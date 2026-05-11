@@ -1,25 +1,24 @@
-import React from 'react'
-import Box from '@mui/material/Box'
-import useAplicationMetadata from '../../hooks/ApplicationMetadata'
-import PageButton from './PageButton'
+import Box from "@mui/material/Box"
 
-export default function HomePage(params) {
+import useAplicationMetadata from "../../hooks/ApplicationMetadata"
+import PageButton from "./PageButton"
+
+export default function HomePage() {
   const { menuPages } = useAplicationMetadata()
   return (
     <Box
       sx={{
-        width: '100%',
-        minHeight: '80%',
-        display: 'flex',
-        flexFlow: 'row wrap',
-        justifyContent: 'center',
-        alignContent: 'center',
-        gap: '10%',
+        width: "100%",
+        minHeight: "80%",
+        display: "flex",
+        flexFlow: "row wrap",
+        justifyContent: "center",
+        alignContent: "center",
+        gap: "10%",
         p: 3,
-      }}
-    >
+      }}>
       {menuPages
-        .filter((page) => page.path !== '/') // home
+        .filter((page) => page.path !== "/") // home
         .filter((page) => !page.dev) // dev pages
         .map((page) => (
           <PageButton

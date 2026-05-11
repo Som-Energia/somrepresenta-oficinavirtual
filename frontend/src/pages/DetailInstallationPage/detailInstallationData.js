@@ -1,43 +1,43 @@
-import i18n from '../../i18n/i18n'
-import format from '../../services/format'
+import i18n from "../../i18n/i18n"
+import format from "../../services/format"
 
 export const installationFields = [
-  'contract_number',
-  'name',
-  'address',
-  'city',
-  'postal_code',
-  'province',
-  'coordinates',
-  'technology',
-  'cil',
-  'rated_power',
-  'type',
-  'ministry_code',
+  "contract_number",
+  "name",
+  "address",
+  "city",
+  "postal_code",
+  "province",
+  "coordinates",
+  "technology",
+  "cil",
+  "rated_power",
+  "type",
+  "ministry_code",
 ]
 
 export const contractFields = [
-  'billing_mode',
-  'proxy_fee',
-  'cost_deviation',
-  'reduction_deviation',
-  'representation_type',
-  'iban',
-  'discharge_date',
-  'status',
+  "billing_mode",
+  "proxy_fee",
+  "cost_deviation",
+  "reduction_deviation",
+  "representation_type",
+  "iban",
+  "discharge_date",
+  "status",
 ]
 
 export function transformInstallationDetails(data) {
   if (!data) return undefined
   const t = i18n.t
   const productionTecnologyOptions = {
-    b11: t('INSTALLATION_DETAIL.TECHNOLOGY_PHOTOVOLTAIC'),
-    b41: t('INSTALLATION_DETAIL.TECHNOLOGY_HYDRO'),
-    b42: t('INSTALLATION_DETAIL.TECHNOLOGY_HYDRO'),
+    b11: t("INSTALLATION_DETAIL.TECHNOLOGY_PHOTOVOLTAIC"),
+    b41: t("INSTALLATION_DETAIL.TECHNOLOGY_HYDRO"),
+    b42: t("INSTALLATION_DETAIL.TECHNOLOGY_HYDRO"),
   }
   return {
     ...data,
-    rated_power: format.units(data.rated_power, 'kW', 2),
+    rated_power: format.units(data.rated_power, "kW", 2),
     technology: format.enumeration(data.technology, productionTecnologyOptions),
   }
 }
@@ -45,36 +45,36 @@ function transformContractDetails(contract) {
   if (!contract) return undefined
   const t = i18n.t
   const billingModeOptions = {
-    index: t('CONTRACT_DETAIL.BILLING_MODE_INDEX'),
-    atr: t('CONTRACT_DETAIL.BILLING_MODE_ATR'),
+    index: t("CONTRACT_DETAIL.BILLING_MODE_INDEX"),
+    atr: t("CONTRACT_DETAIL.BILLING_MODE_ATR"),
   }
   const representationTypeOptions = {
-    directa_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT'),
-    indirecta_cnmc: t('CONTRACT_DETAIL.REPRESENTATION_TYPE_INDIRECT'),
+    directa_cnmc: t("CONTRACT_DETAIL.REPRESENTATION_TYPE_DIRECT"),
+    indirecta_cnmc: t("CONTRACT_DETAIL.REPRESENTATION_TYPE_INDIRECT"),
   }
   const contractStatusOptions = {
-    esborrany: t('CONTRACT_DETAIL.CONTRACT_STATUS_DRAFT'),
-    validar: t('CONTRACT_DETAIL.CONTRACT_STATUS_VALIDATION'),
-    pendent: t('CONTRACT_DETAIL.CONTRACT_STATUS_PENDING'),
-    activa: t('CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVE'),
-    cancelada: t('CONTRACT_DETAIL.CONTRACT_STATUS_CANCELLED'),
-    contracte: t('CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVATION'),
-    novapolissa: t('CONTRACT_DETAIL.CONTRACT_STATUS_NEW_CONTRACT'),
-    modcontractual: t('CONTRACT_DETAIL.CONTRACT_STATUS_MODIFICATION'),
-    impagament: t('CONTRACT_DETAIL.CONTRACT_STATUS_UNPAID'),
-    tall: t('CONTRACT_DETAIL.CONTRACT_STATUS_CUT'),
-    baixa: t('CONTRACT_DETAIL.CONTRACT_STATUS_ENDED'),
+    esborrany: t("CONTRACT_DETAIL.CONTRACT_STATUS_DRAFT"),
+    validar: t("CONTRACT_DETAIL.CONTRACT_STATUS_VALIDATION"),
+    pendent: t("CONTRACT_DETAIL.CONTRACT_STATUS_PENDING"),
+    activa: t("CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVE"),
+    cancelada: t("CONTRACT_DETAIL.CONTRACT_STATUS_CANCELLED"),
+    contracte: t("CONTRACT_DETAIL.CONTRACT_STATUS_ACTIVATION"),
+    novapolissa: t("CONTRACT_DETAIL.CONTRACT_STATUS_NEW_CONTRACT"),
+    modcontractual: t("CONTRACT_DETAIL.CONTRACT_STATUS_MODIFICATION"),
+    impagament: t("CONTRACT_DETAIL.CONTRACT_STATUS_UNPAID"),
+    tall: t("CONTRACT_DETAIL.CONTRACT_STATUS_CUT"),
+    baixa: t("CONTRACT_DETAIL.CONTRACT_STATUS_ENDED"),
   }
   const costDeviationIncludedOptions = {
-    included: t('CONTRACT_DETAIL.COST_DEVIATION_INCLUDED'),
-    not_included: t('CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED'),
+    included: t("CONTRACT_DETAIL.COST_DEVIATION_INCLUDED"),
+    not_included: t("CONTRACT_DETAIL.COST_DEVIATION_NOT_INCLUDED"),
   }
   return {
     ...contract,
     reduction_deviation:
-      contract.cost_deviation === 'included'
+      contract.cost_deviation === "included"
         ? format.percent(contract.reduction_deviation, 0)
-        : 'N/A',
+        : "N/A",
     cost_deviation: format.enumeration(
       contract.cost_deviation,
       costDeviationIncludedOptions,
@@ -85,12 +85,15 @@ function transformContractDetails(contract) {
       representationTypeOptions,
     ),
     discharge_date: format.date(contract.discharge_date),
-    proxy_fee: format.units(contract.proxy_fee, '€/MWh', 2),
+    proxy_fee: format.units(contract.proxy_fee, "€/MWh", 2),
     status: format.enumeration(contract.status, contractStatusOptions),
   }
 }
 
-function computeNavigationInfo(installations, currentInstallationContractNumber) {
+function computeNavigationInfo(
+  installations,
+  currentInstallationContractNumber,
+) {
   if (!installations) return {}
   if (installations.length < 2) {
     return {}
@@ -98,12 +101,15 @@ function computeNavigationInfo(installations, currentInstallationContractNumber)
 
   // Find the index of the current installation
   const currentIndex = installations.findIndex(
-    (installation) => installation.contract_number === currentInstallationContractNumber,
+    (installation) =>
+      installation.contract_number === currentInstallationContractNumber,
   )
 
   // Determine the index of the previous and next installations
-  const previousIndex = currentIndex > 0 ? currentIndex - 1 : installations.length - 1
-  const nextIndex = currentIndex < installations.length - 1 ? currentIndex + 1 : 0
+  const previousIndex =
+    currentIndex > 0 ? currentIndex - 1 : installations.length - 1
+  const nextIndex =
+    currentIndex < installations.length - 1 ? currentIndex + 1 : 0
 
   // Extract the contract numbers for the previous and next installations
   const before = installations[previousIndex].contract_number
@@ -112,4 +118,4 @@ function computeNavigationInfo(installations, currentInstallationContractNumber)
   return { before, next }
 }
 
-export { transformContractDetails, computeNavigationInfo }
+export { computeNavigationInfo, transformContractDetails }

@@ -14,7 +14,9 @@ function time2index(referenceTimestamp, timestamp) {
  * values.
  */
 function index2time(referenceTimestamp, index) {
-  return new Date(new Date(referenceTimestamp).getTime() + index * 60 * 60 * 1000)
+  return new Date(
+    new Date(referenceTimestamp).getTime() + index * 60 * 60 * 1000,
+  )
 }
 
 /**
@@ -44,30 +46,30 @@ function timeInterval(scope, current_date) {
   start.setSeconds(0)
   start.setMilliseconds(0)
 
-  if (scope === 'MONTHLY') {
+  if (scope === "MONTHLY") {
     start.setDate(1)
   }
-  if (scope === 'YEARLY') {
+  if (scope === "YEARLY") {
     start.setDate(1) // Month days are 1 based
     start.setMonth(0) // Month are 0 based
   }
-  if (scope === 'WEEKLY') {
+  if (scope === "WEEKLY") {
     var weekday_shift = (start.getDay() + 6) % 7
     start.setDate(start.getDate() - weekday_shift)
   }
 
   const end = new Date(start)
   switch (scope) {
-    case 'DAILY':
+    case "DAILY":
       end.setDate(end.getDate() + 1)
       break
-    case 'MONTHLY':
+    case "MONTHLY":
       end.setMonth(end.getMonth() + 1)
       break
-    case 'YEARLY':
+    case "YEARLY":
       end.setFullYear(end.getFullYear() + 1)
       break
-    case 'WEEKLY':
+    case "WEEKLY":
       end.setDate(end.getDate() + 7)
       break
   }
@@ -77,7 +79,10 @@ function timeInterval(scope, current_date) {
 function timeSlice(timeOffset, values, indexStart, indexEnd) {
   var adjustedIndexStart = Math.max(0, indexStart)
   const newTimeOffset = index2time(timeOffset, adjustedIndexStart)
-  return array2datapoints(newTimeOffset, values.slice(adjustedIndexStart, indexEnd))
+  return array2datapoints(
+    newTimeOffset,
+    values.slice(adjustedIndexStart, indexEnd),
+  )
 }
 
 function sliceIndexes(offsetDate, period, currentTime) {
@@ -87,7 +92,14 @@ function sliceIndexes(offsetDate, period, currentTime) {
   return [startIndex, endIndex]
 }
 
-export { time2index, index2time, array2datapoints, timeInterval, timeSlice, sliceIndexes }
+export {
+  array2datapoints,
+  index2time,
+  sliceIndexes,
+  time2index,
+  timeInterval,
+  timeSlice,
+}
 export default {
   time2index,
   index2time,

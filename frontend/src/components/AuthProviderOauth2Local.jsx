@@ -1,18 +1,11 @@
-import React from 'react'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
-import Alert from '@mui/material/Alert'
-import { useTranslation } from 'react-i18next'
-import useLocalStorage from '../hooks/LocalStorage'
-import { useDialog } from './DialogProvider'
-import ov from '../services/ovapi'
-import wait from '../services/wait'
-import ChangePasswordDialog from './ChangePasswordDialog'
-import LoginDialog from './LoginDialog'
-import HijackDialog from './HijackDialog'
+import React from "react"
+
+import useLocalStorage from "../hooks/LocalStorage"
+import ov from "../services/ovapi"
+import ChangePasswordDialog from "./ChangePasswordDialog"
+import { useDialog } from "./DialogProvider"
+import HijackDialog from "./HijackDialog"
+import LoginDialog from "./LoginDialog"
 
 const noFunction = () => undefined
 
@@ -25,14 +18,14 @@ const AuthContext = React.createContext({
 })
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useLocalStorage('user', null)
+  const [user, setUser] = useLocalStorage("user", null)
   const [openDialog, closeDialog] = useDialog()
 
   let currentUser = null
   try {
     currentUser = JSON.parse(user)
   } catch (e) {
-    console.error('Parsing user info', e)
+    console.error("Parsing user info", e)
   }
   const setCurrentUser = (user) => setUser(JSON.stringify(user))
   const reloadUser = () => {
@@ -82,11 +75,6 @@ function AuthProvider({ children }) {
     })
   }, [])
 
-  function error(message) {
-    console.error('Auth Error:', message)
-    return null
-  }
-
   React.useEffect(() => {
     reloadUser()
   }, [])
@@ -100,8 +88,7 @@ function AuthProvider({ children }) {
         currentUser,
         changePassword,
         hijack,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   )

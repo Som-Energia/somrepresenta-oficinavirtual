@@ -1,32 +1,35 @@
-import React from 'react'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Chip from '@mui/material/Chip'
-import Avatar from '@mui/material/Avatar'
-import { useTranslation } from 'react-i18next'
-import { useAuth } from '../../components/AuthProvider'
-import { vat2nif } from '../../services/vat'
-import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import PageTitle from '../../components/PageTitle'
+import React from "react"
+import { useTranslation } from "react-i18next"
 
-const hideRoleInProfile = import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE == false
+import AccountBoxIcon from "@mui/icons-material/AccountBox"
+import Avatar from "@mui/material/Avatar"
+import Box from "@mui/material/Box"
+import Chip from "@mui/material/Chip"
+import Container from "@mui/material/Container"
 
-export default function ProfilePage(params) {
+import { useAuth } from "../../components/AuthProvider"
+import PageTitle from "../../components/PageTitle"
+import { vat2nif } from "../../services/vat"
+
+const hideRoleInProfile =
+  import.meta.env.VITE_ENABLE_VIEW_ROLE_IN_PROFILE === false
+
+export default function ProfilePage() {
   const { t } = useTranslation()
   const { currentUser } = useAuth()
   const fields = [
     {
-      id: 'name',
-      label: t('PROFILE.NAME'),
+      id: "name",
+      label: t("PROFILE.NAME"),
     },
     {
-      id: 'vat',
-      label: t('PROFILE.VAT'),
+      id: "vat",
+      label: t("PROFILE.VAT"),
       view: (user) => <>{vat2nif(user.vat)}</>,
     },
     {
-      id: 'roles',
-      label: t('PROFILE.ROLES'),
+      id: "roles",
+      label: t("PROFILE.ROLES"),
       view: (user) => (
         <>
           {user.roles.map((rol) => (
@@ -34,41 +37,41 @@ export default function ProfilePage(params) {
           ))}
         </>
       ),
-      hide: (user) => hideRoleInProfile,
+      hide: () => hideRoleInProfile,
     },
     {
-      id: 'address',
-      label: t('PROFILE.ADDRESS'),
+      id: "address",
+      label: t("PROFILE.ADDRESS"),
     },
     {
-      id: 'city',
-      label: t('PROFILE.CITY'),
+      id: "city",
+      label: t("PROFILE.CITY"),
     },
     {
-      id: 'zip',
-      label: t('PROFILE.ZIP'),
+      id: "zip",
+      label: t("PROFILE.ZIP"),
     },
     {
-      id: 'state',
-      label: t('PROFILE.STATE'),
+      id: "state",
+      label: t("PROFILE.STATE"),
     },
     {
-      id: 'email',
-      label: t('PROFILE.EMAIL'),
+      id: "email",
+      label: t("PROFILE.EMAIL"),
     },
     {
-      id: 'phones',
-      label: t('PROFILE.PHONE'),
-      view: (user) => <>{user.phones?.join(', ')}</>,
+      id: "phones",
+      label: t("PROFILE.PHONE"),
+      view: (user) => <>{user.phones?.join(", ")}</>,
     },
     {
-      id: 'proxy_name',
-      label: t('PROFILE.PROXY_NAME'),
+      id: "proxy_name",
+      label: t("PROFILE.PROXY_NAME"),
       hide: (user) => !user.proxy_vat,
     },
     {
-      id: 'proxy_vat',
-      label: t('PROFILE.PROXY_VAT'),
+      id: "proxy_vat",
+      label: t("PROFILE.PROXY_VAT"),
       view: (user) => <>{vat2nif(user.proxy_vat)}</>,
       hide: (user) => !user.proxy_vat,
     },
@@ -76,25 +79,23 @@ export default function ProfilePage(params) {
 
   return (
     <Container>
-      <PageTitle Icon={AccountBoxIcon}>{t('PROFILE.PROFILE_TITLE')}</PageTitle>
+      <PageTitle Icon={AccountBoxIcon}>{t("PROFILE.PROFILE_TITLE")}</PageTitle>
       <Box
         style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 2fr',
-          columnGap: '1rem',
-          rowGap: '.7rem',
-        }}
-      >
-        <Box style={{ gridColumn: '2' }}>
+          display: "grid",
+          gridTemplateColumns: "1fr 2fr",
+          columnGap: "1rem",
+          rowGap: ".7rem",
+        }}>
+        <Box style={{ gridColumn: "2" }}>
           <Avatar
             alt={currentUser.initials}
             src={currentUser.avatar}
             variant="square"
             sx={{
-              width: '64px',
-              height: '64px',
-            }}
-          >
+              width: "64px",
+              height: "64px",
+            }}>
             {currentUser.initials}
           </Avatar>
         </Box>
@@ -102,7 +103,7 @@ export default function ProfilePage(params) {
           if (field.hide && field.hide(currentUser)) return null
           return (
             <React.Fragment key={field.id}>
-              <Box sx={{ textAlign: 'right' }}>
+              <Box sx={{ textAlign: "right" }}>
                 <label htmlFor={field.id}>
                   <b>{field.label}:</b>
                 </label>

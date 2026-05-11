@@ -8,11 +8,12 @@
 
 // based on https://stackoverflow.com/questions/63737526/material-ui-how-to-open-dialog-imperatively-programmatically/63737527#63737527
 
-import React from 'react'
-import Dialog from '@mui/material/Dialog'
-import Grow from '@mui/material/Grow'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import React from "react"
+
+import Dialog from "@mui/material/Dialog"
+import Grow from "@mui/material/Grow"
+import { useTheme } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
 
 const no_function = () => {}
 
@@ -23,7 +24,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 })
 
 function DialogContainer(props) {
-  const { children, open, onClose, onKill, fullScreenBelow = 'sm', ...extraprops } = props
+  const {
+    children,
+    open,
+    onClose,
+    onKill,
+    fullScreenBelow = "sm",
+    ...extraprops
+  } = props
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down(fullScreenBelow))
 
@@ -37,8 +45,7 @@ function DialogContainer(props) {
       onClose={onClose}
       fullScreen={fullScreen}
       scroll="paper"
-      {...extraprops}
-    >
+      {...extraprops}>
       {children}
     </Dialog>
   )
@@ -65,7 +72,7 @@ export default function DialogProvider({ children }) {
     <DialogContext.Provider value={contextValue.current}>
       {children}
       {dialogs.map((dialog, i) => {
-        const { onClose, ...dialogParams } = dialog
+        const { onClose: _onClose, ...dialogParams } = dialog
         const handleKill = () => {
           if (dialog.onExited) dialog.onExited()
           setDialogs((dialogs) => dialogs.slice(0, dialogs.length - 1))

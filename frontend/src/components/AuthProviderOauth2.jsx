@@ -1,19 +1,20 @@
-import React from 'react'
-import axios from 'axios'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import Avatar from '@mui/material/Avatar'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
-import ListItemButton from '@mui/material/ListItemButton'
-import { useTranslation } from 'react-i18next'
-import useLocalStorage from '../hooks/LocalStorage'
-import { useDialog } from './DialogProvider'
-import HijackDialog from './HijackDialog'
-import ov from '../services/ovapi'
-import authProviders from '../data/authproviders.yaml'
+import React from "react"
+import { useTranslation } from "react-i18next"
+
+import Avatar from "@mui/material/Avatar"
+import DialogContent from "@mui/material/DialogContent"
+import DialogTitle from "@mui/material/DialogTitle"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemAvatar from "@mui/material/ListItemAvatar"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemText from "@mui/material/ListItemText"
+
+import authProviders from "../data/authproviders.yaml"
+import useLocalStorage from "../hooks/LocalStorage"
+import ov from "../services/ovapi"
+import { useDialog } from "./DialogProvider"
+import HijackDialog from "./HijackDialog"
 
 const noFunction = () => undefined
 
@@ -27,11 +28,11 @@ const AuthContext = React.createContext({
 
 function AuthProviderDialog(params) {
   const { onSelected } = params
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   return (
     <>
       <DialogContent>
-        <DialogTitle>{t('APP_FRAME.CHOOSE_AUTH_PROVIDER')}</DialogTitle>
+        <DialogTitle>{t("APP_FRAME.CHOOSE_AUTH_PROVIDER")}</DialogTitle>
         <List>
           {authProviders.map((provider) => (
             <ListItem key={provider.id}>
@@ -52,14 +53,14 @@ function AuthProviderDialog(params) {
 }
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useLocalStorage('user', null)
+  const [user, setUser] = useLocalStorage("user", null)
   const [openDialog, closeDialog] = useDialog()
 
   let currentUser = null
   try {
     currentUser = JSON.parse(user)
   } catch (e) {
-    console.error('Parsing user info', e)
+    console.error("Parsing user info", e)
   }
   const setCurrentUser = (user) => setUser(JSON.stringify(user))
 
@@ -93,11 +94,6 @@ function AuthProvider({ children }) {
     })
   }, [])
 
-  function error(message) {
-    console.error('Auth Error:', message)
-    return null
-  }
-
   const reloadUser = React.useCallback(() => {
     ov.currentUser().then((user) => setCurrentUser(user))
   })
@@ -114,8 +110,7 @@ function AuthProvider({ children }) {
         hijack,
         currentUser,
         reloadUser,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   )
