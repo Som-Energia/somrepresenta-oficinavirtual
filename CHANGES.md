@@ -1,5 +1,11 @@
 # Change log
 
+## 1.5.0 (2026-05-12)
+
+- Use unified configuration from frontend-config repository
+- Refactor all code with eslint and prettier rules
+- Add new npm scripts to run lint, format and todos
+
 ## 1.4.0 (2026-03-09)
 
 - IMP: adapt to breaking changes in somenergis-ui
