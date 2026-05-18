@@ -1,5 +1,9 @@
 # Change log
 
+## 1.5.1 (2026-05-18)
+
+- fix deprecated import method.
+
 ## 1.5.0 (2026-05-12)
 
 - Use unified configuration from frontend-config repository
