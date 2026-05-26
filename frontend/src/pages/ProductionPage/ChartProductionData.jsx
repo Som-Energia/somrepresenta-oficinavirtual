@@ -10,12 +10,12 @@ import Checkbox from "@mui/material/Checkbox"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 
-import { SomDatePicker } from "@somenergia/somenergia-ui"
-import { CurveChart } from "@somenergia/somenergia-ui"
-import { ConsumptionDisplay } from "@somenergia/somenergia-ui"
+import {
+  ConsumptionDisplay,
+  CurveChart,
+  SomDatePicker,
+} from "@somenergia/somenergia-ui"
 
 import dayjs from "dayjs"
 import minMax from "dayjs/plugin/minMax"
@@ -149,7 +149,6 @@ const ChartProductionData = () => {
   const [totalKwh, setTotalKwh] = React.useState(0)
   const [foreseenTotalKwh, setForeseenTotalKwh] = React.useState(0)
 
-  const language = i18n.language
   const maxDate = new Date()
   maxDate.setHours(0)
   maxDate.setMinutes(0)
@@ -249,7 +248,7 @@ const ChartProductionData = () => {
       endIndex,
     )
     setProductionLineData(measured_data)
-    let transdormedData = transformBarChartData(measured_data)
+    const transdormedData = transformBarChartData()
     setProductionBarData(transdormedData)
     setCompareData(foreseen_data)
     calculateTotalKwh(measured_data, foreseen_data)
@@ -313,26 +312,22 @@ const ChartProductionData = () => {
           sx={{
             display: "flex",
           }}>
-          <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-            adapterLocale={language}>
-            <SomDatePicker
-              currentTime={currentTime}
-              setCurrentTime={setCurrentTime}
-              period={period}
-              styles={{
-                datePicker: {
-                  borderColor: "primary.main",
-                  "& .MuiOutlinedInput-root": { borderRadius: "8px" },
-                  input: {
-                    textAlign: "center",
-                  },
+          <SomDatePicker
+            currentTime={currentTime}
+            setCurrentTime={setCurrentTime}
+            period={period}
+            styles={{
+              datePicker: {
+                borderColor: "primary.main",
+                "& .MuiOutlinedInput-root": { borderRadius: "8px" },
+                input: {
+                  textAlign: "center",
                 },
-              }}
-              firstDate={dayjs(firstDataDate)}
-              lastDate={dayjs(lastDataDate)}
-            />
-          </LocalizationProvider>
+              },
+            }}
+            firstDate={dayjs(firstDataDate)}
+            lastDate={dayjs(lastDataDate)}
+          />
         </Box>
 
         <ToggleButtonGroup

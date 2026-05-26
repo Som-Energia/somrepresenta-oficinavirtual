@@ -1,13 +1,10 @@
-import {
-  createAppConfig,
-  createManualChunks,
-} from '@somenergia/frontend-config/vite'
+import { createAppConfig } from "@somenergia/frontend-config/vite"
 
-import viteyaml from '@modyfi/vite-plugin-yaml'
-import react from '@vitejs/plugin-react'
-import svgr from 'vite-plugin-svgr'
+import viteyaml from "@modyfi/vite-plugin-yaml"
+import react from "@vitejs/plugin-react"
+import svgr from "vite-plugin-svgr"
 
-import pkg from './package.json'
+import pkg from "./package.json"
 
 export default createAppConfig(() => {
   return {
@@ -17,14 +14,31 @@ export default createAppConfig(() => {
     build: {
       manifest: true,
       sourcemap: true,
-      outDir: '../backend/dist',
+      outDir: "../backend/dist",
       rollupOptions: {
         output: {
-          manualChunks: createManualChunks(),
+          manualChunks: (id) => {
+            if (!id.includes("node_modules") || id.includes("@types")) return
+            if (id.includes("@somenergia")) {
+              return "somenergia-vendor"
+            }
+
+            if (["dayjs", "x-date-pickers"].some((item) => id.includes(item))) {
+              return "date-pickers-vendor"
+            }
+
+            if (
+              ["i18next", "react-i18next"].some((item) => id.includes(item))
+            ) {
+              return "i18n-vendor"
+            }
+
+            return "vendor"
+          },
         },
       },
     },
-    root: 'frontend',
+    root: "frontend",
     define: {
       __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     },
@@ -40,23 +54,23 @@ export default createAppConfig(() => {
     ],
     server: {
       proxy: {
-        '/api': 'http://localhost:5500',
-        '/oauth2': 'http://localhost:5500',
-        '/docs': 'http://localhost:5500',
-        '/redoc': 'http://localhost:5500',
-        '/openapi.json': 'http://localhost:5500',
+        "/api": "http://localhost:5500",
+        "/oauth2": "http://localhost:5500",
+        "/docs": "http://localhost:5500",
+        "/redoc": "http://localhost:5500",
+        "/openapi.json": "http://localhost:5500",
       },
     },
     test: {
-      exclude: ['**/node_modules/**'],
-      testMatch: ['./src/**/*.test.jsx'],
+      exclude: ["**/node_modules/**"],
+      testMatch: ["./src/**/*.test.jsx"],
       server: {
         deps: {
           // Pre-bundle MUI and somenergia-ui to avoid ES module directory import errors
           inline: [
             /@mui\/material/,
             /@mui\/icons-material/,
-            '@mui/x-date-pickers',
+            "@mui/x-date-pickers",
             /@somenergia\/somenergia-ui/,
           ],
         },
