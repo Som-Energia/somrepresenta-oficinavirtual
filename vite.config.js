@@ -2,6 +2,7 @@ import { createAppConfig } from "@somenergia/frontend-config/vite"
 
 import viteyaml from "@modyfi/vite-plugin-yaml"
 import react from "@vitejs/plugin-react"
+import eslint from "vite-plugin-eslint2"
 import svgr from "vite-plugin-svgr"
 
 import pkg from "./package.json"
@@ -46,11 +47,11 @@ export default createAppConfig(() => {
       react(),
       viteyaml(),
       svgr(),
-      // eslint({
-      //   build: true,
-      //   lintOnStart: true,
-      //  include: ['frontend/src/**/*.{js,jsx,ts,tsx}'],
-      // }),
+      eslint({
+        build: true,
+        lintOnStart: true,
+        include: ["frontend/src/**/*.{js,jsx,ts,tsx}"],
+      }),
     ],
     server: {
       proxy: {
