@@ -152,6 +152,10 @@ async function externalLogin(providerId) {
   }, 1)*/
 }
 
+async function externalProfile() {
+  window.location = 'https://authentik-test.somenergia.coop/if/user/#/settings'
+}
+
 async function logout() {
   axios
     .get("/api/auth/logout", {
@@ -377,6 +381,7 @@ export default {
   logout,
   localLogin,
   externalLogin,
+  externalProfile,
   localChangePassword,
   hijack,
   currentUser,

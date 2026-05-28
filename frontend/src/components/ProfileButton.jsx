@@ -77,7 +77,7 @@ function ProfileMenu(params) {
 function ProfileButton(params) {
   const { onMenuClose } = params
   const { t } = useTranslation()
-  const { currentUser, login, logout, changePassword, hijack } = useAuth()
+  const { currentUser, login, logout, profileAuthentik, changePassword, hijack } = useAuth()
   const navigate = useNavigate()
 
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -95,6 +95,12 @@ function ProfileButton(params) {
       onclick: () => {
         navigate("/profile")
       },
+    },
+    {
+      text: t("APP_FRAME.MENU_PROFILE_AUTHENTIK"),
+      icon: <IconSettings />,
+      onclick: profileAuthentik,
+      hidden: profileAuthentik === undefined,
     },
     {
       text: t("APP_FRAME.MENU_CHANGE_PASSWORD"),

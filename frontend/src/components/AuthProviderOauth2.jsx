@@ -76,6 +76,10 @@ function AuthProvider({ children }) {
     })
   }, [])
 
+  const profileAuthentik = React.useCallback(() => {
+    ov.externalProfile()
+  }, [])
+
   const logout = React.useCallback(() => {
     setCurrentUser(null)
     ov.logout()
@@ -110,6 +114,7 @@ function AuthProvider({ children }) {
         hijack,
         currentUser,
         reloadUser,
+        profileAuthentik,
       }}>
       {children}
     </AuthContext.Provider>
