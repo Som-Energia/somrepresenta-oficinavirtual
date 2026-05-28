@@ -1,5 +1,10 @@
 # Change log
 
+## unreleased
+
+- fix vite.config on production deploy
+- add eslint plugin on build process
+
 ## 1.5.1 (2026-05-18)
 
 - fix deprecated import method.
