@@ -153,7 +153,11 @@ async function externalLogin(providerId) {
 }
 
 async function externalProfile() {
-  window.location = 'https://authentik-test.somenergia.coop/if/user/#/settings'
+  const AUTHENTIK = 'https://authentik-test.somenergia.coop'
+  const FLOW = 'custom-user-profile-edit'
+  const RETURN_TO = 'http://localhost:3000/'
+
+  window.location.href = `${AUTHENTIK}/if/flow/${FLOW}/?next=${RETURN_TO}`
 }
 
 async function logout() {

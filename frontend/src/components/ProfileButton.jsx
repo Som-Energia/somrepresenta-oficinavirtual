@@ -97,10 +97,10 @@ function ProfileButton(params) {
       },
     },
     {
-      text: t("APP_FRAME.MENU_PROFILE_AUTHENTIK"),
+      text: 'Edit user profile',
       icon: <IconSettings />,
       onclick: profileAuthentik,
-      hidden: profileAuthentik === undefined,
+      hidden: import.meta.env.MODE !== 'development',
     },
     {
       text: t("APP_FRAME.MENU_CHANGE_PASSWORD"),
