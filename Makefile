@@ -1,21 +1,26 @@
-.PHONY: default deps tests deploy ui-deploy api-deploy ui-dev api-dev ui-deps api-deps style
+.PHONY: default deps tests deploy ui-deploy api-deploy ui-dev ui-deploy-deps api-dev ui-deps api-deps style
 
 default:
 	@printf "$$HELP"
 
 deps: ui-deps api-deps
 
+deploy-deps: ui-deploy-deps api-deps
+
 tests: api-test-once ui-test-once
 
 deploy: ui-deploy api-deploy
 
-ui-deploy: ui-deps
+ui-deploy: deploy-deps
 	npm run build
 
 api-deploy: api-deps
 
 ui-dev:
 	npm run dev
+
+ui-deploy-deps:
+	npm ci
 
 ui-deps:
 	npm install

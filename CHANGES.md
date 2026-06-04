@@ -1,9 +1,10 @@
 # Change log
 
-## unreleased
+## 1.5.2
 
 - fix vite.config on production deploy
 - add eslint plugin on build process
+- change Makefile to use npm ci
 
 ## 1.5.1 (2026-05-18)
 
