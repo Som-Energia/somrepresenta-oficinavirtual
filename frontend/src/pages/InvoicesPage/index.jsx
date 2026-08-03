@@ -201,6 +201,8 @@ export default function InvoicesPage() {
       ),
     },
   ]
+  // TODO: Remove this when new implementación is determined. Currently larger zips (more than 3 invoices) gives time out.
+  const zipEnable = false
   const actions = []
   const selectionActions = [
     {
@@ -259,7 +261,7 @@ export default function InvoicesPage() {
         columns={columns}
         rows={rows}
         actions={actions}
-        selectionActions={selectionActions}
+        selectionActions={zipEnable ? selectionActions : []}
         itemActions={itemActions}
         idField={"invoice_number"}
         isLoading={isLoading}
