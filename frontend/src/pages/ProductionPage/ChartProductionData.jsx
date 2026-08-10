@@ -89,7 +89,7 @@ const DownloadCsvButton = ({
       [
         t("PRODUCTION.CSV_COLUMN_DATETIME"),
         t("PRODUCTION.CSV_COLUMN_UTC_OFFSET"),
-        t("PRODUCTION.CSV_COLUMN_FORESEEN"),
+        //t("PRODUCTION.CSV_COLUMN_FORESEEN"),
         t("PRODUCTION.CSV_COLUMN_MEASURE"),
         t("PRODUCTION.CSV_COLUMN_MATURITY"),
         t("PRODUCTION.CSV_COLUMN_ESTIMATED"),
@@ -102,7 +102,7 @@ const DownloadCsvButton = ({
         return [
           format.localISODateTime(date),
           date.getTimezoneOffset() / 60,
-          contractData.foreseen_kwh[j],
+          //contractData.foreseen_kwh[j],
           contractData.measure_kwh[j],
           format.enumeration(contractData.maturity[j], maturityOptions, ""),
           contractData.estimated[j] === null
