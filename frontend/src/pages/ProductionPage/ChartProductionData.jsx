@@ -89,7 +89,7 @@ const DownloadCsvButton = ({
       [
         t("PRODUCTION.CSV_COLUMN_DATETIME"),
         t("PRODUCTION.CSV_COLUMN_UTC_OFFSET"),
-        t("PRODUCTION.CSV_COLUMN_FORESEEN"),
+        //t("PRODUCTION.CSV_COLUMN_FORESEEN"),
         t("PRODUCTION.CSV_COLUMN_MEASURE"),
         t("PRODUCTION.CSV_COLUMN_MATURITY"),
         t("PRODUCTION.CSV_COLUMN_ESTIMATED"),
@@ -102,7 +102,7 @@ const DownloadCsvButton = ({
         return [
           format.localISODateTime(date),
           date.getTimezoneOffset() / 60,
-          contractData.foreseen_kwh[j],
+          //contractData.foreseen_kwh[j],
           contractData.measure_kwh[j],
           format.enumeration(contractData.maturity[j], maturityOptions, ""),
           contractData.estimated[j] === null
@@ -145,7 +145,7 @@ const ChartProductionData = () => {
   const [currentTime, setCurrentTime] = React.useState(dayjs(yesterday))
   const { t, i18n } = useTranslation()
   const [showProduction, setShowProduction] = React.useState(true)
-  const [showForeseen, setShowForeseen] = React.useState(true)
+  const [showForeseen, setShowForeseen] = React.useState(false)
   const [totalKwh, setTotalKwh] = React.useState(0)
   const [foreseenTotalKwh, setForeseenTotalKwh] = React.useState(0)
 
@@ -183,6 +183,8 @@ const ChartProductionData = () => {
   const firstDataDate = contractData?.first_timestamp_utc ?? minDate
   const lastDataDate = contractData?.last_timestamp_utc ?? maxDate
 
+  // TODO: Rmove foreseenEnable once graph behavior is determined (possibility of showing 4 curbes)
+  const foreseenEnable = false
   const getProductionData = (contractNumber) => {
     if (!contractNumber) return // If no contract number, do not proceed
 
@@ -408,21 +410,23 @@ const ChartProductionData = () => {
             }
             label={t("PRODUCTION.LEGEND_PRODUCTION")}
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={showForeseen}
-                onChange={(event) => setShowForeseen(event.target.checked)}
-                sx={{
-                  color: "chartlines.foreseen",
-                  "&.Mui-checked": {
+          {foreseenEnable && (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showForeseen}
+                  onChange={(event) => setShowForeseen(event.target.checked)}
+                  sx={{
                     color: "chartlines.foreseen",
-                  },
-                }}
-              />
-            }
-            label={t("PRODUCTION.LEGEND_FORESEEN")}
-          />
+                    "&.Mui-checked": {
+                      color: "chartlines.foreseen",
+                    },
+                  }}
+                />
+              }
+              label={t("PRODUCTION.LEGEND_FORESEEN")}
+            />
+          )}
         </Box>
         <ConsumptionDisplay
           period={period}

@@ -21,7 +21,7 @@ function HijackDialog(params) {
   const [username, setUsername] = React.useState("")
   const [isLoading, beLoading] = React.useState(false)
   const [error, setError] = React.useState()
-  const [setCookie] = useCookies(["Hijacked"])
+  const [, setCookie] = useCookies(["Hijacked"])
   const { t } = useTranslation()
 
   async function handleSubmit(ev) {
